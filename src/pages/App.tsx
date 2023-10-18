@@ -1,9 +1,9 @@
 import { BrowserRouter } from "react-router-dom"
-import RoutesComponents from "./components/routes"
-import { AlertProvider } from "./context/AlertContext"
+import RoutesComponents from "../components/routes"
+import { AlertProvider } from "../context/AlertContext"
 import { AuthProvider } from "react-auth-kit";
-import { LoaderProvider } from "./context/LoaderContext"
-import Navbar from "./components/external/Navbar";
+import { LoaderProvider } from "../context/LoaderContext"
+import Navbar from "../components/external/Navbar";
 function App() {
 
   return (
