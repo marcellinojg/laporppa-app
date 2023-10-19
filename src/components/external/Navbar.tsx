@@ -39,7 +39,7 @@ function Navbar() {
 
         {/* SM Screen Navbar Button */}
         <button
-          className="lg:hidden block text-2xl text-gray-600 border-2 px-4 py-1 rounded-md border-gray-500"
+          className="lg:hidden block text-2xl text-white border-2 px-4 py-1 rounded-md border-white"
           onClick={() => setIsMobileNavbarActive(prev => !prev)}
         >
           {!isMobileNavbarActive ? <HiBars3 /> : <HiXMark />}

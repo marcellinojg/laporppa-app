@@ -40,7 +40,7 @@ const AdminLayout = (props: AdminLayoutProps) => {
     }
 
 
-    return <div className="min-w-screen min-h-screen bg-slate-300">
+    return <div className="min-w-screen min-h-screen bg-white">
         <header className="fixed top-0 w-full p-4 lg:px-10 flex justify-between place-items-center bg-slate-200 floating-shadow-md">
             <button onClick={() => setSidebarActive(true)} className="flex lg:gap-4 items-center bg-primary hover:bg-primaryDarker p-4 md:px-10 text-white font-bold rounded-full transition duration-300">
                 <FaBars />
@@ -52,7 +52,7 @@ const AdminLayout = (props: AdminLayoutProps) => {
                 </button>
                 {/* Dropdown */}
                 {dropdownActive &&
-                    <div className="bg-slate-200 p-4 absolute floating-shadow-md -translate-x-[250px] translate-y-4 w-[300px] rounded-lg" ref={dropdownRef}>
+                    <div className="bg-white p-4 absolute floating-shadow-md -translate-x-[250px] translate-y-4 w-[300px] rounded-lg" ref={dropdownRef}>
                         <div className="flex flex-col items-start justify-center w-full">
                             <div className="flex items-center justify-start gap-4 border-b-2 border-slate-400 pb-4 w-full">
                                 <InitialsAvatar className="bg-primary text-white font-bold h-[50px] w-[50px] rounded-md flex items-center justify-center" name={userData.name} />

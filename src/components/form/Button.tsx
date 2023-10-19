@@ -41,14 +41,15 @@ export const SecondaryButton = (props: ButtonProps) => {
 
 interface LinkProps {
     children: ReactNode,
-    to: string
+    to: string,
+    className: string,
 }
 
 export const PrimaryLink = (props: LinkProps) => {
-    const { children, to } = props
+    const { children, to, className } = props
     return <Link
         to={to}
-        className="text-center text-lg text-white bg-primary py-4 w-full rounded-full text-md  transition duration-300 font-bold"
+        className={`text-center text-lg text-white bg-primary py-4 w-full rounded-full text-md  transition duration-300 font-bold ${className}`}
     >
         {children}
     </Link>

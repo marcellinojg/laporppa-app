@@ -6,6 +6,7 @@ import Login from "../pages/external/Login"
 import Pelaporan from "../pages/external/Pelaporan"
 import Dashboard from "../pages/internal/Dashboard"
 import Pelaporans from "../pages/internal/Pelaporans"
+import CreatePelaporan from "../pages/internal/CreatePelaporan"
 
 const RoutesComponents = () => {
     return <Routes>
@@ -50,6 +51,14 @@ const RoutesComponents = () => {
             element={
                 <RequireAuth>
                     <Pelaporans />
+                </RequireAuth>
+            }
+        />
+        <Route
+            path={ROUTES.INTERNAL.CREATE_LAPORAN}
+            element={
+                <RequireAuth>
+                    <CreatePelaporan />
                 </RequireAuth>
             }
         />
