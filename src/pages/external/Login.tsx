@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useAlert } from '../../hooks/useAlert';
 import { ALERT_TYPE } from '../../consts/alert';
 import { useSignIn } from 'react-auth-kit';
-import { User } from '../../consts/user';
+import { UserLogin } from '../../consts/user';
 import { PrimaryButton } from '../../components/form/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ const Login = () => {
                 })
                 return
             })
-            .finally(() => setIsLoading(false)) as User
+            .finally(() => setIsLoading(false)) as UserLogin
         signIn({
             authState: loginData,
             token: loginData.token,

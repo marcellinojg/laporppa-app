@@ -1,12 +1,12 @@
 import { MutableRefObject, SetStateAction } from "react"
-import { User } from "./user"
+import { UserLogin } from "./user"
 import { IconType } from "react-icons"
 
 export interface SidebarProps {
     sidebarRef: MutableRefObject<any>
     sidebarActive: boolean
     setSidebarActive: React.Dispatch<SetStateAction<boolean>>
-    userData: User
+    userData: UserLogin
 }
 
 export interface SidebarItemProps {

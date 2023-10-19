@@ -1,4 +1,4 @@
-import { User } from "../consts/user"
+import { UserLogin } from "../consts/user"
 import { useAxiosInstance } from "../hooks/useAxiosInstance"
 import { LoginProps } from "../consts/login"
 
@@ -9,8 +9,7 @@ export const postLogin = async (props: LoginProps) => {
         username: username,
         password: password
     })
-    const data = res.data.data as User
+    const data = res.data.data as UserLogin
     return data
 }
-
 
