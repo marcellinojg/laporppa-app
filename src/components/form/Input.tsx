@@ -19,7 +19,7 @@ export const InputText = (props: InputProps): ReactNode => {
             <input
                 autoComplete={autoComplete}
                 id={name}
-                className={`rounded-lg py-3 px-4 text-black border-2 border-slate-400 w-full outline-none ${className}`}
+                className={`rounded-lg py-3 px-4 text-black border-2 border-slate-400 w-full outline-1 ${className}`}
                 type={isObscure ? 'password' : type}
                 {...register(
                     name,
@@ -27,7 +27,7 @@ export const InputText = (props: InputProps): ReactNode => {
                         required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
                         pattern: regex ? {
                             value: regex,
-                            message: regex == REGEX.PHONE_IDN ? 'Gunakan format contoh: 08123456789' : `${placeholder} tidak valid !`
+                            message: regex == REGEX.PHONE_IDN ? 'Gunakan format contoh: 08123456789' : `${label || placeholder} tidak valid !`
                         } : undefined
                     },
                 )}

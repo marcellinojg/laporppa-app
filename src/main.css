@@ -3,9 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
+body {
   font-family: "Inter", sans-serif;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .floating-shadow-sm {
@@ -22,9 +27,8 @@ body{
 }
 
 .bg-login {
-  background-image: url('images/bg-login.png');
+  background-image: url("/images/bg-login.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-
