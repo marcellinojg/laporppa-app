@@ -15,7 +15,7 @@ export const InputText = (props: InputProps): ReactNode => {
             </label>
         }
 
-        <div className='relative'>
+        <div className={`${obscure === true && 'relative'}`}>
             <input
                 autoComplete={autoComplete}
                 id={name}
@@ -45,4 +45,40 @@ export const InputText = (props: InputProps): ReactNode => {
             {errors[name] && <span>{errors[name]!.message?.toString()}</span>}
         </span>
     </div>
+}
+
+export const TextArea = (props: InputProps) => {
+    const { register, placeholder, name, isRequired, errors, label, className } = props
+
+
+
+    return <div className='flex flex-col gap-1'>
+        {label &&
+            <label htmlFor={name}>
+                {label ? label : placeholder}
+                {isRequired && <span className='text-red-500'> *</span>}
+            </label>
+        }
+        <div className=''>
+            <textarea
+                id={name}
+                className={`rounded-lg p-2 border-2 border-slate-400 resize-none text-black w-full outline-none ${className}`}
+                placeholder={placeholder}
+                rows={5}
+                defaultValue={""}
+                {...register(
+                    name,
+                    {
+                        required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
+                    },
+                )}
+
+            />
+        </div>
+
+        <span className='text-start text-red-500'>
+            {errors[name] && <span>{errors[name]!.message?.toString()}</span>}
+        </span>
+    </div>
+
 }

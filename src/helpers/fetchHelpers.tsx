@@ -4,6 +4,7 @@ import { Kelurahan } from "../consts/kelurahan";
 import useLoader from "../hooks/useLoader";
 import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
+import { useAlert } from "../hooks/useAlert";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -16,10 +17,11 @@ interface FetchDataEffectsProps<T> {
 export const KecamatanLoader = (props: FetchDataEffectsProps<Kecamatan[]>) => {
     const { data, setData, children } = props
     const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
 
     useEffect(() => {
         showLoader()
-        getKecamatans().then((kecamatans) => setData(kecamatans)).catch((error) => console.log(error)).then(() => hideLoader())
+        getKecamatans().then((kecamatans) => setData(kecamatans)).catch((error) => errorFetchAlert()).then(() => hideLoader())
     }, [])
 
     return <>
@@ -31,13 +33,15 @@ export const KecamatanLoader = (props: FetchDataEffectsProps<Kecamatan[]>) => {
 export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
     const { data, setData, children } = props
     const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
 
     useEffect(() => {
         showLoader()
-        getKelurahans().then((kelurahans) => setData(kelurahans)).catch((error) => console.log(error)).then(() => hideLoader())
+        getKelurahans().then((kelurahans) => setData(kelurahans)).catch((error) => errorFetchAlert()).then(() => hideLoader())
     }, [])
 
     return <>
         {children}
     </>
 }
+

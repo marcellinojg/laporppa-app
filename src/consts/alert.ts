@@ -14,4 +14,5 @@ export const ALERT_TYPE = {
 export interface AlertContextModel {
     addAlert: (props: AlertProps) => void
     clearAlert: () => void
+    errorFetchAlert: () => void
 }

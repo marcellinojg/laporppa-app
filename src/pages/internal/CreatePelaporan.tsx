@@ -41,7 +41,7 @@ const CreatePelaporan = () => {
                                     <h2 className="font-bold mb-3">Data Identitas Pelapor</h2>
                                     <div className="flex flex-col gap-4">
                                         <InputText
-                                            name="nama_pelapor"
+                                            name="namaPelapor"
                                             register={register}
                                             placeholder="Masukkan nama pelapor"
                                             errors={errors}
@@ -85,7 +85,7 @@ const CreatePelaporan = () => {
                             {/* Footer */}
                             <div className="border-t-2 border-slate-400 pt-5">
                                 <PrimaryButton className="py-3" isLoading={isLoading} isDisabled={isLoading} isSubmit>
-                                    Laporkan
+                                    Buat Laporan
                                 </PrimaryButton>
                             </div>
                         </form>

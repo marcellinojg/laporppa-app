@@ -31,7 +31,7 @@ export const SecondaryButton = (props: ButtonProps) => {
         disabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}
         className={`bg-transparent border-2 
-        text-black border-primary hover:bg-primary  w-full rounded-full text-lg transition duration-300 font-bold disabled:opacity-75 ${className}`}
+        text-black border-primary hover:bg-primary  w-full rounded-full transition duration-300 font-bold disabled:opacity-75 ${className}`}
         onClick={onClick}
     >
         {isLoading ? <SpinnerOval primaryColor="#FFFFFF" secondaryColor="#606060" height={24} /> : children}

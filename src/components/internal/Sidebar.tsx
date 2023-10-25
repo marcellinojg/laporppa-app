@@ -17,8 +17,8 @@ const Sidebar = (props: SidebarProps) => {
         `}
             style={{ zIndex: '2 !important' }}
         >
-            <div className="flex md:justify-center justify-between items-center py-6 px-6 border-b-2 border-primaryDarker bg-primary">
-                <img src="/images/logo.png" width={96} className="md:w-1/3 w-1/6" alt="" />
+            <div className="flex md:justify-center justify-between items-center md:py-6 py-3 px-6 border-b-2 border-primaryDarker bg-primary">
+                <img src="/images/logo-without-text.png" width={96} className="md:w-1/3 w-3/12 bg-white rounded-full p-2" alt="" />
                 <button className="bg-white md:hidden flex h-12 w-12 items-center justify-center rounded-full text-primary" onClick={() => setSidebarActive(false)}>
                     <FaTimes />
                 </button>

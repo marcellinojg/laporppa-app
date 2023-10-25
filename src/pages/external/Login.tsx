@@ -8,7 +8,6 @@ import { ALERT_TYPE } from '../../consts/alert';
 import { useSignIn } from 'react-auth-kit';
 import { UserLogin } from '../../consts/user';
 import { PrimaryButton } from '../../components/form/Button';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const {
@@ -25,20 +24,29 @@ const Login = () => {
         setIsLoading(true)
         const loginData = await postLogin(data)
             .catch((error) => {
+                console.log(error)
                 alert.addAlert({
                     type: ALERT_TYPE.ERROR,
                     title: "Autentikasi gagal",
-                    message: error.message
+                    message: error.response && error.response.data.code == 401 ? 'Username atau password salah.' : 'Terjadi kesalahan, coba lagi nanti.' 
                 })
                 return
             })
             .finally(() => setIsLoading(false)) as UserLogin
-        signIn({
-            authState: loginData,
-            token: loginData.token,
-            tokenType: "Bearer",
-            expiresIn: 60
-        })
+
+        if (loginData) {
+            alert.addAlert({
+                type: ALERT_TYPE.SUCCESS,
+                title: "Login Sukses",
+                message: `Selamat datang ${loginData.name}`
+            })
+            signIn({
+                authState: loginData,
+                token: loginData.token,
+                tokenType: "Bearer",
+                expiresIn: 60
+            })
+        }
     };
 
     return <>

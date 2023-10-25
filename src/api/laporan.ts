@@ -15,6 +15,13 @@ export const getLaporan = async (id: string) => {
     return laporan
 }
 
+export const getLaporanByToken = async (token: string) => {
+    const instance = useAxiosInstance()
+    const res = await instance.get(`/public/laporans/${token}`)
+    const laporan = res.data.data as Laporan
+    return laporan
+}
+
 export const postLaporan = async (laporan: Laporan) => {
     const instance = useAxiosInstance()
     const res = await instance.post('/laporans', laporan)

@@ -26,14 +26,15 @@ function Navbar() {
       <div className="flex justify-between items-center px-[6vw] py-5">
         {/* Left Side */}
         <Link to={ROUTES.EXTERNAL.LANDING} className="flex items-center gap-4 font-bold font-poppins text-xl">
-          <img src='images/logo.png' alt="" width={48} />
-          <span className="text-white">LaporPPA</span>
+          <img src='images/logo-without-text.png' className="bg-white rounded-full p-2" alt="" width={64} />
+          <span className="text-white">SIAP PPAK</span>
         </Link>
 
         {/* Right Side */}
         <div className="items-center justify-center gap-[3vw] lg:flex hidden">
           <NavbarLink route={ROUTES.EXTERNAL.LANDING}>Home</NavbarLink>
           <NavbarLink route={ROUTES.EXTERNAL.PELAPORAN}>Pelaporan</NavbarLink>
+          <NavbarLink route={ROUTES.EXTERNAL.TRACK_PELAPORAN}>Track Pelaporan</NavbarLink>
           <NavbarLink route={ROUTES.EXTERNAL.LOGIN}>Portal Satgas</NavbarLink>
         </div>
 
@@ -51,6 +52,7 @@ function Navbar() {
         <div className="flex flex-col lg:hidden px-4 bg-primary pb-4">
           <MobileNavbarLink route={ROUTES.EXTERNAL.LANDING}>Home</MobileNavbarLink>
           <MobileNavbarLink route={ROUTES.EXTERNAL.PELAPORAN}>Pelaporan</MobileNavbarLink>
+          <MobileNavbarLink route={ROUTES.EXTERNAL.TRACK_PELAPORAN}>Track Pelaporan</MobileNavbarLink>
           <MobileNavbarLink route={ROUTES.EXTERNAL.LOGIN}>Portal Satgas</MobileNavbarLink>
         </div>
       }

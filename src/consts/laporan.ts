@@ -1,3 +1,5 @@
+import { Status } from "./status";
+
 export interface Laporan {
     id?: string,
     tanggal_pengaduan?: string,
@@ -6,7 +8,7 @@ export interface Laporan {
     no_telp_pelapor?: string,
     no_telp_klien?: string,
     nama_klien?: string,
-    nama_pelapor?: string,
+    namaPelapor?: string,
     inisial_klien?: string,
     nik_pelapor?: string,
     nik_klien?: string,
@@ -19,10 +21,11 @@ export interface Laporan {
     kronologis?: string,
     sumber_pengaduan_id?: number,
     kelurahan_id?: number,
+    kecamatan_id?: number,
     jenis_kelamin?: string,
     satgas_pelapor_id?: string,
     previous_satgas_id?: string,
-    status_id?: number,
+    status?: Status
     token?: string,
     pendidikan_id?: number,
     dokumentasi_pengaduan?: string,

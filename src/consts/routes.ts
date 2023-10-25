@@ -10,6 +10,9 @@ export const ROUTES = {
         LANDING: "/",
         LOGIN: "/login",
         PELAPORAN: "/pelaporan",
+        KONFIRMASI_PELAPORAN: '/konfirmasi-pelaporan',
+        TRACK_PELAPORAN: '/track-pelaporan',
+        TOKEN_PELAPORAN: '/token-pelaporan'
     },
 }
 

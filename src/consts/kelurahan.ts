@@ -1,6 +1,6 @@
 export interface Kelurahan {
     id: number,
     id_kecamatan?: number,
-    name: string,
+    nama: string,
     is_active?: boolean
 }
