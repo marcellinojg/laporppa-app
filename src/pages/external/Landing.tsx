@@ -14,7 +14,7 @@ const Landing = () => {
                 <p className="text-lg">Website ini diperuntukkan untuk pelaporan adanya masalah dalam masyarakat seperti kekerasan rumah tangga, penganiayaan, dan lain-lain.</p>
                 <PrimaryLink to={ROUTES.EXTERNAL.PELAPORAN}  className="floating-shadow-md hover:bg-white hover:text-primary transition duration-300">LAPOR KASUS</PrimaryLink>
             </div>
-            <img src="/images/homeImage.png" width={200} className="w-5/12 md:block hidden" alt="" />
+            <img src="/images/homeImage.png" width={200} className="w-5/12 md:block hidden" alt="Ilustrasi gambar home" />
         </div>
     </div>
 }
