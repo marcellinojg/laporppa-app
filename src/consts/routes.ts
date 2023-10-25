@@ -1,10 +1,10 @@
 export const ROUTES = {
     INTERNAL: {
         DASHBOARD: '/internal/dashboard',
-        PELAPORAN: '/internal/pelaporan',
-        DETAIL_PELAPORAN: '/internal/pelaporan/:id',
-        CREATE_LAPORAN: "/internal/pelaporan/create",
-        EDIT_LAPORAN: "/internal/pelaporan/:id/edit"
+        PELAPORAN: '/internal/laporan',
+        DETAIL_PELAPORAN: '/internal/laporan/:id',
+        CREATE_LAPORAN: "/internal/laporan/create",
+        EDIT_LAPORAN: "/internal/laporan/:id/edit"
     },
     EXTERNAL: {
         LANDING: "/",

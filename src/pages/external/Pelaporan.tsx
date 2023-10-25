@@ -87,7 +87,6 @@ const Pelaporan = () => {
                                 isRequired={false}
                                 label="Uraian Singkat Permasalahan"
                                 placeholder="Ceritakan permasalahan secara singkat"
-
                             />
                         </div>
 
