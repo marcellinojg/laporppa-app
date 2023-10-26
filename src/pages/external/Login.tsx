@@ -28,7 +28,7 @@ const Login = () => {
                 alert.addAlert({
                     type: ALERT_TYPE.ERROR,
                     title: "Autentikasi gagal",
-                    message: error.response && error.response.data.code == 401 ? 'Username atau password salah.' : 'Terjadi kesalahan, coba lagi nanti.' 
+                    message: error.response && error.response.data.code == 401 ? 'Username atau password salah.' : 'Terjadi kesalahan, coba lagi nanti.'
                 })
                 return
             })
@@ -40,6 +40,7 @@ const Login = () => {
                 title: "Login Sukses",
                 message: `Selamat datang ${loginData.name}`
             })
+            localStorage.setItem('accessToken', loginData.token)
             signIn({
                 authState: loginData,
                 token: loginData.token,

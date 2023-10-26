@@ -1,4 +1,5 @@
-import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form"
+import { Dispatch, SetStateAction } from "react"
+import { UseFormRegister, FieldErrors } from "react-hook-form"
 
 export interface InputProps {
     register: UseFormRegister<any>
@@ -12,4 +13,9 @@ export interface InputProps {
     label?: string
     type?: string
     className?: string
+}
+
+export interface SearchInputProps {
+    value: string,
+    setValue: Dispatch<SetStateAction<string>>
 }

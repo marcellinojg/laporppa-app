@@ -73,7 +73,7 @@ const TrackPelaporan = () => {
                     <div className="border-2 border-md py-6 px-4 mt-2 flex flex-col items-start gap-3">
                         <div className="flex flex-col gap-1 items-start">
                             <b className="text-lg">Inisial Pelapor</b>
-                            <span>{getInitials(laporan.namaPelapor!)}</span>
+                            <span>{getInitials(laporan.nama_pelapor!)}</span>
                         </div>
                         <div className="flex flex-col gap-1 items-start">
                             <b className="text-lg">Status Laporan</b>

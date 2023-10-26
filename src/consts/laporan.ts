@@ -8,7 +8,7 @@ export interface Laporan {
     no_telp_pelapor?: string,
     no_telp_klien?: string,
     nama_klien?: string,
-    namaPelapor?: string,
+    nama_pelapor?: string,
     inisial_klien?: string,
     nik_pelapor?: string,
     nik_klien?: string,

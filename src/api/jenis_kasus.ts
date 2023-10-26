@@ -1,9 +1,9 @@
 import { JenisKasus } from "../consts/jenis_kasus"
-import { useAxiosInstance } from "../hooks/useAxiosInstance"
+import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 
 
 export const getJenisKasuses = async () => {
-    const instance = useAxiosInstance()
+    const instance = CreateAxiosInstance()
     const res = await instance.get('/jenis_kasuses')
     const jenisKasus = res.data.data as JenisKasus[]
     return jenisKasus

@@ -11,6 +11,8 @@ import KonfirmasiPelaporan from "../pages/external/KonfirmasiPelaporan"
 import { NotFoundPage } from "./errors/NotFoundPage"
 import TokenPelaporan from "../pages/external/TokenPelaporan"
 import TrackPelaporan from "../pages/external/TrackPelaporan"
+import DetailPelaporan from "../pages/internal/DetailPelaporan"
+import CekPelaporan from "../pages/internal/CekPelaporan"
 
 const RoutesComponents = () => {
     return <Routes>
@@ -56,6 +58,14 @@ const RoutesComponents = () => {
             <Route
                 path={ROUTES.INTERNAL.CREATE_LAPORAN}
                 element={<CreatePelaporan />}
+            />
+            <Route
+                path={ROUTES.INTERNAL.DETAIL_PELAPORAN}
+                element={<DetailPelaporan />}
+            />
+            <Route
+                path={ROUTES.INTERNAL.CEK_PELAPORAN}
+                element={<CekPelaporan />}
             />
         </Route>
         {/* INTERNAL END */}

@@ -14,6 +14,7 @@ export const RequireAuth = () => {
 
     useEffect(() => {
         if (isAuthenticated() === false) {
+            localStorage.removeItem('accessToken')
             alert.addAlert({
                 type: ALERT_TYPE.WARNING,
                 title: "Autentikasi Gagal",

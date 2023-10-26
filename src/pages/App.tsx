@@ -4,8 +4,10 @@ import { AlertProvider } from "../context/AlertContext"
 import { AuthProvider } from "react-auth-kit";
 import { LoaderProvider } from "../context/LoaderContext"
 import Navbar from "../components/external/Navbar";
+import id from 'date-fns/locale/id'
+import { registerLocale } from "react-datepicker";
 function App() {
-
+  registerLocale("id", id)
   return (
     <>
       <AuthProvider

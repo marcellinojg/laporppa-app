@@ -73,7 +73,7 @@ const KonfirmasiPelaporan = () => {
                             <div className="flex flex-col gap-2.5 pt-3 pb-6 border-b-[1px] border-slate-300">
                                 <div className="flex flex-col gap-1">
                                     <b>Nama Lengkap Pelapor</b>
-                                    <span>{state.namaPelapor}</span>
+                                    <span>{state.nama_pelapor}</span>
                                 </div>
                                 <div className="flex flex-col gap-1">
                                     <b>Nomor Telepon Pelapor</b>

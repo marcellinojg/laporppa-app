@@ -1,4 +1,4 @@
-import { FaChartLine, FaFileAlt, FaPlus, FaTimes } from "react-icons/fa"
+import { FaChartLine, FaFileAlt, FaPlus, FaSearch, FaTimes } from "react-icons/fa"
 import { ROUTES } from "../../consts/routes"
 import { Link, useLocation } from "react-router-dom"
 import { SidebarItemProps, SidebarProps } from "../../consts/sidebar"
@@ -6,9 +6,11 @@ import { SidebarItemProps, SidebarProps } from "../../consts/sidebar"
 
 
 const Sidebar = (props: SidebarProps) => {
-    const { sidebarRef, userData, sidebarActive, setSidebarActive } = props
+    const { sidebarRef, sidebarActive, setSidebarActive } = props
 
     return <>
+
+        {sidebarActive && <div className="w-screen h-screen fixed top-0 bg-black bg-opacity-70 left-0"></div>}
         <div ref={sidebarRef}
             className={`fixed h-screen bg-slate-200 floating-shadow-lg left-0 top-0 
             lg:w-[350px] md:w-1/2 w-full
@@ -17,6 +19,7 @@ const Sidebar = (props: SidebarProps) => {
         `}
             style={{ zIndex: '2 !important' }}
         >
+
             <div className="flex md:justify-center justify-between items-center md:py-6 py-3 px-6 border-b-2 border-primaryDarker bg-primary">
                 <img src="/images/logo-without-text.png" width={96} className="md:w-1/3 w-3/12 bg-white rounded-full p-2" alt="" />
                 <button className="bg-white md:hidden flex h-12 w-12 items-center justify-center rounded-full text-primary" onClick={() => setSidebarActive(false)}>
@@ -40,6 +43,11 @@ const Sidebar = (props: SidebarProps) => {
                     Icon={FaPlus}
                     to={ROUTES.INTERNAL.CREATE_LAPORAN}
                 />
+                <SidebarItem
+                    label="Cek Pelaporan"
+                    Icon={FaSearch}
+                    to={ROUTES.INTERNAL.CEK_PELAPORAN}
+                />
             </div>
         </div>
 
@@ -60,15 +68,6 @@ const SidebarItem = (props: SidebarItemProps) => {
         </span>
         <span>{label}</span>
     </Link>
-}
-
-const SidebarDropdown = () => {
-
-}
-
-
-const SidebarDropdownItem = () => {
-
 }
 
 

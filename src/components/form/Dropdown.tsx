@@ -17,7 +17,7 @@ interface DropdownOptionProps {
 }
 
 export const Dropdown = (props: DropdownProps): ReactNode => {
-    const [value, setValue] = useState<string | null | undefined>()
+    const [value, setValue] = useState<string>()
     const { name, options, placeholder, register, errors, label, errorLabel } = props
 
 
@@ -55,7 +55,7 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
             <select
                 defaultValue={""}
                 id={name}
-                className={` text-black border-2 border-slate-400 bg-white w-full outline-none px-2 py-2 rounded-lg ${value == '' && 'text-gray-400'}`}
+                className={` text-black border-2 border-slate-400 bg-white w-full outline-none px-2 py-3 rounded-lg ${value == '' && 'text-gray-400'}`}
                 {...register(name, {
                     required: `Pilihan ${errorLabel} harus diisi`,
                 })}

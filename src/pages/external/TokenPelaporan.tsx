@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { ForbiddenPage } from "../../components/errors/ForbiddenPage"
-import { PrimaryButton, PrimaryLink } from "../../components/form/Button"
+import { PrimaryButton } from "../../components/form/Button"
 import { ROUTES } from "../../consts/routes"
 
 

@@ -1,10 +1,10 @@
 import { UserLogin } from "../consts/user"
-import { useAxiosInstance } from "../hooks/useAxiosInstance"
+import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 import { LoginProps } from "../consts/login"
 
 export const postLogin = async (props: LoginProps) => {
     const { username, password } = props
-    const instance = useAxiosInstance()
+    const instance = CreateAxiosInstance()
     const res = await instance.post('/login', {
         username: username,
         password: password

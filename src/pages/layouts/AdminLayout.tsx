@@ -31,6 +31,7 @@ const AdminLayout = (props: AdminLayoutProps) => {
 
     const handleLogout = () => {
         signOut()
+        localStorage.removeItem('accessToken')
         navigate(ROUTES.EXTERNAL.LANDING)
         alert.addAlert({
             type: ALERT_TYPE.INFO,
@@ -42,8 +43,8 @@ const AdminLayout = (props: AdminLayoutProps) => {
 
     return <>
         {userData &&
-            <div className="min-w-screen min-h-screen bg-login">
-                <header className="fixed top-0 w-full p-4 lg:px-10 flex justify-between place-items-center bg-primary floating-shadow-md">
+            <div className="min-w-screen min-h-screen bg-login pb-24">
+                <header className="fixed top-0 w-full p-4 lg:px-10 z-10 flex justify-between place-items-center bg-primary floating-shadow-md">
                     <button onClick={() => setSidebarActive(true)} className="flex lg:gap-4 items-center bg-white hover:bg-slate-200 p-4 md:px-10 text-primary font-bold rounded-full transition duration-300">
                         <FaBars />
                         <span className="lg:block hidden">Menu</span>

@@ -1,7 +1,8 @@
 import { ReactNode, useState } from "react"
 import { HiEyeSlash, HiEye } from "react-icons/hi2"
-import { InputProps } from "../../consts/input"
+import { InputProps, SearchInputProps } from "../../consts/input"
 import { REGEX } from "../../consts/regex"
+import { FaSearch } from "react-icons/fa"
 
 export const InputText = (props: InputProps): ReactNode => {
     const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className } = props
@@ -81,4 +82,20 @@ export const TextArea = (props: InputProps) => {
         </span>
     </div>
 
+}
+
+
+export const SearchInput = (props: SearchInputProps) => {
+    const { value, setValue } = props
+    return <div className="border-[1px] border-slate-300 flex items-center gap-3 p-2.5 rounded-lg">
+        <span className="text-slate-500">
+            <FaSearch />
+        </span>
+        <input type="text"
+            className=" outline-none"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Search"
+        />
+    </div>
 }

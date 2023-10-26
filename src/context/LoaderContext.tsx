@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from 'react';
 import { FullPageLoader } from '../components/common/Loader';
+import { LoaderContextModel } from '../consts/loader';
 
 export const LoaderContext = createContext<LoaderContextModel>({
     showLoader: () => { },

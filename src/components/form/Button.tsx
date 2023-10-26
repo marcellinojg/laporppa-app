@@ -14,7 +14,7 @@ interface ButtonProps {
 
 
 export const PrimaryButton = (props: ButtonProps): ReactNode => {
-    const { isSubmit, children, isLoading, onClick, className, isDisabled = false, spinnerColor } = props
+    const { isSubmit, children, isLoading, onClick, className, isDisabled = false} = props
     return <button
         disabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}
@@ -26,7 +26,7 @@ export const PrimaryButton = (props: ButtonProps): ReactNode => {
 }
 
 export const SecondaryButton = (props: ButtonProps) => {
-    const { isSubmit, children, isLoading, onClick, className, isDisabled, spinnerColor } = props
+    const { isSubmit, children, isLoading, onClick, className, isDisabled} = props
     return <button
         disabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}

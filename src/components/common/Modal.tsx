@@ -1,6 +1,6 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from "react"
+import { MouseEventHandler } from "react"
 import { PrimaryButton, SecondaryButton } from "../form/Button"
-import { FaPaperPlane, FaPlane, FaTimesCircle } from "react-icons/fa"
+import { FaPaperPlane, FaTimesCircle } from "react-icons/fa"
 
 interface ModalProps {
     onClose: MouseEventHandler
