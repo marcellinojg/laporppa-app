@@ -6,13 +6,17 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan } from "../consts/laporan";
-import { getLaporans } from "../api/laporan";
+import { getLaporans, getLaporansBySearch } from '../api/laporan';
+import PaginationData from "../consts/pagination";
 
 interface FetchDataEffectsProps<T> {
     data: T,
     setData: React.Dispatch<SetStateAction<T>>,
     children: ReactNode
-    setMaxPage?: React.Dispatch<SetStateAction<number>>
+    page?: number,
+    setPaginationData?: React.Dispatch<SetStateAction<PaginationData | null>>,
+    keyword?: string
+    setPage? : React.Dispatch<SetStateAction<number>>
 
 }
 
@@ -50,14 +54,24 @@ export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
 
 
 export const LaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
-    const { setData, children, setMaxPage } = props
+    const { setData, children, page = 1, keyword = "", setPaginationData, setPage } = props
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
 
     useEffect(() => {
         showLoader()
-        getLaporans().then((laporans) => setData(laporans)).catch(() => errorFetchAlert()).then(() => hideLoader())
-    }, [])
+        getLaporansBySearch(page, keyword)
+            .then(({ laporans, paginationData }) => {
+                setData(laporans)
+                setPaginationData!(paginationData)
+            })
+            .catch(() => errorFetchAlert())
+            .finally(() => hideLoader())
+    }, [keyword, page])
+
+    useEffect(() => {
+        setPage!(1)
+    }, [keyword])
 
     return <>
         {children}

@@ -15,7 +15,7 @@ const TableLaporan = (props: TableLaporan) => {
         {listLaporan.length == 0 ?
             <div className="w-full flex flex-col items-center justify-center py-12">
                 <img src="/images/nodata.png" className="" width={400} alt="No Data illustration" />
-                <b className="text-2xl text-center">Pelaporan tidak ditemukan</b>
+                <b className="text-2xl text-center text-primary">Pelaporan tidak ditemukan</b>
             </div>
             :
             <div className="w-full overflow-auto">
@@ -33,27 +33,27 @@ const TableLaporan = (props: TableLaporan) => {
                     {listLaporan.map((laporan) =>
                         <tbody key={laporan.id}>
                             <tr className="border-b-2 border-slate-300 text-center text-sm">
-                                <td className="py-4 px-2 border-r-[2px]">00/0000/XXXXXXXXXX/XXX/XXXX</td>
+                                <td className="py-4 px-2 border-r-[2px]">{laporan.id}</td>
                                 <td className="py-4 px-2 border-r-[2px] flex flex-col gap-2">
                                     <div className="flex flex-col gap-1 text-start">
-                                        <span>Bobi Bobo Biba</span>
+                                        <span>{laporan.nama_korban}</span>
                                         <span className="text-slate-400">XXXXXXXXXXXXXX</span>
                                     </div>
                                     <div className="flex flex-col gap-1 text-start">
-                                        <span>Rumah Hermit 2A/4</span>
+                                        <span>{laporan.alamat}</span>
                                         <span className="text-slate-400">Langit, Planet</span>
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
                                     <div className="flex flex-col gap-1 text-start">
-                                        <span>Rini Rina Rana</span>
+                                        <span>{laporan.nama_pelapor}</span>
                                         <span className="text-slate-400">XXXXXXXXXXXXXX</span>
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
                                     <div className="flex flex-col gap-1 text-start">
                                         <span>Masyarakat</span>
-                                        <span className="text-slate-400">1 Januari 1970 00:00:00</span>
+                                        <span className="text-slate-400">{laporan.created_at}</span>
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
@@ -68,6 +68,7 @@ const TableLaporan = (props: TableLaporan) => {
                                             Detail
                                         </button>
                                         <button
+                                            onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.EDIT_LAPORAN(laporan.id!))}
                                             className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full w-full">
                                             <FaEdit />
                                             Edit

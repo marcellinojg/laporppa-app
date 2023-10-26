@@ -3,7 +3,8 @@ interface UploaderProps {
 
 }
 
-const Uploader = (props : UploaderProps) => {
+const Uploader = (props: UploaderProps) => {
+    const { } = props
     return <></>
 }
 

@@ -13,7 +13,7 @@ const CekPelaporan = () => {
 
     
     return <AdminLayout>
-        <div className="bg-white p-8 floating-shadow-md mt-4 md:w-3/4 w-11/12 mx-auto text-center">
+        <div className="bg-white p-8 floating-shadow-md mt-4 md:w-3/4 w-11/12 mx-auto text-center rounded-md">
             <h1 className="font-bold text-2xl">Cek Pelaporan</h1>
             <h2 className="mt-2 text-slate-500 font-bold">Masukkan Nomor Registrasi, NIK, atau nomor identitas untuk melacak progres pengaduan</h2>
             <form action="" onSubmit={handleSubmit(onSubmit)}>

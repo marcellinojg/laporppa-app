@@ -1,4 +1,5 @@
 import { Laporan } from "../consts/laporan"
+import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 
 export const getLaporans = async () => {
@@ -42,4 +43,21 @@ export const getLaporansByPage = async (page: number) => {
     const res = await instance.get(`laporans?page=${page}`)
     const data = res.data.data.data as Laporan[]
     return { data }
+}
+
+export const getLaporansBySearch = async (page: number, keyword: string) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.get(`laporans?page=${page}&search=${keyword}`)
+    const data = res.data.data
+    const laporans = data.data as Laporan[]
+    const paginationData = {
+        currentPage: data.current_page,
+        maxPage: data.last_page,
+        from: data.from,
+        to: data.to,
+        total: data.total,
+        perPage: data.per_page
+    } as PaginationData
+
+    return { laporans, paginationData }
 }

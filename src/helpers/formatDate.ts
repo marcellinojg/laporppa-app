@@ -1,15 +1,20 @@
 
 
-const formatDate = (date: string, locale: 'id-ID' | 'en-EN') => {
+const formatDate = (date: string, withTime: boolean) => {
     const dateObj = new Date(date)
-
-    return dateObj.toLocaleDateString(locale, {
+    const options = withTime === true ? {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
-    })
+    } : {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    } as any
+
+    return dateObj.toLocaleDateString('id-ID', options)
 }
 
 export default formatDate

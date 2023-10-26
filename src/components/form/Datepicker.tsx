@@ -34,7 +34,7 @@ const Datepicker = (props: DatepickerProps) => {
                         placeholderText={placeholder}
                         onChange={onChange}
                         selected={new Date(value)}
-                        value={formatDate(value, 'id-ID')}
+                        value={formatDate(value, true)}
                         maxDate={new Date()}
                         maxTime={new Date()}
                         showTimeInput={true}

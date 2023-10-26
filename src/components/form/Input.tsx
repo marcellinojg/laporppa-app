@@ -88,10 +88,11 @@ export const TextArea = (props: InputProps) => {
 export const SearchInput = (props: SearchInputProps) => {
     const { value, setValue } = props
     return <div className="border-[1px] border-slate-300 flex items-center gap-3 p-2.5 rounded-lg">
-        <span className="text-slate-500">
+        <label htmlFor="search" className="text-slate-500">
             <FaSearch />
-        </span>
+        </label>
         <input type="text"
+            id='search'
             className=" outline-none"
             value={value}
             onChange={(e) => setValue(e.target.value)}
