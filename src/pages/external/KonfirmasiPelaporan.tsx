@@ -30,7 +30,7 @@ const KonfirmasiPelaporan = () => {
         setShowModal(false)
         showLoader()
         // Call Api Here
-        navigate(ROUTES.EXTERNAL.TOKEN_PELAPORAN, { state : 'ABCDEFG'})
+        navigate(ROUTES.EXTERNAL.TOKEN_PELAPORAN, { state: 'ABCDEFG' })
         hideLoader()
         localStorage.removeItem('form_laporan')
     }
@@ -54,7 +54,7 @@ const KonfirmasiPelaporan = () => {
                                 </div>
                                 <div className="flex flex-col gap-1">
                                     <b>Kecamatan Domisili Klien</b>
-                                    <span>{state.kecamatan_id}</span>
+                                    <span>{kecamatan.find(k => k.id === state.kecamatan_id)?.nama}</span>
                                 </div>
                                 <div className="flex flex-col gap-1">
                                     <b>Kelurahan Domisili Klien</b>

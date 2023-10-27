@@ -6,7 +6,7 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan } from "../consts/laporan";
-import { getLaporans, getLaporansBySearchAndStatus } from '../api/laporan';
+import { getLaporansBySearchAndStatus } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 
 interface FetchDataEffectsProps<T> {

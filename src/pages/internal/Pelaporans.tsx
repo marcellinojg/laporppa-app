@@ -4,7 +4,6 @@ import AdminLayout from "../layouts/AdminLayout"
 import TableLaporan from "../../components/internal/Table"
 import Pill from "../../components/internal/Pill"
 import { LaporanLoader } from "../../helpers/fetchHelpers"
-import { filterLaporanByStatus } from "../../helpers/filterLaporan"
 import { FaArrowLeft, FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import { SearchInput } from "../../components/form/Input"
 import { useDebounce, useStep } from "usehooks-ts"
@@ -54,7 +53,7 @@ const Pelaporans = () => {
                     <SearchInput value={keyword} setValue={setKeyword} />
                 </div>
                 <TableLaporan
-                    listLaporan={filterLaporanByStatus(laporans, status)}
+                    listLaporan={laporans}
                 />
                 <div className="flex justify-between items-center mt-4 overflow-auto">
                     <span className="text-sm mr-12">Showing {paginationData?.from} - {paginationData?.to} from {paginationData?.total}</span>

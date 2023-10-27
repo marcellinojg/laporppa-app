@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form"
 import { InputText, TextArea } from "../../components/form/Input"
 import { Laporan } from "../../consts/laporan"
-import { Dropdown, Select } from "../../components/form/Dropdown"
+import { Select } from "../../components/form/Dropdown"
 import { REGEX } from "../../consts/regex"
 import { PrimaryButton } from "../../components/form/Button"
 import AutosaveFormEffect from "../../helpers/formSaveHelpers"
