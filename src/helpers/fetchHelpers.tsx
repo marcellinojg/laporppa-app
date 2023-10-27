@@ -68,6 +68,7 @@ export const LaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
             })
             .catch(() => errorFetchAlert())
             .finally(() => hideLoader())
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }, [keyword, page, status])
 
     useEffect(() => {

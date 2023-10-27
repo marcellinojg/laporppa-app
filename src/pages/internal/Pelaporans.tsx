@@ -10,6 +10,9 @@ import { useDebounce, useStep } from "usehooks-ts"
 import pageNumbersGenerator from "../../helpers/paginationHelpers"
 import PaginationData from "../../consts/pagination"
 import { STATUS_LAPORAN } from "../../consts/status"
+import { PrimaryButton } from "../../components/form/Button"
+import { useNavigate } from "react-router-dom"
+import { ROUTES } from "../../consts/routes"
 
 
 
@@ -21,6 +24,7 @@ const Pelaporans = () => {
     const debounceKeyword = useDebounce(keyword, 1000)
     const [pageNumbers, setPageNumbers] = useState<number[]>([])
     const [page, helpers] = useStep(paginationData && paginationData.maxPage || 1)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setPageNumbers(pageNumbersGenerator(paginationData && paginationData.maxPage || 1, page))
@@ -38,8 +42,14 @@ const Pelaporans = () => {
             status={status}
         >
             <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md">
-                <div className="flex w-full justify-between items-center mb-6">
+                <div className="flex w-full justify-between md:flex-row flex-col md:items-center mb-6">
                     <h1 className="font-bold text-xl">Data Pengaduan</h1>
+                    <PrimaryButton
+                        className="w-[250px] px-10 py-2 md:mt-0 mt-2 mx-auto md:mx-0"
+                        onClick={() => navigate(ROUTES.INTERNAL.CREATE_LAPORAN)}
+                    >
+                        Tambah Data
+                    </PrimaryButton>
                 </div>
                 <div className="flex items-center flex-wrap gap-4">
                     <h2 className="font-bold mr-10">Keterangan Status</h2>
@@ -56,7 +66,7 @@ const Pelaporans = () => {
                     listLaporan={laporans}
                 />
                 <div className="flex justify-between items-center mt-4 overflow-auto">
-                    <span className="text-sm mr-12">Showing {paginationData?.from} - {paginationData?.to} from {paginationData?.total}</span>
+                    <span className="text-sm mr-12">Showing {paginationData?.from || 0} - {paginationData?.to || 0} from {paginationData?.total}</span>
                     <div className="flex gap-3 items-center">
                         <button
                             onClick={() => helpers.setStep(1)}
