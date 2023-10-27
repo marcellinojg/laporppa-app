@@ -15,7 +15,7 @@ const Dashboard = () => {
             </div>
             <div className="flex gap-3 items-center text-lg">
                 <FaUserNurse />
-                <h2 className="font-bold">{userData.name}</h2>
+                <h2 className="font-bold">{userData?.name}</h2>
             </div>
         </div>
         <div className="lg:w-10/12 w-11/12 p-8 bg-white floating-shadow-md mx-auto mt-6 rounded-lg">
