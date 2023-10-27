@@ -44,12 +44,14 @@ const Pelaporans = () => {
             <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md">
                 <div className="flex w-full justify-between md:flex-row flex-col md:items-center mb-6">
                     <h1 className="font-bold text-xl">Data Pengaduan</h1>
-                    <PrimaryButton
-                        className="w-[250px] px-10 py-2 md:mt-0 mt-2 mx-auto md:mx-0"
-                        onClick={() => navigate(ROUTES.INTERNAL.CREATE_LAPORAN)}
-                    >
-                        Tambah Data
-                    </PrimaryButton>
+                    <div className="w-[250px] md:mt-0 mt-2 mx-auto md:mx-0">
+                        <PrimaryButton
+                            className="px-10 py-2 "
+                            onClick={() => navigate(ROUTES.INTERNAL.CREATE_LAPORAN)}
+                        >
+                            Tambah Data
+                        </PrimaryButton>
+                    </div>
                 </div>
                 <div className="flex items-center flex-wrap gap-4">
                     <h2 className="font-bold mr-10">Keterangan Status</h2>
