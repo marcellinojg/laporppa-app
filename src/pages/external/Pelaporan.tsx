@@ -1,23 +1,24 @@
 import { SubmitHandler, useForm } from "react-hook-form"
 import { InputText, TextArea } from "../../components/form/Input"
 import { Laporan } from "../../consts/laporan"
-import { Dropdown } from "../../components/form/Dropdown"
+import { Dropdown, Select } from "../../components/form/Dropdown"
 import { REGEX } from "../../consts/regex"
 import { PrimaryButton } from "../../components/form/Button"
 import AutosaveFormEffect from "../../helpers/formSaveHelpers"
 import { useLocalStorage } from "usehooks-ts"
 import { useNavigate } from "react-router-dom"
 import { ROUTES } from "../../consts/routes"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Kelurahan } from "../../consts/kelurahan"
 import { Kecamatan } from "../../consts/kecamatan"
 import { KecamatanLoader, KelurahanLoader } from "../../helpers/fetchHelpers"
 
 const Pelaporan = () => {
-    const { register, formState: { errors }, setValue, watch, handleSubmit } = useForm<Laporan>()
+    const { register, formState: { errors }, setValue, watch, handleSubmit, control, getValues } = useForm<Laporan>()
     const [formState, setFormState] = useLocalStorage<string | null>('form_laporan', null)
     const [kelurahan, setKelurahan] = useState<Kelurahan[]>([])
     const [kecamatan, setKecamatan] = useState<Kecamatan[]>([])
+    const [selectedKecamatan, setSelectedKecamatan] = useState<number | string>()
     const navigate = useNavigate()
 
     const onSubmit: SubmitHandler<Laporan> = (data: Laporan) => {
@@ -25,6 +26,16 @@ const Pelaporan = () => {
             state: data
         })
     }
+
+    useEffect(() => {
+        setSelectedKecamatan(getValues('kecamatan_id'))
+        const subscription = watch((value) => {
+            setSelectedKecamatan(value.kecamatan_id)
+        })
+        return () => subscription.unsubscribe()
+    }, [])
+
+
 
     return <AutosaveFormEffect watch={watch} setValue={setValue} formState={formState} setFormState={setFormState}>
         <KelurahanLoader data={kelurahan} setData={setKelurahan}>
@@ -42,43 +53,42 @@ const Pelaporan = () => {
                     <form className="bg-white floating-shadow-md rounded-sm py-8 md:px-12 px-6 lg:w-[600px] md:w-3/4 w-11/12 mt-6" onSubmit={handleSubmit(onSubmit)}>
                         <b className="text-lg">Detail Laporan</b>
                         <div className="flex flex-col gap-2 pt-3 pb-6 mb-6 border-b-[1px] border-slate-300">
-                            <Dropdown
+                            <Select
                                 name="kategori_id"
-                                register={register}
-                                errors={errors}
-                                errorLabel="Kategori Permasalahan"
                                 placeholder="Pilih kategori"
                                 label="Kategori Permasalahan"
+                                control={control}
+                                errors={errors}
+                                errorLabel="Kategori Permasalahan"
                                 options={[{
-                                    text: 'Sosial',
+                                    label: 'Sosial',
                                     value: 1
                                 }]}
                             />
-                            <Dropdown
+                            <Select
                                 name="kecamatan_id"
-                                register={register}
-                                errors={errors}
-                                errorLabel="Kecamatan"
                                 placeholder="Pilih kecamatan"
                                 label="Kecamatan Klien"
-                                options={[{
-                                    text: 'Tambaksari',
-                                    value: 1
-                                }]}
-                            />
-                            <Dropdown
-                                name="kelurahan_id"
-                                register={register}
+                                control={control}
                                 errors={errors}
-                                errorLabel="Kelurahan"
+                                errorLabel="Kecamatan"
+                                options={kecamatan.map((k) => ({
+                                    label: k.nama,
+                                    value: k.id
+                                }))}
+                            />
+                            <Select
+                                isDisabled={selectedKecamatan == ""}
+                                name="kelurahan_id"
                                 placeholder="Pilih kelurahan"
                                 label="Kelurahan Klien"
-                                options={kelurahan.map(
-                                    (k) => ({
-                                        text: k.nama,
-                                        value: k.id,
-                                    })
-                                )}
+                                control={control}
+                                errors={errors}
+                                errorLabel="Kelurahan"
+                                options={kelurahan.filter(k => k.kecamatan.id == selectedKecamatan).map((k) => ({
+                                    label: k.nama,
+                                    value: k.id
+                                }))}
                             />
                             <TextArea
                                 name="uraian_singkat"

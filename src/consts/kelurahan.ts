@@ -1,6 +1,8 @@
+import { Kecamatan } from "./kecamatan"
+
 export interface Kelurahan {
-    id: number,
-    id_kecamatan?: number,
-    nama: string,
+    id: number
+    kecamatan: Kecamatan
+    nama: string
     is_active?: boolean
 }

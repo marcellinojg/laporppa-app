@@ -1,14 +1,28 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { Control, Controller, FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import ReactSelect, { GroupBase, Options, OptionsOrGroups } from 'react-select';
 
 interface DropdownProps {
     name: string
     options: DropdownOptionProps[]
     placeholder: string
-    register: UseFormRegister<FieldValues>
+    register: UseFormRegister<any>
     errors: FieldErrors<FieldValues>
     label?: string
     errorLabel: string
+    isDisabled?: boolean
+}
+
+interface SelectProps {
+    name: string
+    options: Options<any>
+    control: Control<any>
+    placeholder: string
+    label: string
+    errors: FieldErrors<FieldValues>
+    isDisabled?: boolean
+    errorLabel?: string
+    isRequired?: boolean
 }
 
 interface DropdownOptionProps {
@@ -18,7 +32,7 @@ interface DropdownOptionProps {
 
 export const Dropdown = (props: DropdownProps): ReactNode => {
     const [value, setValue] = useState<string>()
-    const { name, options, placeholder, register, errors, label, errorLabel } = props
+    const { name, options, placeholder, register, errors, label, errorLabel, isDisabled = false } = props
 
 
     // Bisa di fix
@@ -55,6 +69,7 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
             <select
                 defaultValue={""}
                 id={name}
+                disabled={isDisabled}
                 className={` text-black border-2 border-slate-400 bg-white w-full outline-none px-2 py-3 rounded-lg ${value == '' && 'text-gray-400'}`}
                 {...register(name, {
                     required: `Pilihan ${errorLabel} harus diisi`,
@@ -75,4 +90,35 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
         </span>
     </div>
 
+}
+
+
+export const Select = (props: SelectProps) => {
+    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true } = props
+    return <Controller
+        control={control}
+        name={name}
+        rules={{
+            required: isRequired === true && `${errorLabel} harus diisi !`
+        }}
+        defaultValue={""}
+        render={({ field: { onChange, value }, fieldState: { error } }) => <div className='flex flex-col gap-1 w-full'>
+            <label htmlFor={name}>
+                {label ? label : placeholder}
+                {isRequired === true && <span className='text-red-500'> *</span>}
+            </label>
+            <ReactSelect
+                isDisabled={isDisabled}
+                onChange={val => onChange(val.value)}
+                value={options.find(c => c.value === value)}
+                placeholder={placeholder}
+                className='outline-none'
+                options={options}
+            />
+            <span className='text-red-500 text-start'>
+                {error?.message}
+            </span>
+        </div>
+        }
+    />
 }

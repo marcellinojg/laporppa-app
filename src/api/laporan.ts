@@ -45,9 +45,9 @@ export const getLaporansByPage = async (page: number) => {
     return { data }
 }
 
-export const getLaporansBySearch = async (page: number, keyword: string) => {
+export const getLaporansBySearchAndStatus = async (page: number, keyword: string, status: number) => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get(`laporans?page=${page}&search=${keyword}`)
+    const res = await instance.get(`laporans?page=${page}&search=${keyword}&status=${status}`)
     const data = res.data.data
     const laporans = data.data as Laporan[]
     const paginationData = {

@@ -1,12 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { InputText } from '../../components/form/Input';
-import { LoginProps } from '../../consts/login';
 import { postLogin } from '../../api/auth';
 import { useState } from 'react';
 import { useAlert } from '../../hooks/useAlert';
 import { ALERT_TYPE } from '../../consts/alert';
 import { useSignIn } from 'react-auth-kit';
-import { UserLogin } from '../../consts/user';
+import { User, UserLogin } from '../../consts/user';
 import { PrimaryButton } from '../../components/form/Button';
 
 const Login = () => {
@@ -14,13 +13,13 @@ const Login = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginProps>();
+    } = useForm<UserLogin>();
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const alert = useAlert()
     const signIn = useSignIn()
 
 
-    const onSubmit: SubmitHandler<LoginProps> = async (data) => {
+    const onSubmit: SubmitHandler<UserLogin> = async (data) => {
         setIsLoading(true)
         const loginData = await postLogin(data)
             .catch((error) => {
@@ -32,7 +31,7 @@ const Login = () => {
                 })
                 return
             })
-            .finally(() => setIsLoading(false)) as UserLogin
+            .finally(() => setIsLoading(false)) as User
 
         if (loginData) {
             alert.addAlert({

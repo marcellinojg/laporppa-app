@@ -10,6 +10,7 @@ import { SearchInput } from "../../components/form/Input"
 import { useDebounce, useStep } from "usehooks-ts"
 import pageNumbersGenerator from "../../helpers/paginationHelpers"
 import PaginationData from "../../consts/pagination"
+import { STATUS_LAPORAN } from "../../consts/status"
 
 
 
@@ -35,6 +36,7 @@ const Pelaporans = () => {
             setPaginationData={setPaginationData}
             keyword={debounceKeyword}
             page={page}
+            status={status}
         >
             <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md">
                 <div className="flex w-full justify-between items-center mb-6">
@@ -42,11 +44,11 @@ const Pelaporans = () => {
                 </div>
                 <div className="flex items-center flex-wrap gap-4">
                     <h2 className="font-bold mr-10">Keterangan Status</h2>
-                    <Pill status={1} onClick={() => setStatus(1)} />
-                    <Pill status={2} onClick={() => setStatus(2)} />
-                    <Pill status={3} onClick={() => setStatus(3)} />
-                    <Pill status={4} onClick={() => setStatus(4)} />
-                    <Pill status={6} onClick={() => setStatus(6)} />
+                    <Pill status={STATUS_LAPORAN.MENUNGGU_VALIDASI} onClick={() => setStatus(STATUS_LAPORAN.MENUNGGU_VALIDASI)} />
+                    <Pill status={STATUS_LAPORAN.SEDANG_DITANGANI} onClick={() => setStatus(STATUS_LAPORAN.SEDANG_DITANGANI)} />
+                    <Pill status={STATUS_LAPORAN.KASUS_DITOLAK} onClick={() => setStatus(STATUS_LAPORAN.KASUS_DITOLAK)} />
+                    <Pill status={STATUS_LAPORAN.KASUS_SELESAI} onClick={() => setStatus(STATUS_LAPORAN.KASUS_SELESAI)} />
+                    <Pill status={STATUS_LAPORAN.KASUS_DITERUSKAN} onClick={() => setStatus(STATUS_LAPORAN.KASUS_DITERUSKAN)} />
                 </div>
                 <div className="flex justify-end mt-8 mb-4">
                     <SearchInput value={keyword} setValue={setKeyword} />
@@ -54,8 +56,8 @@ const Pelaporans = () => {
                 <TableLaporan
                     listLaporan={filterLaporanByStatus(laporans, status)}
                 />
-                <div className="flex justify-between items-center mt-4">
-                    <span className="text-sm">Showing {paginationData?.from} - {paginationData?.to} from {paginationData?.total}</span>
+                <div className="flex justify-between items-center mt-4 overflow-auto">
+                    <span className="text-sm mr-12">Showing {paginationData?.from} - {paginationData?.to} from {paginationData?.total}</span>
                     <div className="flex gap-3 items-center">
                         <button
                             onClick={() => helpers.setStep(1)}

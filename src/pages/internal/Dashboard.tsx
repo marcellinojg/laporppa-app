@@ -1,12 +1,11 @@
 import { FaHome, FaUserNurse } from "react-icons/fa"
 import AdminLayout from "../layouts/AdminLayout"
 import { useAuthUser } from "react-auth-kit"
-import { UserLogin } from "../../consts/user"
-import formatDate from "../../helpers/formatDate"
+import { User } from "../../consts/user"
 import Panel from "../../components/internal/Panel"
 
 const Dashboard = () => {
-    const userData = useAuthUser()() as UserLogin
+    const userData = useAuthUser()() as User
     return <AdminLayout>
         <div className="lg:w-10/12 w-11/12 p-4 bg-white floating-shadow-md mx-auto mt-12 rounded-lg">
             <h1 className="font-bold text-2xl text-primary mb-2">Selamat Datang di Dashboard !</h1>

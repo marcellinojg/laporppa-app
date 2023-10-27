@@ -46,7 +46,6 @@ const TrackPelaporan = () => {
             })
     }
 
-    console.log(laporan)
 
 
     return <div className="min-w-screen min-h-screen bg-login flex flex-col items-center justify-center pb-[5vh]">

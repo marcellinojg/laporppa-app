@@ -2,7 +2,7 @@ import { ReactNode, useRef, useState } from "react"
 import { FaBars, FaSignOutAlt } from "react-icons/fa"
 import { useAuthUser, useSignOut } from "react-auth-kit"
 import InitialsAvatar from 'react-initials-avatar';
-import { UserLogin } from "../../consts/user";
+import { User } from "../../consts/user";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import { SecondaryButton } from "../../components/form/Button";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const AdminLayout = (props: AdminLayoutProps) => {
     useOutsideAlerter(dropdownRef, () => setDropdownActive(false))
     useOutsideAlerter(sidebarRef, () => setSidebarActive(false))
     const signOut = useSignOut()
-    const userData = useAuthUser()() as UserLogin
+    const userData = useAuthUser()() as User
     const navigate = useNavigate()
     const alert = useAlert()
 

@@ -6,7 +6,7 @@ import formatDate from "../../helpers/formatDate";
 
 
 interface DatepickerProps {
-    control: Control
+    control: Control<any>
     name: string
     isRequired?: boolean
     placeholder: string
