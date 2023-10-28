@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { Laporan } from "../../consts/laporan"
 import AdminLayout from "../layouts/AdminLayout"
-import TableLaporan from "../../components/internal/Table"
 import Pill from "../../components/internal/Pill"
-import { LaporanLoader } from "../../helpers/fetchHelpers"
+import { AllLaporanLoader } from "../../helpers/fetchHelpers"
 import { FaArrowLeft, FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import { SearchInput } from "../../components/form/Input"
 import { useDebounce, useStep } from "usehooks-ts"
@@ -13,6 +12,7 @@ import { STATUS_LAPORAN } from "../../consts/status"
 import { PrimaryButton } from "../../components/form/Button"
 import { useNavigate } from "react-router-dom"
 import { ROUTES } from "../../consts/routes"
+import TableLaporan from '../../components/internal/TableLaporan';
 
 
 
@@ -32,7 +32,7 @@ const Pelaporans = () => {
 
 
     return <AdminLayout>
-        <LaporanLoader
+        <AllLaporanLoader
             setPage={helpers.setStep}
             data={laporans}
             setData={setLaporans}
@@ -105,7 +105,7 @@ const Pelaporans = () => {
                     </div>
                 </div>
             </div>
-        </LaporanLoader>
+        </AllLaporanLoader>
     </AdminLayout >
 }
 

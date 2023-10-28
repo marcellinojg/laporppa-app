@@ -20,7 +20,7 @@ export const InputText = (props: InputProps): ReactNode => {
             <input
                 autoComplete={autoComplete}
                 id={name}
-                className={`rounded-lg py-3 px-4 text-black border-2 border-slate-400 w-full outline-1 ${className}`}
+                className={`rounded p-2 text-black outline-blue-500 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 w-full outline-1 ${className}`}
                 type={isObscure ? 'password' : type}
                 {...register(
                     name,
@@ -51,8 +51,6 @@ export const InputText = (props: InputProps): ReactNode => {
 export const TextArea = (props: InputProps) => {
     const { register, placeholder, name, isRequired, errors, label, className } = props
 
-
-
     return <div className='flex flex-col gap-1'>
         {label &&
             <label htmlFor={name}>
@@ -63,7 +61,7 @@ export const TextArea = (props: InputProps) => {
         <div className=''>
             <textarea
                 id={name}
-                className={`rounded-lg p-2 border-2 border-slate-400 resize-none text-black w-full outline-none ${className}`}
+                className={`rounded p-2 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 resize-none text-black w-full outline-none ${className}`}
                 placeholder={placeholder}
                 rows={5}
                 defaultValue={""}

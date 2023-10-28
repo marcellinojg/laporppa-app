@@ -6,7 +6,7 @@ export interface Laporan {
     jam?: string,
     uraian_singkat?: string,
     no_telp_pelapor?: string,
-    no_telp_klien?: string,
+    no_telp_korban?: string,
     nama_korban?: string,
     nama_pelapor?: string,
     inisial_klien?: string,

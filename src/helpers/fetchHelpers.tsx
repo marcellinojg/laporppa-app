@@ -6,7 +6,7 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan } from "../consts/laporan";
-import { getLaporansBySearchAndStatus } from '../api/laporan';
+import { getLaporan, getLaporansBySearchAndStatus } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 
 interface FetchDataEffectsProps<T> {
@@ -18,6 +18,9 @@ interface FetchDataEffectsProps<T> {
     keyword?: string
     setPage?: React.Dispatch<SetStateAction<number>>
     status?: number
+    id?: string
+    refetch?: boolean
+    setRefetch?: React.Dispatch<SetStateAction<boolean>>
 
 }
 
@@ -54,7 +57,7 @@ export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
 }
 
 
-export const LaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
+export const AllLaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
     const { setData, children, page = 1, keyword = "", setPaginationData, setPage, status = 0 } = props
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
@@ -74,6 +77,34 @@ export const LaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
     useEffect(() => {
         setPage!(1)
     }, [keyword, status])
+
+    return <>
+        {children}
+    </>
+}
+
+export const LaporanLoader = (props: FetchDataEffectsProps<Laporan | null | undefined>) => {
+    const { setData, id, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getLaporan(id!)
+            .then((laporan) => {
+                setData(laporan)
+                console.log(laporan)
+            })
+            .catch((error) => {
+                
+                if (error.response.status == 404)
+                    setData(null)
+                else
+                    errorFetchAlert()
+            })
+            .finally(() => hideLoader())
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [])
 
     return <>
         {children}

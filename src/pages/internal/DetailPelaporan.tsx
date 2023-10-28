@@ -1,9 +1,40 @@
+import { useParams } from "react-router-dom"
 import AdminLayout from "../layouts/AdminLayout"
+import { useState } from "react"
+import { Laporan } from "../../consts/laporan"
+import { NotFoundPage } from "../../components/errors/NotFoundPage"
+import { LaporanLoader } from "../../helpers/fetchHelpers"
+import { useStep } from "usehooks-ts"
+import SectionPelaporan from "../../components/internal/detail_pelaporan/SectionPelaporan"
+import SectionPenjangkauan from "../../components/internal/detail_pelaporan/SectionPenjangkauan"
+import SwitchDetailButton from "../../components/internal/detail_pelaporan/SwitchDetail"
 
 
 const DetailPelaporan = () => {
+    const { id } = useParams()
+    const [laporan, setLaporan] = useState<Laporan | null | undefined>()
+    const [page, helpers] = useStep(2)
     return <AdminLayout>
+        <LaporanLoader data={laporan} setData={setLaporan} id={id}>
+            {laporan === null ? <NotFoundPage /> :
+                laporan &&
+                <>
+                    <div className="lg:w-10/12 w-11/12 mx-auto mt-12 mb-6 flex justify-between items-center">
+                        <h1 className="font-bold text-2xl text-primary">Detail Pelaporan</h1>
 
+                        <div className="flex flex-wrap items-center gap-4">
+                            <SwitchDetailButton page={1} currentPage={page} label="Pelaporan" setStep={helpers.setStep} />
+                            <SwitchDetailButton page={2} currentPage={page} label="Penjangkauan" setStep={helpers.setStep} />
+                        </div>
+                    </div>
+                    <div className="lg:w-10/12 w-11/12 p-6 bg-white floating-shadow-md mx-auto  rounded-lg">
+                        {page === 1 && <SectionPelaporan laporan={laporan} />}
+                        {page === 2 && <SectionPenjangkauan />}
+                    </div>
+                </>
+
+            }
+        </LaporanLoader>
     </AdminLayout>
 }
 

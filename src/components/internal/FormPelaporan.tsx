@@ -1,16 +1,21 @@
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { Laporan } from "../../consts/laporan"
-import { ReactNode } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { REGEX } from "../../consts/regex"
 import { PrimaryButton } from "../form/Button"
 import Datepicker from "../form/Datepicker"
-import { Dropdown } from "../form/Dropdown"
+import { Select } from "../form/Dropdown"
 import { InputText, TextArea } from "../form/Input"
+import { Kelurahan } from '../../consts/kelurahan';
+import { Kecamatan } from '../../consts/kecamatan';
+import Uploader from '../form/Uploader';
 
 interface FormPelaporanProps {
     onSubmit: SubmitHandler<Laporan>
     isLoading: boolean
     form: UseFormReturn<Laporan>
+    kelurahan: Kelurahan[]
+    kecamatan: Kecamatan[]
 }
 
 interface InputSectionProps {
@@ -19,24 +24,28 @@ interface InputSectionProps {
 }
 
 const FormPelaporan = (props: FormPelaporanProps) => {
-    const { onSubmit, isLoading, form } = props
-    const { register, formState: { errors }, handleSubmit, control } = form
+    const { onSubmit, isLoading, form, kecamatan, kelurahan } = props
+    const [selectedKecamatan, setSelectedKecamatan] = useState<number | string>()
+    const { register, formState: { errors }, handleSubmit, control, watch, getValues } = form
 
+    useEffect(() => {
+        setSelectedKecamatan(getValues('kecamatan_id'))
+        const subscription = watch((value) => {
+            setSelectedKecamatan(value.kecamatan_id)
+        })
+        return () => subscription.unsubscribe()
+    }, [])
 
     return <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col">
             <InputSection>
-                <Dropdown
-                    name="kategori_id"
-                    register={register}
+                <Select
+                    name='kategori_id'
+                    control={control}
+                    placeholder='Pilih kategori'
+                    label='Kategori Permasalahan'
                     errors={errors}
-                    errorLabel="Kategori Permasalahan"
-                    placeholder="Pilih kategori"
-                    label="Kategori Permasalahan"
-                    options={[{
-                        text: 'Sosial',
-                        value: 1
-                    }]}
+                    options={[{ value: 1, label: 'Sosial' }, { value: 2, label: 'Kekerasan' }, { value: 3, label: 'Pelecehan Seksual' }]}
                 />
                 <Datepicker
                     name='tanggal_pengaduan'
@@ -69,7 +78,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     register={register}
                     placeholder="Masukkan nomor telepon pelapor"
                     errors={errors}
-                    label="No. Telepon Pelapor"
+                    label="No. Telepon/Whatsapp Pelapor"
                     regex={REGEX.PHONE_IDN}
                     type="tel"
                     isRequired
@@ -84,7 +93,60 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             </InputSection>
 
             <InputSection title="Identitas Klien">
-                <></>
+                <InputText
+                    name='nama_klien'
+                    register={register}
+                    placeholder='Masukkan nama lengkap klien'
+                    label='Nama Lengkap Klien'
+                    errors={errors}
+                    isRequired
+                />
+                <InputText
+                    name='nik_klien'
+                    register={register}
+                    placeholder='Masukkan NIK klien'
+                    label='NIK Klien'
+                    errors={errors}
+                />
+                <InputText
+                    name='no_telp_klien'
+                    register={register}
+                    placeholder='Masukkan nomor telepon klien'
+                    label='No.Telepon/Whatsapp Klien'
+                    errors={errors}
+                />
+                <Select
+                    name='kecamatan_id'
+                    control={control}
+                    placeholder='Pilih kecamatan'
+                    label='Kecamatan Klien'
+                    errors={errors}
+                    errorLabel='Kecamatan'
+                    options={kecamatan.map((k) => ({
+                        label: k.nama,
+                        value: k.id
+                    }))}
+                />
+                <Select
+                    isDisabled={selectedKecamatan == ""}
+                    name="kelurahan_id"
+                    placeholder="Pilih kelurahan"
+                    label="Kelurahan Klien"
+                    control={control}
+                    errors={errors}
+                    errorLabel="Kelurahan"
+                    options={kelurahan.filter(k => k.kecamatan.id == selectedKecamatan).map((k) => ({
+                        label: k.nama,
+                        value: k.id
+                    }))}
+                />
+                <InputText
+                    name='alamat_klien'
+                    register={register}
+                    placeholder='Masukkan alamat domisili klien'
+                    label='Alamat Domisili Klien'
+                    errors={errors}
+                />
             </InputSection>
 
             <InputSection title="Permasalahan">
@@ -97,8 +159,13 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder="Ceritakan permasalahan secara singkat"
                 />
             </InputSection>
-            <InputSection title="Dokumentasi Pengaduan">
-                <></>
+            <InputSection title="Dokumentasi Pelaporan">
+                <Uploader
+                    name='dokumentasi_pengaduan'
+                    control={control}
+                    watch={watch}
+                    placeholder='Upload file dokumentasi pelaporan'
+                />
             </InputSection>
         </div>
         {/* Footer */}

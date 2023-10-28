@@ -15,7 +15,9 @@ export default {
         kategoriRujuk: "#FFDFE9",
         kategoriRujukDarker: '#F1416C',
         kategoriDitolak: "#D6D6D6",
-        kategoriDitolakDarker: "#000000"
+        kategoriDitolakDarker: "#000000",
+        inputBorder: "#CCCCCC",
+        inputBorderHover: "#B3B3B3"
       },
     },
   },

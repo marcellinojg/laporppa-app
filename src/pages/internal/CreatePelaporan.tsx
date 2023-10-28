@@ -34,6 +34,8 @@ const CreatePelaporan = () => {
                             onSubmit={onSubmit}
                             isLoading={isLoading}
                             form={form}
+                            kecamatan={kecamatans}
+                            kelurahan={kelurahans}
                         />
                     </div>
                 </AutosaveFormEffect>
