@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Control, Controller, FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import ReactSelect, { Options, StylesConfig } from 'react-select';
+import ReactSelect, { Options } from 'react-select';
 
 interface DropdownProps {
     name: string
