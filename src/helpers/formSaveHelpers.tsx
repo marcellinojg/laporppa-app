@@ -12,12 +12,14 @@ interface AutosaveForm {
 const AutosaveFormEffect = (props: AutosaveForm) => {
     const { children, watch, setValue, formState, setFormState } = props
 
+    const excludeKeys = ['dokumentasi_pengaduan', 'kelurahan_id', 'kecamatan_id', 'tanggal_pengaduan']
     // Load form if available in local storage
     useEffect(() => {
         if (formState) {
             const formStateParsed = Object.entries(JSON.parse(formState))
             formStateParsed.forEach(element => {
-                setValue(element[0], element[1])
+                if (!excludeKeys.includes(element[0]))
+                    setValue(element[0], element[1])
             });
         }
     }, [])

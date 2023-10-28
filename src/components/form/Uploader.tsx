@@ -1,50 +1,80 @@
 
-import { useEffect, useState } from "react"
-import { Control, Controller, FieldValue, UseFormWatch } from "react-hook-form"
+import { ChangeEventHandler, useEffect, useState } from "react"
+import { Control, FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import Thumbnail from "../common/Thumbnail"
 
 interface UploaderProps {
     name: string
     control: Control<any>
     watch: UseFormWatch<any>
     placeholder: string
-
+    setValue: UseFormSetValue<any>
+    register: UseFormRegister<any>
+    errors: FieldErrors<any>
+    errorLabel: string
+    isRequired?: boolean
 }
 
 const Uploader = (props: UploaderProps) => {
-    const { name, control, watch, placeholder } = props
+    const { name, placeholder, setValue, errors } = props
+    const [pictures, setPictures] = useState<string[]>([])
+    const [files, setFiles] = useState<File[]>([])
 
-    const [picture, setPicture] = useState<string>('')
+
+    const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+        const files = e.target.files
+        if (!files) return
+        for (let i = 0; i < files.length; i++) {
+            setFiles(prev => [...prev, files[i]])
+            setPictures(prev => [...prev, URL.createObjectURL(files[i])])
+        }
+    }
 
     useEffect(() => {
-        const subscription = watch((value) => {
-            console.log(value)
-        })
-        return () => subscription.unsubscribe()
-    }, [])
+        setValue(name, files)
+    }, [files])
+
+    return <>
+        <div className="min-h-[250px] w-full border-primary border-2 rounded border-dashed bg-primary bg-opacity-10 relative">
+            <input
+                type="file"
+                className="opacity-0 absolute z-20 w-full h-full"
+                multiple
+                title=" "
+                id={name}
+                onChange={onChange}
+            />
+            {pictures.length === 0 ?
+                <div className="absolute top-0 h-full w-full flex items-center justify-center z-10">
+                    <div className="flex flex-col text-center">
+                        <span className="font-bold">
+                            Drop Files here or click to upload
+                        </span>
+                        <span className="text-sm text-gray-500">{placeholder}</span>
+                    </div>
+                </div> :
+                <div className="absolute top-0 h-full w-full flex flex-wrap max-w-full overflow-hidden items-center justify-center gap-3">
+                    {pictures.map((picture, index) =>
+                        <Thumbnail
+                            key={index}
+                            imgUrl={picture}
+                            onDelete={() => {
+                                const index = pictures.findIndex(p => p === picture)
+                                files.splice(index, 1)
+                                setPictures(pictures.filter(p => p != picture))
+                            }}
+                        />
+                    )}
+                </div>
+            }
+        </div>
+        <span className='text-start text-red-500'>
+            {errors[name] && <span>{errors[name]!.message?.toString()}</span>}
+        </span>
+    </>
 
 
-    return <Controller
-        name={name}
-        control={control}
-        render={({ field: { onChange } }) =>
-            <div className="h-[200px] w-full border-primary border-2 rounded border-dashed bg-primary bg-opacity-10 relative">
-                <input type="file" multiple className="opacity-0 absolute z-20 w-full h-full" name={name} id={name} onChange={onChange} />
-                {!picture ?
-                    <div className="absolute top-0 h-full w-full flex items-center justify-center z-10">
-                        <div className="flex flex-col text-center">
-                            <span className="font-bold">
-                                Drop Files here or click to upload
-                            </span>
-                            <span className="text-sm text-gray-500">{placeholder}</span>
-                        </div>
-                    </div> :
-                    <></>
-                }
 
-
-            </div>
-        }
-    />
 
 }
 

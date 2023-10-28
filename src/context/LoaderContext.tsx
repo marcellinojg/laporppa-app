@@ -12,10 +12,13 @@ export const LoaderProvider = ({ children }: { children: ReactNode }) => {
 
     const showLoader = () => {
         setIsLoaderOpen(true)
+        document.getElementsByTagName('body')[0].style.overflowY = 'hidden'
     }
 
     const hideLoader = () => {
         setIsLoaderOpen(false)
+        document.getElementsByTagName('body')[0].style.overflowY = 'auto'
+
     }
 
     return <LoaderContext.Provider value={{ showLoader, hideLoader }}>

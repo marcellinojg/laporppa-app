@@ -26,10 +26,9 @@ interface InputSectionProps {
 const FormPelaporan = (props: FormPelaporanProps) => {
     const { onSubmit, isLoading, form, kecamatan, kelurahan } = props
     const [selectedKecamatan, setSelectedKecamatan] = useState<number | string>()
-    const { register, formState: { errors }, handleSubmit, control, watch, getValues } = form
+    const { register, formState: { errors }, handleSubmit, control, watch, setValue } = form
 
     useEffect(() => {
-        setSelectedKecamatan(getValues('kecamatan_id'))
         const subscription = watch((value) => {
             setSelectedKecamatan(value.kecamatan_id)
         })
@@ -44,6 +43,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     control={control}
                     placeholder='Pilih kategori'
                     label='Kategori Permasalahan'
+                    errorLabel='Kategori Permasalahan'
                     errors={errors}
                     options={[{ value: 1, label: 'Sosial' }, { value: 2, label: 'Kekerasan' }, { value: 3, label: 'Pelecehan Seksual' }]}
                 />
@@ -71,7 +71,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder="Masukkan NIK pelapor"
                     errors={errors}
                     label="NIK Pelapor"
-                    type="number"
+                    regex={REGEX.NIK}
                 />
                 <InputText
                     name="no_telp_pelapor"
@@ -99,6 +99,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder='Masukkan nama lengkap klien'
                     label='Nama Lengkap Klien'
                     errors={errors}
+                    regex={REGEX.ALPHABETIC_ONLY}
                     isRequired
                 />
                 <InputText
@@ -107,6 +108,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder='Masukkan NIK klien'
                     label='NIK Klien'
                     errors={errors}
+                    regex={REGEX.NIK}
                 />
                 <InputText
                     name='no_telp_klien'
@@ -128,7 +130,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     }))}
                 />
                 <Select
-                    isDisabled={selectedKecamatan == ""}
+                    isDisabled={selectedKecamatan ? false : true}
                     name="kelurahan_id"
                     placeholder="Pilih kelurahan"
                     label="Kelurahan Klien"
@@ -165,6 +167,11 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     control={control}
                     watch={watch}
                     placeholder='Upload file dokumentasi pelaporan'
+                    setValue={setValue}
+                    register={register}
+                    errors={errors}
+                    isRequired={true}
+                    errorLabel='Dokumentasi Pelaporan'
                 />
             </InputSection>
         </div>

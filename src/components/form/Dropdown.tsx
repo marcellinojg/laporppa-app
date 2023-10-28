@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Control, Controller, FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import ReactSelect, { Options } from 'react-select';
+import ReactSelect, { Options, StylesConfig } from 'react-select';
 
 interface DropdownProps {
     name: string
@@ -95,6 +95,9 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
 
 export const Select = (props: SelectProps) => {
     const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true } = props
+
+
+
     return <Controller
         control={control}
         name={name}
@@ -112,7 +115,6 @@ export const Select = (props: SelectProps) => {
                 onChange={val => onChange(val.value)}
                 value={options.find(c => c.value === value)}
                 placeholder={placeholder}
-                className='outline-none'
                 options={options}
             />
             <span className='text-red-500 text-start'>

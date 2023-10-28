@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AdminLayout from "../layouts/AdminLayout"
 import { useForm } from "react-hook-form"
 import { Laporan } from "../../consts/laporan"
@@ -14,15 +14,37 @@ const CreatePelaporan = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [formState, setFormState] = useLocalStorage<string | null>('form_internal_state', null)
     const form = useForm<Laporan>()
-    const { setValue, watch } = form
+    const { setValue, watch, setError, clearErrors } = form
     const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
     const [kelurahans, setKelurahans] = useState<Kelurahan[]>([])
 
     const onSubmit = (data: Laporan) => {
-        console.log(data)
+        if (!data.dokumentasi_pengaduan || data.dokumentasi_pengaduan.length == 0) {
+            setError('dokumentasi_pengaduan', { type: 'required', message: 'Dokumentasi Pelaporan harus diisi !' })
+            return
+        }
+        const arrData = Object.entries(data)
+        const formData = new FormData()
+        arrData.forEach((data) => {
+            if (data[0].includes('dokumentasi')) {
+                const arrFiles = data[1] as File[]
+                arrFiles.forEach((file) => formData.append(`${data[0]}[]`, file))
+            }
+            else
+                formData.append(data[0], data[1])
+        })
+
         setIsLoading(true)
-        setIsLoading(false)
+        setTimeout(() => setIsLoading(false), 3000)
     }
+
+    useEffect(() => {
+        const subscription = watch((value) => {
+            if (value.dokumentasi_pengaduan && value.dokumentasi_pengaduan?.length != 0)
+                clearErrors('dokumentasi_pengaduan')
+        })
+        return () => subscription.unsubscribe()
+    }, [])
 
     return <AdminLayout>
         <KecamatanLoader data={kecamatans} setData={setKecamatans}>
