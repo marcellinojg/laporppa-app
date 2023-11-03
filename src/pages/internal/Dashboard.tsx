@@ -52,9 +52,9 @@ const Dashboard = () => {
                         count={laporanCount.find((val) => val.id === STATUS_LAPORAN.SEDANG_DITANGANI)?.totalCase}
                     />
                     <Panel
-                        title="Total Kasus Ditolak"
+                        title="Total Kasus Dikembalikan"
                         date={new Date().toISOString()}
-                        count={laporanCount.find((val) => val.id === STATUS_LAPORAN.KASUS_DITOLAK)?.totalCase}
+                        count={laporanCount.find((val) => val.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN)?.totalCase}
                     />
                 </div>
             </div>
