@@ -128,9 +128,9 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
                 satgas_pelapor: {
                     id: selectedSatgasId
                 },
-                status: laporan.status.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN && {
+                status: laporan.status.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN ? {
                     id: STATUS_LAPORAN.SEDANG_DITANGANI
-                }
+                } : null
             }, laporan.id)
 
             addAlert({
