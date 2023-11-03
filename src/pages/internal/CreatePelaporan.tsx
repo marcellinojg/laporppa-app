@@ -6,7 +6,7 @@ import { useLocalStorage } from "usehooks-ts"
 import AutosaveFormEffect from "../../helpers/formSaveHelpers"
 import { Kelurahan } from "../../consts/kelurahan"
 import { Kecamatan } from "../../consts/kecamatan"
-import { KecamatanLoader, KelurahanLoader } from "../../helpers/fetchHelpers"
+import { KategoriLoader, KecamatanLoader, KelurahanLoader } from "../../helpers/fetchHelpers"
 import FormPelaporan from "../../components/internal/FormPelaporan"
 import { postLaporan } from "../../api/laporan"
 import { useAlert } from "../../hooks/useAlert"
@@ -21,6 +21,7 @@ const CreatePelaporan = () => {
     const form = useForm<LaporanSatgas>()
     const { setValue, watch, clearErrors, reset, setError } = form
     const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
+    const [kategoris, setKategoris] = useState<Kategori[]>([])
     const [kelurahans, setKelurahans] = useState<Kelurahan[]>([])
     const { errorFetchAlert, addAlert } = useAlert()
     const { showLoader, hideLoader } = useLoader()
@@ -85,22 +86,25 @@ const CreatePelaporan = () => {
     }, [])
 
     return <AdminLayout>
-        <KecamatanLoader data={kecamatans} setData={setKecamatans}>
-            <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                <AutosaveFormEffect setValue={setValue} watch={watch} formState={formState} setFormState={setFormState}>
-                    <div className="lg:w-1/2 md:w-10/12 w-11/12 bg-white floating-shadow-md rounded-md mx-auto mt-4 px-8 py-10">
-                        <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl text-primary">Tambah Data Laporan</h1>
-                        <FormPelaporan
-                            onSubmit={onSubmit}
-                            isLoading={isLoading}
-                            form={form}
-                            kecamatan={kecamatans}
-                            kelurahan={kelurahans}
-                        />
-                    </div>
-                </AutosaveFormEffect>
-            </KelurahanLoader>
-        </KecamatanLoader>
+        <KategoriLoader data={kategoris} setData={setKategoris}>
+            <KecamatanLoader data={kecamatans} setData={setKecamatans}>
+                <KelurahanLoader data={kelurahans} setData={setKelurahans}>
+                    <AutosaveFormEffect setValue={setValue} watch={watch} formState={formState} setFormState={setFormState}>
+                        <div className="lg:w-1/2 md:w-10/12 w-11/12 bg-white floating-shadow-md rounded-md mx-auto mt-4 px-8 py-10">
+                            <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl text-primary">Tambah Data Laporan</h1>
+                            <FormPelaporan
+                                onSubmit={onSubmit}
+                                isLoading={isLoading}
+                                form={form}
+                                kecamatan={kecamatans}
+                                kelurahan={kelurahans}
+                                kategori={kategoris}
+                            />
+                        </div>
+                    </AutosaveFormEffect>
+                </KelurahanLoader>
+            </KecamatanLoader>
+        </KategoriLoader>
     </AdminLayout>
 }
 

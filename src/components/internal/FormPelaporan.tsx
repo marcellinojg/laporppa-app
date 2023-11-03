@@ -16,6 +16,7 @@ interface FormPelaporanProps {
     form: UseFormReturn<LaporanSatgas>
     kelurahan: Kelurahan[]
     kecamatan: Kecamatan[]
+    kategori: Kategori[]
     laporanEdit?: Laporan
 }
 
@@ -25,7 +26,7 @@ interface InputSectionProps {
 }
 
 const FormPelaporan = (props: FormPelaporanProps) => {
-    const { onSubmit, isLoading, form, kecamatan, kelurahan, laporanEdit } = props
+    const { onSubmit, isLoading, form, kecamatan, kelurahan, kategori, laporanEdit } = props
     const [selectedKecamatan, setSelectedKecamatan] = useState<number | string>()
     const { register, formState: { errors }, handleSubmit, control, watch, setValue } = form
 
@@ -51,7 +52,10 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     errorLabel='Kategori Permasalahan'
                     errors={errors}
                     defaultValue={laporanEdit?.kategori.id}
-                    options={[{ value: 1, label: 'Sosial' }, { value: 2, label: 'Kekerasan' }, { value: 3, label: 'Pelecehan Seksual' }]}
+                    options={kategori.map((k) => ({
+                        label: k.nama,
+                        value: k.id
+                    }))}
                 />
                 <Datepicker
                     name='tanggal_jam_pengaduan'

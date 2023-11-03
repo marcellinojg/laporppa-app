@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { Laporan, LaporanSatgas } from "../../consts/laporan"
 import { Kelurahan } from "../../consts/kelurahan"
 import { Kecamatan } from "../../consts/kecamatan"
-import { KecamatanLoader, KelurahanLoader, LaporanLoader } from "../../helpers/fetchHelpers"
+import { KecamatanLoader, KelurahanLoader, LaporanLoader, KategoriLoader } from '../../helpers/fetchHelpers';
 import FormPelaporan from "../../components/internal/FormPelaporan"
 import { patchLaporan } from "../../api/laporan"
 import { useAlert } from "../../hooks/useAlert"
@@ -23,6 +23,7 @@ const EditPelaporan = () => {
     const form = useForm<LaporanSatgas>()
     const { reset } = form
     const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
+    const [kategoris, setKategoris] = useState<Kategori[]>([])
     const [kelurahans, setKelurahans] = useState<Kelurahan[]>([])
     const [refetch, setRefetch] = useState<boolean>(true)
     const { errorFetchAlert, addAlert } = useAlert()
@@ -63,26 +64,30 @@ const EditPelaporan = () => {
 
 
     return <AdminLayout>
-        <KecamatanLoader data={kecamatans} setData={setKecamatans}>
-            <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                <LaporanLoader id={id} data={laporan} setData={setLaporan} refetch={refetch} setRefetch={setRefetch}>
-                    {laporan === null ? <NotFoundPage /> : laporan?.status.id !== STATUS_LAPORAN.SEDANG_DITANGANI ? <ForbiddenPage/> :
-                        laporan &&
-                        <div className="lg:w-1/2 md:w-10/12 w-11/12 bg-white floating-shadow-md rounded-md mx-auto mt-4 px-8 py-10">
-                            <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl ">Edit Laporan <span className="text-primary">{laporan.nama_pelapor}</span></h1>
-                            <FormPelaporan
-                                onSubmit={onSubmit}
-                                isLoading={isLoading}
-                                form={form}
-                                kecamatan={kecamatans}
-                                kelurahan={kelurahans}
-                                laporanEdit={laporan}
-                            />
-                        </div>
-                    }
-                </LaporanLoader>
-            </KelurahanLoader>
-        </KecamatanLoader>
+        <KategoriLoader data={kategoris} setData={setKategoris}>
+            <KecamatanLoader data={kecamatans} setData={setKecamatans}>
+                <KelurahanLoader data={kelurahans} setData={setKelurahans}>
+                    <LaporanLoader id={id} data={laporan} setData={setLaporan} refetch={refetch} setRefetch={setRefetch}>
+                        {laporan === null ? <NotFoundPage /> :
+                            laporan && (laporan.status.id === STATUS_LAPORAN.SEDANG_DITANGANI ? (
+                                <div className="lg:w-1/2 md:w-10/12 w-11/12 bg-white floating-shadow-md rounded-md mx-auto mt-4 px-8 py-10">
+                                    <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl ">Edit Laporan <span className="text-primary">{laporan.nama_pelapor}</span></h1>
+                                    <FormPelaporan
+                                        onSubmit={onSubmit}
+                                        isLoading={isLoading}
+                                        form={form}
+                                        kecamatan={kecamatans}
+                                        kelurahan={kelurahans}
+                                        kategori={kategoris}
+                                        laporanEdit={laporan}
+                                    />
+                                </div> 
+                            ) : <ForbiddenPage/>)
+                        }
+                    </LaporanLoader>
+                </KelurahanLoader>
+            </KecamatanLoader>
+        </KategoriLoader>
     </AdminLayout>
 }
 
