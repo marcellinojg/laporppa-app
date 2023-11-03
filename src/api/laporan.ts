@@ -34,7 +34,7 @@ export const postLaporan = async (laporan: LaporanSatgas) => {
     return postedLaporan
 }
 
-export const patchLaporan = async (laporan: LaporanSatgas, id: string) => {
+export const patchLaporan = async (laporan: LaporanSatgas | Laporan | any, id: string) => {
     const instance = CreateAxiosInstance()
     const res = await instance.patch(`/laporans/${id}`, laporan)
     const patchedLaporan = res.data.data as Laporan

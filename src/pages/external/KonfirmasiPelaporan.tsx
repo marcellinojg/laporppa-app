@@ -124,6 +124,7 @@ const KonfirmasiPelaporan = () => {
                 onSuccess={onSubmit}
                 title="Apakah anda yakin ?"
                 description="Laporan yang dikirim tidak dapat ditarik kembali."
+                successButtonText="Kirim"
             />
         }
     </>

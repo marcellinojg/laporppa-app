@@ -9,6 +9,8 @@ import { Laporan, LaporanCount } from "../consts/laporan";
 import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoris } from "../api/kategori";
+import { SatgasPelapor } from "../consts/satgas";
+import { getSatgasPelapors } from "../api/satgas";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -59,21 +61,30 @@ export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
 
 
 export const AllLaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
-    const { setData, children, page = 1, keyword = "", setPaginationData, setPage, status = 0 } = props
+    const { setData, children, page = 1, keyword = "", setPaginationData, setPage, status = 0, refetch, setRefetch } = props
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
 
     useEffect(() => {
-        showLoader()
-        getLaporansBySearchAndStatus(page, keyword, status)
-            .then(({ laporans, paginationData }) => {
-                setData(laporans)
-                setPaginationData!(paginationData)
-            })
-            .catch(() => errorFetchAlert())
-            .finally(() => hideLoader())
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, [keyword, page, status])
+        setRefetch!(true)
+    }, [keyword, status, page])
+
+    useEffect(() => {
+        if (refetch === true) {
+            showLoader()
+            getLaporansBySearchAndStatus(page, keyword, status)
+                .then(({ laporans, paginationData }) => {
+                    setData(laporans)
+                    setPaginationData!(paginationData)
+                })
+                .catch(() => errorFetchAlert())
+                .finally(() => hideLoader())
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+
+        setRefetch!(false)
+
+    }, [refetch])
 
     useEffect(() => {
         setPage!(1)
@@ -85,25 +96,29 @@ export const AllLaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
 }
 
 export const LaporanLoader = (props: FetchDataEffectsProps<Laporan | null | undefined>) => {
-    const { setData, id, children } = props
+    const { setData, id, children, refetch, setRefetch } = props
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
 
     useEffect(() => {
-        showLoader()
-        getLaporan(id!)
-            .then((laporan) => {
-                setData(laporan)
-            })
-            .catch((error) => {
-                if (error.response.status == 404)
-                    setData(null)
-                else
-                    errorFetchAlert()
-            })
-            .finally(() => hideLoader())
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, [])
+        if (refetch === true) {
+            showLoader()
+            getLaporan(id!)
+                .then((laporan) => {
+                    setData(laporan)
+                })
+                .catch((error) => {
+                    if (error.response.status == 404)
+                        setData(null)
+                    else
+                        errorFetchAlert()
+                })
+                .finally(() => hideLoader())
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+
+        setRefetch!(false)
+    }, [refetch])
 
     return <>
         {children}
@@ -133,6 +148,21 @@ export const LaporanCountLoader = (props: FetchDataEffectsProps<LaporanCount[]>)
     useEffect(() => {
         showLoader()
         getTotalLaporan().then((totalLaporan) => setData(totalLaporan)).catch(() => errorFetchAlert()).then(() => hideLoader())
+    }, [])
+
+    return <>
+        {children}
+    </>
+}
+
+export const SatgasPelaporLoader = (props: FetchDataEffectsProps<SatgasPelapor[]>) => {
+    const { setData, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getSatgasPelapors().then((satgasPelapors) => setData(satgasPelapors)).catch(() => errorFetchAlert()).then(() => hideLoader())
     }, [])
 
     return <>

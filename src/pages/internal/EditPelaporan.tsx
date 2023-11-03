@@ -22,6 +22,7 @@ const EditPelaporan = () => {
     const { reset } = form
     const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
     const [kelurahans, setKelurahans] = useState<Kelurahan[]>([])
+    const [refetch, setRefetch] = useState<boolean>(true)
     const { errorFetchAlert, addAlert } = useAlert()
     const { showLoader, hideLoader } = useLoader()
     const { id } = useParams()
@@ -62,7 +63,7 @@ const EditPelaporan = () => {
     return <AdminLayout>
         <KecamatanLoader data={kecamatans} setData={setKecamatans}>
             <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                <LaporanLoader id={id} data={laporan} setData={setLaporan}>
+                <LaporanLoader id={id} data={laporan} setData={setLaporan} refetch={refetch} setRefetch={setRefetch}>
                     {laporan === null ? <NotFoundPage /> :
                         laporan &&
                         <div className="lg:w-1/2 md:w-10/12 w-11/12 bg-white floating-shadow-md rounded-md mx-auto mt-4 px-8 py-10">

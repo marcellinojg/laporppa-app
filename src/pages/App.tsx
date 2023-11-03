@@ -14,7 +14,7 @@ function App() {
         authType={'cookie'}
         authName={'_auth'}
         cookieDomain={window.location.hostname}
-        cookieSecure={window.location.protocol === "http:"}
+        cookieSecure={window.location.protocol === "https:"}
       >
         <LoaderProvider>
           <AlertProvider>

@@ -6,9 +6,9 @@ interface DetailLaporanItemProps {
 
 const DetailLaporanItem = (props : DetailLaporanItemProps) => {
     const {label,value} = props
-    return <div className="grid grid-cols-3">
+    return <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
         <span className="text-slate-400 text-sm">{label}</span>
-        <span className="col-span-2 font-bold break-words">{value ? value : '-'}</span>
+        <span className="lg:col-span-2 font-bold break-words">{value ? value : '-'}</span>
     </div>
 }
 

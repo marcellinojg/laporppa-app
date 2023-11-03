@@ -24,7 +24,9 @@ const Pelaporans = () => {
     const debounceKeyword = useDebounce(keyword, 1000)
     const [pageNumbers, setPageNumbers] = useState<number[]>([])
     const [page, helpers] = useStep(paginationData && paginationData.maxPage || 1)
+    const [refetch, setRefetch] = useState<boolean>(true)
     const navigate = useNavigate()
+
 
     useEffect(() => {
         setPageNumbers(pageNumbersGenerator(paginationData && paginationData.maxPage || 1, page))
@@ -40,6 +42,8 @@ const Pelaporans = () => {
             keyword={debounceKeyword}
             page={page}
             status={status}
+            refetch={refetch}
+            setRefetch={setRefetch}
         >
             <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md">
                 <div className="flex w-full justify-between md:flex-row flex-col md:items-center mb-6">
@@ -66,6 +70,7 @@ const Pelaporans = () => {
                 </div>
                 <TableLaporan
                     listLaporan={laporans}
+                    setRefetch={setRefetch}
                 />
                 <div className="flex justify-between items-center mt-4 overflow-auto">
                     <span className="text-sm mr-12">Showing {paginationData?.from || 0} - {paginationData?.to || 0} from {paginationData?.total}</span>

@@ -1,20 +1,21 @@
 import { Laporan } from "../../consts/laporan"
 import Pill from "./Pill"
 import { useNavigate } from "react-router-dom"
-import { DYNAMIC_ROUTES } from "../../consts/routes"
 import { formatDate } from "../../helpers/formatDate"
 import { useAuthUser } from "react-auth-kit"
 import { User } from "../../consts/user"
 import { ROLE } from '../../consts/role';
-import { AssignButton, DetailButton, EditButton } from "../form/Button"
+import { AssignButton, DetailButton, EditButton, TolakButton } from "../form/Button"
+import { STATUS_LAPORAN } from "../../consts/status"
+import { Dispatch, SetStateAction } from "react"
 
 interface TableLaporan {
     listLaporan: Laporan[]
+    setRefetch: Dispatch<SetStateAction<boolean>>
 }
 
 const TableLaporan = (props: TableLaporan) => {
-    const { listLaporan } = props
-    const navigate = useNavigate()
+    const { listLaporan, setRefetch } = props
     const userData = useAuthUser()() as User
     return <>
         {listLaporan.length == 0 ?
@@ -68,12 +69,15 @@ const TableLaporan = (props: TableLaporan) => {
                                 </td>
                                 <td className="py-4 px-3">
                                     <div className="flex flex-col gap-2">
-                                        <DetailButton onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.DETAIL_PELAPORAN(laporan.id))} />
-                                        {userData.role === ROLE.KELURAHAN &&
-                                            <AssignButton onClick={() => { }} />
+                                        <DetailButton laporan={laporan} />
+                                        {userData.role === ROLE.KELURAHAN && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                            <>
+                                                <AssignButton setRefetch={setRefetch} laporan={laporan} />
+                                                <TolakButton setRefetch={setRefetch} laporan={laporan} />
+                                            </>
                                         }
-                                        {userData.role === ROLE.SATGAS &&
-                                            <EditButton onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.EDIT_LAPORAN(laporan.id))} />
+                                        {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
+                                            <EditButton laporan={laporan} />
                                         }
                                     </div>
                                 </td>

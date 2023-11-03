@@ -14,8 +14,9 @@ const DetailPelaporan = () => {
     const { id } = useParams()
     const [laporan, setLaporan] = useState<Laporan | null | undefined>()
     const [page, helpers] = useStep(2)
+    const [refetch, setRefetch] = useState<boolean>(true)
     return <AdminLayout>
-        <LaporanLoader data={laporan} setData={setLaporan} id={id}>
+        <LaporanLoader data={laporan} setData={setLaporan} refetch={refetch} setRefetch={setRefetch} id={id}>
             {laporan === null ? <NotFoundPage /> :
                 laporan &&
                 <>
@@ -28,7 +29,7 @@ const DetailPelaporan = () => {
                         </div>
                     </div>
                     <div className="lg:w-10/12 w-11/12 p-6 bg-white floating-shadow-md mx-auto  rounded-lg">
-                        {page === 1 && <SectionPelaporan laporan={laporan} />}
+                        {page === 1 && <SectionPelaporan laporan={laporan} setRefetch={setRefetch} />}
                         {page === 2 && <SectionPenjangkauan />}
                     </div>
                 </>
