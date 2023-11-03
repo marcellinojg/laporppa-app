@@ -1,8 +1,12 @@
-import { FaEdit, FaInfoCircle } from "react-icons/fa"
 import { Laporan } from "../../consts/laporan"
 import Pill from "./Pill"
 import { useNavigate } from "react-router-dom"
 import { DYNAMIC_ROUTES } from "../../consts/routes"
+import { formatDate } from "../../helpers/formatDate"
+import { useAuthUser } from "react-auth-kit"
+import { User } from "../../consts/user"
+import { ROLE } from '../../consts/role';
+import { AssignButton, DetailButton, EditButton } from "../form/Button"
 
 interface TableLaporan {
     listLaporan: Laporan[]
@@ -11,6 +15,7 @@ interface TableLaporan {
 const TableLaporan = (props: TableLaporan) => {
     const { listLaporan } = props
     const navigate = useNavigate()
+    const userData = useAuthUser()() as User
     return <>
         {listLaporan.length == 0 ?
             <div className="w-full flex flex-col items-center justify-center py-12">
@@ -34,26 +39,28 @@ const TableLaporan = (props: TableLaporan) => {
                         <tbody key={laporan.id}>
                             <tr className="border-b-2 border-slate-300 text-center text-sm">
                                 <td className="py-4 px-2 border-r-[2px]">{laporan.id}</td>
-                                <td className="py-4 px-2 border-r-[2px] flex flex-col gap-2">
-                                    <div className="flex flex-col gap-1 text-start">
-                                        <span>{laporan.nama_korban}</span>
-                                        <span className="text-slate-400">XXXXXXXXXXXXXX</span>
-                                    </div>
-                                    <div className="flex flex-col gap-1 text-start">
-                                        <span>{laporan.alamat}</span>
-                                        <span className="text-slate-400">Langit, Planet</span>
+                                <td className="py-4 px-2 border-r-[2px]">
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex flex-col gap-1 text-start">
+                                            <span>{laporan.nama_klien || '-'}</span>
+                                            <span className="text-slate-400">{laporan.nik_klien || '-'}</span>
+                                        </div>
+                                        <div className="flex flex-col gap-1 text-start">
+                                            <span>{laporan.alamat_klien}</span>
+                                            <span className="text-slate-400">{laporan.kelurahan.nama}, {laporan.kelurahan.kecamatan?.nama}</span>
+                                        </div>
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
                                     <div className="flex flex-col gap-1 text-start">
                                         <span>{laporan.nama_pelapor}</span>
-                                        <span className="text-slate-400">XXXXXXXXXXXXXX</span>
+                                        <span className="text-slate-400">{laporan.nik_pelapor || '-'}</span>
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
                                     <div className="flex flex-col gap-1 text-start">
                                         <span>Masyarakat</span>
-                                        <span className="text-slate-400">{laporan.created_at}</span>
+                                        <span className="text-slate-400">{formatDate(laporan.tanggal_jam_pengaduan, true)}</span>
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
@@ -61,18 +68,13 @@ const TableLaporan = (props: TableLaporan) => {
                                 </td>
                                 <td className="py-4 px-3">
                                     <div className="flex flex-col gap-2">
-                                        <button
-                                            onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.DETAIL_PELAPORAN(laporan.id!))}
-                                            className="text-white bg-blue-400 hover:bg-blue-500 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full w-full">
-                                            <FaInfoCircle />
-                                            Detail
-                                        </button>
-                                        <button
-                                            onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.EDIT_LAPORAN(laporan.id!))}
-                                            className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full w-full">
-                                            <FaEdit />
-                                            Edit
-                                        </button>
+                                        <DetailButton onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.DETAIL_PELAPORAN(laporan.id))} />
+                                        {userData.role === ROLE.KELURAHAN &&
+                                            <AssignButton onClick={() => { }} />
+                                        }
+                                        {userData.role === ROLE.SATGAS &&
+                                            <EditButton onClick={() => navigate(DYNAMIC_ROUTES.INTERNAL.EDIT_LAPORAN(laporan.id))} />
+                                        }
                                     </div>
                                 </td>
                             </tr>

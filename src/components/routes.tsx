@@ -13,6 +13,7 @@ import TokenPelaporan from "../pages/external/TokenPelaporan"
 import TrackPelaporan from "../pages/external/TrackPelaporan"
 import DetailPelaporan from "../pages/internal/DetailPelaporan"
 import CekPelaporan from "../pages/internal/CekPelaporan"
+import EditPelaporan from "../pages/internal/EditPelaporan"
 
 const RoutesComponents = () => {
     return <Routes>
@@ -66,6 +67,10 @@ const RoutesComponents = () => {
             <Route
                 path={ROUTES.INTERNAL.CEK_PELAPORAN}
                 element={<CekPelaporan />}
+            />
+            <Route
+                path={ROUTES.INTERNAL.EDIT_LAPORAN}
+                element={<EditPelaporan />}
             />
         </Route>
         {/* INTERNAL END */}

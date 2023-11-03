@@ -34,6 +34,8 @@ const Uploader = (props: UploaderProps) => {
         setValue(name, files)
     }, [files])
 
+
+
     return <>
         <div className="min-h-[250px] w-full border-primary border-2 rounded border-dashed bg-primary bg-opacity-10 relative">
             <input
@@ -61,6 +63,7 @@ const Uploader = (props: UploaderProps) => {
                             onDelete={() => {
                                 const index = pictures.findIndex(p => p === picture)
                                 files.splice(index, 1)
+                                setValue(name, files)
                                 setPictures(pictures.filter(p => p != picture))
                             }}
                         />

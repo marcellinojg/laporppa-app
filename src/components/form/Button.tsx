@@ -1,6 +1,7 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { SpinnerOval } from "../common/Loader";
+import { FaEdit, FaInfoCircle, FaUser } from "react-icons/fa";
 
 interface ButtonProps {
     isSubmit?: boolean,
@@ -14,7 +15,7 @@ interface ButtonProps {
 
 
 export const PrimaryButton = (props: ButtonProps): ReactNode => {
-    const { isSubmit, children, isLoading, onClick, className, isDisabled = false} = props
+    const { isSubmit, children, isLoading, onClick, className, isDisabled = false } = props
     return <button
         disabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}
@@ -26,7 +27,7 @@ export const PrimaryButton = (props: ButtonProps): ReactNode => {
 }
 
 export const SecondaryButton = (props: ButtonProps) => {
-    const { isSubmit, children, isLoading, onClick, className, isDisabled} = props
+    const { isSubmit, children, isLoading, onClick, className, isDisabled } = props
     return <button
         disabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}
@@ -64,4 +65,36 @@ export const SecondaryLink = (props: LinkProps) => {
     >
         {children}
     </Link>
-} 
+}
+
+export const EditButton = (props: ButtonProps) => {
+    const { onClick } = props
+    return <button
+        type="button"
+        onClick={onClick}
+        className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+        <FaEdit />
+        Edit
+    </button>
+}
+
+export const AssignButton = (props: ButtonProps) => {
+    const { onClick } = props
+    return <button
+        type="button"
+        onClick={onClick}
+        className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+        <FaUser />
+        Assign
+    </button>
+}
+
+export const DetailButton = (props: ButtonProps) => {
+    const { onClick } = props
+    return <button
+        onClick={onClick}
+        className="text-white bg-blue-400 hover:bg-blue-500 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+        <FaInfoCircle />
+        Detail
+    </button>
+}

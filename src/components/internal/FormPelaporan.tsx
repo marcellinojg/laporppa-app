@@ -1,5 +1,5 @@
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
-import { Laporan } from "../../consts/laporan"
+import { Laporan, LaporanSatgas } from "../../consts/laporan"
 import { ReactNode, useEffect, useState } from "react"
 import { REGEX } from "../../consts/regex"
 import { PrimaryButton } from "../form/Button"
@@ -11,11 +11,12 @@ import { Kecamatan } from '../../consts/kecamatan';
 import Uploader from '../form/Uploader';
 
 interface FormPelaporanProps {
-    onSubmit: SubmitHandler<Laporan>
+    onSubmit: SubmitHandler<LaporanSatgas>
     isLoading: boolean
-    form: UseFormReturn<Laporan>
+    form: UseFormReturn<LaporanSatgas>
     kelurahan: Kelurahan[]
     kecamatan: Kecamatan[]
+    laporanEdit?: Laporan
 }
 
 interface InputSectionProps {
@@ -24,11 +25,15 @@ interface InputSectionProps {
 }
 
 const FormPelaporan = (props: FormPelaporanProps) => {
-    const { onSubmit, isLoading, form, kecamatan, kelurahan } = props
+    const { onSubmit, isLoading, form, kecamatan, kelurahan, laporanEdit } = props
     const [selectedKecamatan, setSelectedKecamatan] = useState<number | string>()
     const { register, formState: { errors }, handleSubmit, control, watch, setValue } = form
 
+
+
     useEffect(() => {
+        if (laporanEdit)
+            setSelectedKecamatan(laporanEdit.kelurahan.kecamatan?.id)
         const subscription = watch((value) => {
             setSelectedKecamatan(value.kecamatan_id)
         })
@@ -45,12 +50,14 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     label='Kategori Permasalahan'
                     errorLabel='Kategori Permasalahan'
                     errors={errors}
+                    defaultValue={laporanEdit?.kategori.id}
                     options={[{ value: 1, label: 'Sosial' }, { value: 2, label: 'Kekerasan' }, { value: 3, label: 'Pelecehan Seksual' }]}
                 />
                 <Datepicker
-                    name='tanggal_pengaduan'
+                    name='tanggal_jam_pengaduan'
                     control={control}
                     isRequired
+                    defaultValue={laporanEdit ? new Date(laporanEdit?.tanggal_jam_pengaduan!) : null}
                     placeholder='Masukkan tanggal & jam pengaduan'
                     label='Tanggal & Jam Pengaduan'
                 />
@@ -64,6 +71,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     label="Nama Lengkap Pelapor"
                     regex={REGEX.ALPHABETIC_ONLY}
                     isRequired={true}
+                    defaultValue={laporanEdit?.nama_pelapor}
                 />
                 <InputText
                     name="nik_pelapor"
@@ -72,6 +80,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     errors={errors}
                     label="NIK Pelapor"
                     regex={REGEX.NIK}
+                    defaultValue={laporanEdit?.nik_pelapor}
                 />
                 <InputText
                     name="no_telp_pelapor"
@@ -82,6 +91,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     regex={REGEX.PHONE_IDN}
                     type="tel"
                     isRequired
+                    defaultValue={laporanEdit?.no_telp_pelapor}
                 />
                 <InputText
                     name="alamat_pelapor"
@@ -89,6 +99,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder="Masukkan alamat domisili pelapor"
                     errors={errors}
                     label="Alamat Domisili Pelapor"
+                    defaultValue={laporanEdit?.alamat_pelapor}
                 />
             </InputSection>
 
@@ -101,6 +112,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     errors={errors}
                     regex={REGEX.ALPHABETIC_ONLY}
                     isRequired
+                    defaultValue={laporanEdit?.nama_klien}
                 />
                 <InputText
                     name='nik_klien'
@@ -109,6 +121,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     label='NIK Klien'
                     errors={errors}
                     regex={REGEX.NIK}
+                    defaultValue={laporanEdit?.nik_klien}
                 />
                 <InputText
                     name='no_telp_klien'
@@ -116,6 +129,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder='Masukkan nomor telepon klien'
                     label='No.Telepon/Whatsapp Klien'
                     errors={errors}
+                    defaultValue={laporanEdit?.no_telp_klien}
                 />
                 <Select
                     name='kecamatan_id'
@@ -128,19 +142,22 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                         label: k.nama,
                         value: k.id
                     }))}
+                    defaultValue={laporanEdit?.kelurahan.kecamatan?.id}
                 />
                 <Select
-                    isDisabled={selectedKecamatan ? false : true}
+                    isDisabled={selectedKecamatan ? false : laporanEdit?.kelurahan.kecamatan?.id ? false : true}
                     name="kelurahan_id"
                     placeholder="Pilih kelurahan"
                     label="Kelurahan Klien"
                     control={control}
                     errors={errors}
                     errorLabel="Kelurahan"
-                    options={kelurahan.filter(k => k.kecamatan.id == selectedKecamatan).map((k) => ({
+                    options={kelurahan.filter(k => k.kecamatan?.id == selectedKecamatan).map((k) => ({
                         label: k.nama,
                         value: k.id
                     }))}
+                    defaultValue={laporanEdit?.kelurahan.id}
+
                 />
                 <InputText
                     name='alamat_klien'
@@ -148,37 +165,41 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     placeholder='Masukkan alamat domisili klien'
                     label='Alamat Domisili Klien'
                     errors={errors}
+                    defaultValue={laporanEdit?.alamat_klien}
                 />
             </InputSection>
 
             <InputSection title="Permasalahan">
                 <TextArea
-                    name="uraian_singkat"
-                    register={register}
-                    errors={errors}
-                    isRequired={false}
-                    label="Uraian Singkat Permasalahan"
-                    placeholder="Ceritakan permasalahan secara singkat"
-                />
-            </InputSection>
-            <InputSection title="Dokumentasi Pelaporan">
-                <Uploader
-                    name='dokumentasi_pengaduan'
-                    control={control}
-                    watch={watch}
-                    placeholder='Upload file dokumentasi pelaporan'
-                    setValue={setValue}
+                    name="uraian_singkat_masalah"
                     register={register}
                     errors={errors}
                     isRequired={true}
-                    errorLabel='Dokumentasi Pelaporan'
+                    label="Uraian Singkat Permasalahan"
+                    placeholder="Ceritakan permasalahan secara singkat (maksimal : 255 karakter)"
+                    defaultValue={laporanEdit?.uraian_singkat_masalah}
                 />
             </InputSection>
+            {!laporanEdit &&
+                <InputSection title="Dokumentasi Pelaporan">
+                    <Uploader
+                        name='dokumentasi_pengaduan'
+                        control={control}
+                        watch={watch}
+                        placeholder='Upload file dokumentasi pelaporan'
+                        setValue={setValue}
+                        register={register}
+                        errors={errors}
+                        isRequired={false}
+                        errorLabel='Dokumentasi Pelaporan'
+                    />
+                </InputSection>
+            }
         </div>
         {/* Footer */}
         <div className="border-t-2 border-slate-400 pt-5">
             <PrimaryButton className="py-3" isLoading={isLoading} isDisabled={isLoading} isSubmit>
-                Buat Laporan
+                {laporanEdit ? 'Edit Laporan' : 'Buat Laporan'}
             </PrimaryButton>
         </div>
     </form>

@@ -5,9 +5,10 @@ import useLoader from "../hooks/useLoader";
 import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
-import { Laporan } from "../consts/laporan";
-import { getLaporan, getLaporansBySearchAndStatus } from '../api/laporan';
+import { Laporan, LaporanCount } from "../consts/laporan";
+import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
+import { getKategoris } from "../api/kategori";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -93,10 +94,8 @@ export const LaporanLoader = (props: FetchDataEffectsProps<Laporan | null | unde
         getLaporan(id!)
             .then((laporan) => {
                 setData(laporan)
-                console.log(laporan)
             })
             .catch((error) => {
-                
                 if (error.response.status == 404)
                     setData(null)
                 else
@@ -104,6 +103,36 @@ export const LaporanLoader = (props: FetchDataEffectsProps<Laporan | null | unde
             })
             .finally(() => hideLoader())
         window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [])
+
+    return <>
+        {children}
+    </>
+}
+
+export const KategoriLoader = (props: FetchDataEffectsProps<Kategori[]>) => {
+    const { setData, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getKategoris().then((kategoris) => setData(kategoris)).catch(() => errorFetchAlert()).then(() => hideLoader())
+    }, [])
+
+    return <>
+        {children}
+    </>
+}
+
+export const LaporanCountLoader = (props: FetchDataEffectsProps<LaporanCount[]>) => {
+    const { setData, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getTotalLaporan().then((totalLaporan) => setData(totalLaporan)).catch(() => errorFetchAlert()).then(() => hideLoader())
     }, [])
 
     return <>

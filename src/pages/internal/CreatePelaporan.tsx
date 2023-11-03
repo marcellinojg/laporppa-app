@@ -1,40 +1,78 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "../layouts/AdminLayout"
 import { useForm } from "react-hook-form"
-import { Laporan } from "../../consts/laporan"
+import { Laporan, LaporanSatgas } from "../../consts/laporan"
 import { useLocalStorage } from "usehooks-ts"
 import AutosaveFormEffect from "../../helpers/formSaveHelpers"
 import { Kelurahan } from "../../consts/kelurahan"
 import { Kecamatan } from "../../consts/kecamatan"
 import { KecamatanLoader, KelurahanLoader } from "../../helpers/fetchHelpers"
 import FormPelaporan from "../../components/internal/FormPelaporan"
-
+import { postLaporan } from "../../api/laporan"
+import { useAlert } from "../../hooks/useAlert"
+import useLoader from "../../hooks/useLoader"
+import { formatDatePelaporan } from "../../helpers/formatDate"
+import { ALERT_TYPE } from "../../consts/alert"
+import { useNavigate } from "react-router-dom"
 
 const CreatePelaporan = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [formState, setFormState] = useLocalStorage<string | null>('form_internal_state', null)
-    const form = useForm<Laporan>()
-    const { setValue, watch, setError, clearErrors } = form
+    const form = useForm<LaporanSatgas>()
+    const { setValue, watch, clearErrors, reset, setError } = form
     const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
     const [kelurahans, setKelurahans] = useState<Kelurahan[]>([])
-
-    const onSubmit = (data: Laporan) => {
+    const { errorFetchAlert, addAlert } = useAlert()
+    const { showLoader, hideLoader } = useLoader()
+    const navigate = useNavigate()
+    const onSubmit = async (data: LaporanSatgas) => {
         if (!data.dokumentasi_pengaduan || data.dokumentasi_pengaduan.length == 0) {
             setError('dokumentasi_pengaduan', { type: 'required', message: 'Dokumentasi Pelaporan harus diisi !' })
             return
         }
+
         const arrData = Object.entries(data)
         const formData = new FormData()
         arrData.forEach((data) => {
             if (data[0].includes('dokumentasi')) {
                 const arrFiles = data[1] as File[]
-                arrFiles.forEach((file) => formData.append(`${data[0]}[]`, file))
+                console.log(arrFiles)
+                arrFiles.forEach((file) => formData.append(`${data[0]}`, file))
             }
             else
                 formData.append(data[0], data[1])
         })
 
-        setIsLoading(true)
+        try {
+            setIsLoading(true)
+            showLoader()
+            await postLaporan(
+                {
+                    ...data,
+                    tanggal_jam_pengaduan: formatDatePelaporan(new Date(data.tanggal_jam_pengaduan)),
+                    sumber_pengaduan_id: 2
+                }
+            ) as Laporan
+            localStorage.removeItem('form_internal_state')
+            reset()
+            addAlert({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Laporan Sukses Dibuat !',
+                message: `Selamat, laporan dari ${data.nama_pelapor} telah berhasil disimpan !`
+            })
+            hideLoader()
+            setTimeout(() => {
+                navigate(0)
+            }, 1500)
+        }
+        catch {
+            errorFetchAlert()
+        }
+        finally {
+            setIsLoading(false)
+            hideLoader()
+        }
+
         setTimeout(() => setIsLoading(false), 3000)
     }
 

@@ -5,7 +5,7 @@ import { REGEX } from "../../consts/regex"
 import { FaSearch } from "react-icons/fa"
 
 export const InputText = (props: InputProps): ReactNode => {
-    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className } = props
+    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '' } = props
     const [isObscure, setIsObscure] = useState<boolean | undefined>(obscure)
 
     return <div className='flex flex-col gap-1'>
@@ -20,6 +20,7 @@ export const InputText = (props: InputProps): ReactNode => {
             <input
                 autoComplete={autoComplete}
                 id={name}
+                defaultValue={defaultValue}
                 className={`rounded p-2 text-black outline-blue-500 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 w-full outline-1 ${className}`}
                 type={isObscure ? 'password' : type}
                 {...register(
@@ -49,7 +50,7 @@ export const InputText = (props: InputProps): ReactNode => {
 }
 
 export const TextArea = (props: InputProps) => {
-    const { register, placeholder, name, isRequired, errors, label, className } = props
+    const { register, placeholder, name, isRequired, errors, label, className, defaultValue ='', maxChar = 255 } = props
 
     return <div className='flex flex-col gap-1'>
         {label &&
@@ -64,11 +65,15 @@ export const TextArea = (props: InputProps) => {
                 className={`rounded p-2 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 resize-none text-black w-full outline-none ${className}`}
                 placeholder={placeholder}
                 rows={5}
-                defaultValue={""}
+                defaultValue={defaultValue}
                 {...register(
                     name,
                     {
                         required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
+                        maxLength: {
+                            value: maxChar,
+                            message: `Panjang maksimal ${maxChar} karakter`
+                        }
                     },
                 )}
 

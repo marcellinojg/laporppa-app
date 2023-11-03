@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { PrimaryButton } from "../../components/form/Button"
 import { FieldValues, useForm } from "react-hook-form"
-import { Laporan } from "../../consts/laporan"
+import { LaporanToken } from "../../consts/laporan"
 import { getLaporanByToken } from "../../api/laporan"
 import useLoader from "../../hooks/useLoader"
 import { useAlert } from "../../hooks/useAlert"
@@ -13,7 +13,7 @@ const TrackPelaporan = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert, addAlert } = useAlert()
-    const [laporan, setLaporan] = useState<Laporan>()
+    const [laporan, setLaporan] = useState<LaporanToken>()
 
 
     const onSubmit = (data: FieldValues) => {
@@ -76,7 +76,15 @@ const TrackPelaporan = () => {
                         </div>
                         <div className="flex flex-col gap-1 items-start">
                             <b className="text-lg">Status Laporan</b>
-                            <span>{laporan.status!.nama}</span>
+                            <span>{laporan.status.nama}</span>
+                        </div>
+                        <div className="flex flex-col gap-1 items-start">
+                            <b className="text-lg">Kategori Kasus</b>
+                            <span>{laporan.kategori.nama}</span>
+                        </div>
+                        <div className="flex flex-col gap-1 items-start">
+                            <b className="text-lg">Dilaporkan pada</b>
+                            <span>{laporan.created_at}</span>
                         </div>
                     </div>
                 </div>

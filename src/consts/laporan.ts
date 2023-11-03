@@ -1,34 +1,81 @@
+import { Kelurahan } from "./kelurahan"
+import Pendidikan from "./pendidikan";
+import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
+import SumberPengaduan from './sumber';
 
 export interface Laporan {
-    id?: string,
-    tanggal_pengaduan?: string,
-    jam?: string,
-    uraian_singkat?: string,
-    no_telp_pelapor?: string,
-    no_telp_korban?: string,
-    nama_korban?: string,
-    nama_pelapor?: string,
-    inisial_klien?: string,
-    nik_pelapor?: string,
-    nik_klien?: string,
-    kategori_id?: number,
-    usia?: number,
-    alamat: string,
-    alamat_pelapor?: string,
-    alamat_klien?: string,
-    rt?: string,
-    rw?: string,
-    kronologis?: string,
-    sumber_pengaduan_id?: number,
-    kelurahan_id?: number,
-    kecamatan_id?: number,
-    jenis_kelamin?: string,
-    satgas_pelapor_id?: string,
-    previous_satgas_id?: string,
-    status?: Status
-    token?: string,
-    pendidikan_id?: number,
-    dokumentasi_pengaduan?: string,
-    created_at?: string,
+    id: string,
+    tanggal_jam_pengaduan: string,
+    uraian_singkat_masalah: string,
+    no_telp_pelapor: string,
+    no_telp_klien: string,
+    nama_klien: string,
+    nama_pelapor: string,
+    nik_pelapor: string,
+    nik_klien: string,
+    validated: number,
+    usia: number,
+    alamat_pelapor: string,
+    alamat_klien: string,
+    rw: string,
+    rt: string,
+    token: string,
+    jenis_kelamin: string,
+    kategori: Kategori,
+    status: Status,
+    satgas_pelapor: SatgasPelapor
+    previous_satgas: SatgasPelapor
+    pendidikan: Pendidikan
+    kelurahan: Kelurahan
+    sumber_pengaduan: SumberPengaduan
+    dokumentasi_pengaduan: string[]
+}
+
+export interface LaporanSatgas {
+    kategori_id: number
+    tanggal_jam_pengaduan: string
+    nama_pelapor: string
+    nik_pelapor?: string
+    no_telp_pelapor: string
+    alamat_pelapor?: string
+    nama_klien: string
+    nik_klien?: string
+    no_telp_klien?: string
+    kecamatan_id: number
+    kelurahan_id: number
+    alamat_klien?: string
+    uraian_singkat_masalah: string
+    sumber_pengaduan_id : number
+    dokumentasi_pengaduan: File[]
+
+    // doesn't have default value
+    // satgas_pelapor_id: string
+    // previous_satgas_id: string
+    // sumber_pengaduan_id: number
+}
+
+
+export interface LaporanWarga {
+    kategori_id: number
+    kecamatan_id: number
+    sumber_pengaduan_id: number
+    kelurahan_id: number
+    uraian_singkat_masalah: string
+    nama_pelapor: string
+    nama_klien: string
+    tanggal_jam_pengaduan: string
+}
+
+export interface LaporanToken {
+    nama_pelapor: string
+    token: string
+    status: Status
+    kategori: Kategori
+    created_at: string
+}
+
+
+export interface LaporanCount extends Status {
+    totalCase : number
 }

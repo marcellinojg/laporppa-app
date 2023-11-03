@@ -2,7 +2,7 @@ import { Control, Controller } from "react-hook-form"
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendar } from "react-icons/fa";
-import formatDate from "../../helpers/formatDate";
+import { formatDate } from "../../helpers/formatDate";
 
 
 interface DatepickerProps {
@@ -11,17 +11,18 @@ interface DatepickerProps {
     isRequired?: boolean
     placeholder: string
     label: string
+    defaultValue: Date | null
 }
 
 const Datepicker = (props: DatepickerProps) => {
-    const { control, name, isRequired = false, placeholder, label } = props
+    const { control, name, isRequired = false, placeholder, label, defaultValue = null } = props
     return <Controller
         name={name}
         rules={{
             required: isRequired === true && "Tanggal harus diisi !"
         }}
         control={control}
-        defaultValue={new Date()}
+        defaultValue={defaultValue}
         render={({ field: { onChange, value }, fieldState: { error } }) =>
             <div className="flex flex-col gap-1">
                 <label htmlFor={name}>{label}</label>
@@ -33,7 +34,7 @@ const Datepicker = (props: DatepickerProps) => {
                         className="w-full h-full outline-none p-3 rounded-lg"
                         placeholderText={placeholder}
                         onChange={onChange}
-                        selected={new Date(value)}
+                        startDate={new Date()}
                         value={formatDate(value, true)}
                         maxDate={new Date()}
                         maxTime={new Date()}

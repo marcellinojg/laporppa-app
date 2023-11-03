@@ -1,17 +1,17 @@
-import { Laporan } from "../consts/laporan"
+import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 
 export const getLaporans = async () => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get('/laporans')
+    const res = await instance.get('/laporans?withKecamatan=1')
     const listLaporan = res.data.data as Laporan[]
     return listLaporan
 }
 
 export const getLaporan = async (id: string) => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get(`/laporans/${id}`)
+    const res = await instance.get(`/laporans/${id}?withKecamatan=1`)
     const laporan = res.data.data
     return laporan
 }
@@ -19,13 +19,30 @@ export const getLaporan = async (id: string) => {
 export const getLaporanByToken = async (token: string) => {
     const instance = CreateAxiosInstance()
     const res = await instance.get(`/public/laporans/${token}`)
-    const laporan = res.data.data as Laporan
+    const laporan = res.data.data as LaporanToken
     return laporan
 }
 
-export const postLaporan = async (laporan: Laporan) => {
+export const postLaporan = async (laporan: LaporanSatgas) => {
     const instance = CreateAxiosInstance()
-    const res = await instance.post('/laporans', laporan)
+    const res = await instance.post('/laporans', laporan, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    const postedLaporan = res.data.data as Laporan
+    return postedLaporan
+}
+
+export const patchLaporan = async (laporan: LaporanSatgas, id: string) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.patch(`/laporans/${id}`, laporan)
+    const patchedLaporan = res.data.data as Laporan
+    return patchedLaporan
+}
+export const postLaporanPublic = async (laporan: LaporanToken) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.post('/public/laporans', laporan)
     const postedLaporan = res.data.data
     return postedLaporan
 }
@@ -47,7 +64,7 @@ export const getLaporansByPage = async (page: number) => {
 
 export const getLaporansBySearchAndStatus = async (page: number, keyword: string, status: number) => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get(`laporans?page=${page}&search=${keyword}&status=${status}`)
+    const res = await instance.get(`laporans?page=${page}&search=${keyword}&status=${status}&withKecamatan=1`)
     const data = res.data.data
     const laporans = data.data as Laporan[]
     const paginationData = {
@@ -60,4 +77,11 @@ export const getLaporansBySearchAndStatus = async (page: number, keyword: string
     } as PaginationData
 
     return { laporans, paginationData }
+}
+
+export const getTotalLaporan = async () => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.get('/statuses/count')
+    const data = res.data.data as LaporanCount[]
+    return data
 }

@@ -1,6 +1,8 @@
 
 
-const formatDate = (date: string, withTime: boolean) => {
+export const formatDate = (date: string, withTime: boolean) => {
+    if (!date) return '-'
+
     const dateObj = new Date(date)
     const options = withTime === true ? {
         day: 'numeric',
@@ -17,4 +19,6 @@ const formatDate = (date: string, withTime: boolean) => {
     return dateObj.toLocaleDateString('id-ID', options)
 }
 
-export default formatDate
+export const formatDatePelaporan = (date: Date) => {
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
+}

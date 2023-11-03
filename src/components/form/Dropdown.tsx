@@ -23,6 +23,7 @@ interface SelectProps {
     isDisabled?: boolean
     errorLabel?: string
     isRequired?: boolean
+    defaultValue?: string | number
 }
 
 interface DropdownOptionProps {
@@ -94,7 +95,7 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
 
 
 export const Select = (props: SelectProps) => {
-    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true } = props
+    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true, defaultValue = '' } = props
 
 
 
@@ -104,7 +105,7 @@ export const Select = (props: SelectProps) => {
         rules={{
             required: isRequired === true && `${errorLabel} harus diisi !`
         }}
-        defaultValue={""}
+        defaultValue={defaultValue}
         render={({ field: { onChange, value }, fieldState: { error } }) => <div className='flex flex-col gap-1 w-full'>
             <label htmlFor={name}>
                 {label ? label : placeholder}

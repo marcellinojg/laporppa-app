@@ -12,7 +12,9 @@ export interface InputProps {
     obscure?: boolean
     label?: string
     type?: string
+    defaultValue?: string
     className?: string
+    maxChar? : number
 }
 
 export interface SearchInputProps {

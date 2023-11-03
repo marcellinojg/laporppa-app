@@ -19,7 +19,7 @@ const DetailPelaporan = () => {
             {laporan === null ? <NotFoundPage /> :
                 laporan &&
                 <>
-                    <div className="lg:w-10/12 w-11/12 mx-auto mt-12 mb-6 flex justify-between items-center">
+                    <div className="lg:w-10/12 w-11/12 mx-auto mt-12 mb-6 flex justify-between lg:items-center lg:flex-row flex-col gap-3">
                         <h1 className="font-bold text-2xl text-primary">Detail Pelaporan</h1>
 
                         <div className="flex flex-wrap items-center gap-4">
