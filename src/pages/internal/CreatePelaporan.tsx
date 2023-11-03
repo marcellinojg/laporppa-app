@@ -32,7 +32,13 @@ const CreatePelaporan = () => {
             return
         }
 
-        const arrData = Object.entries(data)
+        const formatData : LaporanSatgas = {
+            ...data,
+            tanggal_jam_pengaduan : formatDatePelaporan(new Date(data.tanggal_jam_pengaduan))
+        }
+        
+        const arrData = Object.entries(formatData)
+        
         const formData = new FormData()
         arrData.forEach((data) => {
             if (data[0].includes('dokumentasi')) {
