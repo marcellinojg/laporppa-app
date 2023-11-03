@@ -1,6 +1,5 @@
 import { Laporan } from "../../consts/laporan"
 import Pill from "./Pill"
-import { useNavigate } from "react-router-dom"
 import { formatDate } from "../../helpers/formatDate"
 import { useAuthUser } from "react-auth-kit"
 import { User } from "../../consts/user"
