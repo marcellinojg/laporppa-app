@@ -61,7 +61,7 @@ const Pelaporans = () => {
                     <h2 className="font-bold mr-10">Keterangan Status</h2>
                     <Pill status={STATUS_LAPORAN.MENUNGGU_VALIDASI} onClick={() => setStatus(STATUS_LAPORAN.MENUNGGU_VALIDASI)} />
                     <Pill status={STATUS_LAPORAN.SEDANG_DITANGANI} onClick={() => setStatus(STATUS_LAPORAN.SEDANG_DITANGANI)} />
-                    <Pill status={STATUS_LAPORAN.KASUS_DITOLAK} onClick={() => setStatus(STATUS_LAPORAN.KASUS_DITOLAK)} />
+                    <Pill status={STATUS_LAPORAN.KASUS_DIKEMBALIKAN} onClick={() => setStatus(STATUS_LAPORAN.KASUS_DIKEMBALIKAN)} />
                     <Pill status={STATUS_LAPORAN.KASUS_SELESAI} onClick={() => setStatus(STATUS_LAPORAN.KASUS_SELESAI)} />
                     <Pill status={STATUS_LAPORAN.KASUS_DITERUSKAN} onClick={() => setStatus(STATUS_LAPORAN.KASUS_DITERUSKAN)} />
                 </div>

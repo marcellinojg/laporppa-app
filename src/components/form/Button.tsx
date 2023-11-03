@@ -1,13 +1,13 @@
 import { Dispatch, MouseEventHandler, ReactNode, SetStateAction, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SpinnerOval } from "../common/Loader";
-import { FaEdit, FaInfoCircle, FaTrash, FaUser } from "react-icons/fa";
+import { FaEdit, FaInfoCircle, FaPaperPlane, FaTrash, FaUser } from "react-icons/fa";
 import { DYNAMIC_ROUTES } from "../../consts/routes";
 import { Laporan } from "../../consts/laporan";
 import { AssignModal, ConfirmationModal } from "../common/Modal";
 import useLoader from "../../hooks/useLoader";
 import { useAlert } from "../../hooks/useAlert";
-import { patchLaporan } from "../../api/laporan";
+import { deleteLaporan, patchLaporan } from "../../api/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
 import { ALERT_TYPE } from "../../consts/alert";
 
@@ -113,29 +113,94 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
     const { addAlert } = useAlert()
 
     const handleAssign = async () => {
+        if (!selectedSatgasId) {
+            addAlert({
+                type: ALERT_TYPE.WARNING,
+                title: 'Data Tidak Lengkap',
+                message: 'Mohon pilih satgas untuk menangani kasus ini'
+            })
+            return
+        }
+
         try {
             showLoader()
             await patchLaporan({
-                status: {
-                    id: STATUS_LAPORAN.SEDANG_DITANGANI
-                },
                 satgas_pelapor: {
                     id: selectedSatgasId
+                },
+                status: laporan.status.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN && {
+                    id: STATUS_LAPORAN.SEDANG_DITANGANI
                 }
             }, laporan.id)
 
             addAlert({
                 type: ALERT_TYPE.SUCCESS,
-                title: 'Laporan Ditolak',
-                message: `Laporan dari ${laporan.nama_pelapor} berhasil ditolak !`
+                title: 'Laporan Didelegasikan',
+                message: `Laporan dari ${laporan.nama_pelapor} berhasil ditugaskan kepada satgas !`
             })
             setRefetch!(true)
         }
         catch {
             addAlert({
                 type: ALERT_TYPE.ERROR,
-                title: 'Laporan Gagal Ditolak',
-                message: `Laporan dari ${laporan.nama_pelapor} gagal ditolak !`
+                title: 'Laporan Gagal Didelegasikan',
+                message: `Laporan dari ${laporan.nama_pelapor} gagal ditugaskan kepada satgas !`
+            })
+        }
+        finally {
+            setIsModalActive(false)
+            hideLoader()
+        }
+    }
+
+    return <>
+        <button
+            type="button"
+            onClick={() => setIsModalActive(true)}
+            className="text-white bg-green-500 hover:bg-green-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+            <FaUser />
+            Delegasi
+        </button>
+        {isModalActive &&
+            <AssignModal
+                title="Delegasi Pelaporan"
+                description={laporan.nama_pelapor}
+                onSuccess={handleAssign}
+                onClose={() => setIsModalActive(false)}
+                successButtonText="Tugaskan"
+                setSelectedSatgasId={setSelectedSatgasId}
+            />
+        }
+    </>
+}
+
+export const TerimaButton = (props: ActionButtonLaporanProps) => {
+    const { laporan, setRefetch } = props
+    const [isModalActive, setIsModalActive] = useState<boolean>()
+    const { showLoader, hideLoader } = useLoader()
+    const { addAlert } = useAlert()
+
+    const handleTerima = async () => {
+        try {
+            showLoader()
+            await patchLaporan({
+                status: {
+                    id: STATUS_LAPORAN.SEDANG_DITANGANI
+                },
+            }, laporan.id)
+
+            addAlert({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Laporan Berhasil Diterima',
+                message: `Laporan dari ${laporan.nama_pelapor} berhasil diterima !`
+            })
+            setRefetch!(true)
+        }
+        catch {
+            addAlert({
+                type: ALERT_TYPE.ERROR,
+                title: 'Laporan Gagal Diterima',
+                message: `Laporan dari ${laporan.nama_pelapor} gagal diterima !`
             })
         }
         finally {
@@ -153,13 +218,12 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
             Terima
         </button>
         {isModalActive &&
-            <AssignModal
+            <ConfirmationModal
                 title="Terima Pelaporan"
-                description={laporan.nama_pelapor}
-                onSuccess={handleAssign}
+                description={`Apakan anda yakin akan menerima dan menangani laporan ${laporan.nama_pelapor}`}
+                onSuccess={handleTerima}
                 onClose={() => setIsModalActive(false)}
                 successButtonText="Terima"
-                setSelectedSatgasId={setSelectedSatgasId}
             />
         }
     </>
@@ -175,19 +239,12 @@ export const TolakButton = (props: ActionButtonLaporanProps) => {
     const handleTolak = async () => {
         try {
             showLoader()
-            await patchLaporan({
-                status: {
-                    id: STATUS_LAPORAN.KASUS_DITOLAK
-                },
-                satgas_pelapor: {
-                    id: null
-                }
-            }, laporan.id)
+            await deleteLaporan(laporan.id)
 
             addAlert({
                 type: ALERT_TYPE.SUCCESS,
                 title: 'Laporan Ditolak',
-                message: `Laporan dari ${laporan.nama_pelapor} berhasil ditolak !`
+                message: `Laporan dari ${laporan.nama_pelapor} berhasil ditolak dan dihapus !`
             })
             setRefetch!(true)
         }
@@ -220,5 +277,60 @@ export const TolakButton = (props: ActionButtonLaporanProps) => {
             />
         }
 
+    </>
+}
+
+export const RujukButton = (props: ActionButtonLaporanProps) => {
+    const { laporan, setRefetch } = props
+    const [isModalActive, setIsModalActive] = useState<boolean>()
+    const { showLoader, hideLoader } = useLoader()
+    const { addAlert } = useAlert()
+
+    const handleRujuk = async () => {
+        try {
+            showLoader()
+            await patchLaporan({
+                status: {
+                    id: STATUS_LAPORAN.KASUS_DITERUSKAN
+                },
+            }, laporan.id)
+
+            addAlert({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Laporan Berhasil Dirujuk',
+                message: `Laporan dari ${laporan.nama_pelapor} berhasil diteruskan ke DP3A !`
+            })
+            setRefetch!(true)
+        }
+        catch {
+            addAlert({
+                type: ALERT_TYPE.ERROR,
+                title: 'Laporan Gagal Dirujuk',
+                message: `Laporan dari ${laporan.nama_pelapor} gagal diteruskan ke DP3A !`
+            })
+        }
+        finally {
+            setIsModalActive(false)
+            hideLoader()
+        }
+    }
+
+    return <>
+        <button
+            type="button"
+            onClick={() => setIsModalActive(true)}
+            className="text-white bg-orange-500 hover:bg-orange-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+            <FaPaperPlane />
+            Rujuk
+        </button>
+        {isModalActive &&
+            <ConfirmationModal
+                title="Rujuk Pelaporan"
+                description={`Apakan anda yakin akan meneruskan laporan ${laporan.nama_pelapor} ke DP3A ?`}
+                onSuccess={handleRujuk}
+                onClose={() => setIsModalActive(false)}
+                successButtonText="Rujuk"
+            />
+        }
     </>
 }

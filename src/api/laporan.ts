@@ -85,3 +85,8 @@ export const getTotalLaporan = async () => {
     const data = res.data.data as LaporanCount[]
     return data
 }
+
+export const deleteLaporan = async (id : string) => {
+    const instance = CreateAxiosInstance()
+    await instance.delete(`/laporans/${id}`)
+}

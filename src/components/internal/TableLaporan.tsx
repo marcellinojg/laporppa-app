@@ -4,7 +4,7 @@ import { formatDate } from "../../helpers/formatDate"
 import { useAuthUser } from "react-auth-kit"
 import { User } from "../../consts/user"
 import { ROLE } from '../../consts/role';
-import { AssignButton, DetailButton, EditButton, TolakButton } from "../form/Button"
+import { AssignButton, DetailButton, EditButton, RujukButton, TerimaButton, TolakButton } from "../form/Button"
 import { STATUS_LAPORAN } from "../../consts/status"
 import { Dispatch, SetStateAction } from "react"
 
@@ -69,14 +69,30 @@ const TableLaporan = (props: TableLaporan) => {
                                 <td className="py-4 px-3">
                                     <div className="flex flex-col gap-2">
                                         <DetailButton laporan={laporan} />
-                                        {userData.role === ROLE.KELURAHAN && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                        {userData.role === ROLE.KELURAHAN &&
+                                            laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                            laporan.satgas_pelapor.id == userData.id &&
                                             <>
                                                 <AssignButton setRefetch={setRefetch} laporan={laporan} />
                                                 <TolakButton setRefetch={setRefetch} laporan={laporan} />
                                             </>
                                         }
+                                        {userData.role === ROLE.KELURAHAN &&
+                                            laporan.status.id == STATUS_LAPORAN.KASUS_DIKEMBALIKAN &&
+                                            laporan.satgas_pelapor.id == userData.id &&
+                                            <>
+                                                <AssignButton setRefetch={setRefetch} laporan={laporan} />
+                                                <RujukButton setRefetch={setRefetch} laporan={laporan} />
+                                            </>
+                                        }
                                         {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
                                             <EditButton laporan={laporan} />
+                                        }
+                                        {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                            <>
+                                                <TerimaButton setRefetch={setRefetch} laporan={laporan} />
+                                                <TolakButton setRefetch={setRefetch} laporan={laporan} />
+                                            </>
                                         }
                                     </div>
                                 </td>

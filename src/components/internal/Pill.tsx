@@ -22,10 +22,10 @@ const Pill = (props: PillProps) => {
             wrapperClassName = 'bg-kategoriDitangani'
             label = 'Sedang Ditangani'
             break
-        case STATUS_LAPORAN.KASUS_DITOLAK:
-            textClassName = 'text-kategoriDitolakDarker'
-            wrapperClassName = 'bg-kategoriDitolak'
-            label = 'Kasus Ditolak'
+        case STATUS_LAPORAN.KASUS_DIKEMBALIKAN:
+            textClassName = 'text-kategoriDikembalikanDarker'
+            wrapperClassName = 'bg-kategoriDikembalikan'
+            label = 'Kasus Dikembalikan'
             break
         case STATUS_LAPORAN.KASUS_SELESAI:
             textClassName = 'text-kategoriSelesaiDarker'

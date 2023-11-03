@@ -5,14 +5,14 @@ import { formatDate } from '../../../helpers/formatDate';
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../../consts/user";
 import { ROLE } from "../../../consts/role";
-import { AssignButton, EditButton, TolakButton } from "../../form/Button";
+import { AssignButton, EditButton, RujukButton, TerimaButton, TolakButton } from "../../form/Button";
 import { Dispatch, SetStateAction } from "react";
 import { STATUS_LAPORAN } from "../../../consts/status";
 
 
 interface SectionPelaporanProps {
     laporan: Laporan
-    setRefetch : Dispatch<SetStateAction<boolean>>
+    setRefetch: Dispatch<SetStateAction<boolean>>
 }
 
 const SectionPelaporan = (props: SectionPelaporanProps) => {
@@ -24,14 +24,30 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <h2 className="font-bold text-xl">Detail Data Laporan <br className="lg:hidden" /> <span className="text-primary">{laporan.nama_pelapor}</span></h2>
                 <Pill status={laporan.status.id} />
             </div>
-            {userData.role === ROLE.KELURAHAN && laporan.status.id === STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+            {userData.role === ROLE.KELURAHAN &&
+                laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                laporan.satgas_pelapor.id == userData.id &&
                 <div className="flex items-center gap-3">
-                    <AssignButton laporan={laporan} setRefetch={setRefetch}  />
-                    <TolakButton laporan={laporan} setRefetch={setRefetch}  />
+                    <AssignButton laporan={laporan} setRefetch={setRefetch} />
+                    <TolakButton laporan={laporan} setRefetch={setRefetch} />
                 </div>
             }
-            {userData.role === ROLE.SATGAS &&
-                <EditButton laporan={laporan}  />
+            {userData.role === ROLE.KELURAHAN &&
+                laporan.status.id == STATUS_LAPORAN.KASUS_DIKEMBALIKAN &&
+                laporan.satgas_pelapor.id == userData.id &&
+                <div className="flex items-center gap-3">
+                    <AssignButton setRefetch={setRefetch} laporan={laporan} />
+                    <RujukButton setRefetch={setRefetch} laporan={laporan} />
+                </div>
+            }
+            {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
+                <EditButton laporan={laporan} />
+            }
+            {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                <div className="flex items-center gap-3">
+                    <TerimaButton setRefetch={setRefetch} laporan={laporan} />
+                    <TolakButton setRefetch={setRefetch} laporan={laporan} />
+                </div>
             }
         </div>
         <div className="flex flex-col gap-2 py-3">
