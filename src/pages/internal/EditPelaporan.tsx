@@ -14,6 +14,8 @@ import { NotFoundPage } from "../../components/errors/NotFoundPage"
 import { ALERT_TYPE } from "../../consts/alert"
 import { ROUTES } from "../../consts/routes"
 import { formatDatePelaporan } from "../../helpers/formatDate"
+import { STATUS_LAPORAN } from "../../consts/status"
+import { ForbiddenPage } from "../../components/errors/ForbiddenPage"
 
 
 const EditPelaporan = () => {
@@ -64,7 +66,7 @@ const EditPelaporan = () => {
         <KecamatanLoader data={kecamatans} setData={setKecamatans}>
             <KelurahanLoader data={kelurahans} setData={setKelurahans}>
                 <LaporanLoader id={id} data={laporan} setData={setLaporan} refetch={refetch} setRefetch={setRefetch}>
-                    {laporan === null ? <NotFoundPage /> :
+                    {laporan === null ? <NotFoundPage /> : laporan?.status.id !== STATUS_LAPORAN.SEDANG_DITANGANI ? <ForbiddenPage/> :
                         laporan &&
                         <div className="lg:w-1/2 md:w-10/12 w-11/12 bg-white floating-shadow-md rounded-md mx-auto mt-4 px-8 py-10">
                             <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl ">Edit Laporan <span className="text-primary">{laporan.nama_pelapor}</span></h1>
