@@ -95,6 +95,7 @@ const TableLaporan = (props: TableLaporan) => {
                                             <>
                                                 <TerimaButton setRefetch={setRefetch} laporan={laporan} />
                                                 <TolakButton setRefetch={setRefetch} laporan={laporan} />
+                                                <KembalikanButton setRefetch={setRefetch} laporan={laporan}/>
                                             </>
                                         }
                                     </div>
