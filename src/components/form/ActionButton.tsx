@@ -291,7 +291,7 @@ export const KembalikanButton = (props: ActionButtonLaporanProps) => {
                     id: STATUS_LAPORAN.KASUS_DIKEMBALIKAN
                 },
                 satgas_pelapor: {
-                    id: satgasPelapor.find((satgas) => satgas.role.nama === ROLE.KELURAHAN)!.id
+                    id: satgasPelapor.find((satgas) => satgas.role.nama === ROLE.KELURAHAN && satgas.kelurahan.id === laporan.kelurahan.id)!.id
                 },
             }, laporan.id)
 

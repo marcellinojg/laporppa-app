@@ -1,3 +1,4 @@
+import { Kelurahan } from "./kelurahan"
 import { Role } from "./role"
 
 
@@ -7,4 +8,5 @@ export interface SatgasPelapor{
     nama: string
     no_telp: string
     role: Role
+    kelurahan : Kelurahan
 }
