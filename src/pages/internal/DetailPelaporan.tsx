@@ -8,6 +8,7 @@ import { useStep } from "usehooks-ts"
 import SectionPelaporan from "../../components/internal/detail_pelaporan/SectionPelaporan"
 import SectionPenjangkauan from "../../components/internal/detail_pelaporan/SectionPenjangkauan"
 import SwitchDetailButton from "../../components/internal/detail_pelaporan/SwitchDetail"
+import { STATUS_LAPORAN } from "../../consts/status"
 
 
 const DetailPelaporan = () => {
@@ -25,7 +26,9 @@ const DetailPelaporan = () => {
 
                         <div className="flex flex-wrap items-center gap-4">
                             <SwitchDetailButton page={1} currentPage={page} label="Pelaporan" setStep={helpers.setStep} />
-                            <SwitchDetailButton page={2} currentPage={page} label="Penjangkauan" setStep={helpers.setStep} />
+                            {laporan.status.id !== STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                <SwitchDetailButton page={2} currentPage={page} label="Penjangkauan" setStep={helpers.setStep} />
+                            }
                         </div>
                     </div>
                     <div className="lg:w-10/12 w-11/12 p-6 bg-white floating-shadow-md mx-auto  rounded-lg">

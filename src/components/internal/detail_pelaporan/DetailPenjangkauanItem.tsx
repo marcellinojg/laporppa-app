@@ -4,6 +4,8 @@ import { useAuthUser } from "react-auth-kit"
 import { User } from "../../../consts/user"
 import { ROLE } from "../../../consts/role"
 import { EditDetailButton, InputDetailButton, LihatDetailButton } from "../../form/PenjangkauanButtons"
+import modalPenjangkauanMapper from "../../../helpers/modalPenjangkauanMapper"
+import { useState } from "react"
 
 
 interface DetailPenjangkauanItemProps {
@@ -13,11 +15,15 @@ interface DetailPenjangkauanItemProps {
     help_text: string
     is_done: boolean
     laporan: Laporan
+    modal_type: string
 }
 
 const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
-    const { title, updated_at, last_edit_by, help_text, is_done, laporan } = props
+    const { title, updated_at, last_edit_by, help_text, is_done, laporan, modal_type } = props
     const userData = useAuthUser()() as User
+    const [isModalActive, setIsModalActive] = useState<boolean>(false)
+    const [mode, setMode] = useState<'read' | 'edit' | 'input'>(is_done === true ? 'read' : 'input' )
+    const Modal = modalPenjangkauanMapper(modal_type)!
     return <div className="flex items-stretch gap-3">
         <div className="flex flex-col">
             <div className="bg-primary text-lg rounded-full p-2 text-white flex flex-col">
@@ -50,22 +56,37 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
                 <p className="text-sm">{help_text}</p>
                 {is_done === true && userData.role === ROLE.KELURAHAN &&
                     <div className="flex items-center gap-3">
-                        <LihatDetailButton />
+                        <LihatDetailButton onClick={() => {
+                            setMode('read')
+                            setIsModalActive(true)
+                        }} />
                     </div>
                 }
                 {is_done === false && userData.role === ROLE.SATGAS && laporan.satgas_pelapor.id === userData.id &&
                     <div className="flex items-center gap-3">
-                        <InputDetailButton />
+                        <InputDetailButton onClick={() => {
+                            setMode('input')
+                            setIsModalActive(true)
+                        }} />
                     </div>
                 }
                 {is_done === true && userData.role === ROLE.SATGAS && laporan.satgas_pelapor.id === userData.id &&
                     <div className="flex items-center gap-3">
-                        <EditDetailButton />
-                        <LihatDetailButton />
+                        <EditDetailButton onClick={() => {
+                            setMode('edit')
+                            setIsModalActive(true)
+                        }} />
+                        <LihatDetailButton onClick={() => {
+                            setMode('read')
+                            setIsModalActive(true)
+                        }} />
                     </div>
                 }
             </div>
         </div>
+        {isModalActive === true &&
+            <Modal mode={mode} setIsModalActive={setIsModalActive} />
+        }
     </div>
 }
 
