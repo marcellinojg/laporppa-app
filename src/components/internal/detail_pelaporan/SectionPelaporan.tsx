@@ -5,7 +5,7 @@ import { formatDate } from '../../../helpers/formatDate';
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../../consts/user";
 import { ROLE } from "../../../consts/role";
-import { AssignButton, EditButton, RujukButton, TerimaButton, TolakButton } from "../../form/Button";
+import { AssignButton, EditButton, KembalikanButton, RujukButton, SelesaikanButton, TerimaButton, TolakButton } from "../../form/ActionButton";
 import { Dispatch, SetStateAction } from "react";
 import { STATUS_LAPORAN } from "../../../consts/status";
 
@@ -41,7 +41,11 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 </div>
             }
             {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
-                <EditButton laporan={laporan} />
+                <div className="flex items-center gap-3">
+                    <EditButton laporan={laporan} />
+                    <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
+                    <SelesaikanButton setRefetch={setRefetch} laporan={laporan} />
+                </div>
             }
             {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
                 <div className="flex items-center gap-3">
@@ -58,6 +62,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <DetailLaporanItem label="Kategori Pengaduan" value={laporan.kategori.nama} />
                 <DetailLaporanItem label="Tanggal & Jam Pengaduan" value={formatDate(laporan.tanggal_jam_pengaduan!, true)} />
                 <DetailLaporanItem label="Satgas yang Menangani" value={laporan.satgas_pelapor.nama} />
+                <DetailLaporanItem label="Satgas yang Sebelumnya Menangani" value={laporan.previous_satgas.nama} />
             </div>
             <div className="border-b-2 flex flex-col gap-3 py-3">
                 <h3 className="text-primary text-lg font-bold">Identitas Pelapor</h3>

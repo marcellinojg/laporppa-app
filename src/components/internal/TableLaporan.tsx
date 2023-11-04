@@ -4,7 +4,7 @@ import { formatDate } from "../../helpers/formatDate"
 import { useAuthUser } from "react-auth-kit"
 import { User } from "../../consts/user"
 import { ROLE } from '../../consts/role';
-import { AssignButton, DetailButton, EditButton, RujukButton, TerimaButton, TolakButton } from "../form/Button"
+import { AssignButton, DetailButton, EditButton, KembalikanButton, RujukButton, TerimaButton, TolakButton } from "../form/ActionButton"
 import { STATUS_LAPORAN } from "../../consts/status"
 import { Dispatch, SetStateAction } from "react"
 
@@ -86,7 +86,10 @@ const TableLaporan = (props: TableLaporan) => {
                                             </>
                                         }
                                         {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
-                                            <EditButton laporan={laporan} />
+                                            <>
+                                                <EditButton laporan={laporan} setRefetch={setRefetch} />
+                                                <KembalikanButton laporan={laporan} setRefetch={setRefetch} />
+                                            </>
                                         }
                                         {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
                                             <>
