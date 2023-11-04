@@ -8,6 +8,7 @@ import { ROLE } from "../../../consts/role";
 import { AssignButton, EditButton, KembalikanButton, RujukButton, SelesaikanButton, TerimaButton, TolakButton } from "../../form/ActionButton";
 import { Dispatch, SetStateAction } from "react";
 import { STATUS_LAPORAN } from "../../../consts/status";
+import { SectionTitle } from "../../common/Typography";
 
 
 interface SectionPelaporanProps {
@@ -57,7 +58,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
         </div>
         <div className="flex flex-col gap-2 py-3">
             <div className="border-b-2 flex flex-col gap-3 py-3">
-                <h3 className="text-primary text-lg font-bold">Informasi Pelaporan</h3>
+                <SectionTitle>Informasi Pelaporan</SectionTitle>
                 <DetailLaporanItem label="Nomor Registrasi" value={laporan.id} />
                 <DetailLaporanItem label="Sumber Pengaduan" value="Masyarakat" />
                 <DetailLaporanItem label="Kategori Pengaduan" value={laporan.kategori.nama} />
@@ -66,14 +67,14 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <DetailLaporanItem label="Satgas yang Sebelumnya Menangani" value={laporan.previous_satgas.nama} />
             </div>
             <div className="border-b-2 flex flex-col gap-3 py-3">
-                <h3 className="text-primary text-lg font-bold">Identitas Pelapor</h3>
+                <SectionTitle>Identitas Pelapor</SectionTitle>
                 <DetailLaporanItem label="Nama Lengkap" value={laporan.nama_pelapor} />
                 <DetailLaporanItem label="NIK" value={laporan.nik_pelapor} />
                 <DetailLaporanItem label="Alamat Domisili" value={laporan.alamat_pelapor} />
                 <DetailLaporanItem label="No. Telepon/Whatsapp" value={laporan.no_telp_pelapor} />
             </div>
             <div className="border-b-2 flex flex-col gap-3 py-3">
-                <h3 className="text-primary text-lg font-bold">Identitas Klien</h3>
+                <SectionTitle>Identitas Klien</SectionTitle>
                 <DetailLaporanItem label="Nama Lengkap (Inisial)" value={laporan.nama_klien} />
                 <DetailLaporanItem label="NIK" value={laporan.nik_klien} />
                 <DetailLaporanItem label="Alamat Domisili" value={laporan.alamat_klien} />
@@ -82,11 +83,11 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <DetailLaporanItem label="No. Telepon/Whatsapp" value={laporan.no_telp_klien} />
             </div>
             <div className="border-b-2 flex flex-col gap-3 py-3">
-                <h3 className="text-primary text-lg font-bold">Permasalahan Klien</h3>
+                <SectionTitle>Permasalahan Klien</SectionTitle>
                 <DetailLaporanItem label="Uraian Singkat Permasalahan" value={laporan.uraian_singkat_masalah} />
             </div>
             <div className="border-b-2 flex flex-col gap-3 py-3">
-                <h3 className="text-primary text-lg font-bold">Dokumentasi Pengaduan</h3>
+                <SectionTitle>Dokumentasi Pengaduan</SectionTitle>
                 <div className="flex flex-wrap items-center gap-4">
                     {laporan.dokumentasi_pengaduan && laporan.dokumentasi_pengaduan.map((url, index) =>
                         <img src={url} width={200} alt={`dokumentasi pengaduan ${index + 1}`} key={index} />

@@ -4,6 +4,8 @@ import Pill from "../Pill"
 import DetailPenjangkauanItem from "./DetailPenjangkauanItem"
 import { formatDate } from "../../../helpers/formatDate"
 import MODAL_PENJANGKAUAN from "../../../consts/modal_penjangkauan"
+import DetailLaporanItem from "./DetailLaporanItem"
+import { SectionTitle } from "../../common/Typography"
 
 interface SectionPenjangkauanProps {
     laporan: Laporan
@@ -20,7 +22,27 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <Pill status={laporan.status.id} />
         </div>
         <div className="flex flex-col gap-2 py-3">
-            <h3 className="text-primary text-lg font-bold">Hasil Penjangkauan</h3>
+            <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
+                <div className="flex items-center justify-between">
+                    <SectionTitle>Penjadwalan</SectionTitle>
+                    <button type="button" className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300">Tambahkan/Edit Penjadwalan</button>
+                </div>
+                <DetailLaporanItem label="Hari, Tanggal, Jam" value={''} />
+                <DetailLaporanItem label="Tempat" value={''} />
+                <DetailLaporanItem label="Alamat" value={''} />
+            </div>
+            <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
+                <div className="flex items-center justify-between">
+                    <SectionTitle>Detail Kasus Klien</SectionTitle>
+                    <button type="button" className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300">Tambahkan/Edit Detail Kasus</button>
+                </div>
+                <DetailLaporanItem label="Tipe Permasalahan" value={''} />
+                <DetailLaporanItem label="Kategori Kasus" value={''} />
+                <DetailLaporanItem label="Jenis Kasus" value={''} />
+                <DetailLaporanItem label="Lokasi Kasus" value={''} />
+                <DetailLaporanItem label="Uraian Singkat Permasalahan" value={''} />
+            </div>
+            <SectionTitle>Hasil Penjangkauan</SectionTitle>
             <span className="text-sm text-gray-500 -mt-2">Berikut ini merupakan hasil penjangkauan ke klien</span>
             <div className="flex flex-col mt-5">
                 <DetailPenjangkauanItem
@@ -74,7 +96,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     updated_at={formatDate(new Date().toString(), true)}
                     modal_type={MODAL_PENJANGKAUAN.KONDISI}
                 />
-                <DetailPenjangkauanItem
+                {/* <DetailPenjangkauanItem
                     laporan={laporan}
                     title="Rencana Analis Kebutuhan Klien Oleh DP3KAPPKB"
                     help_text="Masukkan detail rencana rujukan yang akan diberikan kepada klien."
@@ -89,7 +111,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
                     modal_type={MODAL_PENJANGKAUAN.KLIEN}
-                />
+                /> */}
                 <DetailPenjangkauanItem
                     laporan={laporan}
                     title="Langkah yang Telah Dilakukan"

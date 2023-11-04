@@ -5,7 +5,7 @@ import { User } from "../../../consts/user"
 import { ROLE } from "../../../consts/role"
 import { EditDetailButton, InputDetailButton, LihatDetailButton } from "../../form/PenjangkauanButtons"
 import modalPenjangkauanMapper from "../../../helpers/modalPenjangkauanMapper"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 interface DetailPenjangkauanItemProps {
@@ -22,8 +22,17 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
     const { title, updated_at, last_edit_by, help_text, is_done, laporan, modal_type } = props
     const userData = useAuthUser()() as User
     const [isModalActive, setIsModalActive] = useState<boolean>(false)
-    const [mode, setMode] = useState<'read' | 'edit' | 'input'>(is_done === true ? 'read' : 'input' )
+    const [mode, setMode] = useState<'read' | 'edit' | 'input'>(is_done === true ? 'read' : 'input')
     const Modal = modalPenjangkauanMapper(modal_type)!
+
+    useEffect(() => {
+        if (isModalActive === true)
+            document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+        else
+        document.getElementsByTagName('body')[0].style.overflow = 'auto'
+
+    }, [isModalActive])
+
     return <div className="flex items-stretch gap-3">
         <div className="flex flex-col">
             <div className="bg-primary text-lg rounded-full p-2 text-white flex flex-col">

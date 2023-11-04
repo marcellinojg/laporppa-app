@@ -1,4 +1,4 @@
-import { HarapanModal, KeluargaModal, KlienModal, KondisiModal, KronologiModal, LangkahDilakukanModal, SituasiModal } from '../components/common/ModalPenjangkauan';
+import { HarapanModal, KeluargaModal, KlienModal, KondisiModal, KronologiModal, LangkahDilakukanModal, SituasiModal } from '../components/internal/modal_penjangkauan/ModalPenjangkauan';
 import MODAL_PENJANGKAUAN from '../consts/modal_penjangkauan';
 
 
