@@ -196,6 +196,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Dokumentasi Pelaporan'
+                        isMultiple={true}
                     />
                 </InputSection>
             }

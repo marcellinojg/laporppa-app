@@ -13,10 +13,11 @@ interface UploaderProps {
     errors: FieldErrors<any>
     errorLabel: string
     isRequired?: boolean
+    isMultiple: boolean
 }
 
 const Uploader = (props: UploaderProps) => {
-    const { name, placeholder, setValue, errors } = props
+    const { name, placeholder, setValue, errors, isMultiple } = props
     const [pictures, setPictures] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
 
@@ -24,6 +25,12 @@ const Uploader = (props: UploaderProps) => {
     const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         const files = e.target.files
         if (!files) return
+
+        if(isMultiple === false) {
+            setFiles([files[0]])
+            setPictures([URL.createObjectURL(files[0])])
+            return
+        }
         for (let i = 0; i < files.length; i++) {
             setFiles(prev => [...prev, files[i]])
             setPictures(prev => [...prev, URL.createObjectURL(files[i])])
@@ -41,7 +48,7 @@ const Uploader = (props: UploaderProps) => {
             <input
                 type="file"
                 className="opacity-0 absolute z-20 w-full h-full"
-                multiple
+                multiple={isMultiple}
                 title=" "
                 id={name}
                 onChange={onChange}
@@ -61,6 +68,7 @@ const Uploader = (props: UploaderProps) => {
                         <Thumbnail
                             key={index}
                             imgUrl={picture}
+                            isMultiple={isMultiple}
                             onDelete={() => {
                                 const index = pictures.findIndex(p => p === picture)
                                 files.splice(index, 1)
