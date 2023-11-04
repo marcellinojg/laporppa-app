@@ -16,7 +16,7 @@ interface DetailPenjangkauanItemProps {
 }
 
 const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
-    const { title, updated_at, last_edit_by, help_text, is_done } = props
+    const { title, updated_at, last_edit_by, help_text, is_done, laporan } = props
     const userData = useAuthUser()() as User
     return <div className="flex items-stretch gap-3">
         <div className="flex flex-col">
@@ -53,18 +53,17 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
                         <LihatDetailButton />
                     </div>
                 }
-                {is_done === false && userData.role === ROLE.SATGAS &&
+                {is_done === false && userData.role === ROLE.SATGAS && laporan.satgas_pelapor.id === userData.id &&
                     <div className="flex items-center gap-3">
                         <InputDetailButton />
                     </div>
                 }
-                {is_done === true && userData.role === ROLE.SATGAS &&
+                {is_done === true && userData.role === ROLE.SATGAS && laporan.satgas_pelapor.id === userData.id &&
                     <div className="flex items-center gap-3">
                         <EditDetailButton />
                         <LihatDetailButton />
                     </div>
                 }
-
             </div>
         </div>
     </div>

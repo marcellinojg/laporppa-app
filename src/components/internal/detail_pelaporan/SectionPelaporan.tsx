@@ -40,14 +40,14 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                     <RujukButton setRefetch={setRefetch} laporan={laporan} />
                 </div>
             }
-            {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
+            {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&  laporan.satgas_pelapor.id === userData.id &&
                 <div className="flex items-center gap-3">
                     <EditButton laporan={laporan} />
                     <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
                     <SelesaikanButton setRefetch={setRefetch} laporan={laporan} />
                 </div>
             }
-            {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+            {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&  laporan.satgas_pelapor.id === userData.id &&
                 <div className="flex items-center gap-3">
                     <TerimaButton setRefetch={setRefetch} laporan={laporan} />
                     <TolakButton setRefetch={setRefetch} laporan={laporan} />

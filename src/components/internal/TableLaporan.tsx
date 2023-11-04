@@ -85,13 +85,13 @@ const TableLaporan = (props: TableLaporan) => {
                                                 <RujukButton setRefetch={setRefetch} laporan={laporan} />
                                             </>
                                         }
-                                        {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&
+                                        {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&  laporan.satgas_pelapor.id === userData.id &&
                                             <>
                                                 <EditButton laporan={laporan} setRefetch={setRefetch} />
                                                 <KembalikanButton laporan={laporan} setRefetch={setRefetch} />
                                             </>
                                         }
-                                        {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                        {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&  laporan.satgas_pelapor.id === userData.id &&
                                             <>
                                                 <TerimaButton setRefetch={setRefetch} laporan={laporan} />
                                                 <TolakButton setRefetch={setRefetch} laporan={laporan} />
