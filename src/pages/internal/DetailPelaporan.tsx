@@ -30,7 +30,7 @@ const DetailPelaporan = () => {
                     </div>
                     <div className="lg:w-10/12 w-11/12 p-6 bg-white floating-shadow-md mx-auto  rounded-lg">
                         {page === 1 && <SectionPelaporan laporan={laporan} setRefetch={setRefetch} />}
-                        {page === 2 && <SectionPenjangkauan />}
+                        {page === 2 && <SectionPenjangkauan laporan={laporan} setRefetch={setRefetch} />}
                     </div>
                 </>
 

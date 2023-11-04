@@ -17,7 +17,7 @@ const CekPelaporan = () => {
             <h1 className="font-bold text-2xl">Cek Pelaporan</h1>
             <h2 className="mt-2 text-slate-500 font-bold">Masukkan Nomor Registrasi, NIK, atau nomor identitas untuk melacak progres pengaduan</h2>
             <form action="" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex md:flex-row flex-col items-center md:w-3/4 w-12/12 mx-auto mt-12 gap-2">
+                <div className="flex md:flex-row flex-col items-start md:w-3/4 w-12/12 mx-auto mt-12 gap-2">
                     <div className="grow w-full">
                         <InputText
                             name="cek_pengaduan"
@@ -31,7 +31,7 @@ const CekPelaporan = () => {
                     </div>
                     <PrimaryButton
                         isSubmit={true}
-                        className="md:w-1/6 w-11/12 rounded-lg py-3 mb-1"
+                        className="md:w-1/6 w-11/12 rounded-lg  py-2 mb-1"
                     >
                         Search
                     </PrimaryButton>
