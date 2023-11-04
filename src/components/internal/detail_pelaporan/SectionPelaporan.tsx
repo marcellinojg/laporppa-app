@@ -51,6 +51,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <div className="flex items-center gap-3">
                     <TerimaButton setRefetch={setRefetch} laporan={laporan} />
                     <TolakButton setRefetch={setRefetch} laporan={laporan} />
+                    <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
                 </div>
             }
         </div>
