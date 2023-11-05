@@ -1,9 +1,6 @@
+import { FormModal } from "../../../../consts/modal_penjangkauan"
 
-interface FormDetailKlienProps {
-    mode : 'read' | 'edit' | 'input'
-}
-
-const FormDetailKlien = (props: FormDetailKlienProps) => {
+const FormDetailKlien = (props: FormModal) => {
     const {} = props
     return <>
     

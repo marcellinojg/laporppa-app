@@ -3,7 +3,7 @@ import { Laporan } from "../../../consts/laporan"
 import Pill from "../Pill"
 import DetailPenjangkauanItem from "./DetailPenjangkauanItem"
 import { formatDate } from "../../../helpers/formatDate"
-import MODAL_PENJANGKAUAN from "../../../consts/modal_penjangkauan"
+import { MODAL_PENJANGKAUAN } from "../../../consts/modal_penjangkauan"
 import DetailLaporanItem from "./DetailLaporanItem"
 import { SectionTitle } from "../../common/Typography"
 
@@ -52,7 +52,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={true}
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KLIEN}
+                    modalType={MODAL_PENJANGKAUAN.KLIEN}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -61,7 +61,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={true}
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KELUARGA}
+                    modalType={MODAL_PENJANGKAUAN.KELUARGA}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -70,7 +70,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={true}
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.SITUASI}
+                    modalType={MODAL_PENJANGKAUAN.SITUASI}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -78,7 +78,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Deskripsikan kronologis kejadian secara lengkap."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KRONOLOGI}
+                    modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -86,7 +86,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.HARAPAN}
+                    modalType={MODAL_PENJANGKAUAN.HARAPAN}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -94,7 +94,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Masukkan informasi detail kondisi klien terkait kondisi fisik, psikologis dst."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KONDISI}
+                    modalType={MODAL_PENJANGKAUAN.KONDISI}
                 />
                 {/* <DetailPenjangkauanItem
                     laporan={laporan}
@@ -102,7 +102,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Masukkan detail rencana rujukan yang akan diberikan kepada klien."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KLIEN}
+                    modalType={MODAL_PENJANGKAUAN.KLIEN}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -110,7 +110,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Masukkan detail rencana rujukan yang akan diberikan kepada klien."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KLIEN}
+                    modalType={MODAL_PENJANGKAUAN.KLIEN}
                 /> */}
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -118,7 +118,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
+                    modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -126,7 +126,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
                     is_done={false}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modal_type={MODAL_PENJANGKAUAN.KLIEN}
+                    modalType={MODAL_PENJANGKAUAN.KLIEN}
                 />
             </div>
         </div>

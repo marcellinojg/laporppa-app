@@ -4,8 +4,8 @@ import { useAuthUser } from "react-auth-kit"
 import { User } from "../../../consts/user"
 import { ROLE } from "../../../consts/role"
 import { EditDetailButton, InputDetailButton, LihatDetailButton } from "../../form/PenjangkauanButtons"
-import modalPenjangkauanMapper from "../../../helpers/modalPenjangkauanMapper"
 import { useState, useEffect } from "react"
+import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan"
 
 
 interface DetailPenjangkauanItemProps {
@@ -15,15 +15,14 @@ interface DetailPenjangkauanItemProps {
     help_text: string
     is_done: boolean
     laporan: Laporan
-    modal_type: string
+    modalType: string
 }
 
 const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
-    const { title, updated_at, last_edit_by, help_text, is_done, laporan, modal_type } = props
+    const { title, updated_at, last_edit_by, help_text, is_done, laporan, modalType } = props
     const userData = useAuthUser()() as User
     const [isModalActive, setIsModalActive] = useState<boolean>(false)
     const [mode, setMode] = useState<'read' | 'edit' | 'input'>(is_done === true ? 'read' : 'input')
-    const Modal = modalPenjangkauanMapper(modal_type)!
 
     useEffect(() => {
         if (isModalActive === true)
@@ -94,7 +93,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
             </div>
         </div>
         {isModalActive === true &&
-            <Modal mode={mode} setIsModalActive={setIsModalActive} />
+            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} />
         }
     </div>
 }

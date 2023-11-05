@@ -3,16 +3,13 @@ import capitalize from "../../../../helpers/capitalize"
 import { TextArea } from "../../../form/Input"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { PrimaryButton } from "../../../form/Button"
-
-interface FormDetailKronologiProps {
-    mode: 'read' | 'edit' | 'input'
-}
+import { FormModal } from "../../../../consts/modal_penjangkauan"
 
 interface DetailKronologi {
     kronologi: string
 }
 
-const FormDetailKronologi = (props: FormDetailKronologiProps) => {
+const FormDetailKronologi = (props: FormModal) => {
     const { mode } = props
     const { register, formState: { errors }, handleSubmit } = useForm<DetailKronologi>()
 

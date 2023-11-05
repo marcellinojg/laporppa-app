@@ -1,26 +1,32 @@
-import { HarapanModal, KeluargaModal, KlienModal, KondisiModal, KronologiModal, LangkahDilakukanModal, SituasiModal } from '../components/internal/modal_penjangkauan/ModalPenjangkauan';
-import MODAL_PENJANGKAUAN from '../consts/modal_penjangkauan';
+import FormDetailHarapan from '../components/internal/modal_penjangkauan/harapan/FormHarapan';
+import DetailHarapanContent from '../components/internal/modal_penjangkauan/harapan/HarapanContent';
+import DetailKlienContent from '../components/internal/modal_penjangkauan/klien/DetailKlienContent';
+import DetailKronologiContent from '../components/internal/modal_penjangkauan/kronologi/KronologiContent';
+import FormDetailKlien from '../components/internal/modal_penjangkauan/klien/FormDetailKlien';
+import FormDetailKronologi from '../components/internal/modal_penjangkauan/kronologi/FormKronologi';
+import DetailSituasiContent from '../components/internal/modal_penjangkauan/situasi/DetailSituasiContent';
+import FormDetailSituasi from '../components/internal/modal_penjangkauan/situasi/FormDetailSituasi';
+import { MODAL_PENJANGKAUAN } from '../consts/modal_penjangkauan';
 
-
-const modalPenjangkauanMapper = (type : string) => {
-    switch(type){
-        case MODAL_PENJANGKAUAN.KLIEN :
-            return KlienModal
+const modalPenjangkauanMapper = (type: string) => {
+    switch (type) {
+        case MODAL_PENJANGKAUAN.KLIEN:
+            return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.KELUARGA:
-            return KeluargaModal
+            return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.HARAPAN:
-            return HarapanModal
+            return [DetailHarapanContent, FormDetailHarapan]
         case MODAL_PENJANGKAUAN.KONDISI:
-            return KondisiModal
+            return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.KRONOLOGI:
-            return KronologiModal
+            return [DetailKronologiContent, FormDetailKronologi]
         case MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN:
-            return LangkahDilakukanModal
+            return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.SITUASI:
-            return SituasiModal
+            return [DetailSituasiContent, FormDetailSituasi]
         default:
             console.warn('MODAL TYPE NOT FOUND')
-            return
+            return []
     }
 }
 

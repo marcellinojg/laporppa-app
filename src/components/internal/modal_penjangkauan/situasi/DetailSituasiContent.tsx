@@ -1,10 +1,7 @@
+import { ContentModal } from "../../../../consts/modal_penjangkauan"
 import { SectionTitle } from "../../../common/Typography"
 
-interface DetailSituasiContentProps {
-
-}
-
-const DetailSituasiContent = (props: DetailSituasiContentProps) => {
+const DetailSituasiContent = (props: ContentModal) => {
     const { } = props
     return <>
         <span className="font-bold text-lg">Detail Data Situasi</span>

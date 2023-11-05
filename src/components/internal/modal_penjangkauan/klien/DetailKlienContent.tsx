@@ -1,11 +1,8 @@
+import { ContentModal } from "../../../../consts/modal_penjangkauan"
 import { SectionTitle } from "../../../common/Typography"
 import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem"
 
-interface DetailKlienContentProps {
-
-}
-
-const DetailKlienContent = (props: DetailKlienContentProps) => {
+const DetailKlienContent = (props: ContentModal) => {
     const { } = props
     return <>
         <span className="font-bold text-lg">Detail Data Klien</span>

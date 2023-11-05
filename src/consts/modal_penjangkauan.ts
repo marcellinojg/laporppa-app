@@ -1,6 +1,6 @@
 
 
-const MODAL_PENJANGKAUAN = {
+export const MODAL_PENJANGKAUAN = {
     KLIEN : 'KLIEN',
     KELUARGA: 'KELUARGA',
     SITUASI: 'SITUASI',
@@ -10,4 +10,11 @@ const MODAL_PENJANGKAUAN = {
     LANGKAH_DILAKUKAN: 'LANGKAH_DILAKUKAN',
 }
 
-export default MODAL_PENJANGKAUAN
+
+export interface ContentModal {
+
+}
+
+export interface FormModal {
+    mode : 'read' | 'edit' | 'input'
+}
