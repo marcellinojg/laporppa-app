@@ -108,6 +108,7 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
                 onClose={() => setIsModalActive(false)}
                 successButtonText="Tugaskan"
                 setSelectedSatgasId={setSelectedSatgasId}
+                laporan={laporan}
             />
         }
     </>

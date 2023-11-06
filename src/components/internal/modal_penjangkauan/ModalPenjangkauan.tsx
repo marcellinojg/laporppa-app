@@ -19,7 +19,7 @@ const ModalPenjangkauan = (props: ModalPenjangkauanProps) => {
     return <>
         <div className="w-screen h-screen bg-black bg-opacity-50 fixed top-0 left-0 z-20 flex items-center justify-center">
             <div ref={modalRef} className="flex flex-col bg-white floating-shadow-lg lg:px-10 px-4 py-8 lg:w-3/4 md:w-1/2 w-11/12 max-h-[90vh] overflow-auto rounded-md">
-                {mode === 'read' ? <Content mode={"read"} /> : <Form mode={mode} />}
+                {mode === 'read' ? <Content mode={"read"} setIsModalActive={setIsModalActive} /> : <Form mode={mode} setIsModalActive={setIsModalActive} />}
             </div>
         </div>
     </>

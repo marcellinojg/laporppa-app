@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react"
 
 
 export const MODAL_PENJANGKAUAN = {
@@ -17,4 +18,5 @@ export interface ContentModal {
 
 export interface FormModal {
     mode : 'read' | 'edit' | 'input'
+    setIsModalActive : Dispatch<SetStateAction<boolean>>
 }

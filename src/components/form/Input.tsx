@@ -50,7 +50,7 @@ export const InputText = (props: InputProps): ReactNode => {
 }
 
 export const TextArea = (props: InputProps) => {
-    const { register, placeholder, name, isRequired, errors, label, className, defaultValue ='', maxChar = 255 } = props
+    const { register, placeholder, name, isRequired, errors, label, className, defaultValue ='', maxChar = 255, errorLabel = label } = props
 
     return <div className='flex flex-col gap-1'>
         {label &&
@@ -69,7 +69,7 @@ export const TextArea = (props: InputProps) => {
                 {...register(
                     name,
                     {
-                        required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
+                        required: isRequired ? `${label ? errorLabel : placeholder} harus diisi` : undefined,
                         maxLength: {
                             value: maxChar,
                             message: `Panjang maksimal ${maxChar} karakter`

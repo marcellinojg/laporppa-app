@@ -15,6 +15,7 @@ export interface InputProps {
     defaultValue?: string
     className?: string
     maxChar? : number
+    errorLabel? : string
 }
 
 export interface SearchInputProps {

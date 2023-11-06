@@ -10,17 +10,18 @@ interface DetailSituasi {
 }
 
 const FormDetailSituasi = (props: FormModal) => {
-    const { mode } = props
+    const { mode, setIsModalActive } = props
     const { register, formState: { errors }, handleSubmit } = useForm<DetailSituasi>()
 
-    const onSubmit : SubmitHandler<DetailSituasi> = (data : DetailSituasi ) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<DetailSituasi> = (data: DetailSituasi) => {
+        alert(data.situasi_keluarga)
+        setIsModalActive(false)
     }
 
     return <>
         <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Situasi Klien</span>
         <div className="flex flex-col gap-2 py-3">
-            <form className="border-b-2 flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
                 <SectionTitle>Situasi Keluarga</SectionTitle>
                 <TextArea
                     name="situasi_keluarga"
@@ -28,11 +29,13 @@ const FormDetailSituasi = (props: FormModal) => {
                     defaultValue=""
                     register={register}
                     errors={errors}
+                    isRequired={true}
                     label="Ceritakan tentang situasi keluarga"
+                    errorLabel="Situasi Keluarga"
                     placeholder="Contoh : Situasi keluarga sedang tidak saling berbicara"
                 />
+                <PrimaryButton className="py-2" isSubmit={true}>Submit</PrimaryButton>
             </form>
-            <PrimaryButton className="py-2" isSubmit>Submit</PrimaryButton>
         </div>
     </>
 }
