@@ -11,7 +11,7 @@ import FormPelaporan from "../../components/internal/FormPelaporan"
 import { postLaporan } from "../../api/laporan"
 import { useAlert } from "../../hooks/useAlert"
 import useLoader from "../../hooks/useLoader"
-import { combineDateAndTimePelaporan, formatDatePelaporan } from "../../helpers/formatDate"
+import { combineDateAndTimePelaporan } from "../../helpers/formatDate"
 import { ALERT_TYPE } from "../../consts/alert"
 import { useNavigate } from "react-router-dom"
 

@@ -4,6 +4,7 @@ import capitalize from "../../../../helpers/capitalize"
 import { SectionTitle } from "../../../common/Typography"
 import { PrimaryButton } from "../../../form/Button"
 import Pendidikan from "../../../../consts/pendidikan"
+import { InputText } from "../../../form/Input"
 
 interface DetailKlien {
     nama_lengkap : string
@@ -40,6 +41,13 @@ const FormDetailKlien = (props: FormModal) => {
         <div className="flex flex-col gap-2 py-3">
             <form className="border-b-2 flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
                 <SectionTitle>Detail Klien</SectionTitle>
+                <InputText
+                    register={register}
+                    errors={errors}
+                    name="Test"
+                    placeholder="Test"
+                    label="test"
+                />
             </form>
             <PrimaryButton className="py-2" isSubmit>Submit</PrimaryButton>
         </div>

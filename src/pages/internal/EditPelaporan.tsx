@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { NotFoundPage } from "../../components/errors/NotFoundPage"
 import { ALERT_TYPE } from "../../consts/alert"
 import { ROUTES } from "../../consts/routes"
-import { combineDateAndTimePelaporan, formatDatePelaporan } from "../../helpers/formatDate"
+import { combineDateAndTimePelaporan } from "../../helpers/formatDate"
 import { STATUS_LAPORAN } from "../../consts/status"
 import { ForbiddenPage } from "../../components/errors/ForbiddenPage"
 
