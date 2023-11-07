@@ -7,6 +7,8 @@ import FormDetailKronologi from '../components/internal/modal_penjangkauan/krono
 import DetailSituasiContent from '../components/internal/modal_penjangkauan/situasi/DetailSituasiContent';
 import FormDetailSituasi from '../components/internal/modal_penjangkauan/situasi/FormDetailSituasi';
 import { MODAL_PENJANGKAUAN } from '../consts/modal_penjangkauan';
+import DetailKondisiContent from '../components/internal/modal_penjangkauan/kondisi/KondisiContent';
+import FormDetailKondisi from '../components/internal/modal_penjangkauan/kondisi/FormKondisi';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {
@@ -17,7 +19,7 @@ const modalPenjangkauanMapper = (type: string) => {
         case MODAL_PENJANGKAUAN.HARAPAN:
             return [DetailHarapanContent, FormDetailHarapan]
         case MODAL_PENJANGKAUAN.KONDISI:
-            return [DetailKlienContent, FormDetailKlien]
+            return [DetailKondisiContent, FormDetailKondisi]
         case MODAL_PENJANGKAUAN.KRONOLOGI:
             return [DetailKronologiContent, FormDetailKronologi]
         case MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN:

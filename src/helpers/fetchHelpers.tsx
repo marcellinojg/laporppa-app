@@ -104,8 +104,13 @@ export const LaporanLoader = (props: FetchDataEffectsProps<Laporan | null | unde
         if (refetch === true) {
             showLoader()
             getLaporan(id!)
-                .then((laporan) => {
-                    setData(laporan)
+                .then((laporan : Laporan) => {
+                    const tanggal_jam_pengaduan = new Date(laporan.tanggal_jam_pengaduan)
+                    setData({
+                        ...laporan,
+                        tanggal_pengaduan : tanggal_jam_pengaduan,
+                        jam_pengaduan: `${tanggal_jam_pengaduan.getHours()}:${tanggal_jam_pengaduan.getMinutes()}`
+                    })
                 })
                 .catch((error) => {
                     if (error.response.status == 404)

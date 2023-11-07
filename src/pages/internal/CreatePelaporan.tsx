@@ -11,7 +11,7 @@ import FormPelaporan from "../../components/internal/FormPelaporan"
 import { postLaporan } from "../../api/laporan"
 import { useAlert } from "../../hooks/useAlert"
 import useLoader from "../../hooks/useLoader"
-import { formatDatePelaporan } from "../../helpers/formatDate"
+import { combineDateAndTimePelaporan, formatDatePelaporan } from "../../helpers/formatDate"
 import { ALERT_TYPE } from "../../consts/alert"
 import { useNavigate } from "react-router-dom"
 
@@ -34,32 +34,14 @@ const CreatePelaporan = () => {
 
         const formatData : LaporanSatgas = {
             ...data,
-            tanggal_jam_pengaduan : formatDatePelaporan(new Date(data.tanggal_jam_pengaduan))
+            tanggal_jam_pengaduan : combineDateAndTimePelaporan(data.tanggal_pengaduan, data.jam_pengaduan),
+            sumber_pengaduan_id: 2,
         }
-        
-        const arrData = Object.entries(formatData)
-        
-        const formData = new FormData()
-        arrData.forEach((data) => {
-            if (data[0].includes('dokumentasi')) {
-                const arrFiles = data[1] as File[]
-                console.log(arrFiles)
-                arrFiles.forEach((file) => formData.append(`${data[0]}`, file))
-            }
-            else
-                formData.append(data[0], data[1])
-        })
 
         try {
             setIsLoading(true)
             showLoader()
-            await postLaporan(
-                {
-                    ...data,
-                    tanggal_jam_pengaduan: formatDatePelaporan(new Date(data.tanggal_jam_pengaduan)),
-                    sumber_pengaduan_id: 2
-                }
-            ) as Laporan
+            await postLaporan(formatData) as Laporan
             localStorage.removeItem('form_internal_state')
             reset()
             addAlert({
@@ -70,7 +52,7 @@ const CreatePelaporan = () => {
             hideLoader()
             setTimeout(() => {
                 navigate(0)
-            }, 1500)
+            }, 20000)
         }
         catch {
             errorFetchAlert()

@@ -26,20 +26,18 @@ const TableLaporan = (props: TableLaporan) => {
             <div className="w-full overflow-auto">
                 <table className="w-full">
                     <thead>
-                        <tr className="border-y-2 border-slate-300">
-                            <th className="py-4 px-2">No. Registrasi</th>
-                            <th className="py-4 px-2">Klien - NIK</th>
-                            <th className="py-4 px-2">Pelapor - NIK</th>
-                            <th className="py-4 px-2">Sumber - Tanggal Pengaduan</th>
-                            <th className="py-4 px-2">Status</th>
-                            <th className="py-4 px-2">Aksi</th>
+                        <tr className="border-y-[2px] border-slate-300">
+                            <th className="py-4 px-2 border-x-[2px]">Klien - NIK</th>
+                            <th className="py-4 px-2 border-r-[2px]">Pelapor - NIK</th>
+                            <th className="py-4 px-2 border-r-[2px]">Sumber - Tanggal Pengaduan</th>
+                            <th className="py-4 px-2 border-r-[2px]">Status</th>
+                            <th className="py-4 px-2 border-r-[2px]">Aksi</th>
                         </tr>
                     </thead>
                     {listLaporan.map((laporan) =>
                         <tbody key={laporan.id}>
                             <tr className="border-b-2 border-slate-300 text-center text-sm">
-                                <td className="py-4 px-2 border-r-[2px]">{laporan.id}</td>
-                                <td className="py-4 px-2 border-r-[2px]">
+                                <td className="py-4 px-2 border-x-[2px]">
                                     <div className="flex flex-col gap-2">
                                         <div className="flex flex-col gap-1 text-start">
                                             <span>{laporan.nama_klien || '-'}</span>
@@ -66,7 +64,7 @@ const TableLaporan = (props: TableLaporan) => {
                                 <td className="py-4 px-2 border-r-[2px]">
                                     <Pill status={laporan.status!.id} />
                                 </td>
-                                <td className="py-4 px-3">
+                                <td className="py-4 px-3 border-r-[2px]">
                                     <div className="flex flex-col gap-2">
                                         <DetailButton laporan={laporan} />
                                         {userData.role === ROLE.KELURAHAN &&

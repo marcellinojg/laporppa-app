@@ -9,6 +9,7 @@ import { InputText, TextArea } from "../form/Input"
 import { Kelurahan } from '../../consts/kelurahan';
 import { Kecamatan } from '../../consts/kecamatan';
 import Uploader from '../form/Uploader';
+import TimePicker from '../form/Timepicker';
 
 interface FormPelaporanProps {
     onSubmit: SubmitHandler<LaporanSatgas>
@@ -58,12 +59,21 @@ const FormPelaporan = (props: FormPelaporanProps) => {
                     }))}
                 />
                 <Datepicker
-                    name='tanggal_jam_pengaduan'
+                    name='tanggal_pengaduan'
                     control={control}
                     isRequired
-                    defaultValue={laporanEdit ? new Date(laporanEdit?.tanggal_jam_pengaduan!) : null}
-                    placeholder='Masukkan tanggal & jam pengaduan'
-                    label='Tanggal & Jam Pengaduan'
+                    defaultValue={laporanEdit ? new Date(laporanEdit?.tanggal_pengaduan) : null}
+                    placeholder='Masukkan tanggal pengaduan'
+                    label='Tanggal Pengaduan'
+                />
+                <TimePicker
+                    name='jam_pengaduan'
+                    register={register}
+                    isRequired
+                    defaultValue={laporanEdit && laporanEdit.jam_pengaduan}
+                    placeholder='Masukkan jam pengaduan'
+                    label='Jam Pengaduan'
+                    errors={errors}
                 />
             </InputSection>
             <InputSection title="Identitas Pelapor">

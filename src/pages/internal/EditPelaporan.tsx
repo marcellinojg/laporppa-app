@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { NotFoundPage } from "../../components/errors/NotFoundPage"
 import { ALERT_TYPE } from "../../consts/alert"
 import { ROUTES } from "../../consts/routes"
-import { formatDatePelaporan } from "../../helpers/formatDate"
+import { combineDateAndTimePelaporan, formatDatePelaporan } from "../../helpers/formatDate"
 import { STATUS_LAPORAN } from "../../consts/status"
 import { ForbiddenPage } from "../../components/errors/ForbiddenPage"
 
@@ -40,7 +40,7 @@ const EditPelaporan = () => {
             showLoader()
             await patchLaporan({
                 ...data,
-                tanggal_jam_pengaduan: formatDatePelaporan(new Date(data.tanggal_jam_pengaduan))
+                tanggal_jam_pengaduan : combineDateAndTimePelaporan(data.tanggal_pengaduan, data.jam_pengaduan),
             }, laporan?.id!) as Laporan
             localStorage.removeItem('form_internal_state')
             reset()

@@ -5,31 +5,31 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { PrimaryButton } from "../../../form/Button"
 import { FormModal } from "../../../../consts/modal_penjangkauan"
 
-interface DetailKronologi {
-    kronologi: string
+interface DetailKondisi {
+    kondisi: string
 }
 
-const FormDetailKronologi = (props: FormModal) => {
+const FormDetailKondisi = (props: FormModal) => {
     const { mode } = props
-    const { register, formState: { errors }, handleSubmit } = useForm<DetailKronologi>()
+    const { register, formState: { errors }, handleSubmit } = useForm<DetailKondisi>()
 
-    const onSubmit : SubmitHandler<DetailKronologi> = (data : DetailKronologi ) => {
+    const onSubmit : SubmitHandler<DetailKondisi> = (data : DetailKondisi ) => {
         console.log(data)
     }
 
     return <>
-        <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Kronologi Kejadian</span>
+        <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Kondisi Klien</span>
         <div className="flex flex-col gap-2 py-3">
             <form className="border-b-2 flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
-                <SectionTitle>Kronologi Kejadian</SectionTitle>
+                <SectionTitle>Kondisi Klien</SectionTitle>
                 <TextArea
-                    name="kronologi"
+                    name="kondisi"
                     className="h-60"
                     defaultValue=""
                     register={register}
                     errors={errors}
-                    label="Ceritakan tentang kronologi kejadian"
-                    placeholder="Contoh : Pada tanggal 1 Januari, Klien dianiaya"
+                    label="Ceritakan tentang kondisi klien"
+                    placeholder="Contoh : Klien sedang mengalami gangguan psikologis"
                 />
             </form>
             <PrimaryButton className="py-2" isSubmit>Submit</PrimaryButton>
@@ -37,4 +37,4 @@ const FormDetailKronologi = (props: FormModal) => {
     </>
 }
 
-export default FormDetailKronologi
+export default FormDetailKondisi

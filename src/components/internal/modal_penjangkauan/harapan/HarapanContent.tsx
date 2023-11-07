@@ -4,10 +4,10 @@ import { SectionTitle } from "../../../common/Typography"
 const DetailHarapanContent = (props: ContentModal) => {
     const { } = props
     return <>
-        <span className="font-bold text-lg">Detail Harapan Kejadian</span>
+        <span className="font-bold text-lg">Detail Harapan Klien dan Keluarga</span>
         <div className="flex flex-col gap-2 py-3">
             <div className="border-b-2 flex flex-col gap-3 py-3">
-                <SectionTitle>Harapan Kejadian</SectionTitle>
+                <SectionTitle>Harapan Klien dan Keluarga</SectionTitle>
                 <p className="text-sm whitespace-preline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error placeat nostrum doloribus necessitatibus ipsa quos quibusdam fugit earum amet.</p>
             </div>
         </div>

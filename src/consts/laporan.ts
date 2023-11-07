@@ -7,6 +7,8 @@ import SumberPengaduan from './sumber';
 export interface Laporan {
     id: string,
     tanggal_jam_pengaduan: string,
+    tanggal_pengaduan: Date,
+    jam_pengaduan: string,
     uraian_singkat_masalah: string,
     no_telp_pelapor: string,
     no_telp_klien: string,
@@ -35,6 +37,8 @@ export interface Laporan {
 export interface LaporanSatgas {
     kategori_id: number
     tanggal_jam_pengaduan: string
+    tanggal_pengaduan: Date
+    jam_pengaduan: string
     nama_pelapor: string
     nik_pelapor?: string
     no_telp_pelapor: string
@@ -46,7 +50,7 @@ export interface LaporanSatgas {
     kelurahan_id: number
     alamat_klien?: string
     uraian_singkat_masalah: string
-    sumber_pengaduan_id : number
+    sumber_pengaduan_id: number
     dokumentasi_pengaduan: File[]
 
     // doesn't have default value
@@ -77,5 +81,5 @@ export interface LaporanToken {
 
 
 export interface LaporanCount extends Status {
-    totalCase : number
+    totalCase: number
 }

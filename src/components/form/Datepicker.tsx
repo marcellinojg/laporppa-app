@@ -35,11 +35,9 @@ const Datepicker = (props: DatepickerProps) => {
                         placeholderText={placeholder}
                         onChange={onChange}
                         startDate={new Date()}
-                        value={formatDate(value, true)}
+                        value={formatDate(value, false)}
                         selected={new Date(value || new Date().toISOString())}
                         maxDate={new Date()}
-                        maxTime={new Date()}
-                        showTimeInput={true}
                         showFullMonthYearPicker={true}
                         locale={'id'}
                     />

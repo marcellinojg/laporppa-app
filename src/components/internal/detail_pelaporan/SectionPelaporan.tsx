@@ -62,7 +62,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <DetailLaporanItem label="Nomor Registrasi" value={laporan.id} />
                 <DetailLaporanItem label="Sumber Pengaduan" value="Masyarakat" />
                 <DetailLaporanItem label="Kategori Pengaduan" value={laporan.kategori.nama} />
-                <DetailLaporanItem label="Tanggal & Jam Pengaduan" value={formatDate(laporan.tanggal_jam_pengaduan!, true)} />
+                <DetailLaporanItem label="Tanggal & Jam Pengaduan" value={formatDate(laporan.tanggal_jam_pengaduan, true)} />
                 <DetailLaporanItem label="Satgas yang Menangani" value={laporan.satgas_pelapor.nama} />
                 <DetailLaporanItem label="Satgas yang Sebelumnya Menangani" value={laporan.previous_satgas.nama} />
             </div>

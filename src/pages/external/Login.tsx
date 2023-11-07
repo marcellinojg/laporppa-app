@@ -51,8 +51,8 @@ const Login = () => {
 
     return <>
         <div className="min-w-screen min-h-screen flex items-center justify-center bg-login">
-            <div className="bg-white floating-shadow-md p-10 lg:w-[450px] md:w-1/2 w-11/12">
-                <h1 className="font-bold text-primary text-3xl text-center">PORTAL SATGAS</h1>
+            <div className="bg-white floating-shadow-md p-10 lg:w-[450px] md:w-1/2 w-11/12 relative pt-12">
+                <h1 className="font-bold text-primary text-3xl text-center">Masuk</h1>
                 <form
                     action=""
                     className="flex flex-col gap-2 mt-5"

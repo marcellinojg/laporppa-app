@@ -74,7 +74,7 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
 
             addAlert({
                 type: ALERT_TYPE.SUCCESS,
-                title: 'Laporan Didelegasikan',
+                title: 'Laporan Ditugaskan',
                 message: `Laporan dari ${laporan.nama_pelapor} berhasil ditugaskan kepada satgas !`
             })
             setRefetch!(true)
@@ -82,7 +82,7 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
         catch {
             addAlert({
                 type: ALERT_TYPE.ERROR,
-                title: 'Laporan Gagal Didelegasikan',
+                title: 'Laporan Gagal Ditugaskan',
                 message: `Laporan dari ${laporan.nama_pelapor} gagal ditugaskan kepada satgas !`
             })
         }
@@ -98,11 +98,11 @@ export const AssignButton = (props: ActionButtonLaporanProps) => {
             onClick={() => setIsModalActive(true)}
             className="text-white bg-green-500 hover:bg-green-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
             <FaUser />
-            Delegasi
+            Tugaskan
         </button>
         {isModalActive &&
             <AssignModal
-                title="Delegasi Pelaporan"
+                title="Tugaskan Pelaporan"
                 description={laporan.nama_pelapor}
                 onSuccess={handleAssign}
                 onClose={() => setIsModalActive(false)}
@@ -259,7 +259,7 @@ export const RujukButton = (props: ActionButtonLaporanProps) => {
         <button
             type="button"
             onClick={() => setIsModalActive(true)}
-            className="text-white bg-orange-500 hover:bg-orange-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+            className="text-white bg-red-400 hover:bg-red-500 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
             <FaPaperPlane />
             Rujuk
         </button>

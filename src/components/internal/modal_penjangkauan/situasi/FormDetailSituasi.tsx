@@ -19,7 +19,7 @@ const FormDetailSituasi = (props: FormModal) => {
     }
 
     return <>
-        <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Situasi Klien</span>
+        <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Situasi Keluarga</span>
         <div className="flex flex-col gap-2 py-3">
             <form className="flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
                 <SectionTitle>Situasi Keluarga</SectionTitle>
