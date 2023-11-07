@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react"
 export const MODAL_PENJANGKAUAN = {
     KLIEN : 'KLIEN',
     KELUARGA: 'KELUARGA',
+    PELAKU: 'PELAKU',
     SITUASI: 'SITUASI',
     KRONOLOGI: 'KRONOLOGI',
     HARAPAN : 'HARAPAN',

@@ -16,6 +16,8 @@ const modalPenjangkauanMapper = (type: string) => {
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.KELUARGA:
             return [DetailKlienContent, FormDetailKlien]
+        case MODAL_PENJANGKAUAN.PELAKU:
+            return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.HARAPAN:
             return [DetailHarapanContent, FormDetailHarapan]
         case MODAL_PENJANGKAUAN.KONDISI:

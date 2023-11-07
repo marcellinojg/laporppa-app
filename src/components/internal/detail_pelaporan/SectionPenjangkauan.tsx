@@ -56,6 +56,15 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
+                    title="Data Pelaku"
+                    help_text="Masukkan informasi detail identitas pelaku hingga alamat."
+                    is_done={true}
+                    last_edit_by={laporan.satgas_pelapor.nama}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.PELAKU}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
                     title="Data Keluarga Klien"
                     help_text="Masukkan informasi detail identitas keluarga klien terkait ayah, ibu dan saudara-saudara."
                     is_done={true}
