@@ -1,27 +1,6 @@
-import { DataKlien, Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
+import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
-
-// Penjangkauan
-export const getDataKlien = async (id: string) => {
-    const instance = CreateAxiosInstance()
-    const res = await instance.get(`/laporans/${id}/data-klien`)
-    const DataKlien = res.data.data
-    return DataKlien
-}
-
-export const postDataKlien = async (id: string, dataKlien: DataKlien) => {
-    const instance = CreateAxiosInstance()
-    const res = await instance.post(`/laporans/${id}/data-klien`, dataKlien, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    })
-    const postedDataKlien = res.data.data as DataKlien
-    return postedDataKlien
-}
-
-// End Penjangkauan
 
 export const getLaporans = async () => {
     const instance = CreateAxiosInstance()
@@ -33,7 +12,7 @@ export const getLaporans = async () => {
 export const getLaporan = async (id: string) => {
     const instance = CreateAxiosInstance()
     const res = await instance.get(`/laporans/${id}?withKecamatan=1`)
-    const laporan = res.data.data
+    const laporan = res.data.data as Laporan
     return laporan
 }
 

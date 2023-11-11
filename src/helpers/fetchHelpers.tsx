@@ -175,18 +175,3 @@ export const SatgasPelaporLoader = (props: FetchDataEffectsProps<SatgasPelapor[]
         {children}
     </>
 }
-
-export const DataKlienLoader = (props: FetchDataEffectsProps<DataKlien[]>) => {
-    const { setData, id, children } = props
-    const { showLoader, hideLoader } = useLoader()
-    const { errorFetchAlert } = useAlert()
-
-    useEffect(() => {
-        showLoader()
-        getDataKlien(id!).then((dataKlien) => setData(dataKlien)).catch(() => errorFetchAlert()).then(() => hideLoader())
-    }, [])
-
-    return <>
-        {children}
-    </>
-}
