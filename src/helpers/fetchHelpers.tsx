@@ -5,12 +5,13 @@ import useLoader from "../hooks/useLoader";
 import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
-import { Laporan, LaporanCount } from "../consts/laporan";
+import { DataKlien, Laporan, LaporanCount } from "../consts/laporan";
 import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
 import { getSatgasPelapors } from "../api/satgas";
+import { getDataKlien } from "../api/laporan";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -168,6 +169,21 @@ export const SatgasPelaporLoader = (props: FetchDataEffectsProps<SatgasPelapor[]
     useEffect(() => {
         showLoader()
         getSatgasPelapors().then((satgasPelapors) => setData(satgasPelapors)).catch(() => errorFetchAlert()).then(() => hideLoader())
+    }, [])
+
+    return <>
+        {children}
+    </>
+}
+
+export const DataKlienLoader = (props: FetchDataEffectsProps<DataKlien[]>) => {
+    const { setData, id, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getDataKlien(id!).then((dataKlien) => setData(dataKlien)).catch(() => errorFetchAlert()).then(() => hideLoader())
     }, [])
 
     return <>

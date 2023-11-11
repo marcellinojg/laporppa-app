@@ -83,3 +83,9 @@ export interface LaporanToken {
 export interface LaporanCount extends Status {
     totalCase: number
 }
+
+export interface DataKlien {
+    tanggal: Date
+    tempat: string
+    alamat: string
+}
