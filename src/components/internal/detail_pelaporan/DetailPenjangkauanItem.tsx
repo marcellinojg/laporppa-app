@@ -93,7 +93,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
             </div>
         </div>
         {isModalActive === true &&
-            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} />
+            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} laporan={laporan} />
         }
     </div>
 }

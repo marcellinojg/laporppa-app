@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
+import { Laporan } from "./laporan"
 
 
 export const MODAL_PENJANGKAUAN = {
@@ -14,10 +15,11 @@ export const MODAL_PENJANGKAUAN = {
 
 
 export interface ContentModal {
-
+    laporan?: Laporan
 }
 
 export interface FormModal {
     mode : 'read' | 'edit' | 'input'
     setIsModalActive : Dispatch<SetStateAction<boolean>>
+    laporan : Laporan
 }

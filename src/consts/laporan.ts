@@ -1,3 +1,4 @@
+import { KeluargaKlien } from "./keluarga_klien";
 import { Kelurahan } from "./kelurahan"
 import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
@@ -32,7 +33,8 @@ export interface Laporan {
     kelurahan: Kelurahan
     sumber_pengaduan: SumberPengaduan
     dokumentasi_pengaduan: string[]
-}
+    keluarga_klien?: KeluargaKlien[]
+ }
 
 export interface LaporanSatgas {
     kategori_id: number
@@ -52,6 +54,7 @@ export interface LaporanSatgas {
     uraian_singkat_masalah: string
     sumber_pengaduan_id: number
     dokumentasi_pengaduan: File[]
+
 
     // doesn't have default value
     // satgas_pelapor_id: string
