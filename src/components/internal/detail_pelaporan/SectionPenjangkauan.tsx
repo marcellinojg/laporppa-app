@@ -72,7 +72,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Data Klien"
               help_text="Masukkan informasi detail identitas klien hingga alamat."
-              is_done={true}
+              is_done={false}
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KLIEN}

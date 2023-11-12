@@ -12,6 +12,8 @@ import { getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
 import { getSatgasPelapors } from "../api/satgas";
 import { getDataKlien } from "../api/laporan";
+import { Kota } from "../consts/kota";
+import { getKotas } from "../api/kota";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -59,6 +61,22 @@ export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
         {children}
     </>
 }
+
+export const KotaLoader = (props: FetchDataEffectsProps<Kota[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getKotas()
+      .then((kotas) => setData(kotas))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
 
 
 export const AllLaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {

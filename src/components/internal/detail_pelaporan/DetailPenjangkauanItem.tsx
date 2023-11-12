@@ -70,7 +70,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
                         }} />
                     </div>
                 }
-                {is_done === false && userData.role === ROLE.SATGAS && laporan.satgas_pelapor.id === userData.id &&
+                {is_done === false && laporan.satgas_pelapor.id === userData.id &&
                     <div className="flex items-center gap-3">
                         <InputDetailButton onClick={() => {
                             setMode('input')
@@ -93,7 +93,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
             </div>
         </div>
         {isModalActive === true &&
-            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} />
+            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} laporan={laporan} />
         }
     </div>
 }
