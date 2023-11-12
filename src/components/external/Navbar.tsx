@@ -35,7 +35,7 @@ function Navbar() {
           <NavbarLink route={ROUTES.EXTERNAL.LANDING}>Home</NavbarLink>
           <NavbarLink route={ROUTES.EXTERNAL.PELAPORAN}>Pelaporan</NavbarLink>
           <NavbarLink route={ROUTES.EXTERNAL.TRACK_PELAPORAN}>Track Pelaporan</NavbarLink>
-          <NavbarLink route={ROUTES.EXTERNAL.LOGIN}>Portal Satgas</NavbarLink>
+          <NavbarLink route={ROUTES.EXTERNAL.LOGIN}>Masuk</NavbarLink>
         </div>
 
         {/* SM Screen Navbar Button */}
@@ -53,7 +53,7 @@ function Navbar() {
           <MobileNavbarLink route={ROUTES.EXTERNAL.LANDING}>Home</MobileNavbarLink>
           <MobileNavbarLink route={ROUTES.EXTERNAL.PELAPORAN}>Pelaporan</MobileNavbarLink>
           <MobileNavbarLink route={ROUTES.EXTERNAL.TRACK_PELAPORAN}>Track Pelaporan</MobileNavbarLink>
-          <MobileNavbarLink route={ROUTES.EXTERNAL.LOGIN}>Portal Satgas</MobileNavbarLink>
+          <MobileNavbarLink route={ROUTES.EXTERNAL.LOGIN}>Masuk</MobileNavbarLink>
         </div>
       }
 
