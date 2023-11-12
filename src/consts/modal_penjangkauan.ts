@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
+import { Laporan } from "./laporan"
 
 
 export const MODAL_PENJANGKAUAN = {
@@ -10,11 +11,12 @@ export const MODAL_PENJANGKAUAN = {
     HARAPAN : 'HARAPAN',
     KONDISI: 'KONDISI',
     LANGKAH_DILAKUKAN: 'LANGKAH_DILAKUKAN',
+    DOKUMEN_PENDUKUNG : 'DOKUMEN_PENDUKUNG'
 }
 
 
 export interface ContentModal {
-
+    laporan : Laporan
 }
 
 export interface FormModal {

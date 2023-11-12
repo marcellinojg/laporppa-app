@@ -119,7 +119,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
                     is_done={true}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modalType={MODAL_PENJANGKAUAN.KLIEN}
+                    modalType={MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG}
                 />
             </div>
         </div>

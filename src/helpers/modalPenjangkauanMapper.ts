@@ -9,6 +9,8 @@ import FormDetailSituasi from '../components/internal/modal_penjangkauan/situasi
 import { MODAL_PENJANGKAUAN } from '../consts/modal_penjangkauan';
 import DetailKondisiContent from '../components/internal/modal_penjangkauan/kondisi/KondisiContent';
 import FormDetailKondisi from '../components/internal/modal_penjangkauan/kondisi/FormKondisi';
+import DetailDokumenContent from '../components/internal/modal_penjangkauan/dokumen/DetailDokumenContent';
+import FormDetailDokumen from '../components/internal/modal_penjangkauan/dokumen/FormDetailDokumen';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {
@@ -28,6 +30,8 @@ const modalPenjangkauanMapper = (type: string) => {
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.SITUASI:
             return [DetailSituasiContent, FormDetailSituasi]
+        case MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG:
+            return [DetailDokumenContent, FormDetailDokumen]
         default:
             console.warn('MODAL TYPE NOT FOUND')
             return []
