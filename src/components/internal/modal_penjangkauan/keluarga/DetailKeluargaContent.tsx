@@ -24,9 +24,8 @@ const DetailKeluargaContent = (props: DetailKeluargaContent) => {
       </div>
     ))
   ) : (
-    // Render a single div for the only keluarga_klien element
     <div className="border-b-2 flex flex-col gap-3 py-3">
-      <SectionTitle>Keluarga</SectionTitle>
+      <SectionTitle>Data Keluarga</SectionTitle>
       <DetailLaporanItem label="Hubungan dengan Klien" value={laporan.keluarga_klien?.[0]?.hubungan.hubungan ?? '-'} />
       <DetailLaporanItem label="Nama Lengkap" value={laporan.keluarga_klien?.[0]?.nama_lengkap ?? '-'} />
       <DetailLaporanItem label="No. Telepon/Whatsapp" value={laporan.keluarga_klien?.[0]?.no_telp ?? '-'} />
