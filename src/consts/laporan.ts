@@ -1,4 +1,5 @@
 import { Kelurahan } from "./kelurahan"
+import { LangkahDilakukan } from "./langkah";
 import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
@@ -32,6 +33,7 @@ export interface Laporan {
     kelurahan: Kelurahan
     sumber_pengaduan: SumberPengaduan
     dokumentasi_pengaduan: string[]
+    langkah?: LangkahDilakukan[]
 }
 
 export interface LaporanSatgas {
