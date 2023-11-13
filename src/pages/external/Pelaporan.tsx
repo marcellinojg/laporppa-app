@@ -52,17 +52,12 @@ const Pelaporan = () => {
                             <img src="/images/logo-pemkot-new.png" className="w-20 object-contain" alt="Logo Pemkot Surabaya" />
                             <img src="/images/logo-without-text.png" className="w-28 object-contain" alt="Logo SIAPPPAK" />
                         </header>
-                        <div className="lg:w-[300px] md:w-6/12 w-9/12 text-center">
-                            <PrimaryButton className="py-2 text-sm mt-6 mb-3">
-                                Panduan Pengisian dan FAQ
-                            </PrimaryButton>
-                        </div>
                         <form className="bg-white floating-shadow-md rounded-sm py-8 md:px-12 px-6 lg:w-[600px] md:w-3/4 w-11/12 mt-6" onSubmit={handleSubmit(onSubmit)}>
                             <b className="text-lg">Detail Laporan</b>
                             <div className="flex flex-col gap-2 pt-3 pb-6 mb-6 border-b-[1px] border-slate-300">
                                 <Select
                                     name="kategori_id"
-                                    placeholder="Pilih kategori"
+                                    placeholder="Pilih Kategori"
                                     label="Kategori Permasalahan"
                                     control={control}
                                     errors={errors}
@@ -74,7 +69,7 @@ const Pelaporan = () => {
                                 />
                                 <Select
                                     name="kecamatan_id"
-                                    placeholder="Pilih kecamatan"
+                                    placeholder="Pilih Kecamatan"
                                     label="Kecamatan Klien"
                                     control={control}
                                     errors={errors}
@@ -87,7 +82,7 @@ const Pelaporan = () => {
                                 <Select
                                     isDisabled={selectedKecamatan == ""}
                                     name="kelurahan_id"
-                                    placeholder="Pilih kelurahan"
+                                    placeholder="Pilih Kelurahan"
                                     label="Kelurahan Klien"
                                     control={control}
                                     errors={errors}
@@ -113,7 +108,7 @@ const Pelaporan = () => {
                                     name="nama_pelapor"
                                     register={register}
                                     errors={errors}
-                                    placeholder="Masukkan nama lengkap"
+                                    placeholder="Masukkan Nama Lengkap"
                                     label="Nama Lengkap Pelapor"
                                     isRequired
                                     regex={REGEX.ALPHABETIC_ONLY}
@@ -123,7 +118,7 @@ const Pelaporan = () => {
                                     register={register}
                                     errors={errors}
                                     regex={REGEX.PHONE_IDN}
-                                    placeholder="Masukkan nomor telepon"
+                                    placeholder="Masukkan Nomor Telepon"
                                     label="Nomor Telepon Pelapor"
                                     isRequired
                                 />
