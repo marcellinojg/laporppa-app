@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler} from "react-hook-form";
 import { FormModal } from "../../../../consts/modal_penjangkauan";
 import capitalize from "../../../../helpers/capitalize";
 import { SectionTitle } from "../../../common/Typography";
@@ -19,33 +19,42 @@ import {
 } from "../../../../helpers/fetchHelpers";
 import { Select } from "../../../form/Dropdown";
 import Datepicker from "../../../form/Datepicker";
+import useLoader from "../../../../hooks/useLoader";
+import AutosaveFormEffect from "../../../../helpers/formSaveHelpers";
+import { useLocalStorage } from "usehooks-ts";
 
-interface DetailKlien {
-  nama_lengkap: string;
-  nik: string;
-  alamat_domisili: string;
-  nomor_kk: string;
-  alamat_kk: string;
-  no_telp: string;
-  tempat_lahir: string;
-  tanggal_lahir: string;
-  usia: number;
+export interface DetailKlien {
+  nama_klien: string;
+  nik_klien: string;
+  alamat_klien: string;
+  warga_surabaya: number;
+  kecamatan: Kecamatan;
   jenis_kelamin: string;
-  agama: string;
-  pekerjaan: string;
-  penghasilan_per_bulan: string;
-  status_perkawinan: string;
-  kepemilikan_bpjs: string;
-  pendidikan: Pendidikan;
-  kelas: string;
-  nama_sekolah: string;
-  jurusan_sekolah: string;
-  tahun_lulus: string;
+  no_kk: number;
+  no_wa: number;
+  alamat_kk: string;
+  kecamatan_kk: Kecamatan;
+  kelurahan_kk: Kelurahan;
+  kota_lahir: Kota;
+  tanggal_lahir: Date;
+  agama: Agama;
+  usia: number;
+  kategori_klien: string;
+  jenis_klien: string;
+  pekerjaan: number;
+  penghasilan_bulanan: number;
+  status_perkawinan: number;
+  bpjs: BPJS;
+  pendidikan_kelas: string;
+  pendidikan_instansi: string;
+  pendidikan_jurusan: string;
+  pendidikan_thn_lulus: number;
 }
 
 const FormDetailKlien = (props: FormModal) => {
   const { mode, laporan } = props;
   const form = useForm<DetailKlien>();
+  const { showLoader, hideLoader } = useLoader();
   const {
     register,
     formState: { errors },
@@ -62,10 +71,12 @@ const FormDetailKlien = (props: FormModal) => {
   const [pekerjaans, setPekerjaans] = useState<Pekerjaan[]>([]);
   const [statusPerkawinans, setStatusPerkawinans] = useState<StatusPerkawinan[]>([]);
   const [bpjses, setBpjses] = useState<BPJS[]>([]);
+  const [formState, setFormState] = useLocalStorage<string | null>('form_internal_state', null)
 
-  const onSubmit: SubmitHandler<DetailKlien> = (data: DetailKlien) => {
+  const onSubmit : SubmitHandler<DetailKlien> = async (data: DetailKlien) => {
     console.log(data);
   };
+  
   return (
     <>
       <span className="font-bold text-lg">
@@ -73,9 +84,11 @@ const FormDetailKlien = (props: FormModal) => {
       </span>
       <KelurahanLoader data={kelurahans} setData={setKelurahans}>
         <KecamatanLoader data={kecamatans} setData={setKecamatans}>
+          <AutosaveFormEffect setValue={setValue} watch={watch} formState={formState} setFormState={setFormState}>
           <div className="flex flex-col gap-2 py-3">
             <form
               className="flex flex-col gap-3 py-3"
+              action=""
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className="border-b-2 flex flex-col gap-3 py-3">
@@ -244,7 +257,7 @@ const FormDetailKlien = (props: FormModal) => {
                   label="Pekerjaan"
                   errors={errors}
                   errorLabel="Pekerjaan"
-                  options={[{ label: "Pekerjaan 1", value: "1" }]}
+                  options={[{ label: "Pekerjaan 1", value: 1 }]}
                   //   options={kotas.map((k) => ({
                   //     label: k.nama,
                   //     value: k.id,
@@ -266,7 +279,7 @@ const FormDetailKlien = (props: FormModal) => {
                   errors={errors}
                   errorLabel="Status Perkawinan"
                   defaultValue={laporan.jenis_kelamin}
-                  options={[{ label: "Cerai Hidup", value: "3" }]}
+                  options={[{ label: "Cerai Hidup", value: 3 }]}
                   //   options={kotas.map((k) => ({
                   //     label: k.nama,
                   //     value: k.id,
@@ -280,7 +293,7 @@ const FormDetailKlien = (props: FormModal) => {
                   errors={errors}
                   errorLabel="Kepemilikan BPJS"
                   defaultValue={laporan.jenis_kelamin}
-                  options={[{ label: "Mandiri", value: "3" }]}
+                  options={[{ label: "Mandiri", value: 3 }]}
                   //   options={kotas.map((k) => ({
                   //     label: k.nama,
                   //     value: k.id,
@@ -317,13 +330,15 @@ const FormDetailKlien = (props: FormModal) => {
                   name="pendidikan_tahun_lulus"
                   placeholder="Tahun Lulus"
                   label="Tahun Lulus"
+                  type="number"
                 />
               </div>
+              <PrimaryButton className="py-2" isSubmit>
+                Submit
+              </PrimaryButton>
             </form>
-            <PrimaryButton className="py-2" isSubmit>
-              Submit
-            </PrimaryButton>
-          </div>
+            </div>
+            </AutosaveFormEffect>
         </KecamatanLoader>
       </KelurahanLoader>
     </>

@@ -1,7 +1,9 @@
 interface Penjadwalan {
-    id: number
-    laporan_id: string
-    tanggal_jam: Date
-    tempat: string
-    alamat: string
+  tanggal_penjadwalan: Date
+  jam_penjadwalan: string
+  tanggal_jam: string
+  laporan_id: string
+  tempat: string
+  alamat: string
+  id?: number
 }

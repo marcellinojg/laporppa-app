@@ -9,9 +9,13 @@ import FormDetailSituasi from '../components/internal/modal_penjangkauan/situasi
 import { MODAL_PENJANGKAUAN } from '../consts/modal_penjangkauan';
 import DetailKondisiContent from '../components/internal/modal_penjangkauan/kondisi/KondisiContent';
 import FormDetailKondisi from '../components/internal/modal_penjangkauan/kondisi/FormKondisi';
+import PenjadwalanContent from '../components/internal/modal_penjangkauan/penjadwalan/PenjadwalanContent';
+import FormPenjadwalan from '../components/internal/modal_penjangkauan/penjadwalan/FormPenjadwalan';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {
+        case MODAL_PENJANGKAUAN.PENJADWALAN:
+            return [PenjadwalanContent, FormPenjadwalan]
         case MODAL_PENJANGKAUAN.KLIEN:
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.KELUARGA:

@@ -40,6 +40,7 @@ export const patchLaporan = async (laporan: LaporanSatgas | Laporan | any, id: s
     const patchedLaporan = res.data.data as Laporan
     return patchedLaporan
 }
+
 export const postLaporanPublic = async (laporan: LaporanToken) => {
     const instance = CreateAxiosInstance()
     const res = await instance.post('/public/laporans', laporan)
@@ -89,4 +90,26 @@ export const getTotalLaporan = async () => {
 export const deleteLaporan = async (id : string) => {
     const instance = CreateAxiosInstance()
     await instance.delete(`/laporans/${id}`)
+}
+
+export const patchPenjadwalan = async (penjadwalan: Penjadwalan) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.put(`/penjadwalans/${penjadwalan.id}`, penjadwalan, {
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+    })
+    const patchedPenjadwalan = res.data.data2 as Penjadwalan
+    return patchedPenjadwalan
+}
+
+export const postPenjadwalan = async (penjadwalan: Penjadwalan) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.post('/penjadwalans', penjadwalan, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    const postedPenjadwalan = res.data.data as Penjadwalan
+    return postedPenjadwalan
 }

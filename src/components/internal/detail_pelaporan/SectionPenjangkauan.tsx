@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { Laporan } from "../../../consts/laporan"
 import Pill from "../Pill"
 import DetailPenjangkauanItem from "./DetailPenjangkauanItem"
@@ -6,6 +6,7 @@ import { formatDate } from "../../../helpers/formatDate"
 import { MODAL_PENJANGKAUAN } from "../../../consts/modal_penjangkauan"
 import DetailLaporanItem from "./DetailLaporanItem"
 import { SectionTitle } from "../../common/Typography"
+import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan"
 
 interface SectionPenjangkauanProps {
     laporan: Laporan
@@ -14,7 +15,8 @@ interface SectionPenjangkauanProps {
 
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
-    const { laporan } = props
+  const { laporan, setRefetch} = props
+  const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
     return (
       <>
@@ -30,6 +32,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <div className="flex items-center justify-between">
               <SectionTitle>Penjadwalan</SectionTitle>
               <button
+                onClick={() => setIsModalActive(true)}
                 type="button"
                 className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
               >
@@ -44,8 +47,18 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                   : ""
               }
             />
-            <DetailLaporanItem label="Tempat" value={laporan.penjadwalan?.tempat? laporan.penjadwalan?.tempat : ""} />
-            <DetailLaporanItem label="Alamat" value={laporan.penjadwalan?.alamat? laporan.penjadwalan?.alamat : ""} />
+            <DetailLaporanItem
+              label="Tempat"
+              value={
+                laporan.penjadwalan?.tempat ? laporan.penjadwalan?.tempat : ""
+              }
+            />
+            <DetailLaporanItem
+              label="Alamat"
+              value={
+                laporan.penjadwalan?.alamat ? laporan.penjadwalan?.alamat : ""
+              }
+            />
           </div>
           <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
             <div className="flex items-center justify-between">
@@ -137,6 +150,15 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             />
           </div>
         </div>
+        {isModalActive === true && (
+          <ModalPenjangkauan
+            mode={"input"}
+            setIsModalActive={setIsModalActive}
+            modalType={MODAL_PENJANGKAUAN.PENJADWALAN}
+            laporan={laporan}
+            setRefetch={setRefetch}
+          />
+        )}
       </>
     );
 }
