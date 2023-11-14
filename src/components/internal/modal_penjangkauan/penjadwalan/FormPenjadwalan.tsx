@@ -67,7 +67,7 @@ const FormPenjadwalan = (props: FormModal) => {
         addAlert({
           type: ALERT_TYPE.SUCCESS,
           title: "Penjadwalan Sukses Diedit !",
-          message: `Penjadwalan untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          message: `Penjadwalan untuk laporan ${laporan.nama_klien} berhasil diedit!`,
         });
       } else {
         (await postPenjadwalan(formatData)) as Penjadwalan;
@@ -113,7 +113,6 @@ const FormPenjadwalan = (props: FormModal) => {
             <Datepicker
               name="tanggal_penjadwalan"
               control={control}
-              isRequired
               defaultValue={
                 laporan.penjadwalan?.tanggal_jam
                   ? new Date(laporan.penjadwalan.tanggal_jam)

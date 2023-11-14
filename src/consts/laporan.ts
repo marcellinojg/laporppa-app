@@ -1,3 +1,4 @@
+import { DetailKasus } from "../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus";
 import { DetailKlien } from "./detail_klien";
 import { KeluargaKlien } from "./keluarga_klien";
 import { Kelurahan } from "./kelurahan"
@@ -41,6 +42,7 @@ export interface Laporan {
     pelaku?: Pelaku
     kondisi_klien?: KondisiKlien
     penjadwalan?: Penjadwalan
+    detail_kasus?: DetailKasus
 }
 
 export interface LaporanSatgas {

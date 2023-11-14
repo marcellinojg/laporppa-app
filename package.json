@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-table": "^8.10.7",
     "axios": "^1.5.1",
+    "date-fns": "^2.30.0",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.5",
     "react-datepicker": "^4.16.0",

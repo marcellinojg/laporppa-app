@@ -14,6 +14,8 @@ import { getSatgasPelapors } from "../api/satgas";
 import { getDataKlien } from "../api/laporan";
 import { Kota } from "../consts/kota";
 import { getKotas } from "../api/kota";
+import { JenisKasus } from "../consts/jenis_kasus";
+import { getJenisKasuses } from "../api/jenis_kasus";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -193,3 +195,19 @@ export const SatgasPelaporLoader = (props: FetchDataEffectsProps<SatgasPelapor[]
         {children}
     </>
 }
+
+export const JenisKasusesLoader = (props: FetchDataEffectsProps<JenisKasus[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getJenisKasuses()
+      .then((jenisKasuses) => setData(jenisKasuses))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};

@@ -16,7 +16,8 @@ interface SectionPenjangkauanProps {
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
   const { laporan, setRefetch} = props
-  const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const [isModalActivePenjadwalan, setIsModalActivePenjadwalan] = useState<boolean>(false);
+  const [isModalActiveDetailKasus, setIsModalActiveDetailKasus] = useState<boolean>(false);
 
     return (
       <>
@@ -32,7 +33,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <div className="flex items-center justify-between">
               <SectionTitle>Penjadwalan</SectionTitle>
               <button
-                onClick={() => setIsModalActive(true)}
+                onClick={() => setIsModalActivePenjadwalan(true)}
                 type="button"
                 className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
               >
@@ -64,17 +65,48 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <div className="flex items-center justify-between">
               <SectionTitle>Detail Kasus Klien</SectionTitle>
               <button
+                onClick={() => setIsModalActiveDetailKasus(true)}
                 type="button"
                 className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
               >
                 Tambahkan/Edit Detail Kasus
               </button>
             </div>
-            <DetailLaporanItem label="Tipe Permasalahan" value={""} />
-            <DetailLaporanItem label="Kategori Kasus" value={""} />
-            <DetailLaporanItem label="Jenis Kasus" value={""} />
-            <DetailLaporanItem label="Lokasi Kasus" value={""} />
-            <DetailLaporanItem label="Uraian Singkat Permasalahan" value={""} />
+            <DetailLaporanItem
+              label="Kategori Kasus"
+              value={
+                laporan.detail_kasus?.kategori_kasus.nama
+                  ? laporan.detail_kasus.kategori_kasus.nama
+                  : ""
+              }
+            />
+            <DetailLaporanItem
+              label="Jenis Kasus"
+              value={
+                laporan.detail_kasus?.jenis_kasus.nama
+                  ? laporan.detail_kasus.jenis_kasus.nama
+                  : ""
+              }
+            />
+            <DetailLaporanItem
+              label="Lokasi Kasus"
+              value={
+                laporan.detail_kasus?.lokasi_kasus
+                  ? laporan.detail_kasus.lokasi_kasus
+                  : ""
+              }
+            />
+            <DetailLaporanItem
+              label="Uraian Singkat Permasalahan"
+              value={
+                laporan.detail_kasus?.tanggal_jam_kejadian
+                  ? formatDate(
+                      laporan.detail_kasus.tanggal_jam_kejadian.toString(),
+                      true
+                    )
+                  : ""
+              }
+            />
           </div>
           <SectionTitle>Hasil Penjangkauan</SectionTitle>
           <span className="text-sm text-gray-500 -mt-2">
@@ -150,11 +182,20 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             />
           </div>
         </div>
-        {isModalActive === true && (
+        {isModalActivePenjadwalan === true && (
           <ModalPenjangkauan
             mode={"input"}
-            setIsModalActive={setIsModalActive}
+            setIsModalActive={setIsModalActivePenjadwalan}
             modalType={MODAL_PENJANGKAUAN.PENJADWALAN}
+            laporan={laporan}
+            setRefetch={setRefetch}
+          />
+        )}
+        {isModalActiveDetailKasus === true && (
+          <ModalPenjangkauan
+            mode={"input"}
+            setIsModalActive={setIsModalActiveDetailKasus}
+            modalType={MODAL_PENJANGKAUAN.DETAIL_KASUS}
             laporan={laporan}
             setRefetch={setRefetch}
           />
