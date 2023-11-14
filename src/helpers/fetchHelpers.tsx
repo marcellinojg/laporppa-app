@@ -8,7 +8,7 @@ import { useAlert } from "../hooks/useAlert";
 import { DataKlien, Laporan, LaporanCount } from "../consts/laporan";
 import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
-import { getKategoris } from "../api/kategori";
+import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
 import { getSatgasPelapors } from "../api/satgas";
 import { getDataKlien } from "../api/laporan";
@@ -205,6 +205,22 @@ export const JenisKasusesLoader = (props: FetchDataEffectsProps<JenisKasus[]>) =
     showLoader();
     getJenisKasuses()
       .then((jenisKasuses) => setData(jenisKasuses))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
+
+export const KategoriKasusesLoader = (props: FetchDataEffectsProps<Kategori[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getKategoriKasuses()
+      .then((kategoriKasues) => setData(kategoriKasues))
       .catch(() => errorFetchAlert())
       .then(() => hideLoader());
   }, []);

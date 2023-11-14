@@ -20,7 +20,7 @@ import {
 import { useAlert } from "../../../../hooks/useAlert";
 import { ALERT_TYPE } from "../../../../consts/alert";
 import { JenisKasus } from "../../../../consts/jenis_kasus";
-import { JenisKasusesLoader, KategoriLoader } from "../../../../helpers/fetchHelpers";
+import { JenisKasusesLoader, KategoriKasusesLoader, KategoriLoader } from "../../../../helpers/fetchHelpers";
 import { Select } from "../../../form/Dropdown";
 
 export interface DetailKasus {
@@ -35,7 +35,7 @@ export interface DetailKasus {
 
 const FormDetailKasus = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
-  const [kategoris, setKategoris] = useState<Kategori[]>([]);
+  const [kategoriKasues, setKategoriKasues] = useState<Kategori[]>([]);
   const [jenisKasus, setJenisKasus] = useState<JenisKasus[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
@@ -109,7 +109,7 @@ const FormDetailKasus = (props: FormModal) => {
         Klien
       </span>
       <JenisKasusesLoader data={jenisKasus} setData={setJenisKasus}>
-        <KategoriLoader data={kategoris} setData={setKategoris}>
+        <KategoriKasusesLoader data={kategoriKasues} setData={setKategoriKasues}>
           <div className="flex flex-col gap-2 py-3">
             <form
               className="flex flex-col gap-3 py-3"
@@ -124,7 +124,7 @@ const FormDetailKasus = (props: FormModal) => {
                   label="Kategori Kasus"
                   errors={errors}
                   errorLabel="Kategori Kasus"
-                  options={kategoris.map((k) => ({
+                  options={kategoriKasues.map((k) => ({
                     label: k.nama,
                     value: k.id,
                   }))}
@@ -158,9 +158,7 @@ const FormDetailKasus = (props: FormModal) => {
                   control={control}
                   defaultValue={
                     laporan.detail_kasus?.tanggal_jam_kejadian
-                      ? new Date(
-                          laporan.detail_kasus.tanggal_jam_kejadian
-                        )
+                      ? new Date(laporan.detail_kasus.tanggal_jam_kejadian)
                       : null
                   }
                   placeholder="Tanggal Jam Kejadian"
@@ -177,7 +175,7 @@ const FormDetailKasus = (props: FormModal) => {
               </PrimaryButton>
             </form>
           </div>
-        </KategoriLoader>
+        </KategoriKasusesLoader>
       </JenisKasusesLoader>
     </>
   );
