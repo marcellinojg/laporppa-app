@@ -9,7 +9,7 @@ interface ModalPenjangkauanProps {
   setIsModalActive: Dispatch<SetStateAction<boolean>>;
   modalType: string;
   laporan: Laporan;
-  setRefetch: Dispatch<SetStateAction<boolean>>;
+  setRefetch?: Dispatch<SetStateAction<boolean>>;
 }
 
 const ModalPenjangkauan = (props: ModalPenjangkauanProps) => {
