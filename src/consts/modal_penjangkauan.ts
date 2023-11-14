@@ -16,6 +16,7 @@ export const MODAL_PENJANGKAUAN = {
 
 export interface ContentModal {
     laporan : Laporan
+    laporanSatgas : LaporanSatgas
 }
 
 export interface FormModal {

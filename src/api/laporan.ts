@@ -1,3 +1,4 @@
+import { DetailLangkah } from "../components/internal/modal_penjangkauan/langkah_dilakukan/FormLangkah"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
@@ -89,4 +90,15 @@ export const getTotalLaporan = async () => {
 export const deleteLaporan = async (id : string) => {
     const instance = CreateAxiosInstance()
     await instance.delete(`/laporans/${id}`)
+}
+
+export const postLangkah = async (langkah: DetailLangkah) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.post('/laporans', langkah, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    const postedLangkah = res.data.data as DetailLangkah
+    return postedLangkah
 }

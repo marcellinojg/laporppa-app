@@ -109,7 +109,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     laporan={laporan}
                     title="Langkah yang Telah Dilakukan"
                     help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
-                    is_done={true}
+                    is_done={laporan.status_langkah_telah_dilakukan === 0 ? true : false}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
                 />
