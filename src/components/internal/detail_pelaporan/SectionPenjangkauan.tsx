@@ -67,7 +67,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     laporan={laporan}
                     title="Data Keluarga Klien"
                     help_text="Masukkan informasi detail identitas keluarga klien terkait ayah, ibu dan saudara-saudara."
-                    is_done={true}
+                    is_done={laporan.status_keluarga === 0 ? false : true}
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.KELUARGA}

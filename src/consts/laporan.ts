@@ -34,6 +34,7 @@ export interface Laporan {
     sumber_pengaduan: SumberPengaduan
     dokumentasi_pengaduan: string[]
     keluarga_klien?: KeluargaKlien[]
+    status_keluarga: number
  }
 
 export interface LaporanSatgas {

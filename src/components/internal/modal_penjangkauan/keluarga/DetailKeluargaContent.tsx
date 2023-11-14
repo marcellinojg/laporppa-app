@@ -28,7 +28,7 @@ const DetailKeluargaContent = (props: DetailKeluargaContent) => {
       <SectionTitle>Data Keluarga</SectionTitle>
       <DetailLaporanItem label="Hubungan dengan Klien" value={laporan.keluarga_klien?.[0]?.hubungan.hubungan ?? '-'} />
       <DetailLaporanItem label="Nama Lengkap" value={laporan.keluarga_klien?.[0]?.nama_lengkap ?? '-'} />
-      <DetailLaporanItem label="No. Telepon/Whatsapp" value={laporan.keluarga_klien?.[0]?.no_telp ?? '-'} />
+      <DetailLaporanItem label="No. Telepon/Whatsapp" value={laporan.keluarga_klien?.[0]?.no_telp.toString() ?? '-'} />
     </div>
   )}
         </div>
