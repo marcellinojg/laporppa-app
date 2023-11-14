@@ -4,14 +4,14 @@ import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 
 export const getLaporans = async () => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get('/laporans?withKecamatan=1')
+    const res = await instance.get('/laporans?withKecamatan=1&withKeluargaKlien=1')
     const listLaporan = res.data.data as Laporan[]
     return listLaporan
 }
 
 export const getLaporan = async (id: string) => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get(`/laporans/${id}?withKecamatan=1`)
+    const res = await instance.get(`/laporans/${id}?withKecamatan=1&withKeluargaKlien=1`)
     const laporan = res.data.data
     return laporan
 }
