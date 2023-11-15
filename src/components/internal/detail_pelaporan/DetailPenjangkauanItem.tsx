@@ -4,22 +4,23 @@ import { useAuthUser } from "react-auth-kit"
 import { User } from "../../../consts/user"
 import { ROLE } from "../../../consts/role"
 import { EditDetailButton, InputDetailButton, LihatDetailButton } from "../../form/PenjangkauanButtons"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Dispatch, SetStateAction } from "react"
 import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan"
 
 
 interface DetailPenjangkauanItemProps {
-    title: string
-    updated_at: string
-    last_edit_by?: string
-    help_text: string
-    is_done: boolean
-    laporan: Laporan
-    modalType: string
+  title: string;
+  updated_at: string;
+  last_edit_by?: string;
+  help_text: string;
+  is_done: boolean;
+  laporan: Laporan;
+  modalType: string;
+  setRefetch: Dispatch<SetStateAction<boolean>>;
 }
 
 const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
-    const { title, updated_at, last_edit_by, help_text, is_done, laporan, modalType } = props
+    const { title, updated_at, last_edit_by, help_text, is_done, laporan, modalType, setRefetch } = props
     const userData = useAuthUser()() as User
     const [isModalActive, setIsModalActive] = useState<boolean>(false)
     const [mode, setMode] = useState<'read' | 'edit' | 'input'>(is_done === true ? 'read' : 'input')
@@ -93,7 +94,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
             </div>
         </div>
         {isModalActive === true &&
-            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} laporan={laporan} />
+            <ModalPenjangkauan mode={mode} setIsModalActive={setIsModalActive} modalType={modalType} laporan={laporan} setRefetch={setRefetch}/>
         }
     </div>
 }

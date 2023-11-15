@@ -16,7 +16,7 @@ interface SectionPenjangkauanProps {
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
   const { laporan, setRefetch} = props
-  const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const [isModalActive, setIsModalActivePenjadwalan] = useState<boolean>(false);
 
     return (
       <>
@@ -32,7 +32,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <div className="flex items-center justify-between">
               <SectionTitle>Penjadwalan</SectionTitle>
               <button
-                onClick={() => setIsModalActive(true)}
+                onClick={() => setIsModalActivePenjadwalan(true)}
                 type="button"
                 className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
               >
@@ -85,10 +85,11 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Data Klien"
               help_text="Masukkan informasi detail identitas klien hingga alamat."
-              is_done={false}
+              is_done={true}
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KLIEN}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -98,6 +99,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KELUARGA}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -107,6 +109,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.SITUASI}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -115,6 +118,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               is_done={true}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -123,6 +127,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               is_done={true}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.HARAPAN}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -131,6 +136,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               is_done={true}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KONDISI}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -139,6 +145,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               is_done={true}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
+              setRefetch={setRefetch}
             />
             <DetailPenjangkauanItem
               laporan={laporan}
@@ -147,13 +154,14 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               is_done={true}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KLIEN}
+              setRefetch={setRefetch}
             />
           </div>
         </div>
         {isModalActive === true && (
           <ModalPenjangkauan
             mode={"input"}
-            setIsModalActive={setIsModalActive}
+            setIsModalActive={setIsModalActivePenjadwalan}
             modalType={MODAL_PENJANGKAUAN.PENJADWALAN}
             laporan={laporan}
             setRefetch={setRefetch}

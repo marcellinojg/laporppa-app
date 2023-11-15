@@ -1,3 +1,4 @@
+import { DetailKlien } from "../consts/detail_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
@@ -112,4 +113,26 @@ export const postPenjadwalan = async (penjadwalan: Penjadwalan) => {
     })
     const postedPenjadwalan = res.data.data as Penjadwalan
     return postedPenjadwalan
+}
+
+export const patchDetailKlien = async (detail_klien: DetailKlien) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.put(`/detail-kliens/${detail_klien.id}`, detail_klien, {
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+    })
+    const patchedDetailKlien = res.data.data2 as DetailKlien
+    return patchedDetailKlien
+}
+
+export const postDetailKlien = async (detail_klien: DetailKlien) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.post('/detail-kliens', detail_klien, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    const postedDetailKlien = res.data.data as DetailKlien
+    return postedDetailKlien
 }
