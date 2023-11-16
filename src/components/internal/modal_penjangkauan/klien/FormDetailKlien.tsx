@@ -208,8 +208,8 @@ const FormDetailKlien = (props: FormModal) => {
                             defaultValue={laporan.alamat_klien}
                             isRequired
                           />
-                          {/* <Select
-                            name="kecamatan"
+                          <Select
+                            name="kecamatan_id"
                             control={control}
                             placeholder="Pilih Kecamatan"
                             label="Kecamatan Klien"
@@ -221,7 +221,7 @@ const FormDetailKlien = (props: FormModal) => {
                             }))}
                             defaultValue={laporan?.detail_klien?.kecamatan?.id}
                             isRequired
-                          /> */}
+                          />
                           <InputText
                             register={register}
                             errors={errors}
@@ -240,8 +240,8 @@ const FormDetailKlien = (props: FormModal) => {
                             label="Alamat Sesuai Kartu Keluarga"
                             isRequired
                           />
-                          {/* <Select
-                            name="kelurahan_kk"
+                          <Select
+                            name="kelurahan_kk_id"
                             control={control}
                             placeholder="Pilih Kelurahan"
                             label="kelurahan KK"
@@ -255,9 +255,9 @@ const FormDetailKlien = (props: FormModal) => {
                               laporan?.detail_klien?.kelurahan_kk?.id
                             }
                             isRequired
-                          /> */}
-                          {/* <Select
-                            name="kecamatan_kk"
+                          />
+                          <Select
+                            name="kecamatan_kk_id"
                             control={control}
                             placeholder="Pilih Kecamatan"
                             label="Kecamatan KK"
@@ -271,7 +271,7 @@ const FormDetailKlien = (props: FormModal) => {
                               laporan?.detail_klien?.kecamatan_kk?.id
                             }
                             isRequired
-                          /> */}
+                          />
                           <InputText
                             register={register}
                             errors={errors}
@@ -283,7 +283,7 @@ const FormDetailKlien = (props: FormModal) => {
                             // regex={REGEX.PHONE_IDN}
                           />
                           <Select
-                            name="kota_lahir"
+                            name="kota_lahir_id"
                             control={control}
                             placeholder="Pilih Kota"
                             label="Kota Lahir"
@@ -309,7 +309,7 @@ const FormDetailKlien = (props: FormModal) => {
                                 : null
                             }
                           />
-                          <InputText
+                          {/* <InputText
                             register={register}
                             errors={errors}
                             defaultValue={laporan.detail_klien?.usia?.toString()}
@@ -317,7 +317,7 @@ const FormDetailKlien = (props: FormModal) => {
                             placeholder="Usia"
                             label="Usia"
                             isRequired
-                          />
+                          /> */}
                           <Select
                             name="kategori_klien"
                             control={control}
@@ -373,7 +373,7 @@ const FormDetailKlien = (props: FormModal) => {
                             //   }))}
                             isRequired
                           />
-                          {/* <Select
+                          <Select
                             name="agama"
                             control={control}
                             placeholder="Pilih Agama"
@@ -386,7 +386,7 @@ const FormDetailKlien = (props: FormModal) => {
                               value: k.id,
                             }))}
                             isRequired
-                          /> */}
+                          />
                           <Select
                             name="pekerjaan_id"
                             control={control}
@@ -481,16 +481,16 @@ const FormDetailKlien = (props: FormModal) => {
                             label="Pendidikan Jurusan"
                             isRequired
                           />
-                          {/* <InputText
+                          <InputText
                             register={register}
                             errors={errors}
                             defaultValue={laporan.detail_klien?.pendidikan_thn_lulus?.toString()}
-                            name="pendidikan_tahun_lulus"
+                            name="pendidikan_thn_lulus"
                             placeholder="Tahun Lulus"
                             label="Tahun Lulus"
                             type="number"
                             isRequired
-                          /> */}
+                          />
                         </div>
                         <SecondaryButton
                           className="py-2"

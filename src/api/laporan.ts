@@ -1,6 +1,7 @@
 import { DetailKlien } from "../consts/detail_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
+import { Pelaku } from "../consts/pelaku"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 
 export const getLaporans = async () => {
@@ -144,6 +145,51 @@ export const postDetailKlienStatus = async (detail_klien: DetailKlien, jenis: st
       "Content-Type": "multipart/form-data",
     },
   });
-  const postedDetailKlien = res.data.data as DetailKlien;
-  return postedDetailKlien;
+  const postedDetailKlienStatus = res.data.data;
+  return postedDetailKlienStatus;
+};
+
+export const patchPelaku = async (pelaku: Pelaku) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.put(
+    `/pelakus/${pelaku.id}`,
+    pelaku,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+  const patchedPelaku = res.data.data2 as Pelaku;
+  return patchedPelaku;
+};
+
+export const postPelaku = async (pelaku: Pelaku) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/pelakus", pelaku, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedPelaku = res.data.data as Pelaku;
+  return postedPelaku;
+};
+
+export const postPelakuStatus = async (
+  pelaku: Pelaku,
+  jenis: string,
+  status: number
+) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.put(
+    `/laporans/${pelaku.laporan_id}/status-penjangkauan/`,
+    { jenis: jenis, status: status },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  const postedPelaku = res.data.data;
+  return postedPelaku;
 };
