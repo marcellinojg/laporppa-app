@@ -1,5 +1,4 @@
 import { Kelurahan } from "./kelurahan"
-import { LangkahDilakukan } from "./langkah";
 import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";

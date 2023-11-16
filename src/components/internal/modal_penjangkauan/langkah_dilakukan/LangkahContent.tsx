@@ -1,7 +1,4 @@
 import { Laporan } from "../../../../consts/laporan"
-import { ContentModal } from "../../../../consts/modal_penjangkauan"
-import { SectionTitle } from "../../../common/Typography"
-import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem"
 
 
 interface DetailLangkahContent{
