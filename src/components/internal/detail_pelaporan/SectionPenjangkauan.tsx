@@ -85,7 +85,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Data Klien"
               help_text="Masukkan informasi detail identitas klien hingga alamat."
-              is_done={true}
+              is_done={Number(laporan.status_detail_klien)}
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KLIEN}
@@ -95,7 +95,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Data Keluarga Klien"
               help_text="Masukkan informasi detail identitas keluarga klien terkait ayah, ibu dan saudara-saudara."
-              is_done={true}
+              is_done={2}
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KELUARGA}
@@ -105,7 +105,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Situasi Keluarga"
               help_text="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini."
-              is_done={true}
+              is_done={2}
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.SITUASI}
@@ -115,7 +115,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Kronologi Kejadian"
               help_text="Deskripsikan kronologis kejadian secara lengkap."
-              is_done={true}
+              is_done={2}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
               setRefetch={setRefetch}
@@ -124,7 +124,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Harapan Klien dan Keluarga"
               help_text="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
-              is_done={true}
+              is_done={2}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.HARAPAN}
               setRefetch={setRefetch}
@@ -133,7 +133,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Kondisi Klien"
               help_text="Masukkan informasi detail kondisi klien terkait kondisi fisik, psikologis dst."
-              is_done={true}
+              is_done={2}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KONDISI}
               setRefetch={setRefetch}
@@ -142,7 +142,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Langkah yang Telah Dilakukan"
               help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
-              is_done={true}
+              is_done={2}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
               setRefetch={setRefetch}
@@ -151,7 +151,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Dokumen Pendukung"
               help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
-              is_done={true}
+              is_done={2}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KLIEN}
               setRefetch={setRefetch}

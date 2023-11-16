@@ -1,8 +1,8 @@
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { FormModal } from "../../../../consts/modal_penjangkauan";
 import capitalize from "../../../../helpers/capitalize";
 import { SectionTitle } from "../../../common/Typography";
-import { PrimaryButton } from "../../../form/Button";
+import { PrimaryButton, SecondaryButton } from "../../../form/Button";
 import Pendidikan from "../../../../consts/pendidikan";
 import { InputText } from "../../../form/Input";
 import { Kota } from "../../../../consts/kota";
@@ -28,17 +28,22 @@ import useLoader from "../../../../hooks/useLoader";
 import AutosaveFormEffect from "../../../../helpers/formSaveHelpers";
 import { useLocalStorage } from "usehooks-ts";
 import { REGEX } from "../../../../consts/regex";
-import { getLaporan, patchDetailKlien, postDetailKlien } from "../../../../api/laporan";
+import {
+  getLaporan,
+  patchDetailKlien,
+  postDetailKlien,
+  postDetailKlienStatus,
+} from "../../../../api/laporan";
 import { SatgasPelapor } from "../../../../consts/satgas";
 import { ALERT_TYPE } from "../../../../consts/alert";
 import { useAlert } from "../../../../hooks/useAlert";
 import { format } from "date-fns";
 
 export interface DetailKlien {
-  id?: number
-  laporan_id: string
-  kota: Kota
-  satgas: SatgasPelapor
+  id?: number;
+  laporan_id: string;
+  kota: Kota;
+  satgas: SatgasPelapor;
   nama_klien: string;
   nik_klien: string;
   alamat_klien: string;
@@ -67,7 +72,7 @@ export interface DetailKlien {
 }
 
 const FormDetailKlien = (props: FormModal) => {
-  const { mode, laporan, setRefetch, setIsModalActive} = props;
+  const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
@@ -77,7 +82,7 @@ const FormDetailKlien = (props: FormModal) => {
     formState: { errors },
     handleSubmit,
     control,
-    reset
+    reset,
   } = form;
   const [kotas, setKotas] = useState<Kota[]>([]);
   const [kecamatans, setKecamatans] = useState<Kecamatan[]>([]);
@@ -85,20 +90,24 @@ const FormDetailKlien = (props: FormModal) => {
   const [kelurahans, setKelurahans] = useState<Kelurahan[]>([]);
   const [agamas, setAgamas] = useState<Agama[]>([]);
   const [pekerjaans, setPekerjaans] = useState<Pekerjaan[]>([]);
-  const [statusPerkawinans, setStatusPerkawinans] = useState<StatusPerkawinan[]>([]);
+  const [statusPerkawinans, setStatusPerkawinans] = useState<
+    StatusPerkawinan[]
+  >([]);
   const [bpjses, setBpjses] = useState<BPJS[]>([]);
-  const [formState, setFormState] = useLocalStorage<string | null>('form_internal_state', null)
+  const [formState, setFormState] = useLocalStorage<string | null>(
+    "form_internal_state",
+    null
+  );
+  const [jenisButton, setJenisButton] = useState(1)
 
   const onSubmit: SubmitHandler<DetailKlien> = async (data: DetailKlien) => {
+    console.log(jenisButton)
     const formatData: DetailKlien = {
       ...data,
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
-      tanggal_lahir: format(
-        new Date(data.tanggal_lahir),
-        "yyyy-MM-dd"
-      ),
-      id: laporan.detail_klien?.id
+      tanggal_lahir: format(new Date(data.tanggal_lahir), "yyyy-MM-dd"),
+      id: laporan.detail_klien?.id,
     };
 
     try {
@@ -106,6 +115,7 @@ const FormDetailKlien = (props: FormModal) => {
       showLoader();
       if (laporan.detail_klien?.id != null) {
         (await patchDetailKlien(formatData)) as DetailKlien;
+        await postDetailKlienStatus(formatData, "detail_klien", jenisButton);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -114,6 +124,7 @@ const FormDetailKlien = (props: FormModal) => {
         });
       } else {
         (await postDetailKlien(formatData)) as DetailKlien;
+        await postDetailKlienStatus(formatData, "detail_klien", jenisButton);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -139,7 +150,7 @@ const FormDetailKlien = (props: FormModal) => {
 
     setTimeout(() => setIsLoading(false), 3000);
   };
-  
+
   return (
     <>
       <span className="font-bold text-lg">
@@ -197,7 +208,7 @@ const FormDetailKlien = (props: FormModal) => {
                             defaultValue={laporan.alamat_klien}
                             isRequired
                           />
-                          <Select
+                          {/* <Select
                             name="kecamatan"
                             control={control}
                             placeholder="Pilih Kecamatan"
@@ -210,7 +221,7 @@ const FormDetailKlien = (props: FormModal) => {
                             }))}
                             defaultValue={laporan?.detail_klien?.kecamatan?.id}
                             isRequired
-                          />
+                          /> */}
                           <InputText
                             register={register}
                             errors={errors}
@@ -229,7 +240,7 @@ const FormDetailKlien = (props: FormModal) => {
                             label="Alamat Sesuai Kartu Keluarga"
                             isRequired
                           />
-                          <Select
+                          {/* <Select
                             name="kelurahan_kk"
                             control={control}
                             placeholder="Pilih Kelurahan"
@@ -244,8 +255,8 @@ const FormDetailKlien = (props: FormModal) => {
                               laporan?.detail_klien?.kelurahan_kk?.id
                             }
                             isRequired
-                          />
-                          <Select
+                          /> */}
+                          {/* <Select
                             name="kecamatan_kk"
                             control={control}
                             placeholder="Pilih Kecamatan"
@@ -260,7 +271,7 @@ const FormDetailKlien = (props: FormModal) => {
                               laporan?.detail_klien?.kecamatan_kk?.id
                             }
                             isRequired
-                          />
+                          /> */}
                           <InputText
                             register={register}
                             errors={errors}
@@ -362,7 +373,7 @@ const FormDetailKlien = (props: FormModal) => {
                             //   }))}
                             isRequired
                           />
-                          <Select
+                          {/* <Select
                             name="agama"
                             control={control}
                             placeholder="Pilih Agama"
@@ -375,7 +386,7 @@ const FormDetailKlien = (props: FormModal) => {
                               value: k.id,
                             }))}
                             isRequired
-                          />
+                          /> */}
                           <Select
                             name="pekerjaan_id"
                             control={control}
@@ -470,7 +481,7 @@ const FormDetailKlien = (props: FormModal) => {
                             label="Pendidikan Jurusan"
                             isRequired
                           />
-                          <InputText
+                          {/* <InputText
                             register={register}
                             errors={errors}
                             defaultValue={laporan.detail_klien?.pendidikan_thn_lulus?.toString()}
@@ -479,10 +490,21 @@ const FormDetailKlien = (props: FormModal) => {
                             label="Tahun Lulus"
                             type="number"
                             isRequired
-                          />
+                          /> */}
                         </div>
-                        <PrimaryButton className="py-2" isSubmit>
-                          {laporan.detail_klien ? "Edit Data" : "Submit"}
+                        <SecondaryButton
+                          className="py-2"
+                          isSubmit
+                          onClick={() => setJenisButton(1)}
+                        >
+                          {"Simpan Sebagai Draft"}
+                        </SecondaryButton>
+                        <PrimaryButton
+                          className="py-2"
+                          isSubmit
+                          onClick={() => setJenisButton(2)}
+                        >
+                          {"Publish Laporan"}
                         </PrimaryButton>
                       </form>
                     </div>

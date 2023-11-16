@@ -136,3 +136,14 @@ export const postDetailKlien = async (detail_klien: DetailKlien) => {
     const postedDetailKlien = res.data.data as DetailKlien
     return postedDetailKlien
 }
+
+export const postDetailKlienStatus = async (detail_klien: DetailKlien, jenis: string, status: number) => {
+  const instance = CreateAxiosInstance();
+    const res = await instance.post(`/laporans/${detail_klien.laporan_id}/status-penjangkauan/`, { 'jenis': jenis, 'status': status }, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedDetailKlien = res.data.data as DetailKlien;
+  return postedDetailKlien;
+};

@@ -41,6 +41,7 @@ export interface Laporan {
     pelaku?: Pelaku
     kondisi_klien?: KondisiKlien
     penjadwalan?: Penjadwalan
+    status_detail_klien?: number
 }
 
 export interface LaporanSatgas {
