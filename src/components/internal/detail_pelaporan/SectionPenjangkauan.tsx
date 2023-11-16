@@ -124,7 +124,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     laporan={laporan}
                     title="Langkah yang Telah Dilakukan"
                     help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
-                    is_done={Number(laporan.status_langkah_telah_dilakukan)}
+                    is_done={laporan.status_langkah_telah_dilakukan}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
                     setRefetch={setRefetch}
