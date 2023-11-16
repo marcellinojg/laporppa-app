@@ -15,6 +15,7 @@ import {
 import { ALERT_TYPE } from "../../../../consts/alert";
 import { useAlert } from "../../../../hooks/useAlert";
 import { Pelaku } from "../../../../consts/pelaku";
+import { SectionTitle } from "../../../common/Typography";
 
 const FormPelaku = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
@@ -49,7 +50,7 @@ const FormPelaku = (props: FormModal) => {
       showLoader();
       if (laporan.pelaku?.id != null) {
         (await patchPelaku(formatData)) as Pelaku;
-        // await postPelakuStatus(formatData, "pelaku", jenisButton);
+        await postPelakuStatus(formatData, "pelaku", jenisButton);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -58,7 +59,7 @@ const FormPelaku = (props: FormModal) => {
         });
       } else {
         (await postPelaku(formatData)) as Pelaku;
-        // await postPelakuStatus(formatData, "pelaku", jenisButton);
+        await postPelakuStatus(formatData, "pelaku", jenisButton);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -103,6 +104,7 @@ const FormPelaku = (props: FormModal) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="border-b-2 flex flex-col gap-3 py-3">
+            <SectionTitle>Identitas Pelaku</SectionTitle>
             <InputText
               register={register}
               errors={errors}

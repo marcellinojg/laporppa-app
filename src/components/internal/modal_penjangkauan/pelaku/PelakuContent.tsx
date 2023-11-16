@@ -19,9 +19,12 @@ const DetailPelaku = (props: DetailPelaku) => {
         <span className="font-bold text-lg">Pelaku</span>
         <div className="flex flex-col gap-2 py-3">
           <div className="border-b-2 flex flex-col gap-3 py-3">
+            <SectionTitle>Identitas Pelaku</SectionTitle>
             <DetailLaporanItem
               label="Nama Lengkap"
-              value={laporan.pelaku?.nama_lengkap ? laporan.pelaku.nama_lengkap : "-"}
+              value={
+                laporan.pelaku?.nama_lengkap ? laporan.pelaku.nama_lengkap : "-"
+              }
             />
             <DetailLaporanItem
               label="Hubungan"
@@ -29,7 +32,9 @@ const DetailPelaku = (props: DetailPelaku) => {
             />
             <DetailLaporanItem
               label="Alamat Domisili"
-              value={laporan.pelaku?.usia ? laporan.pelaku.usia.toString() : "-"}
+              value={
+                laporan.pelaku?.usia ? laporan.pelaku.usia.toString() : "-"
+              }
             />
           </div>
         </div>

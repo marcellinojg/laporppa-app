@@ -1,4 +1,5 @@
 import { DetailKlien } from "../consts/detail_klien"
+import { KondisiKlien } from "../consts/kondisi_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { Pelaku } from "../consts/pelaku"
@@ -192,4 +193,45 @@ export const postPelakuStatus = async (
   );
   const postedPelaku = res.data.data;
   return postedPelaku;
+};
+
+export const patchKondisiKlien = async (kondisi: KondisiKlien) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.put(`/kondisi-kliens/${kondisi.id}`, kondisi, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+  const patchedKondisiKlien = res.data.data2 as KondisiKlien;
+  return patchedKondisiKlien;
+};
+
+export const postKondisiKlien = async (kondisi: KondisiKlien) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/kondisi-kliens", kondisi, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedKondisiKlien = res.data.data as KondisiKlien;
+  return postedKondisiKlien;
+};
+
+export const postKondisiStatus = async (
+  kondisi: KondisiKlien,
+  jenis: string,
+  status: number
+) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.put(
+    `/laporans/${kondisi.laporan_id}/status-penjangkauan/`,
+    { jenis: jenis, status: status },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  const postedKondisiKlien = res.data.data;
+  return postedKondisiKlien;
 };

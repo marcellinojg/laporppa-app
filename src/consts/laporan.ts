@@ -43,6 +43,7 @@ export interface Laporan {
     penjadwalan?: Penjadwalan
     status_detail_klien?: number
     status_pelaku?: number
+    status_kondisi_klien?: number
 }
 
 export interface LaporanSatgas {
