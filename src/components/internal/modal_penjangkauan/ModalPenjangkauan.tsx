@@ -8,11 +8,11 @@ interface ModalPenjangkauanProps {
     mode: 'read' | 'edit' | 'input'
     setIsModalActive: Dispatch<SetStateAction<boolean>>
     modalType: string
-    laporan : Laporan
+    laporan: Laporan
 }
 
 const ModalPenjangkauan = (props: ModalPenjangkauanProps) => {
-    const { mode, setIsModalActive, modalType, laporan} = props
+    const { mode, setIsModalActive, modalType, laporan } = props
     const modalRef = useRef(null)
     useOutsideAlerter(modalRef, () => setIsModalActive(false))
     const mappedModal = modalPenjangkauanMapper(modalType)

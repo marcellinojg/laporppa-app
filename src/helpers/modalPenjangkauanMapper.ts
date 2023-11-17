@@ -1,5 +1,7 @@
 import FormDetailHarapan from '../components/internal/modal_penjangkauan/harapan/FormHarapan';
 import DetailHarapanContent from '../components/internal/modal_penjangkauan/harapan/HarapanContent';
+import DetailKeluargaContent from '../components/internal/modal_penjangkauan/keluarga/DetailKeluargaContent';
+import FormDetailKeluarga from '../components/internal/modal_penjangkauan/keluarga/FormDetailKeluarga';
 import DetailKlienContent from '../components/internal/modal_penjangkauan/klien/DetailKlienContent';
 import DetailKronologiContent from '../components/internal/modal_penjangkauan/kronologi/KronologiContent';
 import FormDetailKlien from '../components/internal/modal_penjangkauan/klien/FormDetailKlien';
@@ -17,7 +19,7 @@ const modalPenjangkauanMapper = (type: string) => {
         case MODAL_PENJANGKAUAN.KLIEN:
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.KELUARGA:
-            return [DetailKlienContent, FormDetailKlien]
+            return [DetailKeluargaContent, FormDetailKeluarga]
         case MODAL_PENJANGKAUAN.PELAKU:
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.HARAPAN:
