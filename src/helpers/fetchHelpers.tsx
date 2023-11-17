@@ -6,12 +6,13 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan, LaporanCount } from "../consts/laporan";
-import { getKeluargaKlien, getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
+import { getHubunganKeluarga, getKeluargaKlien, getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
 import { getSatgasPelapors } from "../api/satgas";
 import { KeluargaKlien } from "../consts/keluarga_klien";
+import { HubunganKeluarga } from "../consts/hubungan_keluarga";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -197,3 +198,19 @@ export const KeluargaLoader = (props: FetchDataEffectsProps<KeluargaKlien[]>) =>
         {children}
     </>
 }
+
+export const HubunganKeluargaLoader = (props: FetchDataEffectsProps<HubunganKeluarga[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getHubunganKeluarga()
+      .then((hubungans) => setData(hubungans))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};

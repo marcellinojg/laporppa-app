@@ -1,3 +1,4 @@
+import { HubunganKeluarga } from "../consts/hubungan_keluarga"
 import { KeluargaKlien } from "../consts/keluarga_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
@@ -124,4 +125,11 @@ export const postKeluargaKlienStatus = async (laporan_id: string, jenis: string,
   });
   const postedKeluargaKlienStatus = res.data.data;
   return postedKeluargaKlienStatus;
+};
+
+export const getHubunganKeluarga = async () => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/hubungan-keluarga-kliens`);
+  const data = res.data.data as HubunganKeluarga[];
+  return data;
 };
