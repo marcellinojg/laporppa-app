@@ -5,13 +5,12 @@ import useLoader from "../hooks/useLoader";
 import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
-import { DataKlien, Laporan, LaporanCount } from "../consts/laporan";
+import { Laporan, LaporanCount } from "../consts/laporan";
 import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
-import { getKategoris } from "../api/kategori";
+import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
 import { getSatgasPelapors } from "../api/satgas";
-import { getDataKlien } from "../api/laporan";
 import { Kota } from "../consts/kota";
 import { getKotas } from "../api/kota";
 import { Agama } from "../consts/agama";
@@ -22,6 +21,8 @@ import { StatusPerkawinan } from "../consts/status_perkawinan";
 import { getStatusPerkawinans } from "../api/status_perkawinan";
 import { getBPJS } from "../api/bpjs";
 import { BPJS } from "../consts/BPJS";
+import { JenisKasus } from "../consts/jenis_kasus";
+import { getJenisKasuses } from "../api/jenis_kasus";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -71,19 +72,19 @@ export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
 }
 
 export const KotaLoader = (props: FetchDataEffectsProps<Kota[]>) => {
-  const { setData, children } = props;
-  const { showLoader, hideLoader } = useLoader();
-  const { errorFetchAlert } = useAlert();
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
 
-  useEffect(() => {
-    showLoader();
-    getKotas()
-      .then((kotas) => setData(kotas))
-      .catch(() => errorFetchAlert())
-      .then(() => hideLoader());
-  }, []);
+    useEffect(() => {
+        showLoader();
+        getKotas()
+            .then((kotas) => setData(kotas))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader());
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 
@@ -131,11 +132,11 @@ export const LaporanLoader = (props: FetchDataEffectsProps<Laporan | null | unde
         if (refetch === true) {
             showLoader()
             getLaporan(id!)
-                .then((laporan : Laporan) => {
+                .then((laporan: Laporan) => {
                     const tanggal_jam_pengaduan = new Date(laporan.tanggal_jam_pengaduan)
                     setData({
                         ...laporan,
-                        tanggal_pengaduan : tanggal_jam_pengaduan,
+                        tanggal_pengaduan: tanggal_jam_pengaduan,
                         jam_pengaduan: `${tanggal_jam_pengaduan.getHours()}:${tanggal_jam_pengaduan.getMinutes()}`
                     })
                 })
@@ -202,68 +203,108 @@ export const SatgasPelaporLoader = (props: FetchDataEffectsProps<SatgasPelapor[]
     </>
 }
 
-export const AgamaLoader = (props: FetchDataEffectsProps<Agama[]>) => {
-  const { setData, children } = props;
-  const { showLoader, hideLoader } = useLoader();
-  const { errorFetchAlert } = useAlert();
+export const JenisKasusesLoader = (props: FetchDataEffectsProps<JenisKasus[]>) => {
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
 
-  useEffect(() => {
-    showLoader();
-    getAgamas()
-      .then((agamas) => setData(agamas))
-      .catch(() => errorFetchAlert())
-      .then(() => hideLoader());
-  }, []);
+    useEffect(() => {
+        showLoader();
+        getJenisKasuses()
+            .then((jenisKasuses) => setData(jenisKasuses))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader());
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
+export const AgamaLoader = (props: FetchDataEffectsProps<Agama[]>) => {
+    const { setData, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getAgamas()
+            .then((agamas) => setData(agamas))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader())
+    }, [])
+
+    return <>
+        {children}
+    </>
+}
+
+
+
 export const PekerjaanLoader = (props: FetchDataEffectsProps<Pekerjaan[]>) => {
-  const { setData, children } = props;
-  const { showLoader, hideLoader } = useLoader();
-  const { errorFetchAlert } = useAlert();
 
-  useEffect(() => {
-    showLoader();
-    getPekerjaans()
-      .then((pekerjaans) => setData(pekerjaans))
-      .catch(() => errorFetchAlert())
-      .then(() => hideLoader());
-  }, []);
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
 
-  return <>{children}</>;
+    useEffect(() => {
+        showLoader();
+        getPekerjaans()
+            .then((pekerjaans) => setData(pekerjaans))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader());
+    }, []);
+
+    return <>{children}</>;
 };
 
 export const StatusPekawinanLoader = (props: FetchDataEffectsProps<StatusPerkawinan[]>) => {
-  const { setData, children } = props;
-  const { showLoader, hideLoader } = useLoader();
-  const { errorFetchAlert } = useAlert();
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
 
-  useEffect(() => {
-    showLoader();
-    getStatusPerkawinans()
-      .then((status_perkawinans) => setData(status_perkawinans))
-      .catch(() => errorFetchAlert())
-      .then(() => hideLoader());
-  }, []);
+    useEffect(() => {
+        showLoader();
+        getStatusPerkawinans()
+            .then((status_perkawinans) => setData(status_perkawinans))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader());
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 export const BPJSLoader = (
-  props: FetchDataEffectsProps<BPJS[]>
+    props: FetchDataEffectsProps<BPJS[]>
 ) => {
-  const { setData, children } = props;
-  const { showLoader, hideLoader } = useLoader();
-  const { errorFetchAlert } = useAlert();
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
 
-  useEffect(() => {
-    showLoader();
-    getBPJS()
-      .then((bpjs) => setData(bpjs))
-      .catch(() => errorFetchAlert())
-      .then(() => hideLoader());
-  }, []);
+    useEffect(() => {
+        showLoader();
+        getBPJS()
+            .then((bpjs) => setData(bpjs))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader());
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
 };
+
+
+export const KategoriKasusesLoader = (props: FetchDataEffectsProps<Kategori[]>) => {
+    const { setData, children } = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        showLoader()
+        getKategoriKasuses()
+            .then((kategoriKasues) => setData(kategoriKasues))
+            .catch(() => errorFetchAlert())
+            .then(() => hideLoader());
+    }, [])
+
+    return <>
+        {children}
+    </>
+}

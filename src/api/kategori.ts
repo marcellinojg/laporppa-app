@@ -6,3 +6,10 @@ export const getKategoris = async () => {
     const kategoris = res.data.data as Kategori[]
     return kategoris
 }
+
+export const getKategoriKasuses = async () => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.get('/kategori-kasuses')
+    const getKategoriKasuses = res.data.data as Kategori[]
+    return getKategoriKasuses
+}

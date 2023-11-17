@@ -1,3 +1,4 @@
+import { DetailKasus } from "../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus"
 import { DetailKlien } from "../consts/detail_klien"
 import { KondisiKlien } from "../consts/kondisi_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
@@ -235,3 +236,25 @@ export const postKondisiStatus = async (
   const postedKondisiKlien = res.data.data;
   return postedKondisiKlien;
 };
+
+export const patchDetailKasus = async (detailKasus: DetailKasus) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.put(`/detail-kasuses/${detailKasus.id}`, detailKasus, {
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+    })
+    const patchedDetailKasus = res.data.data2 as DetailKasus
+    return patchedDetailKasus
+}
+
+export const postDetailKasus = async (detailKasus: DetailKasus) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.post('/detail-kasuses', detailKasus, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    const postedDetailKasus = res.data.data as DetailKasus
+    return postedDetailKasus
+}
