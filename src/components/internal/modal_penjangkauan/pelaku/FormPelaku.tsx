@@ -2,27 +2,27 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { FormModal } from "../../../../consts/modal_penjangkauan";
 import capitalize from "../../../../helpers/capitalize";
 import { PrimaryButton, SecondaryButton } from "../../../form/Button";
+import { InputText } from "../../../form/Input";
 import { useState } from "react";
 import useLoader from "../../../../hooks/useLoader";
 import { useLocalStorage } from "usehooks-ts";
 import {
   getLaporan,
-  patchKondisiKlien,
-  postKondisiKlien,
-  postKondisiStatus,
+  patchPelaku,
+  postPelaku,
+  postPelakuStatus,
 } from "../../../../api/laporan";
 import { ALERT_TYPE } from "../../../../consts/alert";
 import { useAlert } from "../../../../hooks/useAlert";
+import { Pelaku } from "../../../../consts/pelaku";
 import { SectionTitle } from "../../../common/Typography";
-import { KondisiKlien } from "../../../../consts/kondisi_klien";
-import { TextArea } from "../../../form/Input";
 
-const FormDetailKondisi = (props: FormModal) => {
+const FormPelaku = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
-  const form = useForm<KondisiKlien>();
+  const form = useForm<Pelaku>();
   const {
     register,
     formState: { errors },
@@ -30,37 +30,41 @@ const FormDetailKondisi = (props: FormModal) => {
     control,
     reset,
   } = form;
-  const [jenisButton, setJenisButton] = useState(1);
+  const [formState, setFormState] = useLocalStorage<string | null>(
+    "form_internal_state",
+    null
+  );
+  const [jenisButton, setJenisButton] = useState(1)
 
-  const onSubmit: SubmitHandler<KondisiKlien> = async (data: KondisiKlien) => {
-    console.log(jenisButton);
-    const formatData: KondisiKlien = {
+  const onSubmit: SubmitHandler<Pelaku> = async (data: Pelaku) => {
+    console.log(jenisButton)
+    const formatData: Pelaku = {
       ...data,
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
-      id: Number(laporan.kondisi_klien?.id),
+      id: Number(laporan.pelaku?.id),
     };
 
     try {
       setIsLoading(true);
       showLoader();
       if (laporan.pelaku?.id != null) {
-        (await patchKondisiKlien(formatData)) as KondisiKlien;
-        await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
+        (await patchPelaku(formatData)) as Pelaku;
+        await postPelakuStatus(formatData, "pelaku", jenisButton);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Berhasil Diedit !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil diedit!`,
+          title: "Pelaku Berhasil Diedit !",
+          message: `Pelaku untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       } else {
-        (await postKondisiKlien(formatData)) as KondisiKlien;
-        await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
+        (await postPelaku(formatData)) as Pelaku;
+        await postPelakuStatus(formatData, "pelaku", jenisButton);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Sukses Dibuat !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          title: "Pelaku Sukses Dibuat !",
+          message: `Pelaku untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       }
 
@@ -81,53 +85,53 @@ const FormDetailKondisi = (props: FormModal) => {
 
     setTimeout(() => setIsLoading(false), 3000);
   };
+
   return (
     <>
       <span className="font-bold text-lg">
-        <span className="text-primary">{capitalize(mode)}</span> Kondisi Klien
+        <span className="text-primary">{capitalize(mode)}</span> Pelaku
       </span>
+      {/* <AutosaveFormEffect
+                      setValue={setValue}
+                      watch={watch}
+                      formState={formState}
+                      setFormState={setFormState}
+                    > */}
       <div className="flex flex-col gap-2 py-3">
         <form
           className="flex flex-col gap-3 py-3"
+          action=""
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="border-b-2 flex flex-col gap-3 py-3">
-            <SectionTitle>Kondisi Klien</SectionTitle>
-            <TextArea
-              name="fisik"
-              className="h-60"
-              defaultValue={laporan.kondisi_klien?.fisik}
+            <SectionTitle>Identitas Pelaku</SectionTitle>
+            <InputText
               register={register}
               errors={errors}
-              label="Kondisi fisik klien"
-              placeholder="Ceritakan tentang kondisi fisik klien"
+              defaultValue={laporan.pelaku?.nama_lengkap}
+              name="nama_lengkap"
+              placeholder="Nama Lengkap Pelaku"
+              label="Nama Lengkap Pelaku"
+              isRequired
             />
-            <TextArea
-              name="psikologis"
-              className="h-60"
-              defaultValue={laporan.kondisi_klien?.psikologis}
+            <InputText
               register={register}
               errors={errors}
-              label="Kondisi psikologis klien"
-              placeholder="Ceritakan tentang kondisi psikologis klien"
+              defaultValue={laporan.pelaku?.hubungan}
+              name="hubungan"
+              placeholder="Hubungan Dengan Korban"
+              label="Hubungan Dengan Korban"
+              isRequired
             />
-            <TextArea
-              name="sosial"
-              className="h-60"
-              defaultValue={laporan.kondisi_klien?.sosial}
+            <InputText
               register={register}
               errors={errors}
-              label="Kondisi sosial klien"
-              placeholder="Ceritakan tentang kondisi sosial klien"
-            />
-            <TextArea
-              name="spiritual"
-              className="h-60"
-              defaultValue={laporan.kondisi_klien?.spiritual}
-              register={register}
-              errors={errors}
-              label="Kondisi spiritual klien"
-              placeholder="Ceritakan tentang kondisi spiritual klien"
+              defaultValue={laporan.pelaku?.usia.toString()}
+              name="usia"
+              placeholder="Usia Pelaku"
+              label="Usia Pelaku"
+              isRequired
+              type="number"
             />
           </div>
           <SecondaryButton
@@ -146,8 +150,9 @@ const FormDetailKondisi = (props: FormModal) => {
           </PrimaryButton>
         </form>
       </div>
+      {/* </AutosaveFormEffect> */}
     </>
   );
 };
 
-export default FormDetailKondisi;
+export default FormPelaku;

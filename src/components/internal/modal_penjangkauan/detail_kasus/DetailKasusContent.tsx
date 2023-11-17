@@ -2,13 +2,14 @@ import { Laporan } from "../../../../consts/laporan"
 // import { ContentModal } from "../../../../consts/modal_penjangkauan"
 import { SectionTitle } from "../../../common/Typography"
 import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem"
-import { useEffect } from "react";
+import { useEffect, Dispatch, SetStateAction } from "react";
 
-interface DetailKlienContent {
-    laporan: Laporan
+interface PenjadwalanContent {
+  laporan: Laporan;
+  setRefetch: Dispatch<SetStateAction<boolean>>;
 }
 
-const DetailKlienContent = (props: DetailKlienContent) => {
+const DetailKasusContent = (props: PenjadwalanContent) => {
     const { laporan } = props
     useEffect(() => {
             console.log(laporan, "isi laporan")
@@ -35,7 +36,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Kecamatan Domisili"
               value={
-                laporan.detail_klien?.kecamatan?.nama
+                laporan.detail_klien?.kecamatan.nama
                   ? laporan.detail_klien.kecamatan.nama
                   : "-"
               }
@@ -59,7 +60,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Kelurahan KK"
               value={
-                laporan.detail_klien?.kelurahan_kk?.nama
+                laporan.detail_klien?.kelurahan_kk.nama
                   ? laporan.detail_klien.kelurahan_kk.nama
                   : "-"
               }
@@ -67,7 +68,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Kecamatan KK"
               value={
-                laporan.detail_klien?.kecamatan_kk?.nama
+                laporan.detail_klien?.kecamatan_kk.nama
                   ? laporan.detail_klien.kecamatan_kk.nama
                   : "-"
               }
@@ -122,7 +123,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Agama"
               value={
-                laporan.detail_klien?.agama?.nama
+                laporan.detail_klien?.agama.nama
                   ? laporan.detail_klien.agama.nama
                   : "-"
               }
@@ -130,7 +131,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Pekerjaan"
               value={
-                laporan.detail_klien?.pekerjaan?.nama
+                laporan.detail_klien?.pekerjaan.nama
                   ? laporan.detail_klien.pekerjaan.nama
                   : "-"
               }
@@ -146,7 +147,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Status Perkawinan"
               value={
-                laporan.detail_klien?.status_perkawinan?.nama
+                laporan.detail_klien?.status_perkawinan.nama
                   ? laporan.detail_klien.status_perkawinan.nama
                   : "-"
               }
@@ -154,7 +155,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <DetailLaporanItem
               label="Kepemilikan BPJS"
               value={
-                laporan.detail_klien?.bpjs?.nama
+                laporan.detail_klien?.bpjs.nama
                   ? laporan.detail_klien.bpjs.nama
                   : "-"
               }
@@ -205,4 +206,4 @@ const DetailKlienContent = (props: DetailKlienContent) => {
     );
 }
 
-export default DetailKlienContent
+export default DetailKasusContent
