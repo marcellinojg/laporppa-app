@@ -5,12 +5,23 @@ import useLoader from "../hooks/useLoader";
 import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
-import { Laporan, LaporanCount } from "../consts/laporan";
+import { DataKlien, Laporan, LaporanCount } from "../consts/laporan";
 import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
 import { getSatgasPelapors } from "../api/satgas";
+import { getDataKlien } from "../api/laporan";
+import { Kota } from "../consts/kota";
+import { getKotas } from "../api/kota";
+import { Agama } from "../consts/agama";
+import { getAgamas } from "../api/agama";
+import { Pekerjaan } from "../consts/pekerjaan";
+import { getPekerjaans } from "../api/pekerjaan";
+import { StatusPerkawinan } from "../consts/status_perkawinan";
+import { getStatusPerkawinans } from "../api/status_perkawinan";
+import { getBPJS } from "../api/bpjs";
+import { BPJS } from "../consts/BPJS";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -58,6 +69,22 @@ export const KelurahanLoader = (props: FetchDataEffectsProps<Kelurahan[]>) => {
         {children}
     </>
 }
+
+export const KotaLoader = (props: FetchDataEffectsProps<Kota[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getKotas()
+      .then((kotas) => setData(kotas))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
 
 
 export const AllLaporanLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
@@ -174,3 +201,69 @@ export const SatgasPelaporLoader = (props: FetchDataEffectsProps<SatgasPelapor[]
         {children}
     </>
 }
+
+export const AgamaLoader = (props: FetchDataEffectsProps<Agama[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getAgamas()
+      .then((agamas) => setData(agamas))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
+
+export const PekerjaanLoader = (props: FetchDataEffectsProps<Pekerjaan[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getPekerjaans()
+      .then((pekerjaans) => setData(pekerjaans))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
+
+export const StatusPekawinanLoader = (props: FetchDataEffectsProps<StatusPerkawinan[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getStatusPerkawinans()
+      .then((status_perkawinans) => setData(status_perkawinans))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
+
+export const BPJSLoader = (
+  props: FetchDataEffectsProps<BPJS[]>
+) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getBPJS()
+      .then((bpjs) => setData(bpjs))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
