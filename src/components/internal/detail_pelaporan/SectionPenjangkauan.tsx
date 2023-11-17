@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { Laporan } from "../../../consts/laporan"
 import Pill from "../Pill"
 import DetailPenjangkauanItem from "./DetailPenjangkauanItem"
@@ -14,7 +14,8 @@ interface SectionPenjangkauanProps {
 
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
-    const { laporan } = props
+    const { laporan, setRefetch } = props
+    const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
     return <>
         <div className="flex gap-3 lg:flex-row flex-col items-center justify-start">
@@ -53,6 +54,8 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.KLIEN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -62,6 +65,8 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.PELAKU}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -71,15 +76,19 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.KELUARGA}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
                     title="Situasi Keluarga"
                     help_text="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini."
-                    is_done={2}
+                    is_done={1}
                     last_edit_by={laporan.satgas_pelapor.nama}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.SITUASI}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -88,6 +97,8 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={2}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -96,6 +107,8 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={2}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.HARAPAN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
@@ -104,22 +117,28 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     is_done={2}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.KONDISI}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
                     title="Langkah yang Telah Dilakukan"
                     help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
-                    is_done={1}
+                    is_done={laporan.status_langkah_telah_dilakukan}
                     updated_at={formatDate(new Date().toString(), true)}
                     modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
                 <DetailPenjangkauanItem
                     laporan={laporan}
                     title="Dokumen Pendukung"
                     help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
-                    is_done={1}
+                    is_done={2}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modalType={MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG}
+                    modalType={MODAL_PENJANGKAUAN.KLIEN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
                 />
             </div>
         </div>

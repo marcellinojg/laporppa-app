@@ -16,11 +16,14 @@ export const MODAL_PENJANGKAUAN = {
 
 
 export interface ContentModal {
-    laporan?: Laporan
+    laporan : Laporan
+    setRefetch?: Dispatch<SetStateAction<boolean>>
+    setIsModalActive: Dispatch<SetStateAction<boolean>>
 }
 
 export interface FormModal {
     mode : 'read' | 'edit' | 'input'
     setIsModalActive : Dispatch<SetStateAction<boolean>>
     laporan : Laporan
+    setRefetch?: Dispatch<SetStateAction<boolean>>
 }

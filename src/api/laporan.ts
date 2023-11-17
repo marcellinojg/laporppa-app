@@ -1,3 +1,4 @@
+import { DetailLangkah } from "../components/internal/modal_penjangkauan/langkah_dilakukan/FormLangkah"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
@@ -89,4 +90,15 @@ export const getTotalLaporan = async () => {
 export const deleteLaporan = async (id : string) => {
     const instance = CreateAxiosInstance()
     await instance.delete(`/laporans/${id}`)
+}
+
+export const patchLaporanLangkah = async (laporan: LaporanSatgas | Laporan | any, laporan2: LaporanSatgas | Laporan | any, id: string) => {
+    const instance = CreateAxiosInstance()
+    const data = {
+        ...laporan,
+        ...laporan2
+    };
+    const res = await instance.patch(`/laporans/${id}`, data)
+    const patchedLaporan = res.data.data as Laporan
+    return patchedLaporan
 }

@@ -33,6 +33,8 @@ export interface Laporan {
     kelurahan: Kelurahan
     sumber_pengaduan: SumberPengaduan
     dokumentasi_pengaduan: string[]
+    langkah_telah_dilakukan : string
+    status_langkah_telah_dilakukan: number
     keluarga_klien?: KeluargaKlien[]
     status_keluarga: number
  }
@@ -55,8 +57,6 @@ export interface LaporanSatgas {
     uraian_singkat_masalah: string
     sumber_pengaduan_id: number
     dokumentasi_pengaduan: File[]
-
-
     // doesn't have default value
     // satgas_pelapor_id: string
     // previous_satgas_id: string
