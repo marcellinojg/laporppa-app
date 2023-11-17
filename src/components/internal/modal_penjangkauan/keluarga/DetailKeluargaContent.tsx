@@ -15,7 +15,7 @@ const DetailKeluargaContent = (props: DetailKeluargaContent) => {
     return <>
         <span className="font-bold text-lg">Detail Data Keluarga</span>
         <div className="flex flex-col gap-2 py-3">
-        {laporan.keluarga_klien?.length > 1 ? ( laporan.keluarga_klien?.map((keluarga, index) => (
+        {laporan.keluarga_klien?.length && laporan.keluarga_klien.length > 1 ? ( laporan.keluarga_klien?.map((keluarga, index) => (
         <div key={index} className="border-b-2 flex flex-col gap-3 py-3">
             <SectionTitle>{`Keluarga ${index + 1}`}</SectionTitle>
             <DetailLaporanItem label="Hubungan dengan Klien" value={keluarga.hubungan.hubungan ?? '-'} />

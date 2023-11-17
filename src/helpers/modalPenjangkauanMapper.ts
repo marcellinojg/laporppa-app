@@ -1,7 +1,6 @@
 import FormDetailHarapan from '../components/internal/modal_penjangkauan/harapan/FormHarapan';
 import DetailHarapanContent from '../components/internal/modal_penjangkauan/harapan/HarapanContent';
 import DetailKeluargaContent from '../components/internal/modal_penjangkauan/keluarga/DetailKeluargaContent';
-import FormDetailKeluarga from '../components/internal/modal_penjangkauan/keluarga/FormDetailKeluarga';
 import DetailKlienContent from '../components/internal/modal_penjangkauan/klien/DetailKlienContent';
 import DetailKronologiContent from '../components/internal/modal_penjangkauan/kronologi/KronologiContent';
 import FormDetailKlien from '../components/internal/modal_penjangkauan/klien/FormDetailKlien';
@@ -11,13 +10,14 @@ import FormDetailSituasi from '../components/internal/modal_penjangkauan/situasi
 import { MODAL_PENJANGKAUAN } from '../consts/modal_penjangkauan';
 import DetailKondisiContent from '../components/internal/modal_penjangkauan/kondisi/KondisiContent';
 import FormDetailKondisi from '../components/internal/modal_penjangkauan/kondisi/FormKondisi';
+import FormKeluargaKlien from '../components/internal/modal_penjangkauan/keluarga/FormDetailKeluarga';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {
         case MODAL_PENJANGKAUAN.KLIEN:
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.KELUARGA:
-            return [DetailKeluargaContent, FormDetailKeluarga]
+            return [DetailKeluargaContent, FormKeluargaKlien]
         case MODAL_PENJANGKAUAN.PELAKU:
             return [DetailKlienContent, FormDetailKlien]
         case MODAL_PENJANGKAUAN.HARAPAN:

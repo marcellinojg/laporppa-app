@@ -1,3 +1,4 @@
+import { KeluargaKlien } from "../consts/keluarga_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
@@ -90,3 +91,37 @@ export const deleteLaporan = async (id : string) => {
     const instance = CreateAxiosInstance()
     await instance.delete(`/laporans/${id}`)
 }
+
+export const postKeluarga = async (keluarga_klien: KeluargaKlien) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/keluarga-kliens", keluarga_klien, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedKeluargaKlien = res.data.data as KeluargaKlien;
+  return postedKeluargaKlien;
+};
+
+export const deleteKeluarga = async (id: number) => {
+  const instance = CreateAxiosInstance();
+  await instance.delete(`/keluarga-kliens/${id}`);
+};
+
+export const getKeluargaKlien = async (id: string) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/${id}/keluarga-kliens`);
+  const data = res.data.data as KeluargaKlien[];
+  return data;
+};
+
+export const postKeluargaKlienStatus = async (laporan_id: string, jenis: string, status: number) => {
+  const instance = CreateAxiosInstance();
+    const res = await instance.post(`/laporans/${laporan_id}/status-penjangkauan/`, { 'jenis': jenis, 'status': status }, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedKeluargaKlienStatus = res.data.data;
+  return postedKeluargaKlienStatus;
+};
