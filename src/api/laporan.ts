@@ -144,6 +144,6 @@ export const postDetailKlienStatus = async (detail_klien: DetailKlien, jenis: st
       "Content-Type": "multipart/form-data",
     },
   });
-  const postedDetailKlien = res.data.data as DetailKlien;
-  return postedDetailKlien;
+  const postedDetailKlienStatus = res.data.data;
+  return postedDetailKlienStatus;
 };
