@@ -44,7 +44,7 @@ const FormDetailKondisi = (props: FormModal) => {
     try {
       setIsLoading(true);
       showLoader();
-      if (laporan.pelaku?.id != null) {
+      if (laporan.kondisi_klien?.id != null) {
         (await patchKondisiKlien(formatData)) as KondisiKlien;
         await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
         reset();
