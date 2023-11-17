@@ -19,7 +19,10 @@ import { ALERT_TYPE } from "../../../../consts/alert";
 import useLoader from "../../../../hooks/useLoader";
 import { useAlert } from "../../../../hooks/useAlert";
 import { DeleteButton } from "../../../form/PenjangkauanButtons";
-import { HubunganKeluargaLoader, KeluargaLoader } from "../../../../helpers/fetchHelpers";
+import {
+  HubunganKeluargaLoader,
+  KeluargaLoader,
+} from "../../../../helpers/fetchHelpers";
 import { HubunganKeluarga } from "../../../../consts/hubungan_keluarga";
 
 const FormKeluargaKlien = (props: FormModal) => {
@@ -35,23 +38,38 @@ const FormKeluargaKlien = (props: FormModal) => {
     reset,
   } = useForm<KeluargaKlien>();
   const [keluargas, setKeluargas] = useState<KeluargaKlien[]>([]);
-  const [hubunganKeluarga, setHubunganKeluarga] = useState<HubunganKeluarga[]>([])
+  const [hubunganKeluarga, setHubunganKeluarga] = useState<HubunganKeluarga[]>(
+    []
+  );
 
-  const publishKeluarga = () => {
-    postKeluargaKlienStatus(laporan.id, "keluarga-klien", 2);
-    setIsModalActive(false);
-    addAlert({
-      type: ALERT_TYPE.SUCCESS,
-      title: "Keluarga Klien Berhasil Dibuat !",
-      message: `Keluarga Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
-    });
-  }
+  const publishKeluarga = async () => {
+    try {
+      setIsLoading(true);
+      showLoader();
+      (await postKeluargaKlienStatus(laporan.id, "keluarga-klien", 2))
+      addAlert({
+        type: ALERT_TYPE.SUCCESS,
+        title: "Keluarga Klien Berhasil Dibuat !",
+        message: `Keluarga Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+      });
+      hideLoader();
+      setIsModalActive(false)
+    } catch {
+      errorFetchAlert();
+    } finally {
+      getLaporan(laporan.id);
+      setIsLoading(false);
+      hideLoader();
+    }
+
+    setTimeout(() => setIsLoading(false), 3000);
+  };
 
   const delKeluarga = async (id: number) => {
     try {
       setIsLoading(true);
       showLoader();
-      (await deleteKeluarga(id));
+      await deleteKeluarga(id);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
       //   title: "Keluarga Klien Berhasil Ditambahkan !",
@@ -87,7 +105,7 @@ const FormKeluargaKlien = (props: FormModal) => {
       setIsLoading(true);
       showLoader();
       (await postKeluarga(formatData)) as KeluargaKlien;
-      postKeluargaKlienStatus(laporan.id, "keluarga-klien", 1)
+      postKeluargaKlienStatus(laporan.id, "keluarga-klien", 1);
       reset();
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -97,7 +115,7 @@ const FormKeluargaKlien = (props: FormModal) => {
 
       hideLoader();
       setRefetch!(true);
-      setKeluargas((prevKeluarga) => [...prevKeluarga, formatData])
+      setKeluargas((prevKeluarga) => [...prevKeluarga, formatData]);
 
       // setTimeout(() => {
       //   navigate(0);
