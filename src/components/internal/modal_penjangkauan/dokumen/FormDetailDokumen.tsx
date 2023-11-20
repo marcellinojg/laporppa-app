@@ -6,25 +6,93 @@ import { PrimaryButton, SecondaryButton } from "../../../form/Button"
 import { FormModal } from "../../../../consts/modal_penjangkauan"
 import Uploader from "../../../form/Uploader"
 import { useState } from "react"
-
-interface DokumenPendukung {
-    foto_klien: File[]
-    foto_tempat_tinggal: File[]
-    foto_pendampingan_awal: File[]
-    foto_pendampingan_lanjutan: File[]
-    foto_pendampingan_monitoring: File[]
-    foto_kk: File[]
-    dokumen_pendukung: File[]
-}
+import useLoader from "../../../../hooks/useLoader"
+import { useAlert } from "../../../../hooks/useAlert";
+import { ALERT_TYPE } from "../../../../consts/alert";
+import {
+    getLaporan, patchDokumenPendukung, patchLaporan,
+  } from "../../../../api/laporan";
+import { DokumenPendukung } from "../../../../consts/dokumen_pendukung";
 
 const FormDetailDokumen = (props: FormModal) => {
-    const { mode } = props
-    const { register, formState: { errors }, handleSubmit, control, watch, setValue } = useForm<DokumenPendukung>()
+    const { mode, laporan, setIsModalActive, setRefetch } = props;
+    const { register, formState: { errors }, handleSubmit, control, watch, setValue, reset } = useForm<DokumenPendukung>()
     const [jenisButton, setJenisButton] = useState(1)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert, addAlert } = useAlert();
 
-    const onSubmit: SubmitHandler<DokumenPendukung> = (data: DokumenPendukung) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<DokumenPendukung> = async (data: DokumenPendukung) => {
+        // console.log(data)
         console.log(jenisButton)
+        const formatData: DokumenPendukung = {
+            laporan_id: laporan.id,
+            dokumen_pendukung: { // emang merah tapi jalan kok hehe
+                foto_klien: data.foto_klien,
+                foto_tempat_tinggal: data.foto_tempat_tinggal,
+                foto_pendampingan_awal: data.foto_pendampingan_awal,
+                foto_pendampingan_lanjutan: data.foto_pendampingan_lanjutan,
+                foto_pendampingan_monitoring: data.foto_pendampingan_monitoring,
+                foto_kk: data.foto_kk,
+                dokumen_pendukung: data.dokumen_pendukung 
+            }
+          };
+        console.log(formatData);
+        try {
+            setIsLoading(true);
+            showLoader();
+            if (laporan.dokumen_pendukung?.id != null) {
+                console.log('masuk ke if 1');
+              (await patchDokumenPendukung(formatData, laporan.dokumen_pendukung.id)) as DokumenPendukung;
+              await patchLaporan({
+                status_langkah_telah_dilakukan: jenisButton === 1
+                ? 1
+                : jenisButton === 2
+                    ? 2
+                    : null,
+              }, laporan.id);
+              reset();
+              addAlert({
+                  type: ALERT_TYPE.SUCCESS,
+                  title: "Dokumen Pendukung Berhasil Diedit !",
+                  message: `Dokumen Pendukung untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+              });
+            } else {
+                console.log('masuk ke if 2');
+              (await postDokumenPendukung(formatData)) as DokumenPendukung;
+              await patchLaporan({
+                status_langkah_telah_dilakukan: jenisButton === 1
+                ? 1
+                : jenisButton === 2
+                    ? 2
+                    : null,
+              }, laporan.id);
+              reset();
+              addAlert({
+                type: ALERT_TYPE.SUCCESS,
+                title: "DOkumen Pendukung Sukses Dibuat !",
+                message: `DOkumen Pendukung untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+              });
+
+
+            }
+      
+            hideLoader();
+            setRefetch!(true);
+            setIsModalActive(false);
+      
+            // setTimeout(() => {
+            //   navigate(0);
+            // }, 3000);
+        } catch {
+            errorFetchAlert();
+        } finally {
+            getLaporan(laporan.id);
+            setIsLoading(false);
+            hideLoader();
+        }
+    
+        setTimeout(() => setIsLoading(false), 3000);
     }
 
     return <>
