@@ -92,13 +92,20 @@ export const deleteLaporan = async (id : string) => {
     await instance.delete(`/laporans/${id}`)
 }
 
-export const patchLaporanLangkah = async (laporan: LaporanSatgas | Laporan | any, laporan2: LaporanSatgas | Laporan | any, id: string) => {
+export const postDokumenPendukung = async (laporan: LaporanSatgas) => {
     const instance = CreateAxiosInstance()
-    const data = {
-        ...laporan,
-        ...laporan2
-    };
-    const res = await instance.patch(`/laporans/${id}`, data)
+    const res = await instance.post('/dokumen-pendukungs', laporan, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    const postedLaporan = res.data.data as Laporan
+    return postedLaporan
+}
+
+export const patchDokumenPendukung = async (laporan: LaporanSatgas | Laporan | any, id: string) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.patch(`/laporans/${id}/dokumen-pendukungs`, laporan)
     const patchedLaporan = res.data.data as Laporan
     return patchedLaporan
 }

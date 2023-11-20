@@ -134,9 +134,9 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
                     laporan={laporan}
                     title="Dokumen Pendukung"
                     help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
-                    is_done={2}
+                    is_done={laporan.status_dokumen_pendukung}
                     updated_at={formatDate(new Date().toString(), true)}
-                    modalType={MODAL_PENJANGKAUAN.KLIEN}
+                    modalType={MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG}
                     setRefetch={setRefetch}
                     setIsModalActive={setIsModalActive}
                 />

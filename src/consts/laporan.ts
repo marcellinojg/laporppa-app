@@ -35,8 +35,10 @@ export interface Laporan {
     dokumentasi_pengaduan: string[]
     langkah_telah_dilakukan : string
     status_langkah_telah_dilakukan: number
+    dokumen_pendukung: DokumenPendukung[]
     keluarga_klien?: KeluargaKlien[]
     status_keluarga: number
+    status_dokumen_pendukung: number
  }
 
 export interface LaporanSatgas {
