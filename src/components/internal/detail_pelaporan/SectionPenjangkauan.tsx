@@ -27,11 +27,6 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <span className="text-primary">{laporan.nama_pelapor}</span>
           </h2>
           <Pill status={laporan.status.id} />
-          <h2 className="font-bold text-xl">
-            Detail Penjangkauan <br className="lg:hidden" />{" "}
-            <span className="text-primary">{laporan.nama_pelapor}</span>
-          </h2>
-          <Pill status={laporan.status.id} />
         </div>
         <div className="flex flex-col gap-2 py-3">
           <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
