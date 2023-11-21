@@ -12,6 +12,7 @@ import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 import {
   deleteKeluarga,
   getLaporan,
+  patchLaporan,
   postKeluarga,
   postKeluargaKlienStatus,
 } from "../../../../api/laporan";
@@ -24,6 +25,7 @@ import {
   KeluargaLoader,
 } from "../../../../helpers/fetchHelpers";
 import { HubunganKeluarga } from "../../../../consts/hubungan_keluarga";
+import { Laporan } from "../../../../consts/laporan";
 
 const FormKeluargaKlien = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
@@ -44,16 +46,21 @@ const FormKeluargaKlien = (props: FormModal) => {
 
   const publishKeluarga = async () => {
     try {
+      const formatDataStatus = {
+        // ...laporan,
+        status_keluarga: 2
+      };
       setIsLoading(true);
       showLoader();
-      (await postKeluargaKlienStatus(laporan.id, "keluarga-klien", 2))
+      (await patchLaporan(formatDataStatus, laporan.id))
       addAlert({
         type: ALERT_TYPE.SUCCESS,
         title: "Keluarga Klien Berhasil Dibuat !",
         message: `Keluarga Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
       });
       hideLoader();
-      setIsModalActive(false)
+      setIsModalActive(false);
+      setRefetch!(true);
     } catch {
       errorFetchAlert();
     } finally {
@@ -101,11 +108,17 @@ const FormKeluargaKlien = (props: FormModal) => {
       satgas_id: laporan.satgas_pelapor.id,
     };
 
+    const formatDataStatus = {
+      // ...laporan,
+      status_keluarga: 1,
+      // jenis_kelamin: laporan.jenis_kelamin.toUpperCase()
+    };
+
     try {
       setIsLoading(true);
       showLoader();
       (await postKeluarga(formatData)) as KeluargaKlien;
-      postKeluargaKlienStatus(laporan.id, "keluarga-klien", 1);
+      await patchLaporan(formatDataStatus, laporan.id);
       reset();
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
