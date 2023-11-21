@@ -6,7 +6,6 @@ import { formatDate } from "../../../helpers/formatDate"
 import { MODAL_PENJANGKAUAN } from "../../../consts/modal_penjangkauan"
 import DetailLaporanItem from "./DetailLaporanItem"
 import { SectionTitle } from "../../common/Typography"
-import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan"
 
 interface SectionPenjangkauanProps {
     laporan: Laporan
@@ -15,12 +14,10 @@ interface SectionPenjangkauanProps {
 
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
-  const { laporan, setRefetch} = props
-  const [isModalActivePenjadwalan, setIsModalActivePenjadwalan] = useState<boolean>(false);
-  const [isModalActiveDetailKasus, setIsModalActiveDetailKasus] = useState<boolean>(false);
+    const { laporan, setRefetch } = props
+    const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
-    return (
-      <>
+    return <>
         <div className="flex gap-3 lg:flex-row flex-col items-center justify-start">
           <h2 className="font-bold text-xl">
             Detail Penjangkauan <br className="lg:hidden" />{" "}
@@ -65,161 +62,120 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             <div className="flex items-center justify-between">
               <SectionTitle>Detail Kasus Klien</SectionTitle>
               <button
-                onClick={() => setIsModalActiveDetailKasus(true)}
                 type="button"
                 className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
               >
                 Tambahkan/Edit Detail Kasus
               </button>
             </div>
-            <DetailLaporanItem
-              label="Kategori Kasus"
-              value={
-                laporan.detail_kasus?.kategori_kasus.nama
-                  ? laporan.detail_kasus.kategori_kasus.nama
-                  : ""
-              }
-            />
-            <DetailLaporanItem
-              label="Jenis Kasus"
-              value={
-                laporan.detail_kasus?.jenis_kasus.nama
-                  ? laporan.detail_kasus.jenis_kasus.nama
-                  : ""
-              }
-            />
-            <DetailLaporanItem
-              label="Lokasi Kasus"
-              value={
-                laporan.detail_kasus?.lokasi_kasus
-                  ? laporan.detail_kasus.lokasi_kasus
-                  : ""
-              }
-            />
-            <DetailLaporanItem
-              label="Uraian Singkat Permasalahan"
-              value={
-                laporan.detail_kasus?.tanggal_jam_kejadian
-                  ? formatDate(
-                      laporan.detail_kasus.tanggal_jam_kejadian.toString(),
-                      true
-                    )
-                  : ""
-              }
-            />
+            <DetailLaporanItem label="Tipe Permasalahan" value={""} />
+            <DetailLaporanItem label="Kategori Kasus" value={""} />
+            <DetailLaporanItem label="Jenis Kasus" value={""} />
+            <DetailLaporanItem label="Lokasi Kasus" value={""} />
+            <DetailLaporanItem label="Uraian Singkat Permasalahan" value={""} />
           </div>
           <SectionTitle>Hasil Penjangkauan</SectionTitle>
           <span className="text-sm text-gray-500 -mt-2">
             Berikut ini merupakan hasil penjangkauan ke klien
           </span>
-          <div className="flex flex-col mt-5">
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Data Klien"
-              help_text="Masukkan informasi detail identitas klien hingga alamat."
-              is_done={Number(laporan.status_detail_klien)}
-              last_edit_by={laporan.satgas_pelapor.nama}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.KLIEN}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Pelaku"
-              help_text="Masukkan informasi pelaku hingga hubungan dengan korban."
-              is_done={Number(laporan.status_pelaku)}
-              last_edit_by={laporan.satgas_pelapor.nama}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.PELAKU}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Data Keluarga Klien"
-              help_text="Masukkan informasi detail identitas keluarga klien terkait ayah, ibu dan saudara-saudara."
-              is_done={Number(laporan.status_keluarga)}
-              last_edit_by={laporan.satgas_pelapor.nama}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.KELUARGA}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Situasi Keluarga"
-              help_text="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini."
-              is_done={2}
-              last_edit_by={laporan.satgas_pelapor.nama}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.SITUASI}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Kronologi Kejadian"
-              help_text="Deskripsikan kronologis kejadian secara lengkap."
-              is_done={2}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Harapan Klien dan Keluarga"
-              help_text="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
-              is_done={2}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.HARAPAN}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Kondisi Klien"
-              help_text="Masukkan informasi detail kondisi klien terkait kondisi fisik, psikologis dst."
-              is_done={Number(laporan.status_kondisi_klien)}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.KONDISI}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Langkah yang Telah Dilakukan"
-              help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
-              is_done={2}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
-              setRefetch={setRefetch}
-            />
-            <DetailPenjangkauanItem
-              laporan={laporan}
-              title="Dokumen Pendukung"
-              help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
-              is_done={2}
-              updated_at={formatDate(new Date().toString(), true)}
-              modalType={MODAL_PENJANGKAUAN.KLIEN}
-              setRefetch={setRefetch}
-            />
-          </div>
+            <div className="flex flex-col mt-5">
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Data Klien"
+                    help_text="Masukkan informasi detail identitas klien hingga alamat."
+                    is_done={2}
+                    last_edit_by={laporan.satgas_pelapor.nama}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.KLIEN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Data Pelaku"
+                    help_text="Masukkan informasi detail identitas pelaku hingga alamat."
+                    is_done={2}
+                    last_edit_by={laporan.satgas_pelapor.nama}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.PELAKU}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Data Keluarga Klien"
+                    help_text="Masukkan informasi detail identitas keluarga klien terkait ayah, ibu dan saudara-saudara."
+                    is_done={Number(laporan.status_keluarga)}
+                    last_edit_by={laporan.satgas_pelapor.nama}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.KELUARGA}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Situasi Keluarga"
+                    help_text="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini."
+                    is_done={1}
+                    last_edit_by={laporan.satgas_pelapor.nama}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.SITUASI}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Kronologi Kejadian"
+                    help_text="Deskripsikan kronologis kejadian secara lengkap."
+                    is_done={2}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Harapan Klien dan Keluarga"
+                    help_text="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
+                    is_done={2}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.HARAPAN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Kondisi Klien"
+                    help_text="Masukkan informasi detail kondisi klien terkait kondisi fisik, psikologis dst."
+                    is_done={2}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.KONDISI}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Langkah yang Telah Dilakukan"
+                    help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
+                    is_done={laporan.status_langkah_telah_dilakukan}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+                <DetailPenjangkauanItem
+                    laporan={laporan}
+                    title="Dokumen Pendukung"
+                    help_text="Unggah dokumen pendukung antara lain foto klien, KK, KTP, tempat tinggal dsb."
+                    is_done={laporan.status_dokumen_pendukung}
+                    updated_at={formatDate(new Date().toString(), true)}
+                    modalType={MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG}
+                    setRefetch={setRefetch}
+                    setIsModalActive={setIsModalActive}
+                />
+            </div>
         </div>
-        {isModalActivePenjadwalan === true && (
-          <ModalPenjangkauan
-            mode={"input"}
-            setIsModalActive={setIsModalActivePenjadwalan}
-            modalType={MODAL_PENJANGKAUAN.PENJADWALAN}
-            laporan={laporan}
-            setRefetch={setRefetch}
-          />
-        )}
-        {isModalActiveDetailKasus === true && (
-          <ModalPenjangkauan
-            mode={"input"}
-            setIsModalActive={setIsModalActiveDetailKasus}
-            modalType={MODAL_PENJANGKAUAN.DETAIL_KASUS}
-            laporan={laporan}
-            setRefetch={setRefetch}
-          />
-        )}
-      </>
-    );
+    </>
 }
 
 export default SectionPenjangkauan

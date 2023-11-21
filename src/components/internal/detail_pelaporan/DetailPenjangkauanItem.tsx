@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { FaDiceOne } from "react-icons/fa";
 import { Laporan } from "../../../consts/laporan";
 import { useAuthUser } from "react-auth-kit";
@@ -21,8 +20,7 @@ interface DetailPenjangkauanItemProps {
   laporan: Laporan;
   modalType: string;
   setRefetch: Dispatch<SetStateAction<boolean>>;
-    setRefetch: Dispatch<SetStateAction<boolean>>;
-    setIsModalActive: Dispatch<SetStateAction<boolean>>
+  setIsModalActive: Dispatch<SetStateAction<boolean>>
 }
 
 const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
@@ -136,7 +134,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
           modalType={modalType}
           laporan={laporan}
           setRefetch={setRefetch}
-        setRefetch={setRefetch}/>
+        />
       )}
     </div>
   );
