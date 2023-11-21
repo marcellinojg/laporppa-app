@@ -24,7 +24,7 @@ export interface DetailKlien {
   kelurahan_kk: Kelurahan;
   kota_lahir: Kota;
   tanggal_lahir: Date | string;
-  agama: Agama;
+  agama_id: Agama;
   usia: number;
   kategori_klien: string;
   jenis_klien: string;
