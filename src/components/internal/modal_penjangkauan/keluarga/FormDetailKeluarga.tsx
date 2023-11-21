@@ -77,6 +77,7 @@ const FormKeluargaKlien = (props: FormModal) => {
       setIsLoading(true);
       showLoader();
       await deleteKeluarga(id);
+      setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
       //   title: "Keluarga Klien Berhasil Ditambahkan !",

@@ -16,6 +16,7 @@ import FormPelaku from '../components/internal/modal_penjangkauan/pelaku/FormPel
 import DetailPelaku from '../components/internal/modal_penjangkauan/pelaku/PelakuContent';
 import DetailKasusContent from '../components/internal/modal_penjangkauan/detail_kasus/DetailKasusContent';
 import FormDetailKasus from '../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus';
+import FormKeluargaKlien from '../components/internal/modal_penjangkauan/keluarga/FormDetailKeluarga';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {

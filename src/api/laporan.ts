@@ -1,5 +1,7 @@
 import { DetailKasus } from "../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus"
 import { DetailKlien } from "../consts/detail_klien"
+import { HubunganKeluarga } from "../consts/hubungan_keluarga"
+import { KeluargaKlien } from "../consts/keluarga_klien"
 import { KondisiKlien } from "../consts/kondisi_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
@@ -15,10 +17,11 @@ export const getLaporans = async () => {
 
 export const getLaporan = async (id: string) => {
     const instance = CreateAxiosInstance()
-    const res = await instance.get(`/laporans/${id}?withKecamatan=1`)
-    const laporan = res.data.data as Laporan
+    const res = await instance.get(`/laporans/${id}?withKecamatan=1&withKeluargaKlien=1`)
+    const laporan = res.data.data
     return laporan
 }
+
 
 export const getLaporanByToken = async (token: string) => {
     const instance = CreateAxiosInstance()
@@ -258,3 +261,53 @@ export const postDetailKasus = async (detailKasus: DetailKasus) => {
     const postedDetailKasus = res.data.data as DetailKasus
     return postedDetailKasus
 }
+
+
+export const postKeluarga = async (keluarga_klien: KeluargaKlien) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/keluarga-kliens", keluarga_klien, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedKeluargaKlien = res.data.data as KeluargaKlien;
+  return postedKeluargaKlien;
+};
+
+export const deleteKeluarga = async (id: number) => {
+  const instance = CreateAxiosInstance();
+  await instance.delete(`/keluarga-kliens/${id}`);
+};
+
+export const getKeluargaKlien = async (id: string) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/${id}/keluarga-kliens`);
+  const data = res.data.data as KeluargaKlien[];
+  return data;
+};
+
+export const postKeluargaKlienStatus = async (
+  laporan_id: string,
+  jenis: string,
+  status: number
+) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post(
+    `/laporans/${laporan_id}/status-penjangkauan/`,
+    { jenis: jenis, status: status },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  const postedKeluargaKlienStatus = res.data.data;
+  return postedKeluargaKlienStatus;
+};
+
+export const getHubunganKeluarga = async () => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/hubungan-keluarga-kliens`);
+  const data = res.data.data as HubunganKeluarga[];
+  return data;
+};

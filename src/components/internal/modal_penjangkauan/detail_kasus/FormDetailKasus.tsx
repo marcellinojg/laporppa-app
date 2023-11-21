@@ -20,7 +20,11 @@ import {
 import { useAlert } from "../../../../hooks/useAlert";
 import { ALERT_TYPE } from "../../../../consts/alert";
 import { JenisKasus } from "../../../../consts/jenis_kasus";
-import { JenisKasusesLoader, KategoriKasusesLoader, KategoriLoader } from "../../../../helpers/fetchHelpers";
+import {
+  JenisKasusesLoader,
+  KategoriKasusesLoader,
+  KategoriLoader,
+} from "../../../../helpers/fetchHelpers";
 import { Select } from "../../../form/Dropdown";
 
 export interface DetailKasus {
@@ -54,8 +58,11 @@ const FormDetailKasus = (props: FormModal) => {
     const formatData: DetailKasus = {
       ...data,
       laporan_id: laporan.id,
-      tanggal_jam_kejadian: format(new Date(data.tanggal_jam_kejadian), "yyyy-MM-dd HH:mm:ss"),
-      id: laporan.detail_kasus?.id
+      tanggal_jam_kejadian: format(
+        new Date(data.tanggal_jam_kejadian),
+        "yyyy-MM-dd HH:mm:ss"
+      ),
+      id: laporan.detail_kasus?.id,
     };
 
     try {
@@ -109,7 +116,10 @@ const FormDetailKasus = (props: FormModal) => {
         Klien
       </span>
       <JenisKasusesLoader data={jenisKasus} setData={setJenisKasus}>
-        <KategoriKasusesLoader data={kategoriKasues} setData={setKategoriKasues}>
+        <KategoriKasusesLoader
+          data={kategoriKasues}
+          setData={setKategoriKasues}
+        >
           <div className="flex flex-col gap-2 py-3">
             <form
               className="flex flex-col gap-3 py-3"
