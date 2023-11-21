@@ -31,6 +31,7 @@ import { REGEX } from "../../../../consts/regex";
 import {
   getLaporan,
   patchDetailKlien,
+  patchLaporan,
   postDetailKlien,
   postDetailKlienStatus,
 } from "../../../../api/laporan";
@@ -57,7 +58,7 @@ export interface DetailKlien {
   kelurahan_kk: Kelurahan;
   kota_lahir: Kota;
   tanggal_lahir: Date | string;
-  agama_id: Agama;
+  agama: Agama;
   usia: number;
   kategori_klien: string;
   jenis_klien: string;
@@ -107,15 +108,20 @@ const FormDetailKlien = (props: FormModal) => {
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
       tanggal_lahir: format(new Date(data.tanggal_lahir), "yyyy-MM-dd"),
-      id: laporan.detail_klien?.id,
+      id: laporan.detail_klien?.id
     };
+
+    const formatDataStatus = {
+      status_detail_klien: jenisButton
+    }
 
     try {
       setIsLoading(true);
       showLoader();
       if (laporan.detail_klien?.id != null) {
         (await patchDetailKlien(formatData)) as DetailKlien;
-        await postDetailKlienStatus(formatData, "detail_klien", jenisButton);
+        // await postDetailKlienStatus(formatData, "detail_klien", jenisButton);
+        await patchLaporan(formatDataStatus, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -124,7 +130,8 @@ const FormDetailKlien = (props: FormModal) => {
         });
       } else {
         (await postDetailKlien(formatData)) as DetailKlien;
-        await postDetailKlienStatus(formatData, "detail_klien", jenisButton);
+        // await postDetailKlienStatus(formatData, "detail_klien", jenisButton);
+        await patchLaporan(formatDataStatus, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -379,7 +386,7 @@ const FormDetailKlien = (props: FormModal) => {
                             placeholder="Pilih Agama"
                             label="Agama"
                             errors={errors}
-                            defaultValue={laporan.detail_klien?.agama?.id}
+                            defaultValue={laporan.detail_klien?.agama.id}
                             errorLabel="Agama"
                             options={agamas.map((k) => ({
                               label: k.nama,
