@@ -1,6 +1,5 @@
 import { SectionTitle } from "../../../common/Typography"
 import capitalize from "../../../../helpers/capitalize"
-import { TextArea } from "../../../form/Input"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { PrimaryButton, SecondaryButton } from "../../../form/Button"
 import { FormModal } from "../../../../consts/modal_penjangkauan"
@@ -10,9 +9,22 @@ import useLoader from "../../../../hooks/useLoader"
 import { useAlert } from "../../../../hooks/useAlert";
 import { ALERT_TYPE } from "../../../../consts/alert";
 import {
-    getLaporan, patchDokumenPendukung, patchLaporan,
+    getLaporan, patchDokumenPendukung, patchLaporan,postDokumenPendukung
   } from "../../../../api/laporan";
-import { DokumenPendukung } from "../../../../consts/dokumen_pendukung";
+import { Laporan } from "../../../../consts/laporan"
+
+interface DokumenPendukung {
+    laporan: Laporan,
+    id?:number,
+    laporan_id: string,
+        foto_klien: File[],
+        foto_tempat_tinggal: File[],
+        foto_pendampingan_awal: File[],
+        foto_pendampingan_lanjutan: File[],
+        foto_pendampingan_monitoring: File[],
+        foto_kk: File[],
+        dokumen_pendukung: File[]
+}
 
 const FormDetailDokumen = (props: FormModal) => {
     const { mode, laporan, setIsModalActive, setRefetch } = props;
@@ -22,12 +34,11 @@ const FormDetailDokumen = (props: FormModal) => {
     const { showLoader, hideLoader } = useLoader();
     const { errorFetchAlert, addAlert } = useAlert();
 
+    
+
     const onSubmit: SubmitHandler<DokumenPendukung> = async (data: DokumenPendukung) => {
-        // console.log(data)
-        console.log(jenisButton)
         const formatData: DokumenPendukung = {
-            laporan_id: laporan.id,
-            dokumen_pendukung: { // emang merah tapi jalan kok hehe
+            dokumen_pendukung : {
                 foto_klien: data.foto_klien,
                 foto_tempat_tinggal: data.foto_tempat_tinggal,
                 foto_pendampingan_awal: data.foto_pendampingan_awal,
@@ -35,65 +46,65 @@ const FormDetailDokumen = (props: FormModal) => {
                 foto_pendampingan_monitoring: data.foto_pendampingan_monitoring,
                 foto_kk: data.foto_kk,
                 dokumen_pendukung: data.dokumen_pendukung 
-            }
+            },
+            laporan_id: laporan.id,
+            satgas_id: laporan.satgas_pelapor.id,
           };
         console.log(formatData);
+
+        const formatDataStatus = {
+            status_dokumen_pendukung: jenisButton === 1
+            ? 1
+            : jenisButton === 2
+                ? 2
+                : null,
+          };
+
         try {
-            setIsLoading(true);
-            showLoader();
-            if (laporan.dokumen_pendukung?.id != null) {
-                console.log('masuk ke if 1');
-              (await patchDokumenPendukung(formatData, laporan.dokumen_pendukung.id)) as DokumenPendukung;
-              await patchLaporan({
-                status_langkah_telah_dilakukan: jenisButton === 1
-                ? 1
-                : jenisButton === 2
-                    ? 2
-                    : null,
-              }, laporan.id);
-              reset();
-              addAlert({
-                  type: ALERT_TYPE.SUCCESS,
-                  title: "Dokumen Pendukung Berhasil Diedit !",
-                  message: `Dokumen Pendukung untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
-              });
-            } else {
-                console.log('masuk ke if 2');
-              (await postDokumenPendukung(formatData)) as DokumenPendukung;
-              await patchLaporan({
-                status_langkah_telah_dilakukan: jenisButton === 1
-                ? 1
-                : jenisButton === 2
-                    ? 2
-                    : null,
-              }, laporan.id);
-              reset();
-              addAlert({
-                type: ALERT_TYPE.SUCCESS,
-                title: "DOkumen Pendukung Sukses Dibuat !",
-                message: `DOkumen Pendukung untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
-              });
+            showLoader()
+          
+            await postDokumenPendukung(formatData)
+            await patchLaporan(formatDataStatus, laporan.id)
 
-
-            }
-      
+            
+            if (jenisButton=== 2) {
+                addAlert({
+                    type: ALERT_TYPE.SUCCESS,
+                    title: 'Publish Berhasil',
+                    message: `Proses publish dokumen pendukung berhasil dilakukan`
+                });
+            } else if (laporan.status_dokumen_pendukung === 1) {
+                addAlert({
+                    type: ALERT_TYPE.SUCCESS,
+                    title: 'Edit Berhasil',
+                    message: `Proses edit dokumen pendukung berhasil dilakukan`
+                });
+            } else if (laporan.status_dokumen_pendukung === 0) {
+                addAlert({
+                    type: ALERT_TYPE.SUCCESS,
+                    title: 'Input Berhasil',
+                    message: `Proses input dokumen pendukung berhasil dilakukan`
+                });
+            } 
             hideLoader();
             setRefetch!(true);
             setIsModalActive(false);
-      
-            // setTimeout(() => {
-            //   navigate(0);
-            // }, 3000);
-        } catch {
-            errorFetchAlert();
-        } finally {
+        }
+        catch {
+            addAlert({
+                type: ALERT_TYPE.ERROR,
+                title: 'Input Gagal',
+                message: `Terjadi kesalahan dalam melakukan proses input dokumen pendukung`
+            })
+        }
+        finally {
             getLaporan(laporan.id);
             setIsLoading(false);
             hideLoader();
         }
-    
-        setTimeout(() => setIsLoading(false), 3000);
-    }
+      };
+
+
 
     return <>
         <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Dokumen Pendukung</span>
@@ -124,7 +135,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Tempat Tinggal'
-                        isMultiple={true}
+                        isMultiple={false}
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Awal</div>
                 <Uploader
@@ -137,7 +148,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Pendampingan Awal'
-                        isMultiple={true}
+                        isMultiple={false}
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Lanjutan</div>
                 <Uploader
@@ -150,7 +161,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Pendampingan Lanjutan'
-                        isMultiple={true}
+                        isMultiple={false}
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Monitoring</div>
                 <Uploader
@@ -163,7 +174,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Pendampingan Monitoring'
-                        isMultiple={true}
+                        isMultiple={false}
                     />
                     <div className="text-base mb-1 font-bold">Foto KK</div>
                 <Uploader
@@ -189,7 +200,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto KK'
-                        isMultiple={true}
+                        isMultiple={false}
                     />
                
                <SecondaryButton className="py-2" isSubmit onClick={() => setJenisButton(1)}>

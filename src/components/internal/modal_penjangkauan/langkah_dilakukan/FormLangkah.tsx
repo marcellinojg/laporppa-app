@@ -51,11 +51,25 @@ const FormDetailLangkah = (props: FormModal) => {
                 langkah_telah_dilakukan: data.langkah_telah_dilakukan
             }, laporan.id)
 
-            addAlert({
-                type: ALERT_TYPE.SUCCESS,
-                title: 'Input Berhasil',
-                message: `Proses input langkah berhasil dilakukan`
-            })
+            if (jenisButton === 2) {
+                addAlert({
+                    type: ALERT_TYPE.SUCCESS,
+                    title: 'Publish Berhasil',
+                    message: `Proses publish langkah berhasil dilakukan`
+                });
+            } else if (laporan.status_langkah_telah_dilakukan === 1) {
+                addAlert({
+                    type: ALERT_TYPE.SUCCESS,
+                    title: 'Edit Berhasil',
+                    message: `Proses edit langkah berhasil dilakukan`
+                });
+            } else if (laporan.status_langkah_telah_dilakukan === 0) {
+                addAlert({
+                    type: ALERT_TYPE.SUCCESS,
+                    title: 'Input Berhasil',
+                    message: `Proses input langkah berhasil dilakukan`
+                });
+            } 
             hideLoader();
             setRefetch!(true);
             setIsModalActive(false);

@@ -94,23 +94,24 @@ export const deleteLaporan = async (id : string) => {
 }
 
 export const postDokumenPendukung = async (dokumen_pendukung: DokumenPendukung) => {
-    console.log('postDokumenPendukung')
+    console.log('dokumen', dokumen_pendukung)
     const instance = CreateAxiosInstance()
     const res = await instance.post('/dokumen-pendukungs', dokumen_pendukung, {
         headers: {
             "Content-Type": "multipart/form-data"
         }
     })
-    const postedLaporan = res.data.data as Laporan
+    
+    const postedLaporan = res.data.data as DokumenPendukung
     console.log('postDokumenPendukung', postedLaporan)
-
     return postedLaporan
 }
 
 export const patchDokumenPendukung = async (dokumen_pendukung: DokumenPendukung | DokumenPendukung | any, id: string) => {
     const instance = CreateAxiosInstance()
+    console.log(dokumen_pendukung)
     const res = await instance.patch(`/dokumen-pendukungs/${id}`, dokumen_pendukung)
-    const patchedLaporan = res.data.data as Laporan
-    console.log('patchedLaporan', patchedLaporan)
-    return patchedLaporan
+    const patchedDokumen = res.data.data as DokumenPendukung
+    console.log('patchedLaporan', patchedDokumen)
+    return patchedDokumen
 }

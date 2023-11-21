@@ -4,6 +4,7 @@ import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
 import SumberPengaduan from './sumber';
+import { DokumenPendukung } from "./dokumen_pendukung";
 
 export interface Laporan {
     id: string,
@@ -35,7 +36,7 @@ export interface Laporan {
     dokumentasi_pengaduan: string[]
     langkah_telah_dilakukan : string
     status_langkah_telah_dilakukan: number
-    dokumen_pendukung: DokumenPendukung[]
+    dokumen_pendukung: DokumenPendukung
     keluarga_klien?: KeluargaKlien[]
     status_keluarga: number
     status_dokumen_pendukung: number
