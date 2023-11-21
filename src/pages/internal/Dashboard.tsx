@@ -3,14 +3,17 @@ import AdminLayout from "../layouts/AdminLayout";
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../consts/user";
 import { Panel, BarChartPanel } from "../../components/internal/Panel";
-import { LaporanCountLoader } from "../../helpers/fetchHelpers";
+import { LaporanCountLoader, LaporanLoader, LaporansLoader } from "../../helpers/fetchHelpers";
 import { useState } from "react";
-import { LaporanCount } from "../../consts/laporan";
+import { Laporan, LaporanCount } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
+import { useParams } from "react-router-dom";
 
 const Dashboard = () => {
   const userData = useAuthUser()() as User;
   const [laporanCount, setLaporanCount] = useState<LaporanCount[]>([]);
+  const [laporans, setLaporans] = useState<Laporan[]>([])
+
   return (
     <AdminLayout>
       <LaporanCountLoader data={laporanCount} setData={setLaporanCount}>
@@ -85,10 +88,14 @@ const Dashboard = () => {
             />
           </div>
           <div className="mt-4">
-            <BarChartPanel
-              title="Jumlah Laporan Per Jenis Laporan"
-              date={new Date().toISOString()}
-            />
+            <LaporansLoader data={laporans} setData={setLaporans}>
+              <BarChartPanel
+                title="Jumlah Laporan Per Jenis Laporan"
+                date={new Date().toISOString()}
+                laporans={laporans}
+                laporanCount={laporanCount}
+              />
+            </LaporansLoader>
           </div>
         </div>
       </LaporanCountLoader>
