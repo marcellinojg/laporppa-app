@@ -68,6 +68,7 @@ export interface LaporanSatgas {
     dokumentasi_pengaduan: File[]
 
 
+
     // doesn't have default value
     // satgas_pelapor_id: string
     // previous_satgas_id: string

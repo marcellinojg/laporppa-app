@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 import { Laporan } from "./laporan"
+import { Laporan } from "./laporan"
 
 
 export const MODAL_PENJANGKAUAN = {

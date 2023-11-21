@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useRef } from "react"
 import useOutsideAlerter from "../../../hooks/useOutsideAlerter"
 import modalPenjangkauanMapper from "../../../helpers/modalPenjangkauanMapper"
 import { Laporan } from "../../../consts/laporan"
+import { Laporan } from "../../../consts/laporan"
 
 
 interface ModalPenjangkauanProps {
@@ -10,9 +11,15 @@ interface ModalPenjangkauanProps {
   modalType: string;
   laporan: Laporan;
   setRefetch: Dispatch<SetStateAction<boolean>>;
+  mode: "read" | "edit" | "input";
+  setIsModalActive: Dispatch<SetStateAction<boolean>>;
+  modalType: string;
+  laporan: Laporan;
+  setRefetch: Dispatch<SetStateAction<boolean>>;
 }
 
 const ModalPenjangkauan = (props: ModalPenjangkauanProps) => {
+    const { mode, setIsModalActive, modalType, laporan, setRefetch} = props
     const { mode, setIsModalActive, modalType, laporan, setRefetch} = props
     const modalRef = useRef(null)
     useOutsideAlerter(modalRef, () => setIsModalActive(false))

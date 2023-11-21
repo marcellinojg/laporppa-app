@@ -6,7 +6,7 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan, LaporanCount } from "../consts/laporan";
-import { getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
+import { getHubunganKeluarga, getKeluargaKlien, getLaporan, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
@@ -308,3 +308,41 @@ export const KategoriKasusesLoader = (props: FetchDataEffectsProps<Kategori[]>) 
         {children}
     </>
 }
+
+export const KeluargaLoader = (props: FetchDataEffectsProps<KeluargaKlien[]>) => {
+    const { setData, children , id} = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+            showLoader();
+            getKeluargaKlien(id!)
+              .then((keluarga: KeluargaKlien[]) => {
+                setData(keluarga);
+              })
+              .catch((error) => {
+                if (error.response.status == 404) setData([]);
+                else errorFetchAlert();
+              })
+              .finally(() => hideLoader());
+            window.scrollTo({ top: 0, behavior: "smooth" });    }, [])
+    return <>
+        {children}
+    </>
+}
+
+export const HubunganKeluargaLoader = (props: FetchDataEffectsProps<HubunganKeluarga[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getHubunganKeluarga()
+      .then((hubungans) => setData(hubungans))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
