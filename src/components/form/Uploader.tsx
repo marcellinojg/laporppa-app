@@ -58,7 +58,7 @@ const Uploader = (props: UploaderProps) => {
                 <div className="absolute top-0 h-full w-full flex items-center justify-center z-10">
                     <div className="flex flex-col text-center">
                         <span className="font-bold">
-                            Drop Files here or click to upload
+                            Drop Files Here or Click to Upload
                         </span>
                         <span className="text-sm text-gray-500">{placeholder}</span>
                     </div>

@@ -5,15 +5,15 @@ import { Laporan } from "../../../consts/laporan"
 
 
 interface ModalPenjangkauanProps {
-  mode: "read" | "edit" | "input";
-  setIsModalActive: Dispatch<SetStateAction<boolean>>;
-  modalType: string;
-  laporan: Laporan;
-  setRefetch: Dispatch<SetStateAction<boolean>>;
+    mode: 'read' | 'edit' | 'input'
+    setIsModalActive: Dispatch<SetStateAction<boolean>>
+    modalType: string
+    laporan : Laporan
+    setRefetch?: Dispatch<SetStateAction<boolean>>
 }
 
 const ModalPenjangkauan = (props: ModalPenjangkauanProps) => {
-    const { mode, setIsModalActive, modalType, laporan, setRefetch} = props
+    const { mode, setIsModalActive, modalType, laporan, setRefetch } = props
     const modalRef = useRef(null)
     useOutsideAlerter(modalRef, () => setIsModalActive(false))
     const mappedModal = modalPenjangkauanMapper(modalType)

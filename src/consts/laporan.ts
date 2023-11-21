@@ -8,46 +8,52 @@ import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
 import SumberPengaduan from './sumber';
+import { DokumenPendukung } from "./dokumen_pendukung";
 
 export interface Laporan {
-  id: string;
-  tanggal_jam_pengaduan: string;
-  tanggal_pengaduan: Date;
-  jam_pengaduan: string;
-  uraian_singkat_masalah: string;
-  no_telp_pelapor: string;
-  no_telp_klien: string;
-  nama_klien: string;
-  nama_pelapor: string;
-  nik_pelapor: string;
-  nik_klien: string;
-  validated: number;
-  usia: number;
-  alamat_pelapor: string;
-  alamat_klien: string;
-  rw: string;
-  rt: string;
-  token: string;
-  jenis_kelamin: string;
-  kategori: Kategori;
-  status: Status;
-  satgas_pelapor: SatgasPelapor;
-  previous_satgas: SatgasPelapor;
-  pendidikan: Pendidikan;
-  kelurahan: Kelurahan;
-  sumber_pengaduan: SumberPengaduan;
-  dokumentasi_pengaduan: string[];
-  detail_klien?: DetailKlien;
-  pelaku?: Pelaku;
-  kondisi_klien?: KondisiKlien;
-  penjadwalan?: Penjadwalan;
-  status_detail_klien?: number;
-  status_pelaku?: number;
-  status_kondisi_klien?: number;
-  status_keluarga?: number;
-  keluarga_klien?: KeluargaKlien[];
-  detail_kasus?: DetailKasus;
-}
+    id: string,
+    tanggal_jam_pengaduan: string,
+    tanggal_pengaduan: Date,
+    jam_pengaduan: string,
+    uraian_singkat_masalah: string,
+    no_telp_pelapor: string,
+    no_telp_klien: string,
+    nama_klien: string,
+    nama_pelapor: string,
+    nik_pelapor: string,
+    nik_klien: string,
+    validated: number,
+    usia: number,
+    alamat_pelapor: string,
+    alamat_klien: string,
+    rw: string,
+    rt: string,
+    token: string,
+    jenis_kelamin: string,
+    kategori: Kategori,
+    status: Status,
+    satgas_pelapor: SatgasPelapor
+    previous_satgas: SatgasPelapor
+    pendidikan: Pendidikan
+    kelurahan: Kelurahan
+    sumber_pengaduan: SumberPengaduan
+    dokumentasi_pengaduan: string[]
+    langkah_telah_dilakukan : string
+    status_langkah_telah_dilakukan: number
+    dokumen_pendukung: DokumenPendukung
+    status_dokumen_pendukung: number
+    detail_klien?: DetailKlien;
+    pelaku?: Pelaku;
+    kondisi_klien?: KondisiKlien;
+    penjadwalan?: Penjadwalan;
+    status_detail_klien?: number;
+    status_pelaku?: number;
+    status_kondisi_klien?: number;
+    status_keluarga?: number;
+    keluarga_klien?: KeluargaKlien[];
+    detail_kasus?: DetailKasus;
+
+ }
 
 export interface LaporanSatgas {
     kategori_id: number
@@ -67,7 +73,6 @@ export interface LaporanSatgas {
     uraian_singkat_masalah: string
     sumber_pengaduan_id: number
     dokumentasi_pengaduan: File[]
-
 
 
     // doesn't have default value

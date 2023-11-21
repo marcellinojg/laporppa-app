@@ -10,6 +10,7 @@ interface ButtonProps {
     className?: string
     isDisabled?: boolean
     spinnerColor?: string
+    
 }
 
 

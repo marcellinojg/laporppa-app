@@ -1,3 +1,5 @@
+import { DetailLangkah } from "../components/internal/modal_penjangkauan/langkah_dilakukan/FormLangkah"
+import { DokumenPendukung } from "../consts/dokumen_pendukung"
 import { DetailKasus } from "../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus"
 import { DetailKlien } from "../consts/detail_klien"
 import { HubunganKeluarga } from "../consts/hubungan_keluarga"
@@ -98,6 +100,30 @@ export const deleteLaporan = async (id : string) => {
     const instance = CreateAxiosInstance()
     await instance.delete(`/laporans/${id}`)
 }
+
+export const postDokumenPendukung = async (dokumen_pendukung: DokumenPendukung) => {
+    console.log('dokumen', dokumen_pendukung)
+    const instance = CreateAxiosInstance()
+    const res = await instance.post('/dokumen-pendukungs', dokumen_pendukung, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    
+    const postedLaporan = res.data.data as DokumenPendukung
+    console.log('postDokumenPendukung', postedLaporan)
+    return postedLaporan
+}
+
+export const patchDokumenPendukung = async (dokumen_pendukung: DokumenPendukung | DokumenPendukung | any, id: string) => {
+    const instance = CreateAxiosInstance()
+    console.log(dokumen_pendukung)
+    const res = await instance.patch(`/dokumen-pendukungs/${id}`, dokumen_pendukung)
+    const patchedDokumen = res.data.data as DokumenPendukung
+    console.log('patchedLaporan', patchedDokumen)
+    return patchedDokumen
+}
+
 
 export const patchPenjadwalan = async (penjadwalan: Penjadwalan) => {
     const instance = CreateAxiosInstance()
