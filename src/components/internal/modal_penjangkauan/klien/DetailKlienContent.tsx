@@ -85,7 +85,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
               value={
                 laporan.detail_klien?.kota_lahir &&
                 laporan.detail_klien.tanggal_lahir
-                  ? laporan.detail_klien.kota_lahir +
+                  ? laporan.detail_klien.kota_lahir.nama +
                     ", " +
                     laporan.detail_klien.tanggal_lahir
                   : "-"

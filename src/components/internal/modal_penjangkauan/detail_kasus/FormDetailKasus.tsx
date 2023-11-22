@@ -180,8 +180,8 @@ const FormDetailKasus = (props: FormModal) => {
                 laporan.detail_kasus?.jenis_kasus.nama != null ||
                 laporan.detail_kasus?.lokasi_kasus != null ||
                 laporan.detail_kasus?.tanggal_jam_kejadian != null
-                  ? "Edit Penjadwalan"
-                  : "Tambahkan Penjadwalan"}
+                  ? "Edit Detail Kasus Klien"
+                  : "Tambahkan Detail Kasus Klien"}
               </PrimaryButton>
             </form>
           </div>

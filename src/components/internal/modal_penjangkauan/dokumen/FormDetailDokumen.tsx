@@ -122,7 +122,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Klien'
-                        isMultiple={false}
+                    isMultiple={false}
                     />
                  <div className="text-base mb-1 font-bold">Foto Tempat Tinggal</div>
                 <Uploader
