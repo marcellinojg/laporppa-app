@@ -1,6 +1,6 @@
 
 
 interface Kategori {
-    id?: string
+    id?: number
     nama? : string
 }

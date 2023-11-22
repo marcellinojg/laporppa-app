@@ -8,6 +8,7 @@ import { useLocalStorage } from "usehooks-ts";
 import {
   getLaporan,
   patchKondisiKlien,
+  patchLaporan,
   postKondisiKlien,
   postKondisiStatus,
 } from "../../../../api/laporan";
@@ -41,12 +42,17 @@ const FormDetailKondisi = (props: FormModal) => {
       id: Number(laporan.kondisi_klien?.id),
     };
 
+    const formatDataKondisi = {
+      status_kondisi_klien: jenisButton,
+    };
+
     try {
       setIsLoading(true);
       showLoader();
-      if (laporan.pelaku?.id != null) {
+      if (laporan.kondisi_klien?.id != null) {
         (await patchKondisiKlien(formatData)) as KondisiKlien;
-        await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
+        // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
+        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -55,7 +61,8 @@ const FormDetailKondisi = (props: FormModal) => {
         });
       } else {
         (await postKondisiKlien(formatData)) as KondisiKlien;
-        await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
+        // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
+        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,

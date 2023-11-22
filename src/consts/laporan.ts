@@ -8,6 +8,7 @@ import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
 import SumberPengaduan from './sumber';
+import { DokumenPendukung } from "./dokumen_pendukung";
 
 export interface Laporan {
     id: string,
@@ -37,16 +38,22 @@ export interface Laporan {
     kelurahan: Kelurahan
     sumber_pengaduan: SumberPengaduan
     dokumentasi_pengaduan: string[]
-    detail_klien?: DetailKlien
-    keluarga_klien?: KeluargaKlien[]
-    pelaku?: Pelaku
-    kondisi_klien?: KondisiKlien
-    penjadwalan?: Penjadwalan
-    status_detail_klien?: number
-    status_pelaku?: number
-    status_kondisi_klien?: number
-    detail_kasus?: DetailKasus
-}
+    langkah_telah_dilakukan : string
+    status_langkah_telah_dilakukan: number
+    dokumen_pendukung: DokumenPendukung
+    status_dokumen_pendukung: number
+    detail_klien?: DetailKlien;
+    pelaku?: Pelaku;
+    kondisi_klien?: KondisiKlien;
+    penjadwalan?: Penjadwalan;
+    status_detail_klien?: number;
+    status_pelaku?: number;
+    status_kondisi_klien?: number;
+    status_keluarga?: number;
+    keluarga_klien?: KeluargaKlien[];
+    detail_kasus?: DetailKasus;
+
+ }
 
 export interface LaporanSatgas {
     kategori_id: number

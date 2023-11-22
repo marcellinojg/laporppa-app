@@ -20,24 +20,14 @@ interface DetailPenjangkauanItemProps {
   laporan: Laporan;
   modalType: string;
   setRefetch: Dispatch<SetStateAction<boolean>>;
+  setIsModalActive: Dispatch<SetStateAction<boolean>>
 }
 
 const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
-  const {
-    title,
-    updated_at,
-    last_edit_by,
-    help_text,
-    is_done,
-    laporan,
-    modalType,
-    setRefetch,
-  } = props;
-  const userData = useAuthUser()() as User;
-  const [isModalActive, setIsModalActive] = useState<boolean>(false);
-  const [mode, setMode] = useState<"read" | "edit" | "input">(
-    is_done === 2 ? "read" : "input"
-  );
+    const { title, updated_at, last_edit_by, help_text, is_done, laporan, modalType, setRefetch } = props
+    const userData = useAuthUser()() as User
+    const [isModalActive, setIsModalActive] = useState<boolean>(false)
+    const [mode, setMode] = useState<'read' | 'edit' | 'input'>(is_done === 2 ? 'read' : 'input')
 
   useEffect(() => {
     if (isModalActive === true)

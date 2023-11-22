@@ -8,6 +8,7 @@ import useLoader from "../../../../hooks/useLoader";
 import { useLocalStorage } from "usehooks-ts";
 import {
   getLaporan,
+  patchLaporan,
   patchPelaku,
   postPelaku,
   postPelakuStatus,
@@ -45,12 +46,18 @@ const FormPelaku = (props: FormModal) => {
       id: Number(laporan.pelaku?.id),
     };
 
+    const formatDataStatus = {
+      status_pelaku: jenisButton
+    }
+
     try {
       setIsLoading(true);
       showLoader();
       if (laporan.pelaku?.id != null) {
         (await patchPelaku(formatData)) as Pelaku;
-        await postPelakuStatus(formatData, "pelaku", jenisButton);
+        // await postPelakuStatus(formatData, "pelaku", jenisButton);
+        await patchLaporan(formatDataStatus, laporan.id);
+
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -59,7 +66,7 @@ const FormPelaku = (props: FormModal) => {
         });
       } else {
         (await postPelaku(formatData)) as Pelaku;
-        await postPelakuStatus(formatData, "pelaku", jenisButton);
+        await patchLaporan(formatDataStatus, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
