@@ -9,6 +9,7 @@ import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/la
 import PaginationData from "../consts/pagination"
 import { Pelaku } from "../consts/pelaku"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
+import { LaporanByKategoriRT } from "../consts/laporanByKategoriRT"
 
 export const getLaporans = async () => {
     const instance = CreateAxiosInstance()
@@ -335,5 +336,12 @@ export const getHubunganKeluarga = async () => {
   const instance = CreateAxiosInstance();
   const res = await instance.get(`/hubungan-keluarga-kliens`);
   const data = res.data.data as HubunganKeluarga[];
+  return data;
+};
+
+export const getLaporanByKategoriRT = async () => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/count-by-kategoris`);
+  const data = res.data.data as LaporanByKategoriRT[];
   return data;
 };

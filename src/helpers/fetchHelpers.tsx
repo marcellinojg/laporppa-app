@@ -6,7 +6,7 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan, LaporanCount } from "../consts/laporan";
-import { getHubunganKeluarga, getKeluargaKlien, getLaporan, getLaporans, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
+import { getHubunganKeluarga, getKeluargaKlien, getLaporan, getLaporanByKategoriRT, getLaporans, getLaporansBySearchAndStatus, getTotalLaporan } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
@@ -25,6 +25,7 @@ import { JenisKasus } from "../consts/jenis_kasus";
 import { getJenisKasuses } from "../api/jenis_kasus";
 import { HubunganKeluarga } from "../consts/hubungan_keluarga";
 import { KeluargaKlien } from "../consts/keluarga_klien";
+import { LaporanByKategoriRT } from "../consts/laporanByKategoriRT";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -364,3 +365,20 @@ export const LaporansLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
 
   return <>{children}</>;
 };
+
+export const LaporanByKategoriRTLoader = (props: FetchDataEffectsProps<LaporanByKategoriRT[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getLaporanByKategoriRT()
+      .then((laporanByKategoriRT) => setData(laporanByKategoriRT))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
+
