@@ -7,6 +7,9 @@ import { MODAL_PENJANGKAUAN } from "../../../consts/modal_penjangkauan"
 import DetailLaporanItem from "./DetailLaporanItem"
 import { SectionTitle } from "../../common/Typography"
 import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan"
+import { useAuthUser } from "react-auth-kit"
+import { User } from "../../../consts/user"
+import { ROLE } from "../../../consts/role"
 
 interface SectionPenjangkauanProps {
     laporan: Laporan
@@ -15,7 +18,8 @@ interface SectionPenjangkauanProps {
 
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
-    const { laporan, setRefetch } = props
+  const { laporan, setRefetch } = props
+  const userData = useAuthUser()() as User;
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [isModalActiveDetailKasus, setIsModalActiveDetailKasus] = useState<boolean>(false);
   const [isModalActivePenjadwalan, setIsModalActivePenjadwalan] = useState<boolean>(false);
@@ -33,13 +37,16 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
           <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
             <div className="flex items-center justify-between">
               <SectionTitle>Penjadwalan</SectionTitle>
-              <button
-                onClick={() => setIsModalActivePenjadwalan(true)}
-                type="button"
-                className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
-              >
-                Tambahkan/Edit Penjadwalan
-              </button>
+              {userData.role === ROLE.SATGAS &&
+                laporan.satgas_pelapor.id === userData.id && (
+                  <button
+                    onClick={() => setIsModalActivePenjadwalan(true)}
+                    type="button"
+                    className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
+                  >
+                    Tambahkan/Edit Penjadwalan
+                  </button>
+                )}
             </div>
             <DetailLaporanItem
               label="Hari, Tanggal, Jam"
@@ -65,13 +72,16 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
           <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
             <div className="flex items-center justify-between">
               <SectionTitle>Detail Kasus Klien</SectionTitle>
-              <button
-                onClick={() => setIsModalActiveDetailKasus(true)}
-                type="button"
-                className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
-              >
-                Tambahkan/Edit Detail Kasus
-              </button>
+              {userData.role === ROLE.SATGAS &&
+                laporan.satgas_pelapor.id === userData.id && (
+                  <button
+                    onClick={() => setIsModalActiveDetailKasus(true)}
+                    type="button"
+                    className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
+                  >
+                    Tambahkan/Edit Detail Kasus
+                  </button>
+                )}
             </div>
             <DetailLaporanItem
               label="Kategori Kasus"
