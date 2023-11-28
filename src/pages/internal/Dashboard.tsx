@@ -98,7 +98,7 @@ const Dashboard = () => {
           <div className="grid lg:grid-cols-1 md:grid-cols-1 grid-cols-1 gap-4 mt-4">
               <KelurahanLoader data={kelurahans} setData={setKelurahans}>
                 <BarChartPanel
-                  title="Jumlah Kasus Berdasarkan Kategori"
+                  title="Jumlah Kasus Berdasarkan Kelurahan"
                   date={new Date().toISOString()}
                   kelurahans={kelurahans}
                 />
