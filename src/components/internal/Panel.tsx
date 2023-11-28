@@ -54,37 +54,69 @@ export const BarChartPanel = (props: PanelBar) => {
   // }, [selectedKelurahans]);
 
   React.useEffect(() => {
-    const tempSerieses: DataBarChart[] = [];
-    // console.log(laporansByKategori);
-    let typeColor = true;
-    let color = "yellow";
-    for (let i = 0; i < laporansByKategori.length; i++) {
-      if (laporansByKategori.length > xlabel.length) {
-        setXlabel((prevXlabel) => [...prevXlabel, laporansByKategori[i].kategori_nama]);
-      }
+    // const tempSerieses: DataBarChart[] = [];
+    // // console.log(laporansByKategori);
+    // let typeColor = true;
+    // let color = "yellow";
+    // for (let i = 0; i < laporansByKategori.length; i++) {
+    //   if (laporansByKategori.length > xlabel.length) {
+    //     setXlabel((prevXlabel) => [...prevXlabel, laporansByKategori[i].kategori_nama]);
+    //   }
 
-      for (let j = 0; j < laporansByKategori[i].count_total.length; j++) {
-        if (typeColor == true) {
-          color = "#c81e4f";
-          typeColor = false;
-        } else {
-          color = "#fcdc58";
-          typeColor = true;
-        }
-        // tempSerieses[j].push(laporansByKategori[i].count_total[j].count)
-        {
-          tempSerieses[j]
-            ? tempSerieses[j].data.push(laporansByKategori[i].count_total[j].count)
-            : tempSerieses.push({
-                data: [laporansByKategori[i].count_total[j].count],
-                color: color,
-                label: "RW " + laporansByKategori[i].count_total[j].rw?.toString(),
-              });
-        }
-      }
-    }
+    //   for (let j = 0; j < laporansByKategori[i].count_total.length; j++) {
+    //     if (typeColor == true) {
+    //       color = "#c81e4f";
+    //       typeColor = false;
+    //     } else {
+    //       color = "#fcdc58";
+    //       typeColor = true;
+    //     }
+    //     // tempSerieses[j].push(laporansByKategori[i].count_total[j].count)
+    //     {
+    //       tempSerieses[j]
+    //         ? tempSerieses[j].data.push(laporansByKategori[i].count_total[j].count)
+    //         : tempSerieses.push({
+    //             data: [laporansByKategori[i].count_total[j].count],
+    //             color: color,
+    //             label: "RW " + laporansByKategori[i].count_total[j].rw?.toString(),
+    //           });
+    //     }
+    //   }
+    // }
+    // setSerieses(tempSerieses);
+    // console.log(tempSerieses)
 
-    setSerieses(tempSerieses);
+        const tempSerieses: DataBarChart[] = [];
+        const color = ["#c81e4f", "#fcdc58"];
+        for (let i = 0; i < laporansByKategori.length; i++) {
+          for (let j = 0; j < laporansByKategori[i].count_total.length; j++) {
+            if (laporansByKategori[i].count_total.length > xlabel.length) {
+              setXlabel((prevXlabel) => [
+                ...prevXlabel,
+                "RW-" + laporansByKategori[i].count_total[j].rw.toString(),
+              ]);
+            }
+
+            // if (typeColor == true) {
+            //   color = "#c81e4f";
+            // } else {
+            //   color = "#fcdc58";
+            // }
+            // tempSerieses[j].push(laporansByKategori[i].count_total[j].count)
+            {
+              tempSerieses[i]
+                ? tempSerieses[i].data.push(
+                  laporansByKategori[i].count_total[j].count
+                )
+                : tempSerieses.push({
+                  data: [laporansByKategori[i].count_total[j].count],
+                  color: color[i],
+                  label: laporansByKategori[i].kategori_nama.toString(),
+                });
+            }
+          }
+        }
+        setSerieses(tempSerieses);
   }, [laporansByKategori]);
 
   return (
@@ -95,16 +127,16 @@ export const BarChartPanel = (props: PanelBar) => {
       refetch={refetch}
       setRefetch={setRefetch}
     >
-      <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col">
+      <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col overflow-hidden">
         <span className="text-primary font-bold text-xl">{title}</span>
         <span className="text-black text-sm">
           {formatDate(date.toString(), false)}
         </span>
-        <div className="flex items-center justify-center md:justify-end my-3">
+        <div className="flex items-center justify-center md:justify-end my-6">
           <select
             onChange={selectChange}
-            className="w-full px-5 py-1 rounded-full border-2 bg-primary text-white border-primary font-bold duration-300 md:w-auto"
-            style={{ maxWidth: "200px" }}
+            className="w-full px-5 py-1 rounded-full border-2 bg-primary text-white text-sm border-primary font-bold focus:border-primary hover:border-primary font-bold duration-300 md:w-auto"
+            style={{ maxWidth: "160px" }}
           >
             {kelurahans.map((val) => (
               <option value={val.id} key={val.id}>
@@ -113,14 +145,15 @@ export const BarChartPanel = (props: PanelBar) => {
             ))}
           </select>
         </div>
-
-        <BarChart
-          xAxis={[{ scaleType: "band", data: xlabel }]}
-          // series={[{ data: [2, 2, 2] }, { data: [4, 2, 2] }]}
-          series={serieses}
-          height={300}
-          sx={{ width: "100%" }}
-        />
+        <div className="overflow-auto">
+          <div style={{ minWidth: "500px" }}>
+            <BarChart
+              xAxis={[{ scaleType: "band", data: xlabel }]}
+              series={serieses}
+              height={300}
+            />
+          </div>
+        </div>
       </div>
     </LaporanByKategoriLoader>
   );
