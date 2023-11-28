@@ -110,7 +110,7 @@ export const BarChartPanel = (props: PanelBar) => {
                 )
                 : tempSerieses.push({
                   data: [laporansByKategori[i].count_total[j].count],
-                  color: color[i],
+                  color: color[i%2],
                   label: laporansByKategori[i].kategori_nama.toString(),
                 });
             }
