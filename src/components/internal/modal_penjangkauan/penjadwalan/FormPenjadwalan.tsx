@@ -146,6 +146,7 @@ const FormPenjadwalan = (props: FormModal) => {
               placeholder="Tempat Penjadwalan"
               label="Tempat Penjadwalan"
               defaultValue={laporan.penjadwalan?.tempat}
+              isRequired
             />
             <InputText
               register={register}
@@ -154,6 +155,7 @@ const FormPenjadwalan = (props: FormModal) => {
               placeholder="Alamat Penjadwalan"
               label="Alamat Penjadwalan"
               defaultValue={laporan.penjadwalan?.alamat}
+              isRequired
             />
           </div>
           <PrimaryButton className="py-2" isSubmit>

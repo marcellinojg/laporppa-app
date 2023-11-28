@@ -16,7 +16,7 @@ const DetailPelaporan = () => {
     const [laporan, setLaporan] = useState<Laporan | null | undefined>()
     const [page, helpers] = useStep(2)
     const [refetch, setRefetch] = useState<boolean>(true)
-    console.log(laporan)
+    // console.log(laporan)
     return <AdminLayout>
         <LaporanLoader data={laporan} setData={setLaporan} refetch={refetch} setRefetch={setRefetch} id={id}>
             {laporan === null ? <NotFoundPage /> :

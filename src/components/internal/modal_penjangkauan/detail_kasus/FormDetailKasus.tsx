@@ -54,7 +54,7 @@ const FormDetailKasus = (props: FormModal) => {
   } = form;
 
   const onSubmit: SubmitHandler<DetailKasus> = async (data: DetailKasus) => {
-    console.log(data);
+    // console.log(data);
     const formatData: DetailKasus = {
       ...data,
       laporan_id: laporan.id,
@@ -139,7 +139,7 @@ const FormDetailKasus = (props: FormModal) => {
                     value: k.id,
                   }))}
                   defaultValue={laporan?.detail_kasus?.kategori_kasus?.id}
-                  isRequired={false}
+                  isRequired
                 />
                 <Select
                   name="jenis_kasus_id"
@@ -153,7 +153,7 @@ const FormDetailKasus = (props: FormModal) => {
                     value: k.id,
                   }))}
                   defaultValue={laporan?.detail_kasus?.jenis_kasus?.id}
-                  isRequired={false}
+                  isRequired
                 />
                 <InputText
                   register={register}
@@ -162,6 +162,7 @@ const FormDetailKasus = (props: FormModal) => {
                   placeholder="Lokasi Kasus"
                   label="Lokasi Kasus"
                   defaultValue={laporan.detail_kasus?.lokasi_kasus}
+                  isRequired
                 />
                 <Datepicker
                   name="tanggal_jam_kejadian"
@@ -173,6 +174,7 @@ const FormDetailKasus = (props: FormModal) => {
                   }
                   placeholder="Tanggal Jam Kejadian"
                   label="Tanggal Jam Kejadian"
+                  isRequired
                 />
               </div>
               <PrimaryButton className="py-2" isSubmit>

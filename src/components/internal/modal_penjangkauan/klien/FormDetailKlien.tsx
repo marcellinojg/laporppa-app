@@ -102,7 +102,7 @@ const FormDetailKlien = (props: FormModal) => {
   const [jenisButton, setJenisButton] = useState(1)
 
   const onSubmit: SubmitHandler<DetailKlien> = async (data: DetailKlien) => {
-    console.log(jenisButton)
+    // console.log(jenisButton)
     const formatData: DetailKlien = {
       ...data,
       laporan_id: laporan.id,

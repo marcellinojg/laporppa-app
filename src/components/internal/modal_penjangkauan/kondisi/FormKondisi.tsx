@@ -34,7 +34,7 @@ const FormDetailKondisi = (props: FormModal) => {
   const [jenisButton, setJenisButton] = useState(1);
 
   const onSubmit: SubmitHandler<KondisiKlien> = async (data: KondisiKlien) => {
-    console.log(jenisButton);
+    // console.log(jenisButton);
     const formatData: KondisiKlien = {
       ...data,
       laporan_id: laporan.id,
@@ -103,38 +103,42 @@ const FormDetailKondisi = (props: FormModal) => {
             <TextArea
               name="fisik"
               className="h-60"
-              defaultValue={laporan.kondisi_klien?.fisik}
+              defaultValue={laporan.kondisi_klien?.fisik ? laporan.kondisi_klien.fisik : ""}
               register={register}
               errors={errors}
               label="Kondisi fisik klien"
               placeholder="Ceritakan tentang kondisi fisik klien"
+              isRequired
             />
             <TextArea
               name="psikologis"
               className="h-60"
-              defaultValue={laporan.kondisi_klien?.psikologis}
+              defaultValue={laporan.kondisi_klien?.psikologis ? laporan.kondisi_klien.fisik : ""}
               register={register}
               errors={errors}
               label="Kondisi psikologis klien"
               placeholder="Ceritakan tentang kondisi psikologis klien"
+              isRequired
             />
             <TextArea
               name="sosial"
               className="h-60"
-              defaultValue={laporan.kondisi_klien?.sosial}
+              defaultValue={laporan.kondisi_klien?.sosial ? laporan.kondisi_klien.sosial : ""}
               register={register}
               errors={errors}
               label="Kondisi sosial klien"
               placeholder="Ceritakan tentang kondisi sosial klien"
+              isRequired
             />
             <TextArea
               name="spiritual"
               className="h-60"
-              defaultValue={laporan.kondisi_klien?.spiritual}
+              defaultValue={laporan.kondisi_klien?.spiritual ? laporan.kondisi_klien.spiritual : ""}
               register={register}
               errors={errors}
               label="Kondisi spiritual klien"
               placeholder="Ceritakan tentang kondisi spiritual klien"
+              isRequired
             />
           </div>
           <SecondaryButton

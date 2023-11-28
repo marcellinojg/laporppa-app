@@ -1,7 +1,9 @@
 import { formatDate } from "../../helpers/formatDate";
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
-import { LaporanByKategoriRT } from "../../consts/laporanByKategoriRT";
+import { LaporanByKategori } from "../../consts/laporanByKategori";
+import { Kelurahan } from "../../consts/kelurahan";
+import { LaporanByKategoriLoader } from "../../helpers/fetchHelpers";
 
 interface PanelProps {
   title: string;
@@ -12,7 +14,7 @@ interface PanelProps {
 interface PanelBar {
   title: string;
   date: string;
-  laporans: LaporanByKategoriRT[];
+  kelurahans: Kelurahan[];
 }
 
 interface DataBarChart {
@@ -35,90 +37,33 @@ export const Panel = (props: PanelProps) => {
 };
 
 export const BarChartPanel = (props: PanelBar) => {
-  const { title, date, laporans } = props;
+  const { title, date, kelurahans} = props;
   const [serieses, setSerieses] = React.useState<DataBarChart[]>([]);
   const [xlabel, setXlabel] = React.useState<string[]>([]);
+  const [selectedKelurahans, setSelectedKelurahans] = React.useState<number>(1);
+  const [laporansByKategori, setLaporanByKategori] = React.useState<LaporanByKategori[]>([])
+  const [refetch, setRefetch] = React.useState<boolean>(true);
+
+  const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSelectedKelurahans(value);
+  };
+
+  // React.useEffect(() => {
+  //   console.log("selected", selectedKelurahans);
+  // }, [selectedKelurahans]);
 
   React.useEffect(() => {
-    // const contoh_data = [
-    //   {
-    //     kategori_id: "1",
-    //     kategori_nama: "Permasalahan Sosial",
-    //     count_total: [
-    //       {
-    //         rt: "1",
-    //         count: 7,
-    //       },
-    //       {
-    //         rt: "3",
-    //         count: 2,
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     kategori_id: "2",
-    //     kategori_nama: "Kekerasan",
-    //     count_total: [
-    //       {
-    //         rt: "1",
-    //         count: 10,
-    //       },
-    //       {
-    //         rt: "3",
-    //         count: 5,
-    //       },
-    //     ],
-    //   },
-    // ];
-
-    // const tempSerieses: DataBarChart[] = [];
-    // console.log(contoh_data);
-    // let typeColor = true;
-    // let color = "";
-    // for (let i = 0; i < contoh_data.length; i++) {
-    //   if (contoh_data.length > xlabel.length) {
-    //     setXlabel((prevXlabel) => [
-    //       ...prevXlabel,
-    //       contoh_data[i].kategori_nama,
-    //     ]);
-    //   }
-
-    //   for (let j = 0; j < contoh_data[i].count_total.length; j++) {
-    //     // tempSerieses[j].push(contoh_data[i].count_total[j].count)
-    //     if (typeColor == true) {
-    //       color = "#c81e4f";
-    //       typeColor = false;
-    //     } else {
-    //       color = "#fcdc58";
-    //       typeColor = true;
-    //     }
-
-    //     {
-    //       tempSerieses[j]
-    //         ? tempSerieses[j].data.push(contoh_data[i].count_total[j].count)
-    //         : tempSerieses.push({
-    //             data: [contoh_data[i].count_total[j].count],
-    //             color: color,
-    //             label: "RT " + contoh_data[i].count_total[j].rt.toString(),
-    //           });
-    //     }
-    //   }
-    // }
-
-    // setSerieses(tempSerieses);
-    // console.log(tempSerieses);
-    // console.log("label", xlabel);
-
     const tempSerieses: DataBarChart[] = [];
-    console.log(laporans);
+    // console.log(laporansByKategori);
     let typeColor = true;
     let color = "yellow";
-    for (let i = 0; i < laporans.length; i++) {
-      if (laporans.length > xlabel.length) {
-        setXlabel((prevXlabel) => [...prevXlabel, laporans[i].kategori_nama]);
+    for (let i = 0; i < laporansByKategori.length; i++) {
+      if (laporansByKategori.length > xlabel.length) {
+        setXlabel((prevXlabel) => [...prevXlabel, laporansByKategori[i].kategori_nama]);
       }
 
-      for (let j = 0; j < laporans[i].count_total.length; j++) {
+      for (let j = 0; j < laporansByKategori[i].count_total.length; j++) {
         if (typeColor == true) {
           color = "#c81e4f";
           typeColor = false;
@@ -126,55 +71,57 @@ export const BarChartPanel = (props: PanelBar) => {
           color = "#fcdc58";
           typeColor = true;
         }
-        // tempSerieses[j].push(laporans[i].count_total[j].count)
+        // tempSerieses[j].push(laporansByKategori[i].count_total[j].count)
         {
           tempSerieses[j]
-            ? tempSerieses[j].data.push(laporans[i].count_total[j].count)
+            ? tempSerieses[j].data.push(laporansByKategori[i].count_total[j].count)
             : tempSerieses.push({
-                data: [laporans[i].count_total[j].count],
+                data: [laporansByKategori[i].count_total[j].count],
                 color: color,
-                label: "RT " + laporans[i].count_total[j].rt.toString(),
+                label: "RW " + laporansByKategori[i].count_total[j].rw?.toString(),
               });
         }
       }
     }
 
     setSerieses(tempSerieses);
-    console.log(tempSerieses);
-    console.log("label", xlabel);
-    // let newDataBarChart = []
-    // laporans.forEach(laporan => {
-    //   newDataBarChart
-    // });
-    // // Your logic for updating jumlah based on laporans
-    // let newJumlah = [0, 0];
-
-    // for (let i = 0; i < laporans.length; i++) {
-    //   if (laporans[i]?.kategori?.id === 1) {
-    //     newJumlah = [newJumlah[0] + 1, newJumlah[1]];
-    //   } else if (laporans[i]?.kategori?.id === 2) {
-    //     newJumlah = [newJumlah[0], newJumlah[1] + 1];
-    //   }
-    //   console.log(i, laporans[i]?.kategori?.nama, laporans[i]?.kategori?.id);
-    // }
-
-    // // Update state only once after the loop
-    // setJumlah(newJumlah);
-  }, [laporans]); // Ensure this effect runs when laporans changes
+  }, [laporansByKategori]);
 
   return (
-    <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col">
-      <span className="text-primary font-bold text-xl">{title}</span>
-      <span className="text-black text-sm">
-        {formatDate(date.toString(), false)}
-      </span>
-      <BarChart
-        xAxis={[{ scaleType: "band", data: xlabel }]}
-        // series={[{ data: [2, 2, 2] }, { data: [4, 2, 2] }]}
-        series={serieses}
-        height={300}
-        sx={{ width: "100%" }}
-      />
-    </div>
+    <LaporanByKategoriLoader
+      data={laporansByKategori}
+      setData={setLaporanByKategori}
+      id={selectedKelurahans.toString()}
+      refetch={refetch}
+      setRefetch={setRefetch}
+    >
+      <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col">
+        <span className="text-primary font-bold text-xl">{title}</span>
+        <span className="text-black text-sm">
+          {formatDate(date.toString(), false)}
+        </span>
+        <div className="flex items-center justify-center md:justify-end my-3">
+          <select
+            onChange={selectChange}
+            className="w-full px-5 py-1 rounded-full border-2 bg-primary text-white border-primary font-bold duration-300 md:w-auto"
+            style={{ maxWidth: "200px" }}
+          >
+            {kelurahans.map((val) => (
+              <option value={val.id} key={val.id}>
+                {val.nama}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <BarChart
+          xAxis={[{ scaleType: "band", data: xlabel }]}
+          // series={[{ data: [2, 2, 2] }, { data: [4, 2, 2] }]}
+          series={serieses}
+          height={300}
+          sx={{ width: "100%" }}
+        />
+      </div>
+    </LaporanByKategoriLoader>
   );
 };
