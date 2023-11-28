@@ -11,9 +11,9 @@ interface PenjadwalanContent {
 
 const DetailKasusContent = (props: PenjadwalanContent) => {
     const { laporan } = props
-    useEffect(() => {
-            console.log(laporan, "isi laporan")
-    }, []);
+    // useEffect(() => {
+    //         console.log(laporan, "isi laporan")
+    // }, []);
     
     return (
       <>

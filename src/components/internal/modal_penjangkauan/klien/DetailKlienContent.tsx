@@ -10,9 +10,9 @@ interface DetailKlienContent {
 
 const DetailKlienContent = (props: DetailKlienContent) => {
     const { laporan } = props
-    useEffect(() => {
-            console.log(laporan, "isi laporan")
-    }, []);
+    // useEffect(() => {
+    //         console.log(laporan, "isi laporan")
+    // }, []);
     
     return (
       <>

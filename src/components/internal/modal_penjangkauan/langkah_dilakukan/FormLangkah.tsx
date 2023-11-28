@@ -34,8 +34,8 @@ const FormDetailLangkah = (props: FormModal) => {
 
 
       const onSubmit: SubmitHandler<DetailLangkah> = async (data: DetailLangkah) => {
-        console.log(data);
-        console.log(jenisButton);
+        // console.log(data);
+        // console.log(jenisButton);
 
         try {
             showLoader()
@@ -88,47 +88,65 @@ const FormDetailLangkah = (props: FormModal) => {
         }
       };
 
-    return <>
-        <span className="font-bold text-lg"><span className="text-primary">{capitalize(mode)}</span> Langkah yang Telah Dilakukan</span>
+    return (
+      <>
+        <span className="font-bold text-lg">
+          <span className="text-primary">{capitalize(mode)}</span> Langkah yang
+          Telah Dilakukan
+        </span>
         <div className="flex flex-col gap-2 py-3">
-            <form className="border-b-2 flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="border-b-2 flex flex-col gap-3 py-3"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             {laporan.status_langkah_telah_dilakukan === 0 ? (
-                <>
-                    <SectionTitle>Langkah yang telah Dilakukan</SectionTitle>
-                    <TextArea
-                        name="langkah_telah_dilakukan"
-                        className="h-60"
-                        defaultValue=""
-                        register={register}
-                        errors={errors}
-                        label="Ceritakan langkah yang dilakukan"
-                        placeholder="Contoh : Pada tanggal 1 Januari, satgas mendatangi klien."
-                    />
-                </>
+              <>
+                <SectionTitle>Langkah yang telah Dilakukan</SectionTitle>
+                <TextArea
+                  name="langkah_telah_dilakukan"
+                  className="h-60"
+                  defaultValue=""
+                  register={register}
+                  errors={errors}
+                  label="Ceritakan langkah yang dilakukan"
+                  placeholder="Contoh : Pada tanggal 1 Januari, satgas mendatangi klien."
+                  isRequired
+                />
+              </>
             ) : laporan.status_langkah_telah_dilakukan === 1 ? (
-                <>
-                    <SectionTitle>Langkah yang telah Dilakukan</SectionTitle>
-                    <TextArea
-                        name="langkah_telah_dilakukan"
-                        className="h-60"
-                        defaultValue={laporan.langkah_telah_dilakukan}
-                        register={register}
-                        errors={errors}
-                        label="Ceritakan langkah yang dilakukan"
-                        placeholder="Contoh : Pada tanggal 1 Januari, satgas mendatangi klien."
-                    />
-                </>
+              <>
+                <SectionTitle>Langkah yang telah Dilakukan</SectionTitle>
+                <TextArea
+                  name="langkah_telah_dilakukan"
+                  className="h-60"
+                  defaultValue={laporan.langkah_telah_dilakukan}
+                  register={register}
+                  errors={errors}
+                  label="Ceritakan langkah yang dilakukan"
+                  placeholder="Contoh : Pada tanggal 1 Januari, satgas mendatangi klien."
+                  isRequired
+                />
+              </>
             ) : null}
 
-                        <SecondaryButton className="py-2" isSubmit onClick={() => setJenisButton(1)}>
-                          {"Simpan Sebagai Draft"}
-                        </SecondaryButton>
-                        <PrimaryButton className="py-2" isSubmit onClick={() => setJenisButton(2)}>
-                          {"Publish Laporan"}
-                        </PrimaryButton>
-            </form>
+            <SecondaryButton
+              className="py-2"
+              isSubmit
+              onClick={() => setJenisButton(1)}
+            >
+              {"Simpan Sebagai Draft"}
+            </SecondaryButton>
+            <PrimaryButton
+              className="py-2"
+              isSubmit
+              onClick={() => setJenisButton(2)}
+            >
+              {"Publish Laporan"}
+            </PrimaryButton>
+          </form>
         </div>
-    </>
+      </>
+    );
 }
 
 export default FormDetailLangkah

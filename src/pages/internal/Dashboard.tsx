@@ -3,17 +3,24 @@ import AdminLayout from "../layouts/AdminLayout";
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../consts/user";
 import { Panel, BarChartPanel } from "../../components/internal/Panel";
-import { LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader } from "../../helpers/fetchHelpers";
-import { useState } from "react";
+import { KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader } from "../../helpers/fetchHelpers";
+import { useEffect, useState } from "react";
 import { Laporan, LaporanCount } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
 import { useParams } from "react-router-dom";
-import { LaporanByKategoriRT } from "../../consts/laporanByKategoriRT";
+import { LaporanByKategoriRT } from "../../consts/laporanByKategori";
+import { Kelurahan } from "../../consts/kelurahan";
+import Select from "react-select";
+
+interface DropdownOptionProps {
+  text: string;
+  value: string | number;
+}
 
 const Dashboard = () => {
   const userData = useAuthUser()() as User;
   const [laporanCount, setLaporanCount] = useState<LaporanCount[]>([]);
-  const [laporansByKategoriRT, setLaporanByKategoriRT] = useState<LaporanByKategoriRT[]>([])
+  const [kelurahans, setKelurahans] = useState<Kelurahan[]>([]);
 
   return (
     <AdminLayout>
@@ -88,14 +95,14 @@ const Dashboard = () => {
               }
             />
           </div>
-          <div className="mt-4">
-            <LaporanByKategoriRTLoader data={laporansByKategoriRT} setData={setLaporanByKategoriRT}>
-              <BarChartPanel
-                title="Jumlah Laporan Per Jenis Laporan"
-                date={new Date().toISOString()}
-                laporans={laporansByKategoriRT}
-              />
-            </LaporanByKategoriRTLoader>
+          <div className="grid lg:grid-cols-1 md:grid-cols-1 grid-cols-1 gap-4 mt-4">
+              <KelurahanLoader data={kelurahans} setData={setKelurahans}>
+                <BarChartPanel
+                  title="Jumlah Kasus Berdasarkan Kategori"
+                  date={new Date().toISOString()}
+                  kelurahans={kelurahans}
+                />
+              </KelurahanLoader>
           </div>
         </div>
       </LaporanCountLoader>

@@ -12,7 +12,6 @@ interface DetailDokumenContent{
 
 const DetailDokumenContent = (props: DetailDokumenContent) => {
     const {laporan } = props
-    console.log(laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung)
     return <>
         <span className="font-bold text-lg">Dokumen Pendukung</span>
         <div className="flex flex-col gap-2 py-3">
@@ -20,12 +19,12 @@ const DetailDokumenContent = (props: DetailDokumenContent) => {
             <div>
       
     </div>
-                <DetailLaporanItem label="Foto Klien" value={laporan.dokumen_pendukung.dokumen_pendukung.foto_klien ?? '-'} />
-                <DetailLaporanItem label="Foto Tempat Tinggal Klien" value={laporan.dokumen_pendukung.dokumen_pendukung.foto_tempat_tinggal ?? '-'} />
-                <DetailLaporanItem label="Foto Pendampingan Awal" value={laporan.dokumen_pendukung.dokumen_pendukung.foto_pendampingan_awal ?? '-'} />
-                <DetailLaporanItem label="Foto Pendampingan Lanjutan" value={laporan.dokumen_pendukung.dokumen_pendukung.foto_pendampingan_lanjutan ?? '-'} />
-                <DetailLaporanItem label="Foto Identitas Klien (KK)" value={laporan.dokumen_pendukung.dokumen_pendukung.foto_kk ?? '-'} />
-                <DetailLaporanItem label="Dokumen Pendukung" value={laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung ?? '-'} />
+                <DetailLaporanItem label="Foto Klien" value={laporan.dokumen_pendukung?.dokumen_pendukung?.foto_klien ? laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung : '-'} />
+                <DetailLaporanItem label="Foto Tempat Tinggal Klien" value={laporan.dokumen_pendukung?.dokumen_pendukung?.foto_tempat_tinggal ? laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung : '-'} />
+                <DetailLaporanItem label="Foto Pendampingan Awal" value={laporan.dokumen_pendukung?.dokumen_pendukung?.foto_pendampingan_awal ? laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung : '-'} />
+                <DetailLaporanItem label="Foto Pendampingan Lanjutan" value={laporan.dokumen_pendukung?.dokumen_pendukung?.foto_pendampingan_lanjutan ? laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung : '-'} />
+                <DetailLaporanItem label="Foto Identitas Klien (KK)" value={laporan.dokumen_pendukung?.dokumen_pendukung?.foto_kk ? laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung : '-'} />
+                <DetailLaporanItem label="Dokumen Pendukung" value={laporan.dokumen_pendukung?.dokumen_pendukung?.dokumen_pendukung ? laporan.dokumen_pendukung.dokumen_pendukung.dokumen_pendukung : '-'} />
             </div>
         </div>
     </>

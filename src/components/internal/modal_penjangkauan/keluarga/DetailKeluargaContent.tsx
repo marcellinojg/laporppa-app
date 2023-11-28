@@ -11,9 +11,9 @@ interface DetailKeluargaContent {
 const DetailKeluargaContent = (props: DetailKeluargaContent) => {
   const { laporan } = props;
 
-  useEffect(() => console.log(laporan), [])
+  // useEffect(() => console.log(laporan), [])
 
-  console.log(laporan);
+  // console.log(laporan);
   return (
     <>
       <span className="font-bold text-lg">Detail Data Keluarga</span>

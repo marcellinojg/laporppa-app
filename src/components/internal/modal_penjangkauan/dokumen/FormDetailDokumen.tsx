@@ -50,7 +50,7 @@ const FormDetailDokumen = (props: FormModal) => {
             laporan_id: laporan.id,
             satgas_id: laporan.satgas_pelapor.id,
           };
-        console.log(formatData);
+        // console.log(formatData);
 
         const formatDataStatus = {
             status_dokumen_pendukung: jenisButton === 1
