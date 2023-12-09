@@ -9,12 +9,13 @@ import SectionPelaporan from "../../components/internal/detail_pelaporan/Section
 import SectionPenjangkauan from "../../components/internal/detail_pelaporan/SectionPenjangkauan"
 import SwitchDetailButton from "../../components/internal/detail_pelaporan/SwitchDetail"
 import { STATUS_LAPORAN } from "../../consts/status"
+import SectionPenangananAwal from "../../components/internal/detail_pelaporan/SectionPenangananAwal"
 
 
 const DetailPelaporan = () => {
     const { id } = useParams()
     const [laporan, setLaporan] = useState<Laporan | null | undefined>()
-    const [page, helpers] = useStep(2)
+    const [page, helpers] = useStep(3)
     const [refetch, setRefetch] = useState<boolean>(true)
     // console.log(laporan)
     return <AdminLayout>
@@ -28,13 +29,17 @@ const DetailPelaporan = () => {
                         <div className="flex flex-wrap items-center gap-4">
                             <SwitchDetailButton page={1} currentPage={page} label="Pelaporan" setStep={helpers.setStep} />
                             {laporan.status.id !== STATUS_LAPORAN.MENUNGGU_VALIDASI &&
-                                <SwitchDetailButton page={2} currentPage={page} label="Penjangkauan" setStep={helpers.setStep} />
+                                <SwitchDetailButton page={2} currentPage={page} label="Penanganan Awal" setStep={helpers.setStep} />
+                            }
+                            {laporan.status.id !== STATUS_LAPORAN.MENUNGGU_VALIDASI &&
+                                <SwitchDetailButton page={3} currentPage={page} label="Penjangkauan" setStep={helpers.setStep} />
                             }
                         </div>
                     </div>
                     <div className="lg:w-10/12 w-11/12 p-6 bg-white floating-shadow-md mx-auto  rounded-lg">
                         {page === 1 && <SectionPelaporan laporan={laporan} setRefetch={setRefetch} />}
-                        {page === 2 && <SectionPenjangkauan laporan={laporan} setRefetch={setRefetch} />}
+                        {page === 2 && <SectionPenangananAwal laporan={laporan} setRefetch={setRefetch} />}
+                        {page === 3 && <SectionPenjangkauan laporan={laporan} setRefetch={setRefetch} />}
                     </div>
                 </>
 

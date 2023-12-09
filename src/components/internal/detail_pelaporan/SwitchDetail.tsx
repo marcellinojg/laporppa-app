@@ -10,7 +10,7 @@ interface SwitchDetailButtonProps {
 const SwitchDetailButton = (props: SwitchDetailButtonProps) => {
     const { page, setStep, label, currentPage } = props
     return <button
-        className={`min-w-[150px] transition duration-300 ${page === currentPage ? "bg-primary text-white" : 'border-2 border-primary'} rounded-full py-1.5`}
+        className={`min-w-[150px] transition duration-300 ${page === currentPage ? "bg-primary text-white" : 'border-2 border-primary'} rounded-full py-1.5 p-5`}
         onClick={() => setStep(page)}
     >
         {label}

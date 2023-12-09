@@ -18,7 +18,7 @@ import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
 
-const FormDetailHarapan = (props: FormModal) => {
+const FormSituasiKeluarga = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
@@ -91,8 +91,7 @@ const FormDetailHarapan = (props: FormModal) => {
   return (
     <>
       <span className="font-bold text-lg">
-        <span className="text-primary">{capitalize(mode)}</span> Detail Harapan
-        Klien dan Keluarga
+        <span className="text-primary">{capitalize(mode)}</span> Detail Kronologi Kejadian
       </span>
       <div className="flex flex-col gap-2 py-3">
         <form
@@ -100,17 +99,17 @@ const FormDetailHarapan = (props: FormModal) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="border-b-2 flex flex-col gap-3 py-3">
-            <SectionTitle>Detail Harapan Klien dan Keluarga</SectionTitle>
+            <SectionTitle>Detail Situasi Keluarga</SectionTitle>
             <TextArea
-              name="harapan_keluarga"
+              name="situasi_keluarga"
               className="h-60"
               defaultValue={
                 laporan.kondisi_klien?.fisik ? laporan.kondisi_klien.fisik : ""
               }
               register={register}
               errors={errors}
-              label="Harapan Klien dan Keluarga"
-              placeholder="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
+              label="Situasi Keluarga"
+              placeholder="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini"
               isRequired
             />
           </div>
@@ -134,4 +133,4 @@ const FormDetailHarapan = (props: FormModal) => {
   );
 };
 
-export default FormDetailHarapan;
+export default FormSituasiKeluarga;

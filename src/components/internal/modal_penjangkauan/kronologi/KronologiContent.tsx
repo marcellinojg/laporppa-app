@@ -1,18 +1,29 @@
-import { ContentModal } from "../../../../consts/modal_penjangkauan"
-import { SectionTitle } from "../../../common/Typography"
+import { Laporan } from "../../../../consts/laporan";
+import { SectionTitle } from "../../../common/Typography";
+import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 
-
-const DetailKronologiContent = (props: ContentModal) => {
-    const { } = props
-    return <>
-        <span className="font-bold text-lg">Detail Kronologi Kejadian</span>
-        <div className="flex flex-col gap-2 py-3">
-            <div className="border-b-2 flex flex-col gap-3 py-3">
-                <SectionTitle>Kronologi Kejadian</SectionTitle>
-                <p className="text-sm whitespace-preline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error placeat nostrum doloribus necessitatibus ipsa quos quibusdam fugit earum amet.</p>
-            </div>
-        </div>
-    </>
+interface DetailKondisi {
+  laporan: Laporan;
 }
 
-export default DetailKronologiContent
+const DetailKronologiContent = (props: DetailKondisi) => {
+  const { laporan } = props;
+  return (
+    <>
+      <span className="font-bold text-lg">Detail Kronologi Kejadian</span>
+      <div className="flex flex-col gap-2 py-3">
+        <div className="border-b-2 flex flex-col gap-3 py-3">
+          <SectionTitle>Kronologi Kejadian</SectionTitle>
+          <DetailLaporanItem
+            label="Kronologi Kejadian"
+            value={
+              laporan.kondisi_klien?.fisik ? laporan.kondisi_klien?.fisik : ""
+            }
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default DetailKronologiContent;

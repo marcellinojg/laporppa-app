@@ -1,17 +1,29 @@
-import { ContentModal } from "../../../../consts/modal_penjangkauan"
-import { SectionTitle } from "../../../common/Typography"
+import { Laporan } from "../../../../consts/laporan";
+import { SectionTitle } from "../../../common/Typography";
+import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 
-const DetailHarapanContent = (props: ContentModal) => {
-    const { } = props
-    return <>
-        <span className="font-bold text-lg">Detail Harapan Klien dan Keluarga</span>
-        <div className="flex flex-col gap-2 py-3">
-            <div className="border-b-2 flex flex-col gap-3 py-3">
-                <SectionTitle>Harapan Klien dan Keluarga</SectionTitle>
-                <p className="text-sm whitespace-preline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error placeat nostrum doloribus necessitatibus ipsa quos quibusdam fugit earum amet.</p>
-            </div>
-        </div>
-    </>
+interface DetailKondisi {
+  laporan: Laporan;
 }
 
-export default DetailHarapanContent
+const DetailHarapanContent = (props: DetailKondisi) => {
+  const { laporan } = props;
+  return (
+    <>
+      <span className="font-bold text-lg">Detail Harapan Klien dan Keluarga</span>
+      <div className="flex flex-col gap-2 py-3">
+        <div className="border-b-2 flex flex-col gap-3 py-3">
+          <SectionTitle>Detail Harapan Klien dan Keluarga</SectionTitle>
+          <DetailLaporanItem
+            label="Harapan Klien dan Keluarga"
+            value={
+              laporan.kondisi_klien?.fisik ? laporan.kondisi_klien?.fisik : ""
+            }
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default DetailHarapanContent;
