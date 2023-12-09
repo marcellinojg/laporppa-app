@@ -28,7 +28,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
             {userData.role === ROLE.KELURAHAN &&
                 laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&
                 laporan.satgas_pelapor.id == userData.id &&
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex overflow-x-auto w-full">
                     <AssignButton laporan={laporan} setRefetch={setRefetch} />
                     <TolakButton laporan={laporan} setRefetch={setRefetch} />
                 </div>
@@ -36,20 +36,20 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
             {userData.role === ROLE.KELURAHAN &&
                 laporan.status.id == STATUS_LAPORAN.KASUS_DIKEMBALIKAN &&
                 laporan.satgas_pelapor.id == userData.id &&
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex overflow-x-auto w-full">
                     <AssignButton setRefetch={setRefetch} laporan={laporan} />
                     <RujukButton setRefetch={setRefetch} laporan={laporan} />
                 </div>
             }
             {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&  laporan.satgas_pelapor.id === userData.id &&
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex overflow-x-auto w-full">
                     <EditButton laporan={laporan} />
                     <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
                     <SelesaikanButton setRefetch={setRefetch} laporan={laporan} />
                 </div>
             }
             {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&  laporan.satgas_pelapor.id === userData.id &&
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex overflow-x-auto w-full">
                     <TerimaButton setRefetch={setRefetch} laporan={laporan} />
                     <TolakButton setRefetch={setRefetch} laporan={laporan} />
                     <KembalikanButton setRefetch={setRefetch} laporan={laporan} />

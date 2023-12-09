@@ -20,6 +20,15 @@ interface SectionPenjangkauanProps {
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
   const { laporan, setRefetch } = props
   const userData = useAuthUser()() as User;
+  const days = [
+    "Minggu",
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu",
+  ];
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [isModalActiveDetailKasus, setIsModalActiveDetailKasus] = useState<boolean>(false);
   const [isModalActivePenjadwalan, setIsModalActivePenjadwalan] = useState<boolean>(false);
@@ -52,7 +61,13 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               label="Hari, Tanggal, Jam"
               value={
                 laporan.penjadwalan?.tanggal_jam
-                  ? formatDate(laporan.penjadwalan.tanggal_jam.toString(), true)
+                  ? days[
+                      new Date(
+                        laporan.penjadwalan.tanggal_jam.toString()
+                      ).getDay()
+                    ] +
+                    ", " +
+                    formatDate(laporan.penjadwalan.tanggal_jam.toString(), true)
                   : ""
               }
             />
@@ -157,7 +172,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               setRefetch={setRefetch}
               setIsModalActive={setIsModalActive}
             />
-            {/* <DetailPenjangkauanItem
+            <DetailPenjangkauanItem
               laporan={laporan}
               title="Situasi Keluarga"
               help_text="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini."
@@ -167,27 +182,27 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               modalType={MODAL_PENJANGKAUAN.SITUASI}
               setRefetch={setRefetch}
               setIsModalActive={setIsModalActive}
-            /> */}
-            {/* <DetailPenjangkauanItem
+            />
+            <DetailPenjangkauanItem
               laporan={laporan}
               title="Kronologi Kejadian"
               help_text="Deskripsikan kronologis kejadian secara lengkap."
-              is_done={2}
+              is_done={1}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
               setRefetch={setRefetch}
               setIsModalActive={setIsModalActive}
-            /> */}
-            {/* <DetailPenjangkauanItem
+            />
+            <DetailPenjangkauanItem
               laporan={laporan}
               title="Harapan Klien dan Keluarga"
               help_text="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
-              is_done={2}
+              is_done={1}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.HARAPAN}
               setRefetch={setRefetch}
               setIsModalActive={setIsModalActive}
-            /> */}
+            />
             <DetailPenjangkauanItem
               laporan={laporan}
               title="Kondisi Klien"
@@ -195,6 +210,26 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               is_done={Number(laporan.status_kondisi_klien)}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KONDISI}
+              setRefetch={setRefetch}
+              setIsModalActive={setIsModalActive}
+            />
+            <DetailPenjangkauanItem
+              laporan={laporan}
+              title="Rencana Analis Kebutuhan Klien Oleh DP3KAPPKB"
+              help_text="Masukkan detail rencana analisis kebutuhan."
+              is_done={1}
+              updated_at={formatDate(new Date().toString(), true)}
+              modalType={MODAL_PENJANGKAUAN.RENCANA_ANALIS_KEBUTUHAN}
+              setRefetch={setRefetch}
+              setIsModalActive={setIsModalActive}
+            />
+            <DetailPenjangkauanItem
+              laporan={laporan}
+              title="Rencana Rujukan Kebutuhan Klien"
+              help_text="Masukkan detail rencana rujukan yang akan diberikan kepada klien."
+              is_done={1}
+              updated_at={formatDate(new Date().toString(), true)}
+              modalType={MODAL_PENJANGKAUAN.RENCANA_RUJUKAN}
               setRefetch={setRefetch}
               setIsModalActive={setIsModalActive}
             />

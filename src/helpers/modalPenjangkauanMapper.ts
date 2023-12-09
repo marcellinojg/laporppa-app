@@ -1,12 +1,9 @@
 import FormDetailHarapan from '../components/internal/modal_penjangkauan/harapan/FormHarapan';
 import DetailHarapanContent from '../components/internal/modal_penjangkauan/harapan/HarapanContent';
-import DetailKeluargaContent from '../components/internal/modal_penjangkauan/keluarga/DetailKeluargaContent';
 import DetailKlienContent from '../components/internal/modal_penjangkauan/klien/DetailKlienContent';
 import DetailKronologiContent from '../components/internal/modal_penjangkauan/kronologi/KronologiContent';
 import FormDetailKlien from '../components/internal/modal_penjangkauan/klien/FormDetailKlien';
 import FormDetailKronologi from '../components/internal/modal_penjangkauan/kronologi/FormKronologi';
-import DetailSituasiContent from '../components/internal/modal_penjangkauan/situasi/DetailSituasiContent';
-import FormDetailSituasi from '../components/internal/modal_penjangkauan/situasi/FormDetailSituasi';
 import { MODAL_PENJANGKAUAN } from '../consts/modal_penjangkauan';
 import DetailKondisiContent from '../components/internal/modal_penjangkauan/kondisi/KondisiContent';
 import FormDetailKondisi from '../components/internal/modal_penjangkauan/kondisi/FormKondisi';
@@ -20,7 +17,14 @@ import FormPelaku from '../components/internal/modal_penjangkauan/pelaku/FormPel
 import DetailPelaku from '../components/internal/modal_penjangkauan/pelaku/PelakuContent';
 import DetailKasusContent from '../components/internal/modal_penjangkauan/detail_kasus/DetailKasusContent';
 import FormDetailKasus from '../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus';
+import SituasiKeluargaContent from '../components/internal/modal_penjangkauan/situasi_keluarga/SituasiKeluargaContent';
+import FormSituasiKeluarga from '../components/internal/modal_penjangkauan/situasi_keluarga/FormSituasiKeluarga';
+import DetailKeluargaContent from '../components/internal/modal_penjangkauan/keluarga/DetailKeluargaContent';
 import FormKeluargaKlien from '../components/internal/modal_penjangkauan/keluarga/FormDetailKeluarga';
+import DetailRencanaAnalisKebutuhanContent from '../components/internal/modal_penjangkauan/rencana_analisis_kebutuhan/DetailRencanaAnalisKebutuhanContent';
+import FormRencanaAnalisKebutuhan from '../components/internal/modal_penjangkauan/rencana_analisis_kebutuhan/FormRencanaAnalisKebutuhan';
+import DetailRencanaRujukanContent from '../components/internal/modal_penjangkauan/rencana_rujukan/DetailRencanaRujukanContent';
+import FormRencanaRujukan from '../components/internal/modal_penjangkauan/rencana_rujukan/FormRencanaRujukan';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {
@@ -43,9 +47,13 @@ const modalPenjangkauanMapper = (type: string) => {
         case MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN:
             return [DetailLangkahContent, FormDetailLangkah]
         case MODAL_PENJANGKAUAN.SITUASI:
-            return [DetailSituasiContent, FormDetailSituasi]
+            return [SituasiKeluargaContent, FormSituasiKeluarga]
         case MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG:
             return [DetailDokumenContent, FormDetailDokumen]
+        case MODAL_PENJANGKAUAN.RENCANA_ANALIS_KEBUTUHAN:
+            return [DetailRencanaAnalisKebutuhanContent, FormRencanaAnalisKebutuhan]
+        case MODAL_PENJANGKAUAN.RENCANA_RUJUKAN:
+            return [DetailRencanaRujukanContent, FormRencanaRujukan]
         default:
             console.warn('MODAL TYPE NOT FOUND')
             return []
