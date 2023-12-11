@@ -9,6 +9,8 @@ import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
 import SumberPengaduan from './sumber';
 import { DokumenPendukung } from "./dokumen_pendukung";
+import { LangkahDP3A } from "./langkahDP3A";
+import { LangkahOPD } from "./langkahOPD";
 
 export interface Laporan {
     id: string,
@@ -38,8 +40,10 @@ export interface Laporan {
     kelurahan: Kelurahan
     sumber_pengaduan: SumberPengaduan
     dokumentasi_pengaduan: string[]
-    langkah_telah_dilakukan : string
+    langkah_telah_dilakukan : LangkahDP3A
+    lintas_opd: LangkahOPD,
     status_langkah_telah_dilakukan: number
+    status_lintas_opd: number
     dokumen_pendukung: DokumenPendukung
     status_dokumen_pendukung: number
     detail_klien?: DetailKlien;
@@ -52,6 +56,11 @@ export interface Laporan {
     status_keluarga?: number;
     keluarga_klien?: KeluargaKlien[];
     detail_kasus?: DetailKasus;
+    penanganan_awal: Penanganan;
+    // RAKK: RAKK;
+    harapan_klien_dan_keluarga: string;
+    situasi_keluarga:string; 
+    kronologi_kejadian:string;
 
  }
 

@@ -17,7 +17,7 @@ const DetailHarapanContent = (props: DetailKondisi) => {
           <DetailLaporanItem
             label="Harapan Klien dan Keluarga"
             value={
-              laporan.kondisi_klien?.fisik ? laporan.kondisi_klien?.fisik : ""
+              laporan.harapan_klien_dan_keluarga ? laporan.harapan_klien_dan_keluarga : "-"
             }
           />
         </div>

@@ -12,28 +12,27 @@ import { SetStateAction, useState, Dispatch } from "react";
 import useLoader from "../../../../hooks/useLoader";
 import {
   getLaporan,
-  patchPenjadwalan,
-  postPenjadwalan,
+  patchPenanganan,
+  postPenanganan
 } from "../../../../api/laporan";
 import { useAlert } from "../../../../hooks/useAlert";
 import { ALERT_TYPE } from "../../../../consts/alert";
 
-export interface Penjadwalan {
-  id?: number;
-  tanggal_penjadwalan: Date;
-  jam_penjadwalan: string;
-  tanggal_jam: string;
-  laporan_id: string;
-  tempat: string;
-  alamat: string;
-  setRefetch: Dispatch<SetStateAction<boolean>>;
+export interface Penanganan {
+  tanggal_penanganan: Date
+  jam_penanganan : string
+  tanggal_penanganan_awal: string
+  hasil: string
+  dokumen_pendukung: File
+  laporan_id: string
+  id?: number
 }
 
 const FormPenangananAwal = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive} = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
-  const form = useForm<Penjadwalan>();
+  const form = useForm<Penanganan>();
   const { errorFetchAlert, addAlert } = useAlert();
   const {
     register,
@@ -41,41 +40,41 @@ const FormPenangananAwal = (props: FormModal) => {
     handleSubmit,
     control,
     reset,
-  } = form;
+  } = form; 
 
-  const onSubmit: SubmitHandler<Penjadwalan> = async (data: Penjadwalan) => {
-    const formatData: Penjadwalan = {
+  const onSubmit: SubmitHandler<Penanganan> = async (data: Penanganan) => {
+    const formatData: Penanganan = {
       ...data,
-      tanggal_jam: combineDateAndTimePelaporan(
-        data.tanggal_penjadwalan,
-        data.jam_penjadwalan
+      tanggal_penanganan_awal: combineDateAndTimePelaporan(
+        data.tanggal_penanganan,
+        data.jam_penanganan
       ),
       laporan_id: laporan.id,
-      id: laporan.penjadwalan?.id,
+      id: laporan.penanganan_awal?.id,
     };
 
+    console.log(formatData)
     try {
       setIsLoading(true);
       showLoader();
       if (
-        laporan.penjadwalan?.alamat != null ||
-        laporan.penjadwalan?.alamat != null ||
-        laporan.penjadwalan?.tanggal_jam != null
+        laporan.penanganan_awal?.hasil != null ||
+        laporan.penanganan_awal?.tanggal_penanganan_awal != null
       ) {
-        (await patchPenjadwalan(formatData)) as Penjadwalan;
+        (await patchPenanganan(formatData)) as Penanganan;
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Penjadwalan Sukses Diedit !",
-          message: `Penjadwalan untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          title: "Data Penanganan Awal Sukses Diedit !",
+          message: `Data Penanganan Awal untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       } else {
-        (await postPenjadwalan(formatData)) as Penjadwalan;
+        (await postPenanganan(formatData)) as Penanganan;
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Penjadwalan Sukses Dibuat !",
-          message: `Penjadwalan untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          title: "Data Penanganan Awal Sukses Dibuat !",
+          message: `Data Penanganan Awal untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       }
 
@@ -100,7 +99,7 @@ const FormPenangananAwal = (props: FormModal) => {
   return (
     <>
       <span className="font-bold text-lg">
-        <span className="text-primary">{capitalize(mode)}</span> Penjadwalan
+        <span className="text-primary">{capitalize(mode)}</span> Penanganan Awal
       </span>
 
       <div className="flex flex-col gap-2 py-3">
@@ -111,27 +110,27 @@ const FormPenangananAwal = (props: FormModal) => {
         >
           <div className="border-b-2 flex flex-col gap-3 py-3">
             <Datepicker
-              name="tanggal_penjadwalan"
+              name="tanggal_penanganan"
               control={control}
               isRequired
               defaultValue={
-                laporan.penjadwalan?.tanggal_jam
-                  ? new Date(laporan.penjadwalan.tanggal_jam)
+                laporan.penanganan_awal?.tanggal_penanganan_awal
+                  ? new Date(laporan.penanganan_awal.tanggal_penanganan_awal)
                   : null
               }
               placeholder="Tanggal Penanganan awal"
               label="Tanggal Penanganan Awal"
             />
             <TimePicker
-              name="jam_penjadwalan"
+              name="jam_penanganan"
               register={register}
               isRequired
               defaultValue={
-                laporan.penjadwalan?.tanggal_jam
+                laporan.penanganan_awal?.tanggal_penanganan_awal
                   ? `${String(
-                      new Date(laporan.penjadwalan?.tanggal_jam).getHours()
+                      new Date(laporan.penanganan_awal?.tanggal_penanganan_awal).getHours()
                     ).padStart(2, "0")}:${String(
-                      new Date(laporan.penjadwalan?.tanggal_jam).getMinutes()
+                      new Date(laporan.penanganan_awal?.tanggal_penanganan_awal).getMinutes()
                     ).padStart(2, "0")}`
                   : undefined
               }
@@ -142,19 +141,18 @@ const FormPenangananAwal = (props: FormModal) => {
             <InputText
               register={register}
               errors={errors}
-              name="hasil_penanganan_awal"
+              name="hasil"
               placeholder="Hasil Penanganan Awal"
               label="Hasil Penanganan Awal"
-              defaultValue={laporan.penjadwalan?.tempat}
+              defaultValue={laporan.penanganan_awal?.hasil}
               isRequired
             />
           </div>
           <PrimaryButton className="py-2" isSubmit>
-            {laporan.penjadwalan?.alamat != null ||
-            laporan.penjadwalan?.alamat != null ||
-            laporan.penjadwalan?.tanggal_jam != null
-              ? "Edit Penjadwalan"
-              : "Tambahkan Penjadwalan"}
+            {laporan.penanganan_awal?.tanggal_penanganan_awal != null ||
+            laporan.penanganan_awal?.hasil != null 
+              ? "Edit Penanganan Awal"
+              : "Tambahkan Penanganan Awal"}
           </PrimaryButton>
         </form>
       </div>
