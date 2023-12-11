@@ -1,12 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Laporan } from "../../../consts/laporan";
 import Pill from "../Pill";
-import DetailPenjangkauanItem from "./DetailPenjangkauanItem";
 import { formatDate } from "../../../helpers/formatDate";
 import { MODAL_PENANGANAN_AWAL, MODAL_PENJANGKAUAN } from "../../../consts/modal_penjangkauan";
 import DetailLaporanItem from "./DetailLaporanItem";
 import { SectionTitle } from "../../common/Typography";
-import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan";
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../../consts/user";
 import { ROLE } from "../../../consts/role";
@@ -33,6 +31,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
     useState<boolean>(false);
   const [isModalActiveDokumenPendukung, setIsModalActiveDokumenPendukung] =
     useState<boolean>(false);
+  console.log(laporan)
 
   return (
     <>
@@ -59,17 +58,17 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
               )}
           </div>
           <DetailLaporanItem
-            label="Tanggan & Jam Penanganan"
+            label="Tanggal & Jam Penanganan"
             value={
-              laporan.penjadwalan?.tanggal_jam
-                ? formatDate(laporan.penjadwalan.tanggal_jam.toString(), true)
+              laporan.penanganan_awal?.tanggal_penanganan_awal
+                ? formatDate(laporan.penanganan_awal.tanggal_penanganan_awal.toString(), true)
                 : ""
             }
           />
           <DetailLaporanItem
             label="Hasil Penanganan Awal"
             value={
-              laporan.penjadwalan?.tempat ? laporan.penjadwalan?.tempat : ""
+              laporan.penanganan_awal?.hasil ? laporan.penanganan_awal?.hasil : ""
             }
           />
         </div>
@@ -83,7 +82,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
                   type="button"
                   className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
                 >
-                  Tambahkan/Edit Dokument Pendukung
+                  Tambahkan/Edit Dokumen Pendukung
                 </button>
               )}
           </div>
@@ -107,6 +106,19 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
           setRefetch={setRefetch}
         />
       )}
+    <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
+      {laporan.penanganan_awal?.dokumen_pendukung && laporan.penanganan_awal.dokumen_pendukung.length > 0 ? (
+      laporan.penanganan_awal.dokumen_pendukung.map((dokumen, index) => (
+          <img
+            key={index}
+            src={dokumen || '-'}
+            alt={`Image ${index + 1}`}
+          />
+        ))
+      ) : (
+        <img src={'-'} alt="Image" />
+      )}
+      </div>
     </>
   );
 };

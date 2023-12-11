@@ -25,6 +25,8 @@ import DetailRencanaAnalisKebutuhanContent from '../components/internal/modal_pe
 import FormRencanaAnalisKebutuhan from '../components/internal/modal_penjangkauan/rencana_analisis_kebutuhan/FormRencanaAnalisKebutuhan';
 import DetailRencanaRujukanContent from '../components/internal/modal_penjangkauan/rencana_rujukan/DetailRencanaRujukanContent';
 import FormRencanaRujukan from '../components/internal/modal_penjangkauan/rencana_rujukan/FormRencanaRujukan';
+import DetailLangkahContentOPD from '../components/internal/modal_penjangkauan/langkah_OPD/DetailLangkahOPDContent';
+import FormDetailLangkahOPD from '../components/internal/modal_penjangkauan/langkah_OPD/FormDetailLangkahOPD';
 
 const modalPenjangkauanMapper = (type: string) => {
     switch (type) {
@@ -46,6 +48,8 @@ const modalPenjangkauanMapper = (type: string) => {
             return [DetailKronologiContent, FormDetailKronologi]
         case MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN:
             return [DetailLangkahContent, FormDetailLangkah]
+        case MODAL_PENJANGKAUAN.LANGKAH_OPD:
+            return [DetailLangkahContentOPD, FormDetailLangkahOPD]
         case MODAL_PENJANGKAUAN.SITUASI:
             return [SituasiKeluargaContent, FormSituasiKeluarga]
         case MODAL_PENJANGKAUAN.DOKUMEN_PENDUKUNG:

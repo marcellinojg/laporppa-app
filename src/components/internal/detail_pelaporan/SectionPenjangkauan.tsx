@@ -235,11 +235,21 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             />
             <DetailPenjangkauanItem
               laporan={laporan}
-              title="Langkah yang Telah Dilakukan"
+              title="Langkah yang Telah Dilakukan DP3AAPKB"
               help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
               is_done={laporan.status_langkah_telah_dilakukan}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.LANGKAH_DILAKUKAN}
+              setRefetch={setRefetch}
+              setIsModalActive={setIsModalActive}
+            />
+            <DetailPenjangkauanItem
+              laporan={laporan}
+              title="Langkah yang Telah Dilakukan OPD"
+              help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
+              is_done={laporan.status_lintas_opd}
+              updated_at={formatDate(new Date().toString(), true)}
+              modalType={MODAL_PENJANGKAUAN.LANGKAH_OPD}
               setRefetch={setRefetch}
               setIsModalActive={setIsModalActive}
             />

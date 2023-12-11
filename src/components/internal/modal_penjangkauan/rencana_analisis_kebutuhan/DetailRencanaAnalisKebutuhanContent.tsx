@@ -20,13 +20,13 @@ const DetailRencanaAnalisKebutuhanContent = (props: DetailKeluargaContent) => {
         Detail Rencana Analis Kebutuhan Klien Oleh DP3KAPPKB
       </span>
       <div className="flex flex-col gap-2 py-3">
-        {laporan.keluarga_klien?.length && laporan.keluarga_klien.length > 1 ? (
-          laporan.keluarga_klien?.map((keluarga, index) => (
+        {laporan.RAKK?.length && laporan.RAKK.length > 1 ? (
+          laporan.RAKK?.map((rencana, index) => (
             <div key={index} className="border-b-2 flex flex-col gap-3 py-3">
               <SectionTitle>{`Pelayanan ${index + 1}`}</SectionTitle>
               <DetailLaporanItem
                 label="Kebutuhan"
-                value={keluarga.hubungan.hubungan ?? "-"}
+                value={rencana.pend_hukum ?? "-"}
               />
               <DetailLaporanItem
                 label="Deskripsi Layanan yang Diberikan"

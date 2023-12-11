@@ -10,6 +10,7 @@ import { getLaporan, patchLaporan, postLangkah } from "../../../../api/laporan"
 import { ALERT_TYPE } from "../../../../consts/alert"
 import { useAlert } from "../../../../hooks/useAlert"
 import { Laporan } from "../../../../consts/laporan"
+import { LangkahDP3A } from "../../../../consts/langkahDP3A"
 import { DeleteButton } from "../../../form/PenjangkauanButtons";
 import Datepicker from "../../../form/Datepicker";
 import TimePicker from "../../../form/Timepicker";
@@ -24,13 +25,13 @@ export interface LangkahDP3A {
   laporan_id?: string
   tanggal_langkah: Date
   jam_langkah : string
-  tanggal_pelayanan: string
+  tanggal_pelayanan: Date
   pelayanan_yang_diberikan: string
   deskripsi: String
   id?: number
 }
 
-const FormDetailLangkah = (props: FormModal) => {
+const FormDetailLangkahOPD = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
@@ -43,7 +44,7 @@ const FormDetailLangkah = (props: FormModal) => {
     control,
     reset,
   } = useForm<LangkahDP3A>();
-  console.log(laporan)
+  // console.log(laporan)
   const publishLangkah = async () => {
     try {
       const formatDataStatus = {
@@ -263,11 +264,11 @@ const FormDetailLangkah = (props: FormModal) => {
               )}
             </div>
           <PrimaryButton className="py-2" onClick={() => publishLangkah()}>
-            Publish Langkah DP3AAPKB
+            Publish Langkah OPD
           </PrimaryButton>
         </div>
     </>
   );
 };
 
-export default FormDetailLangkah
+export default FormDetailLangkahOPD

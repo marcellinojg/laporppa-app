@@ -6,19 +6,19 @@ import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem"
 
 
 
-interface DetailLangkahContent{
+interface DetailLangkahOPDContent{
     laporan : Laporan
 }
 
-const DetailLangkahContent = (props: DetailLangkahContent) => {
+const DetailLangkahContentOPD = (props: DetailLangkahOPDContent) => {
     const { laporan } = props
     // console.log(laporan)
   
     return <>
-        <span className="font-bold text-lg">Detail Langkah oleh DP3KAPPKB</span>
+        <span className="font-bold text-lg">Detail Langkah oleh OPD</span>
         <div className="flex flex-col gap-2 py-3">
-            {laporan.langkah_telah_dilakukan?.length && laporan.langkah_telah_dilakukan.length > 1 ? (
-            laporan.langkah_telah_dilakukan?.map((langkah, index) => (
+            {laporan.lintas_opd?.length && laporan.lintas_opd.length > 1 ? (
+            laporan.lintas_opd?.map((langkah, index) => (
                 <div key={index} className="border-b-2 flex flex-col gap-3 py-3">
                 <SectionTitle>{`Langkah ${index + 1}`}</SectionTitle>
                 <DetailLaporanItem
@@ -27,11 +27,15 @@ const DetailLangkahContent = (props: DetailLangkahContent) => {
                 />
                 <DetailLaporanItem
                     label="Pelayanan yang Diberikan"
-                    value={langkah.pelayanan_yang_diberikan ?? "-"}
+                    value={langkah.pelayanan_diberikan ?? "-"}
                 />
                 <DetailLaporanItem
-                    label="Deskripsi"
-                    value={langkah.deskripsi ?? "-"}
+                    label="Instansi"
+                    value={langkah.instansi ?? "-"}
+                />
+                <DetailLaporanItem
+                    label="Deskripsi Pelayanan"
+                    value={langkah.deskripsi_pelayanan ?? "-"}
                 />
                 </div>
             ))
@@ -47,4 +51,4 @@ const DetailLangkahContent = (props: DetailLangkahContent) => {
     </>
 }
 
-export default DetailLangkahContent
+export default DetailLangkahContentOPD

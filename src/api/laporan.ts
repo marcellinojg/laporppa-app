@@ -10,6 +10,8 @@ import PaginationData from "../consts/pagination"
 import { Pelaku } from "../consts/pelaku"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 import { LaporanByKategori, LaporanByKategoriRT } from "../consts/laporanByKategori"
+import { LangkahDP3A } from "../consts/langkahDP3A"
+
 
 export const getLaporans = async () => {
     const instance = CreateAxiosInstance()
@@ -352,3 +354,47 @@ export const getlaporanByKategori = async (id: number | string) => {
   const data = res.data.data as LaporanByKategori[];
   return data;
 };
+
+export const postPenanganan = async (penanganan: Penanganan) => {
+  const instance = CreateAxiosInstance()
+  const res = await instance.post('/penanganan-awals', penanganan, {
+      headers: {
+          "Content-Type": "multipart/form-data"
+      }
+  })
+  const postedPenanganan = res.data.data as Penanganan
+  return postedPenanganan
+}
+
+export const patchPenanganan = async (penanganan: Penanganan) => {
+  const instance = CreateAxiosInstance()
+  const res = await instance.put(`/penanganan-awals/${penanganan.id}`, penanganan, {
+      headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+      }
+  })
+  const patchedPenanganan = res.data.data2 as Penanganan
+  return patchedPenanganan
+}
+
+export const postLangkah = async (langkah: LangkahDP3A) => {
+  const instance = CreateAxiosInstance()
+  const res = await instance.post('/langkah-telah-dilakukans', langkah, {
+      headers: {
+          "Content-Type": "multipart/form-data"
+      }
+  })
+  const postedLangkah = res.data.data as LangkahDP3A
+  return postedLangkah
+}
+
+export const patchLangkah = async (langkah: LangkahDP3A) => {
+  const instance = CreateAxiosInstance()
+  const res = await instance.put(`//langkah-telah-dilakukans/${langkah.id}`, langkah, {
+      headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+      }
+  })
+  const patchedLangkah = res.data.data2 as LangkahDP3A
+  return patchedLangkah
+}

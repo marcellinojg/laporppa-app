@@ -17,7 +17,7 @@ const SituasiKeluargaContent = (props: DetailKondisi) => {
             <DetailLaporanItem
               label="Situasi Keluarga"
               value={
-                laporan.kondisi_klien?.fisik ? laporan.kondisi_klien?.fisik : ""
+                laporan.situasi_keluarga ? laporan.situasi_keluarga : ""
               }
             />
           </div>
