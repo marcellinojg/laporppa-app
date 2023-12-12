@@ -39,7 +39,8 @@ interface FetchDataEffectsProps<T> {
     id?: string
     refetch?: boolean
     setRefetch?: React.Dispatch<SetStateAction<boolean>>
-
+    startDate?: Date | null
+    endDate?: Date | null
 }
 
 
@@ -412,18 +413,20 @@ export const LaporanByKategoriLoader = (props: FetchDataEffectsProps<LaporanByKa
     refetch,
     setRefetch,
     id,
+    startDate,
+    endDate
   } = props;
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert } = useAlert();
 
   useEffect(() => {
     setRefetch!(true);
-  }, [id]);
+  }, [id, startDate, endDate]);
 
   useEffect(() => {
     if (refetch === true) {
         showLoader();
-        getlaporanByKategori(id!)
+        getlaporanByKategori(id!, startDate!, endDate!)
             .then((laporan: LaporanByKategori[]) => {
             setData(laporan);
             })
