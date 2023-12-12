@@ -27,6 +27,14 @@ export const getLaporan = async (id: string) => {
     return laporan
 }
 
+export const getLaporanCetak = async (id: string) => {
+  const instance = CreateAxiosInstance()
+  const res = await instance.get(`/laporans/${id}?withKecamatan=1&withKeluargaKlien=1/cetak`)
+  const laporan = res.data.data
+  console.log("ini", laporan)
+  return laporan
+}
+
 
 export const getLaporanByToken = async (token: string) => {
     const instance = CreateAxiosInstance()

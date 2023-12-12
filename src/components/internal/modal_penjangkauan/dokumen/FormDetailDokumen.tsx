@@ -122,7 +122,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Klien'
-                    isMultiple={false}
+                        isMultiple={true}
                     />
                  <div className="text-base mb-1 font-bold">Foto Tempat Tinggal</div>
                 <Uploader
@@ -135,7 +135,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Tempat Tinggal'
-                        isMultiple={false}
+                        isMultiple={true}
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Awal</div>
                 <Uploader
@@ -148,7 +148,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Pendampingan Awal'
-                        isMultiple={false}
+                        isMultiple={true}
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Lanjutan</div>
                 <Uploader
@@ -161,7 +161,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Pendampingan Lanjutan'
-                        isMultiple={false}
+                        isMultiple={true}
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Monitoring</div>
                 <Uploader
@@ -174,7 +174,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto Pendampingan Monitoring'
-                        isMultiple={false}
+                        isMultiple={true}
                     />
                     <div className="text-base mb-1 font-bold">Foto KK</div>
                 <Uploader
@@ -187,7 +187,7 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto KK'
-                        isMultiple={false}
+                        isMultiple={true}
                     />
                     <div className="text-base mb-1 font-bold">Dokumen Pendukung</div>
                 <Uploader
@@ -200,15 +200,15 @@ const FormDetailDokumen = (props: FormModal) => {
                         errors={errors}
                         isRequired={false}
                         errorLabel='Foto KK'
-                        isMultiple={false}
+                        isMultiple={true}
                     />
                
                <SecondaryButton className="py-2" isSubmit onClick={() => setJenisButton(1)}>
-                          {"Simpan Sebagai Draft"}
-                        </SecondaryButton>
-                        <PrimaryButton className="py-2" isSubmit onClick={() => setJenisButton(2)}>
-                          {"Publish Laporan"}
-                        </PrimaryButton>
+                    {"Simpan Sebagai Draft"}
+                </SecondaryButton>
+                <PrimaryButton className="py-2" isSubmit onClick={() => setJenisButton(2)}>
+                    {"Publish Laporan"}
+                </PrimaryButton>
             </form>
         </div>
     </>

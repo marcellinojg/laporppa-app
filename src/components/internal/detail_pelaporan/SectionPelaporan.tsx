@@ -5,7 +5,7 @@ import { formatDate } from '../../../helpers/formatDate';
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../../consts/user";
 import { ROLE } from "../../../consts/role";
-import { AssignButton, EditButton, KembalikanButton, RujukButton, SelesaikanButton, TerimaButton, TolakButton } from "../../form/ActionButton";
+import { AssignButton, EditButton, KembalikanButton, PrintButton, RujukButton, SelesaikanButton, TerimaButton, TolakButton } from "../../form/ActionButton";
 import { Dispatch, SetStateAction } from "react";
 import { STATUS_LAPORAN } from "../../../consts/status";
 import { SectionTitle } from "../../common/Typography";
@@ -31,6 +31,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <div className="flex items-center gap-3 flex overflow-x-auto w-full">
                     <AssignButton laporan={laporan} setRefetch={setRefetch} />
                     <TolakButton laporan={laporan} setRefetch={setRefetch} />
+                    <PrintButton setRefetch={setRefetch} laporan={laporan}/>
                 </div>
             }
             {userData.role === ROLE.KELURAHAN &&
@@ -46,6 +47,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                     <EditButton laporan={laporan} />
                     <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
                     <SelesaikanButton setRefetch={setRefetch} laporan={laporan} />
+                    <PrintButton setRefetch={setRefetch} laporan={laporan}/>
                 </div>
             }
             {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.MENUNGGU_VALIDASI &&  laporan.satgas_pelapor.id === userData.id &&
@@ -93,6 +95,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                         <img src={url} width={200} alt={`dokumentasi pengaduan ${index + 1}`} key={index} />
                     )}
                 </div>
+                <PrintButton setRefetch={setRefetch} laporan={laporan}/>
 
             </div>
         </div>

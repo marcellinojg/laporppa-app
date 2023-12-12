@@ -17,13 +17,18 @@ import { useAlert } from "../../../../hooks/useAlert";
 import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
+import { Laporan } from "../../../../consts/laporan";
+
+interface Kronologi {
+  kronologi_kejadian:string,
+}
 
 const FormDetailKronologi = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
-  const form = useForm<KondisiKlien>();
+  const form = useForm<Kronologi>();
   const {
     register,
     formState: { errors },
@@ -33,41 +38,46 @@ const FormDetailKronologi = (props: FormModal) => {
   } = form;
   const [jenisButton, setJenisButton] = useState(1);
 
-  const onSubmit: SubmitHandler<KondisiKlien> = async (data: KondisiKlien) => {
+  const onSubmit: SubmitHandler<Kronologi> = async (data: Kronologi) => {
     // console.log(jenisButton);
-    const formatData: KondisiKlien = {
+    const formatData: Kronologi = {
       ...data,
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
       id: Number(laporan.kondisi_klien?.id),
-    };
-
-    const formatDataKondisi = {
-      status_kondisi_klien: jenisButton,
+      status_kronologi: jenisButton,
     };
 
     try {
       setIsLoading(true);
       showLoader();
-      if (laporan.kondisi_klien?.id != null) {
-        (await patchKondisiKlien(formatData)) as KondisiKlien;
+      if (jenisButton == 2) {
+        (await patchLaporan(formatData, laporan.id)) as Kronologi;
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
-        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Berhasil Diedit !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil diedit!`,
+          title: "Data Kronologi Berhasil Dipublish !",
+          message: `Data Kronologi untuk laporan ${laporan.nama_klien} berhasil Dipublish!`,
         });
-      } else {
-        (await postKondisiKlien(formatData)) as KondisiKlien;
+      } else if (jenisButton == 1 && laporan.situasi_keluarga != null){
+        (await patchLaporan(formatData, laporan.id)) as Kronologi;
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
-        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Sukses Dibuat !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          title: "Data Kronologi Berhasil Diedit !",
+          message: `Data Kronologi untuk laporan ${laporan.nama_klien} berhasil Diedit!`,
+        });
+
+      }
+        else {
+        (await patchLaporan(formatData, laporan.id)) as Situasi;
+        reset();
+        addAlert({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Data Kronologi Sukses Dibuat !",
+          message: `Data Kronologi untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       }
 
@@ -104,12 +114,12 @@ const FormDetailKronologi = (props: FormModal) => {
               name="kronologi_kejadian"
               className="h-60"
               defaultValue={
-                laporan.kondisi_klien?.fisik ? laporan.kondisi_klien.fisik : ""
+                laporan.kronologi_kejadian ? laporan.kronologi_kejadian: ""
               }
               register={register}
               errors={errors}
               label="Kronologi Kejadian"
-              placeholder="Deskripsikan kronologis kejadian secara lengkap."
+              placeholder="Deskripsikan kronologi kejadian secara lengkap."
               isRequired
             />
           </div>
