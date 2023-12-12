@@ -18,6 +18,7 @@ interface SectionPenjangkauanProps {
 
 
 const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
+  
   const { laporan, setRefetch } = props
   const userData = useAuthUser()() as User;
   const days = [
@@ -29,6 +30,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
     "Jumat",
     "Sabtu",
   ];
+  console.log(laporan)
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [isModalActiveDetailKasus, setIsModalActiveDetailKasus] = useState<boolean>(false);
   const [isModalActivePenjadwalan, setIsModalActivePenjadwalan] = useState<boolean>(false);
@@ -176,7 +178,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Situasi Keluarga"
               help_text="Deskripsikan kondisi situasi keluarga pada saat kejadian dan saat ini."
-              is_done={1}
+              is_done={laporan.status_situasi_keluarga}
               last_edit_by={laporan.satgas_pelapor.nama}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.SITUASI}
@@ -187,7 +189,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Kronologi Kejadian"
               help_text="Deskripsikan kronologis kejadian secara lengkap."
-              is_done={1}
+              is_done={laporan.status_kronologi}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KRONOLOGI}
               setRefetch={setRefetch}
@@ -197,7 +199,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Harapan Klien dan Keluarga"
               help_text="Deskripsikan harapan yang diinginkan oleh klien dan keluarga dari kejadian ini."
-              is_done={1}
+              is_done={laporan.status_harapan_klien_dan_keluarga}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.HARAPAN}
               setRefetch={setRefetch}
@@ -207,7 +209,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Kondisi Klien"
               help_text="Masukkan informasi detail kondisi klien terkait kondisi fisik, psikologis dst."
-              is_done={Number(laporan.status_kondisi_klien)}
+              is_done={laporan.status_detail_klien}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KONDISI}
               setRefetch={setRefetch}

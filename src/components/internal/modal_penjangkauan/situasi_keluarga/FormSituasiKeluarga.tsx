@@ -17,13 +17,18 @@ import { useAlert } from "../../../../hooks/useAlert";
 import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
+import { Laporan } from "../../../../consts/laporan";
+
+interface Situasi {
+  situasi_keluarga:string,
+}
 
 const FormSituasiKeluarga = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
-  const form = useForm<KondisiKlien>();
+  const form = useForm<Situasi>();
   const {
     register,
     formState: { errors },
@@ -33,41 +38,46 @@ const FormSituasiKeluarga = (props: FormModal) => {
   } = form;
   const [jenisButton, setJenisButton] = useState(1);
 
-  const onSubmit: SubmitHandler<KondisiKlien> = async (data: KondisiKlien) => {
+  const onSubmit: SubmitHandler<Situasi> = async (data: Situasi) => {
     // console.log(jenisButton);
-    const formatData: KondisiKlien = {
+    const formatData: Situasi = {
       ...data,
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
       id: Number(laporan.kondisi_klien?.id),
-    };
-
-    const formatDataKondisi = {
-      status_kondisi_klien: jenisButton,
+      status_situasi_keluarga: jenisButton,
     };
 
     try {
       setIsLoading(true);
       showLoader();
-      if (laporan.kondisi_klien?.id != null) {
-        (await patchKondisiKlien(formatData)) as KondisiKlien;
+      if (jenisButton == 2) {
+        (await patchLaporan(formatData, laporan.id)) as Situasi;
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
-        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Berhasil Diedit !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil diedit!`,
+          title: "Data Situasi Keluarga Berhasil Dipublish !",
+          message: `Data Situasi Keluarga untuk laporan ${laporan.nama_klien} berhasil Dipublish!`,
         });
-      } else {
-        (await postKondisiKlien(formatData)) as KondisiKlien;
+      } else if (jenisButton == 1 && laporan.situasi_keluarga != null){
+        (await patchLaporan(formatData, laporan.id)) as Situasi;
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
-        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Sukses Dibuat !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          title: "Data Situasi Keluarga Berhasil Diedit !",
+          message: `Data Situasi Keluarga untuk laporan ${laporan.nama_klien} berhasil Diedit!`,
+        });
+
+      }
+        else {
+        (await patchLaporan(formatData, laporan.id)) as Situasi;
+        reset();
+        addAlert({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Data Situasi Keluarga Sukses Dibuat !",
+          message: `Data Situasi Keluarga untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       }
 
@@ -91,7 +101,7 @@ const FormSituasiKeluarga = (props: FormModal) => {
   return (
     <>
       <span className="font-bold text-lg">
-        <span className="text-primary">{capitalize(mode)}</span> Detail Kronologi Kejadian
+        <span className="text-primary">{capitalize(mode)}</span> Detail Situasi Keluarga
       </span>
       <div className="flex flex-col gap-2 py-3">
         <form
@@ -104,7 +114,7 @@ const FormSituasiKeluarga = (props: FormModal) => {
               name="situasi_keluarga"
               className="h-60"
               defaultValue={
-                laporan.kondisi_klien?.fisik ? laporan.kondisi_klien.fisik : ""
+                laporan.situasi_keluarga ? laporan.situasi_keluarga: ""
               }
               register={register}
               errors={errors}

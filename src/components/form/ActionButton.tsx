@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { FaEdit, FaInfoCircle, FaUser, FaTrash, FaPaperPlane, FaCheck } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-import { patchLaporan, deleteLaporan } from "../../api/laporan"
+import { patchLaporan, deleteLaporan, getLaporanCetak } from "../../api/laporan"
 import { ALERT_TYPE } from "../../consts/alert"
 import { ROLE } from "../../consts/role"
 import { DYNAMIC_ROUTES } from "../../consts/routes"
@@ -12,6 +12,8 @@ import { useAlert } from "../../hooks/useAlert"
 import useLoader from "../../hooks/useLoader"
 import { AssignModal, ConfirmationModal } from "../common/Modal"
 import { Laporan } from "../../consts/laporan"
+import generate from "../../helpers/generatePDF"
+
 
 interface ActionButtonLaporanProps {
     laporan: Laporan
@@ -390,6 +392,62 @@ export const SelesaikanButton = (props: ActionButtonLaporanProps) => {
                 onSuccess={handleSelesaikan}
                 onClose={() => setIsModalActive(false)}
                 successButtonText="Selesaikan"
+            />
+        }
+    </>
+}
+
+export const PrintButton = (props: ActionButtonLaporanProps) => {
+    const { laporan, setRefetch } = props
+    const [isModalActive, setIsModalActive] = useState<boolean>()
+    const { showLoader, hideLoader } = useLoader()
+    const { addAlert } = useAlert()
+
+   
+
+    const handleSelesaikan = async () => {
+        try {
+            showLoader()
+            const data = await getLaporanCetak(laporan.id)
+
+            await generate(data)
+
+            addAlert({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Laporan Berhasil Dicetak',
+                message: `Laporan dari ${laporan.nama_pelapor} berhasil Dicetak !`
+            })
+            setRefetch!(true)
+        }
+        catch (e){
+            console.log(e)
+            addAlert({
+                type: ALERT_TYPE.ERROR,
+                title: 'Laporan Gagal Dicetak',
+                message: `Laporan dari ${laporan.nama_pelapor} gagal Dicetak !`
+            })
+        }
+        finally {
+            setIsModalActive(false)
+            hideLoader()
+        }
+    }
+
+    return <>
+        <button
+            type="button"
+            onClick={() => setIsModalActive(true)}
+            className="text-white bg-lime-500 hover:bg-lime-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+            <FaCheck />
+            Cetak
+        </button>
+        {isModalActive &&
+            <ConfirmationModal
+                title="Cetak Pelaporan"
+                description={`Apakan anda yakin akan mencetak laporan ${laporan.nama_pelapor} ?`}
+                onSuccess={handleSelesaikan}
+                onClose={() => setIsModalActive(false)}
+                successButtonText="Cetak"
             />
         }
     </>

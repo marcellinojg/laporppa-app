@@ -50,10 +50,10 @@ export interface Laporan {
     pelaku?: Pelaku;
     kondisi_klien?: KondisiKlien;
     penjadwalan?: Penjadwalan;
-    status_detail_klien?: number;
-    status_pelaku?: number;
-    status_kondisi_klien?: number;
-    status_keluarga?: number;
+    status_detail_klien: number;
+    status_pelaku: number;
+    status_kondisi_klien: number;
+    status_keluarga: number;
     keluarga_klien?: KeluargaKlien[];
     detail_kasus?: DetailKasus;
     penanganan_awal: Penanganan;
@@ -61,7 +61,9 @@ export interface Laporan {
     harapan_klien_dan_keluarga: string;
     situasi_keluarga:string; 
     kronologi_kejadian:string;
-
+    status_situasi_keluarga: number;
+    status_kronologi: number;
+    status_harapan_klien_dan_keluarga: number;
  }
 
 export interface LaporanSatgas {
