@@ -194,7 +194,7 @@ export const FilterPanel = (props: PanelFilter) => {
           <span className="text-red-500 mt-[-15px]">
             {error == true ? "End Date Tidak Valid!" : ""}
           </span>
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 h-full flex items-center">
+          <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 h-full flex items-center">
             <SecondaryButton className="py-1" onClick={() => resetFilter()}>
               Reset
             </SecondaryButton>
