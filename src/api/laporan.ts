@@ -356,9 +356,18 @@ export const getLaporanByKategoriRT = async () => {
   return data;
 };
 
-export const getlaporanByKategori = async (id: number | string) => {
+export const getlaporanByKategori = async (id: number | string, startDate?: Date, endDate?: Date) => {
   const instance = CreateAxiosInstance();
-  const res = await instance.get(`/laporans/count-by-kategoris?kelurahan_id=${id}`);
+  let res = null
+  if (startDate != null && endDate != null) {
+    res = await instance.get(
+      `laporans/count-by-kategoris?kelurahan_id=${id}&tanggal_start=${startDate.toISOString().slice(0, 10)}&tanggal_end=${endDate.toISOString().slice(0, 10)}`
+    );
+  } else {
+    res = await instance.get(
+      `/laporans/count-by-kategoris?kelurahan_id=${id}`
+    );
+  }
   const data = res.data.data as LaporanByKategori[];
   return data;
 };

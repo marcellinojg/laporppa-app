@@ -2,13 +2,13 @@ import { FaHome, FaUserNurse } from "react-icons/fa";
 import AdminLayout from "../layouts/AdminLayout";
 import { useAuthUser } from "react-auth-kit";
 import { User } from "../../consts/user";
-import { Panel, BarChartPanel } from "../../components/internal/Panel";
+import { Panel, BarChartPanel, FilterPanel } from "../../components/internal/Panel";
 import { KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader } from "../../helpers/fetchHelpers";
 import { useEffect, useState } from "react";
 import { Laporan, LaporanCount } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
 import { useParams } from "react-router-dom";
-import { LaporanByKategoriRT } from "../../consts/laporanByKategori";
+import { LaporanByKategori, LaporanByKategoriRT } from "../../consts/laporanByKategori";
 import { Kelurahan } from "../../consts/kelurahan";
 import Select from "react-select";
 
@@ -17,10 +17,16 @@ interface DropdownOptionProps {
   value: string | number;
 }
 
+
 const Dashboard = () => {
   const userData = useAuthUser()() as User;
   const [laporanCount, setLaporanCount] = useState<LaporanCount[]>([]);
   const [kelurahans, setKelurahans] = useState<Kelurahan[]>([]);
+
+  // chart variabel
+  const [selectedKelurahans, setSelectedKelurahans] = useState<number>(1);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   return (
     <AdminLayout>
@@ -95,14 +101,30 @@ const Dashboard = () => {
               }
             />
           </div>
-          <div className="grid lg:grid-cols-1 md:grid-cols-1 grid-cols-1 gap-4 mt-4">
+          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 mt-4">
+            <div>
               <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                <BarChartPanel
-                  title="Jumlah Kasus Berdasarkan Kelurahan"
-                  date={new Date().toISOString()}
+                <FilterPanel
+                  title="Filter Diagram"
                   kelurahans={kelurahans}
+                  selectedKelurahans={selectedKelurahans}
+                  setSelectedKelurahans={setSelectedKelurahans}
+                  setStartDate={setStartDate}
+                  setEndDate={setEndDate}
+                  startDate={startDate}
+                  endDate={endDate}
                 />
               </KelurahanLoader>
+            </div>
+            <div className="lg:col-span-2">
+              <BarChartPanel
+                title="Diagram Jumlah Kasus Berdasarkan Kelurahan"
+                date={new Date().toISOString()}
+                selectedKelurahans={selectedKelurahans}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </div>
           </div>
         </div>
       </LaporanCountLoader>
