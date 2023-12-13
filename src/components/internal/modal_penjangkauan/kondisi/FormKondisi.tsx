@@ -113,7 +113,7 @@ const FormDetailKondisi = (props: FormModal) => {
             <TextArea
               name="psikologis"
               className="h-60"
-              defaultValue={laporan.kondisi_klien?.psikologis ? laporan.kondisi_klien.fisik : ""}
+              defaultValue={laporan.kondisi_klien?.psikologis ? laporan.kondisi_klien.psikologis : ""}
               register={register}
               errors={errors}
               label="Kondisi psikologis klien"

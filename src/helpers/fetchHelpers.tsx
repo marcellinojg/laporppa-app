@@ -6,7 +6,7 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan, LaporanCount } from "../consts/laporan";
-import { getHubunganKeluarga, getKeluargaKlien, getLaporan, getLaporanByKategoriRT, getLaporans, getLaporansBySearchAndStatus, getTotalLaporan, getlaporanByKategori } from '../api/laporan';
+import { getHubunganKeluarga, getKeluargaKlien, getLangkahBadanDaerah, getLangkahOPD, getLaporan, getLaporans, getLaporansBySearchAndStatus, getRAKK, getRRKK, getTotalLaporan, getlaporanByKategori } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
@@ -26,6 +26,12 @@ import { getJenisKasuses } from "../api/jenis_kasus";
 import { HubunganKeluarga } from "../consts/hubungan_keluarga";
 import { KeluargaKlien } from "../consts/keluarga_klien";
 import { LaporanByKategori } from "../consts/laporanByKategori";
+import Pendidikan from "../consts/pendidikan";
+import { getPendidikans } from "../api/pendidikan";
+import { LangkahOPD } from "../consts/langkahOPD";
+import { LangkahBadanDaerah } from "../consts/langkahBadanDaerah";
+import { RAKK } from "../consts/rakk";
+import { RRKK } from "../consts/rrkk";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -367,45 +373,6 @@ export const LaporansLoader = (props: FetchDataEffectsProps<Laporan[]>) => {
   return <>{children}</>;
 };
 
-// export const LaporanByKategoriLoader = (props: FetchDataEffectsProps<LaporanByKategori[]>) => {
-//   const { setData, children } = props;
-//   const { showLoader, hideLoader } = useLoader();
-//   const { errorFetchAlert } = useAlert();
-
-//   useEffect(() => {
-//     showLoader();
-//     getLaporanByKategoriRT()
-//       .then((laporanByKategori) => setData(laporanByKategori))
-//       .catch(() => errorFetchAlert())
-//       .then(() => hideLoader());
-//   }, []);
-
-//   return <>{children}</>;
-// };
-
-// export const LaporanByKategoriLoader = (props: FetchDataEffectsProps<LaporanByKategori[]>) => {
-//     const { setData, children , id} = props
-//     const { showLoader, hideLoader } = useLoader()
-//     const { errorFetchAlert } = useAlert()
-
-//     useEffect(() => {
-//             showLoader();
-//             getlaporanByKategori(id!)
-//               .then((laporan: LaporanByKategori[]) => {
-//                 setData(laporan);
-//               })
-//               .catch((error) => {
-//                 if (error.response.status == 404) setData([]);
-//                 else errorFetchAlert();
-//               })
-//               .finally(() => hideLoader());
-//         // window.scrollTo({ top: 0, behavior: "smooth" });
-//     }, [])
-//     return <>
-//         {children}
-//     </>
-// }
-
 export const LaporanByKategoriLoader = (props: FetchDataEffectsProps<LaporanByKategori[]>) => {
   const {
     setData,
@@ -443,3 +410,106 @@ export const LaporanByKategoriLoader = (props: FetchDataEffectsProps<LaporanByKa
   return <>{children}</>;
 };
 
+export const PendidikanLoader = (props: FetchDataEffectsProps<Pendidikan[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getPendidikans()
+      .then((pendidikans) => setData(pendidikans))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};
+
+export const LangkahOPDLoader = (props: FetchDataEffectsProps<LangkahOPD[]>) => {
+    const { setData, children , id} = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+            showLoader();
+            getLangkahOPD(id!)
+              .then((langkahOPD: LangkahOPD[]) => {
+                setData(langkahOPD);
+              })
+              .catch((error) => {
+                if (error.response.status == 404) setData([]);
+                else errorFetchAlert();
+              })
+              .finally(() => hideLoader());
+    }, [])
+    return <>
+        {children}
+    </>
+}
+
+export const LangkahBadanDaerahLoader = (props: FetchDataEffectsProps<LangkahBadanDaerah[]>) => {
+    const { setData, children , id} = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+            showLoader();
+            getLangkahBadanDaerah(id!)
+              .then((langkahBadanDaerah: LangkahBadanDaerah[]) => {
+                setData(langkahBadanDaerah);
+              })
+              .catch((error) => {
+                if (error.response.status == 404) setData([]);
+                else errorFetchAlert();
+              })
+              .finally(() => hideLoader());
+    }, [])
+    return <>
+        {children}
+    </>
+}
+
+export const RAKKLoader = (props: FetchDataEffectsProps<RAKK[]>) => {
+    const { setData, children , id} = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+            showLoader();
+            getRAKK(id!)
+              .then((rakk: RAKK[]) => {
+                setData(rakk);
+              })
+              .catch((error) => {
+                if (error.response.status == 404) setData([]);
+                else errorFetchAlert();
+              })
+              .finally(() => hideLoader());
+    }, [])
+    return <>
+        {children}
+    </>
+}
+
+export const RRKKLoader = (props: FetchDataEffectsProps<RRKK[]>) => {
+    const { setData, children , id} = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+            showLoader();
+            getRRKK(id!)
+              .then((rrkk: RRKK[]) => {
+                setData(rrkk);
+              })
+              .catch((error) => {
+                if (error.response.status == 404) setData([]);
+                else errorFetchAlert();
+              })
+              .finally(() => hideLoader());
+    }, [])
+    return <>
+        {children}
+    </>
+}

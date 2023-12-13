@@ -47,7 +47,9 @@ const FormPelaku = (props: FormModal) => {
     };
 
     const formatDataStatus = {
-      status_pelaku: jenisButton
+      status_pelaku: jenisButton,
+      // updated_at_pelaku: new Date(),
+      // updated_by_pelaku: laporan.satgas_pelapor.id
     }
 
     try {

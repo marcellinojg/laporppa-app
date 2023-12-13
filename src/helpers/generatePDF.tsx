@@ -4,7 +4,7 @@
 // import fs from 'fs'
 // import Anvil from '@anvilco/anvil'
 
-import { formatDatePelaporan, formatDate } from "./formatDate";
+import { formatDatePelaporan, formatDate, getDayNameIndonesian, getTime} from "./formatDate";
 
 declare var html2pdf: any
 
@@ -97,7 +97,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.tanggal_jam_pengaduan)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ getDayNameIndonesian(checkExist(data.tanggal_jam_pengaduan)) +`</p>
                 </td>
                 <td rowspan="2" style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 1</p>
@@ -120,7 +120,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">NO. HP</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(petugas1['no_telp'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+  checkExist(petugas1['no_telp'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -128,7 +128,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">WAKTU</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.tanggal_jam_pengaduan)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ getTime(checkExist(data.tanggal_jam_pengaduan)) +`</p>
                 </td>
                 <td rowspan="2" style="width:81.35pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 2</p>

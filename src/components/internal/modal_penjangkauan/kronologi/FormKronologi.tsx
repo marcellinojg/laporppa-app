@@ -18,6 +18,7 @@ import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
 import { Laporan } from "../../../../consts/laporan";
+import { getCurrentDateTime } from "../../../../helpers/getDate";
 
 interface Kronologi {
   kronologi_kejadian:string,
@@ -46,6 +47,8 @@ const FormDetailKronologi = (props: FormModal) => {
       satgas_id: laporan.satgas_pelapor.id,
       id: Number(laporan.kondisi_klien?.id),
       status_kronologi: jenisButton,
+      updated_by_kronologi: laporan.satgas_pelapor.id,
+      updated_at_kronologi: getCurrentDateTime()
     };
 
     try {

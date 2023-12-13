@@ -21,17 +21,17 @@ const DetailPelaku = (props: DetailPelaku) => {
           <div className="border-b-2 flex flex-col gap-3 py-3">
             <SectionTitle>Identitas Pelaku</SectionTitle>
             <DetailLaporanItem
-              label="Nama Lengkap"
+              label="Nama Lengkap Pelaku"
               value={
                 laporan.pelaku?.nama_lengkap ? laporan.pelaku.nama_lengkap : "-"
               }
             />
             <DetailLaporanItem
-              label="Hubungan"
+              label="Hubungan Dengan Korban"
               value={laporan.pelaku?.hubungan ? laporan.pelaku.hubungan : "-"}
             />
             <DetailLaporanItem
-              label="Alamat Domisili"
+              label="Usia Pelaku"
               value={
                 laporan.pelaku?.usia ? laporan.pelaku.usia.toString() : "-"
               }
