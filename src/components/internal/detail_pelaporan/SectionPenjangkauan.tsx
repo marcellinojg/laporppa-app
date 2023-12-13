@@ -217,7 +217,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             />
             <DetailPenjangkauanItem
               laporan={laporan}
-              title="Rencana Analis Kebutuhan Klien Oleh DP3KAPPKB"
+              title="Rencana Analis Kebutuhan Klien Oleh Kelurahan"
               help_text="Masukkan detail rencana analisis kebutuhan."
               is_done={laporan.status_rakk}
               updated_at={formatDate(new Date().toString(), true)}
