@@ -155,14 +155,14 @@ const FormDetailLangkahOPD = (props: FormModal) => {
   return (
     <>
       <span className="font-bold text-lg">
-        <span className="text-primary">{capitalize(mode)}</span> Detail Langkah yang Telah Dilakukan DP3APPKB
+        <span className="text-primary">{capitalize(mode)}</span> Detail Langkah yang Telah Dilakukan OPD
       </span>
         <div className="flex flex-col gap-2 py-3">
           <form
             className="border-b-2 flex flex-col gap-3 py-3"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <SectionTitle>Detail Langkah yang Telah Dilakukan DP3APPKB</SectionTitle>
+            <SectionTitle>Detail Langkah yang Telah Dilakukan OPD</SectionTitle>
             <Datepicker
               name="tanggal_langkah"
               control={control}
@@ -172,8 +172,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                   ? new Date(laporan.langkah_telah_dilakukan?.tanggal_pelayanan)
                   : null
               }
-              placeholder="Tanggal Langkah Dilakukan DP3APPKB"
-              label="Tanggal Langkah Dilakukan DP3APPKB"
+              placeholder="Tanggal Langkah OPD"
+              label="Tanggal Langkah OPD"
             />
             <TimePicker
               name="jam_langkah"
@@ -188,8 +188,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                     ).padStart(2, "0")}`
                   : undefined
               }
-              placeholder="Jam Langkah Dilakukan DP3APPKB"
-              label="Jam Langkah Dilakukan DP3APPKB"
+              placeholder="Jam Langkah Dilakukan OPD"
+              label="Jam Langkah Dilakukan OPD"
               errors={errors}
             />
             <InputText
@@ -210,7 +210,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
               />
            
             <PrimaryButton className="py-2" isSubmit>
-              Tambah Langkah DP3AAPKB
+              Tambah Langkah OPD
             </PrimaryButton>
           </form>
         
@@ -258,7 +258,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                     alt="No Data illustration"
                   />
                   <b className="text-xl text-center text-primary">
-                    Rencana Rujukan Belum Ditambahkan
+                    Langkah OPD Belum Ditambahkan
                   </b>
                 </div>
               )}

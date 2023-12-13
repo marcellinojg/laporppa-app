@@ -4,6 +4,8 @@
 // import fs from 'fs'
 // import Anvil from '@anvilco/anvil'
 
+import { formatDatePelaporan, formatDate } from "./formatDate";
+
 declare var html2pdf: any
 
 // const html2pdf = window.html2pdf
@@ -40,8 +42,8 @@ function formatDateIndonesia(date){
 }
  
 function generate(data:any){
-    var pengaduan = checkGetDataExist(data['pengaduan']);
-    var petugas1 = checkGetDataExist(data['petugas']);
+    var pengaduan = checkGetDataExist(data['sumber_pengaduan']);
+    var petugas1 = checkGetDataExist(data['satgas_pelapor']);
     var petugas2 = checkGetDataExist(data['petugas2']);
     var penanganan_awal = checkGetDataExist(data['penanganan_awal']);
     var penjangkauan = checkGetDataExist(data['tanggal_penjangkauan']);
@@ -61,7 +63,8 @@ function generate(data:any){
     const laporanData = checkGetDataExist(data['dokumen_pendukung']['dokumen_pendukung']);
     console.log(laporanData);
 
-    console.log(data)
+    console.log("ini pelaku", data.pelaku['agama']['nama']);
+    console.log(formatDate((checkExist(kasus['tanggal_jam_kejadian'])), true))
 
 
 
@@ -94,7 +97,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['hari'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.tanggal_jam_pengaduan)+`</p>
                 </td>
                 <td rowspan="2" style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 1</p>
@@ -111,13 +114,13 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['tanggal'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+formatDate(checkExist(data.tanggal_jam_pengaduan), false)+`</p>
                 </td>
                 <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">NO. HP</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(petugas1['no_hp'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(petugas1['no_telp'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -125,7 +128,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">WAKTU</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['waktu'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.tanggal_jam_pengaduan)+`</p>
                 </td>
                 <td rowspan="2" style="width:81.35pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 2</p>
@@ -168,7 +171,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penjangkauan['tanggal_penanganan_awal'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.tanggal_penjangkauan)+`</p>
                 </td>
             </tr>
             <tr>
@@ -176,13 +179,13 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penanganan_awal['tanggal_penanganan_awal'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+formatDate(checkExist(penanganan_awal['tanggal_penanganan_awal']), false)+`</p>
                 </td>
                 <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penjangkauan['tanggal_penanganan_awal'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+formatDate(checkExist(data.tanggal_penjangkauan), false)+`</p>
                 </td>
             </tr>
             <tr>
@@ -196,7 +199,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">WAKTU</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penjangkauan['tanggal_penanganan_awal'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.tanggal_penjangkauan)+`</p>
                 </td>
             </tr>
         </tbody>
@@ -319,7 +322,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['ttl'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['kota_lahir']['nama']) + `, `  + checkExist(klien['tanggal_lahir']) +`</p>
                 </td>
             </tr>
             <tr>
@@ -341,7 +344,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['jenis_kelamin'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.jenis_kelamin)+`</p>
                 </td>
             </tr>
             <tr>
@@ -791,7 +794,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['lokasi_kejadian'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['lokasi_kasus'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -802,7 +805,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['tanggal_jam_kejadian'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ formatDate((checkExist(kasus['tanggal_jam_kejadian'])), true)+`</p>
                 </td>
             </tr>
         </tbody>
@@ -1224,7 +1227,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+dokumen+`</p><br>`;
                 console.log(laporanData[dokumen]);
                 laporanData[dokumen].forEach( (foto_bukti:any)=>{
-                    foto+=`<img  src="`+foto_bukti+`" height="100px">`;
+                    foto+=`<img src="`+foto_bukti+`" height="100px">`;
                 });  
                 foto+=`</td>
             </tr>
