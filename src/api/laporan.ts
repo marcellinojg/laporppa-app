@@ -10,7 +10,10 @@ import PaginationData from "../consts/pagination"
 import { Pelaku } from "../consts/pelaku"
 import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
 import { LaporanByKategori, LaporanByKategoriRT } from "../consts/laporanByKategori"
-import { LangkahDP3A } from "../consts/langkahDP3A"
+import { LangkahBadanDaerah, LangkahDP3A } from "../consts/langkahBadanDaerah"
+import { LangkahOPD } from "../consts/langkahOPD"
+import { RAKK } from "../consts/rakk"
+import { RRKK } from "../consts/rrkk"
 
 
 export const getLaporans = async () => {
@@ -415,3 +418,105 @@ export const patchLangkah = async (langkah: LangkahDP3A) => {
   const patchedLangkah = res.data.data2 as LangkahDP3A
   return patchedLangkah
 }
+
+// langkah opd
+
+export const postLangkahOPD = async (langkah_OPD: LangkahOPD) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/lintas-o-p-ds", langkah_OPD, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedLangkahOPD = res.data.data as LangkahOPD;
+  return postedLangkahOPD;
+};
+
+export const deleteLangkahOPD = async (id: number) => {
+  const instance = CreateAxiosInstance();
+  await instance.delete(`/lintas-o-p-ds/${id}`);
+};
+
+export const getLangkahOPD = async (id: string) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/${id}/lintas-o-p-ds`);
+  const data = res.data.data as LangkahOPD[];
+  return data;
+};
+
+// langkah badan daerah
+
+export const postLangkahBadanDaerah = async (langkah_OPD: LangkahBadanDaerah) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/langkah-telah-dilakukans", langkah_OPD, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedLangkahBadanDaerah = res.data.data as LangkahBadanDaerah;
+  return postedLangkahBadanDaerah;
+};
+
+export const deleteLangkahBadanDaerah = async (id: number) => {
+  const instance = CreateAxiosInstance();
+  await instance.delete(`/langkah-telah-dilakukans/${id}`);
+};
+
+export const getLangkahBadanDaerah = async (id: string) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/${id}/langkah-telah-dilakukans`);
+  const data = res.data.data as LangkahBadanDaerah[];
+  return data;
+};
+
+// rakk
+
+export const postRAKK = async (
+  rakk: RAKK
+) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/r-a-k-ks", rakk, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedRAKK = res.data.data as RAKK;
+  return postedRAKK;
+};
+
+export const deleteRAKK = async (id: number) => {
+  const instance = CreateAxiosInstance();
+  await instance.delete(`/r-a-k-ks/${id}`);
+};
+
+export const getRAKK = async (id: string) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/${id}/r-a-k-ks`);
+  const data = res.data.data as RAKK[];
+  return data;
+};
+
+// rrkk
+
+export const postRRKK = async (RRKK: RRKK) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.post("/r-r-k-ks", RRKK, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  const postedRRKK = res.data.data as RRKK;
+  return postedRRKK;
+};
+
+export const deleteRRKK = async (id: number) => {
+  const instance = CreateAxiosInstance();
+  await instance.delete(`/r-r-k-ks/${id}`);
+};
+
+export const getRRKK = async (id: string) => {
+  const instance = CreateAxiosInstance();
+  const res = await instance.get(`/laporans/${id}/r-r-k-ks`);
+  const data = res.data.data as RRKK[];
+  return data;
+};

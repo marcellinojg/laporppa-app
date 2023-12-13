@@ -1,62 +1,57 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { FormModal } from "../../../../consts/modal_penjangkauan";
-import capitalize from "../../../../helpers/capitalize";
 import { SectionTitle } from "../../../common/Typography";
-import { PrimaryButton, SecondaryButton } from "../../../form/Button";
-import { InputText } from "../../../form/Input";
-import { REGEX } from "../../../../consts/regex";
+import capitalize from "../../../../helpers/capitalize";
+import { InputText, TextArea } from "../../../form/Input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { PrimaryButton } from "../../../form/Button";
+import { FormModal } from "../../../../consts/modal_penjangkauan";
 import { useState } from "react";
-import { KeluargaKlien } from "../../../../consts/keluarga_klien";
-import { Select } from "../../../form/Dropdown";
-import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
+import useLoader from "../../../../hooks/useLoader";
 import {
-  deleteKeluarga,
+  deleteRAKK,
+  deleteRRKK,
   getLaporan,
   patchLaporan,
-  postKeluarga,
-  postKeluargaKlienStatus,
+  postRAKK,
+  postRRKK,
 } from "../../../../api/laporan";
 import { ALERT_TYPE } from "../../../../consts/alert";
-import useLoader from "../../../../hooks/useLoader";
 import { useAlert } from "../../../../hooks/useAlert";
 import { DeleteButton } from "../../../form/PenjangkauanButtons";
-import {
-  HubunganKeluargaLoader,
-  KeluargaLoader,
-} from "../../../../helpers/fetchHelpers";
-import { HubunganKeluarga } from "../../../../consts/hubungan_keluarga";
-import { Laporan } from "../../../../consts/laporan";
+import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
+import { Select } from "../../../form/Dropdown";
+import { RRKKLoader } from "../../../../helpers/fetchHelpers";
+import { RRKK } from "../../../../consts/rrkk";
+DetailLaporanItem;
 
 const FormRencanaRujukan = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [ isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
+  const [langkahs, setLangkahs] = useState<RRKK[]>([]);
   const {
     register,
     formState: { errors },
     handleSubmit,
     control,
     reset,
-  } = useForm<KeluargaKlien>();
-  const [keluargas, setKeluargas] = useState<KeluargaKlien[]>([]);
-  const [hubunganKeluarga, setHubunganKeluarga] = useState<HubunganKeluarga[]>(
-    []
-  );
+  } = useForm<RRKK>();
+  // console.log(laporan)
 
-  const publishKeluarga = async () => {
+  const publishLangkah = async () => {
     try {
       const formatDataStatus = {
         // ...laporan,
-        status_keluarga: 2
+        status_rrkk: 2,
       };
+
       setIsLoading(true);
       showLoader();
-      (await patchLaporan(formatDataStatus, laporan.id))
+      await patchLaporan(formatDataStatus, laporan.id);
       addAlert({
         type: ALERT_TYPE.SUCCESS,
-        title: "Keluarga Klien Berhasil Dibuat !",
-        message: `Keluarga Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+        title: "Rencana Rujukan Berhasil Dibuat !",
+        message: `Rencana Rujukan untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
       });
       hideLoader();
       setIsModalActive(false);
@@ -72,11 +67,11 @@ const FormRencanaRujukan = (props: FormModal) => {
     setTimeout(() => setIsLoading(false), 3000);
   };
 
-  const delKeluarga = async (id: number) => {
+  const delLangkah = async (id: number) => {
     try {
       setIsLoading(true);
       showLoader();
-      await deleteKeluarga(id);
+      await deleteRRKK(id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -85,10 +80,8 @@ const FormRencanaRujukan = (props: FormModal) => {
       // });
 
       hideLoader();
-      const updatedKeluargas = keluargas.filter(
-        (keluarga) => keluarga.id !== id
-      );
-      setKeluargas(updatedKeluargas);
+      const updatedLangkahs = langkahs.filter((langkah) => langkah.id !== id);
+      setLangkahs(updatedLangkahs);
     } catch {
       errorFetchAlert();
     } finally {
@@ -100,25 +93,23 @@ const FormRencanaRujukan = (props: FormModal) => {
     setTimeout(() => setIsLoading(false), 3000);
   };
 
-  const onSubmit: SubmitHandler<KeluargaKlien> = async (
-    data: KeluargaKlien
-  ) => {
-    const formatData: KeluargaKlien = {
+  const onSubmit: SubmitHandler<RRKK> = async (data: RRKK) => {
+    const formatData: RRKK = {
       ...data,
       laporan_id: laporan.id,
-      satgas_id: laporan.satgas_pelapor.id,
+      opd: "Surabaya"
     };
 
+    console.log(formatData);
+
     const formatDataStatus = {
-      // ...laporan,
-      status_keluarga: 1,
-      // jenis_kelamin: laporan.jenis_kelamin.toUpperCase()
+      status_rrkk: 1,
     };
 
     try {
       setIsLoading(true);
       showLoader();
-      (await postKeluarga(formatData)) as KeluargaKlien;
+      (await postRRKK(formatData)) as RRKK;
       await patchLaporan(formatDataStatus, laporan.id);
       reset();
       // addAlert({
@@ -129,7 +120,7 @@ const FormRencanaRujukan = (props: FormModal) => {
 
       hideLoader();
       setRefetch!(true);
-      setKeluargas((prevKeluarga) => [...prevKeluarga, formatData]);
+      setLangkahs((prevLangkah) => [...prevLangkah, formatData]);
 
       // setTimeout(() => {
       //   navigate(0);
@@ -148,114 +139,105 @@ const FormRencanaRujukan = (props: FormModal) => {
     <>
       <span className="font-bold text-lg">
         <span className="text-primary">{capitalize(mode)}</span> Detail Rencana
-        Rujukan Kebutuhan Klien
+        Analis Kebutuhan Klien Oleh Kelurahan
       </span>
-      <HubunganKeluargaLoader
-        data={hubunganKeluarga}
-        setData={setHubunganKeluarga}
-      >
-        <div className="flex flex-col gap-2 py-3">
-          <form
-            className="border-b-2 flex flex-col gap-3 py-3"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <SectionTitle>Detail Rencana Rujukan Kebutuhan Klien</SectionTitle>
-            <Select
-              name="hubungan_id"
-              control={control}
-              placeholder="Kebutuhan"
-              label="Kebutuhan"
-              errors={errors}
-              errorLabel="Hubungan"
-              // options={[{ label: "Ayah Kandung", value: 1 }]}
-              options={hubunganKeluarga.map((k) => ({
-                label: k.hubungan,
-                value: k.id,
-              }))}
-              isRequired
-            />
-            <InputText
-              register={register}
-              errors={errors}
-              name="nama_lengkap"
-              placeholder="OPD"
-              label="OPD"
-              isRequired
-            />
-            <InputText
-              register={register}
-              errors={errors}
-              name="no_telp"
-              regex={REGEX.PHONE_IDN}
-              placeholder="Layanan yang Diberikan"
-              label="Layanan yang Diberikan"
-              isRequired
-            />
-            <PrimaryButton className="py-2" isSubmit>
-              Tambah Rencana Rujukan
-            </PrimaryButton>
-          </form>
-          <KeluargaLoader
-            key={keluargas.length}
-            setData={setKeluargas}
-            data={keluargas}
-            id={laporan.id}
-          >
-            <div className="border-b-2 flex flex-col gap-3 py-3">
-              {keluargas.length > 0 ? (
-                keluargas.map((keluarga, index) => (
-                  <div
-                    key={index}
-                    className="shadow-md p-5 rounded gap-2 flex flex-col"
-                  >
-                    <SectionTitle>{`Pelayanan ${index + 1}`}</SectionTitle>
-                    <DetailLaporanItem
-                      label="Kebutuhan"
-                      value={
-                        keluarga.hubungan?.hubungan
-                          ? keluarga.hubungan.hubungan
-                          : "-"
-                      }
-                    />
-                    <DetailLaporanItem
-                      label="OPD"
-                      value={
-                        keluarga.nama_lengkap ? keluarga.nama_lengkap : "-"
-                      }
-                    />
-                    <DetailLaporanItem
-                      label="Layanan yang Diberikan"
-                      value={
-                        keluarga.no_telp ? keluarga.no_telp.toString() : "-"
-                      }
-                    />
-                    <div className="flex flex-row-reverse items-end gap-3">
-                      <DeleteButton
-                        onClick={() => delKeluarga(keluarga.id)}
-                      ></DeleteButton>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
-                  <img
-                    src="/images/nodata.png"
-                    className=""
-                    width={300}
-                    alt="No Data illustration"
-                  />
-                  <b className="text-xl text-center text-primary">
-                    Rencana Rujukan Belum Ditambahkan
-                  </b>
-                </div>
-              )}
-            </div>
-          </KeluargaLoader>
-          <PrimaryButton className="py-2" onClick={() => publishKeluarga()}>
-            Publish Rencana Rujukan
+      <div className="flex flex-col gap-2 py-3">
+        <form
+          className="border-b-2 flex flex-col gap-3 py-3"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <SectionTitle>
+            Detail Rencana Analis Kebutuhan Klien Oleh
+          </SectionTitle>
+          <Select
+            name="kebutuhan"
+            control={control}
+            placeholder="Pilih Jenis Kebutuhan"
+            label="Kebutuhan"
+            errors={errors}
+            errorLabel="Kebutuhan"
+            options={[
+              { label: "Pendidikan", value: "Pendidikan" },
+              { label: "Kesehatan", value: "Kesehatan" },
+              { label: "Ekonomi", value: "Ekonomi" },
+              { label: "Hukum", value: "Hukum" },
+            ]}
+            isRequired
+          />
+          <InputText
+            register={register}
+            errors={errors}
+            name="opd"
+            placeholder="OPD"
+            label="OPD"
+            defaultValue={"Surabaya"}
+            isRequired
+            isDisabled
+          />
+          <InputText
+            register={register}
+            errors={errors}
+            name="layanan_yang_diberikan"
+            placeholder="Layanan yang Diberikan"
+            label="Layanan yang Diberikan"
+            isRequired
+          />
+          <PrimaryButton className="py-2" isSubmit>
+            Tambah Rencana Rujukan
           </PrimaryButton>
-        </div>
-      </HubunganKeluargaLoader>
+        </form>
+        <RRKKLoader
+          data={langkahs}
+          setData={setLangkahs}
+          key={langkahs.length}
+          id={laporan.id}
+        >
+          <div className="border-b-2 flex flex-col gap-3 py-3">
+            {langkahs.length > 0 ? (
+              langkahs.map((langkah, index) => (
+                <div
+                  key={index}
+                  className="shadow-md p-5 rounded gap-2 flex flex-col"
+                >
+                  <SectionTitle>{`Pelayanan ${index + 1}`}</SectionTitle>
+                  <DetailLaporanItem
+                    label="Kebutuhan"
+                    value={langkah.kebutuhan ? langkah.kebutuhan : "-"}
+                  />
+                  <DetailLaporanItem
+                    label="OPD"
+                    value={langkah.opd ? langkah.opd : "-"}
+                  />
+                  <DetailLaporanItem
+                    label="Layanan yang Diberikan"
+                    value={langkah.layanan_yang_diberikan? langkah.layanan_yang_diberikan: "-"}
+                  />
+                  <div className="flex flex-row-reverse items-end gap-3">
+                    <DeleteButton
+                      onClick={() => delLangkah(langkah.id)}
+                    ></DeleteButton>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
+                <img
+                  src="/images/nodata.png"
+                  className=""
+                  width={300}
+                  alt="No Data illustration"
+                />
+                <b className="text-xl text-center text-primary">
+                  Rencana Rujukan Belum Ditambahkan
+                </b>
+              </div>
+            )}
+          </div>
+        </RRKKLoader>
+        <PrimaryButton className="py-2" onClick={() => publishLangkah()}>
+          Publish Rencana Rujukan
+        </PrimaryButton>
+      </div>
     </>
   );
 };

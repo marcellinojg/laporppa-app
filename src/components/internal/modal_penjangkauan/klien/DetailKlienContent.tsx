@@ -165,7 +165,7 @@ const DetailKlienContent = (props: DetailKlienContent) => {
             <SectionTitle>Pendidikan Klien</SectionTitle>
             <DetailLaporanItem
               label="Pendidikan"
-              value={laporan.pendidikan.nama ? laporan.pendidikan.nama : "-"}
+              value={laporan.pendidikan?.nama ? laporan.pendidikan.nama : "-"}
             />
             <DetailLaporanItem
               label="Kelas"

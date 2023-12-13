@@ -95,8 +95,6 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                         <img src={url} width={200} alt={`dokumentasi pengaduan ${index + 1}`} key={index} />
                     )}
                 </div>
-                <PrintButton setRefetch={setRefetch} laporan={laporan}/>
-
             </div>
         </div>
     </>

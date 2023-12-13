@@ -219,7 +219,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Rencana Analis Kebutuhan Klien Oleh DP3KAPPKB"
               help_text="Masukkan detail rencana analisis kebutuhan."
-              is_done={1}
+              is_done={laporan.status_rakk}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.RENCANA_ANALIS_KEBUTUHAN}
               setRefetch={setRefetch}
@@ -229,7 +229,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Rencana Rujukan Kebutuhan Klien"
               help_text="Masukkan detail rencana rujukan yang akan diberikan kepada klien."
-              is_done={1}
+              is_done={laporan.status_rrkk}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.RENCANA_RUJUKAN}
               setRefetch={setRefetch}
@@ -237,7 +237,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             />
             <DetailPenjangkauanItem
               laporan={laporan}
-              title="Langkah yang Telah Dilakukan DP3AAPKB"
+              title="Langkah yang Telah Dilakukan Kelurahan"
               help_text="Masukkan informasi pelayanan yang telah diberikan dari instansi terkait."
               is_done={laporan.status_langkah_telah_dilakukan}
               updated_at={formatDate(new Date().toString(), true)}

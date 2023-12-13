@@ -5,7 +5,7 @@ import { REGEX } from "../../consts/regex"
 import { FaSearch } from "react-icons/fa"
 
 export const InputText = (props: InputProps): ReactNode => {
-    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '' } = props
+    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '', isDisabled} = props
     const [isObscure, setIsObscure] = useState<boolean | undefined>(obscure)
 
     return <div className='flex flex-col gap-1'>
@@ -25,7 +25,7 @@ export const InputText = (props: InputProps): ReactNode => {
                 type={isObscure ? 'password' : type}
                 {...register(
                     name,
-                    {
+                    {   disabled: isDisabled? true : false,
                         required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
                         pattern: regex ? {
                             value: regex,
