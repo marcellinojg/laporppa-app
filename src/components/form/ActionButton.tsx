@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react"
-import { FaEdit, FaInfoCircle, FaUser, FaTrash, FaPaperPlane, FaCheck } from "react-icons/fa"
+import { FaEdit, FaInfoCircle, FaUser, FaTrash, FaPaperPlane, FaCheck, FaPrint } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import { patchLaporan, deleteLaporan, getLaporanCetak } from "../../api/laporan"
 import { ALERT_TYPE } from "../../consts/alert"
@@ -405,7 +405,7 @@ export const PrintButton = (props: ActionButtonLaporanProps) => {
 
    
 
-    const handleSelesaikan = async () => {
+    const handlePrint = async () => {
         try {
             showLoader()
             const data = await getLaporanCetak(laporan.id)
@@ -437,15 +437,15 @@ export const PrintButton = (props: ActionButtonLaporanProps) => {
         <button
             type="button"
             onClick={() => setIsModalActive(true)}
-            className="text-white bg-lime-500 hover:bg-lime-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
-            <FaCheck />
+            className="text-white bg-blue-400 hover:bg-blue-500 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full">
+            <FaPrint />
             Cetak
         </button>
         {isModalActive &&
             <ConfirmationModal
                 title="Cetak Pelaporan"
                 description={`Apakan anda yakin akan mencetak laporan ${laporan.nama_pelapor} ?`}
-                onSuccess={handleSelesaikan}
+                onSuccess={handlePrint}
                 onClose={() => setIsModalActive(false)}
                 successButtonText="Cetak"
             />

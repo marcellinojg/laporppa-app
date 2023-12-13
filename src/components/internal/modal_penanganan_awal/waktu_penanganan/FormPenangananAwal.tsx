@@ -66,7 +66,7 @@ const FormPenangananAwal = (props: FormModal) => {
         addAlert({
           type: ALERT_TYPE.SUCCESS,
           title: "Data Penanganan Awal Sukses Diedit !",
-          message: `Data Penanganan Awal untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          message: `Data Penanganan Awal untuk laporan ${laporan.nama_klien} berhasil diedit!`,
         });
       } else {
         (await postPenanganan(formatData)) as Penanganan;

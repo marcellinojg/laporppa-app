@@ -257,7 +257,7 @@ const FormDetailLangkah = (props: FormModal) => {
                     alt="No Data illustration"
                   />
                   <b className="text-xl text-center text-primary">
-                    Rencana Rujukan Belum Ditambahkan
+                    Langkah oleh DP3A Belum Ditambahkan
                   </b>
                 </div>
               )}

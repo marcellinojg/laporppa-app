@@ -45,9 +45,11 @@ const FormDokumenPenanganan = (props: FormModal) => {
       ...data,
       laporan_id: laporan.id,
       id: laporan.penanganan_awal?.id,
+      hasil: laporan.penanganan_awal?.hasil,
+      tanggal_penanganan_awal: laporan.penanganan_awal?.tanggal_penanganan_awal
     };
 
-    // console.log(formatData)
+    console.log(formatData)
     try {
       setIsLoading(true);
       showLoader();
@@ -55,7 +57,7 @@ const FormDokumenPenanganan = (props: FormModal) => {
         laporan.penanganan_awal?.hasil != null ||
         laporan.penanganan_awal?.tanggal_penanganan_awal != null
       ) {
-        (await patchPenanganan(formatData)) as Penanganan;
+        (await postPenanganan(formatData)) as Penanganan;
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -63,7 +65,7 @@ const FormDokumenPenanganan = (props: FormModal) => {
           message: `Data Dokumen Pendukung untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       } else {
-        (await patchPenanganan(formatData)) as Penanganan;
+        (await postPenanganan(formatData)) as Penanganan;
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,

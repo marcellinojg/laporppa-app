@@ -14,12 +14,11 @@ const DetailHarapanContent = (props: DetailKondisi) => {
       <div className="flex flex-col gap-2 py-3">
         <div className="border-b-2 flex flex-col gap-3 py-3">
           <SectionTitle>Detail Harapan Klien dan Keluarga</SectionTitle>
-          <DetailLaporanItem
-            label="Harapan Klien dan Keluarga"
-            value={
-              laporan.harapan_klien_dan_keluarga ? laporan.harapan_klien_dan_keluarga : "-"
-            }
-          />
+          <p className="text-sm whitespace-preline">
+               {laporan.harapan_klien_dan_keluarga? laporan.harapan_klien_dan_keluarga .split('\n').map((line, index) => [line,
+                 <br key={index} />,
+              ])
+                : '-'}</p>
         </div>
       </div>
     </>

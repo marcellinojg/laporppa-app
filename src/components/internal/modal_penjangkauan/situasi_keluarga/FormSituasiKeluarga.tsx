@@ -44,7 +44,6 @@ const FormSituasiKeluarga = (props: FormModal) => {
       ...data,
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
-      id: Number(laporan.kondisi_klien?.id),
       status_situasi_keluarga: jenisButton,
     };
 

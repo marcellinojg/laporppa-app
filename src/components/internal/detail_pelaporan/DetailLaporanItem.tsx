@@ -15,12 +15,13 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
         return (
             <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
             <span className="text-slate-400 text-sm">{label}</span>
+            <div className="overflow-x-visible max-w-10/12 flex">
               {Array.isArray(value) ? (
                 value.map((url, index) => (
                   <img
                     key={index}
                     src={url}
-                    alt={`Image ${index + 1}`}
+                    className= 'w-4/6 mr-2 ml-2'
                   />
                 ))
               ) : (
@@ -28,6 +29,7 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
                 <img
                   src={value}
                   alt="Image"
+                  className= 'h-3/6 w-auto mr-2 ml-2'
                 />
               ) : (
                 <span className="lg:col-span-2 col-span-3 font-bold text-sm break-words">
@@ -35,6 +37,7 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
                 </span>
               )
             )}
+            </div>
           </div>
         );
       };

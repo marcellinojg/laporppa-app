@@ -31,7 +31,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
     useState<boolean>(false);
   const [isModalActiveDokumenPendukung, setIsModalActiveDokumenPendukung] =
     useState<boolean>(false);
-  console.log(laporan)
+  console.log(laporan.penanganan_awal?.dokumen_pendukung)
 
   return (
     <>
@@ -106,12 +106,13 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
           setRefetch={setRefetch}
         />
       )}
+
     <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
       {laporan.penanganan_awal?.dokumen_pendukung && laporan.penanganan_awal.dokumen_pendukung.length > 0 ? (
-      laporan.penanganan_awal.dokumen_pendukung.map((dokumen, index) => (
+      laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
           <img
             key={index}
-            src={dokumen || '-'}
+            src={url}
             alt={`Image ${index + 1}`}
           />
         ))

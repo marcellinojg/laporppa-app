@@ -18,12 +18,16 @@ import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
 
+interface Harapan {
+  harpaan_klien_dan_keluarga: string,
+}
+
 const FormDetailHarapan = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
-  const form = useForm<KondisiKlien>();
+  const form = useForm<Harapan>();
   const {
     register,
     formState: { errors },
@@ -33,41 +37,45 @@ const FormDetailHarapan = (props: FormModal) => {
   } = form;
   const [jenisButton, setJenisButton] = useState(1);
 
-  const onSubmit: SubmitHandler<KondisiKlien> = async (data: KondisiKlien) => {
+  const onSubmit: SubmitHandler<Harapan> = async (data: Harapan) => {
     // console.log(jenisButton);
-    const formatData: KondisiKlien = {
+    const formatData: Harapan = {
       ...data,
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
-      id: Number(laporan.kondisi_klien?.id),
-    };
-
-    const formatDataKondisi = {
-      status_kondisi_klien: jenisButton,
+      status_harapan_klien_dan_keluarga: jenisButton,
     };
 
     try {
       setIsLoading(true);
       showLoader();
-      if (laporan.kondisi_klien?.id != null) {
-        (await patchKondisiKlien(formatData)) as KondisiKlien;
+      if (jenisButton == 2) {
+        (await patchLaporan(formatData, laporan.id)) as Harapan;
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
-        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Berhasil Diedit !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil diedit!`,
+          title: "Data Harapan Keluarga Berhasil Dipublish !",
+          message: `Data Harapan Keluarga untuk laporan ${laporan.nama_klien} berhasil Dipublish!`,
         });
-      } else {
-        (await postKondisiKlien(formatData)) as KondisiKlien;
+      } else if (jenisButton == 1 && laporan.situasi_keluarga != null){
+        (await patchLaporan(formatData, laporan.id)) as Harapan;
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
-        await patchLaporan(formatDataKondisi, laporan.id);
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
-          title: "Kondisi Klien Sukses Dibuat !",
-          message: `Kondisi Klien untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
+          title: "Data Harapan Keluarga Berhasil Diedit !",
+          message: `Data Harapan Keluarga untuk laporan ${laporan.nama_klien} berhasil Diedit!`,
+        });
+
+      }
+        else {
+        (await patchLaporan(formatData, laporan.id)) as Harapan;
+        reset();
+        addAlert({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Data Harapan Keluarga Sukses Dibuat !",
+          message: `Data Harapan Keluarga untuk laporan ${laporan.nama_klien} berhasil dibuat!`,
         });
       }
 
@@ -102,10 +110,10 @@ const FormDetailHarapan = (props: FormModal) => {
           <div className="border-b-2 flex flex-col gap-3 py-3">
             <SectionTitle>Detail Harapan Klien dan Keluarga</SectionTitle>
             <TextArea
-              name="harapan_keluarga"
+              name="harapan_klien_dan_keluarga"
               className="h-60"
               defaultValue={
-                laporan.kondisi_klien?.fisik ? laporan.kondisi_klien.fisik : ""
+                laporan.harapan_klien_dan_keluarga ? laporan.harapan_klien_dan_keluarga : ""
               }
               register={register}
               errors={errors}

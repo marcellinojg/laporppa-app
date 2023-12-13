@@ -4,11 +4,11 @@ import { Laporan } from "../../../../consts/laporan";
 import { SectionTitle } from "../../../common/Typography";
 import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 
-interface DetailKeluargaContent {
+interface DetailRencanaRujukanContent {
   laporan: Laporan;
 }
 
-const DetailRencanaRujukanContent = (props: DetailKeluargaContent) => {
+const DetailRencanaRujukanContent = (props: DetailRencanaRujukanContent) => {
   const { laporan } = props;
 
   // useEffect(() => console.log(laporan), [])
