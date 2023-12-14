@@ -125,9 +125,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
               alt={`Image ${index + 1}`}
             />
           ))
-        ) : (
-          <img src={"-"} alt="Image" />
-        )}
+        ) : "-"}
       </div>
     </>
   );
