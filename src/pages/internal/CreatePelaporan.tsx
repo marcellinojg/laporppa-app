@@ -50,9 +50,9 @@ const CreatePelaporan = () => {
                 message: `Selamat, laporan dari ${data.nama_pelapor} telah berhasil disimpan !`
             })
             hideLoader()
-            setTimeout(() => {
+            // setTimeout(() => {
                 navigate(0)
-            }, 20000)
+            // }, 20000)
         }
         catch {
             errorFetchAlert()
