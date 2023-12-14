@@ -209,7 +209,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
               laporan={laporan}
               title="Kondisi Klien"
               help_text="Masukkan informasi detail kondisi klien terkait kondisi fisik, psikologis dst."
-              is_done={laporan.status_detail_klien}
+              is_done={laporan.status_kondisi_klien}
               updated_at={formatDate(new Date().toString(), true)}
               modalType={MODAL_PENJANGKAUAN.KONDISI}
               setRefetch={setRefetch}
