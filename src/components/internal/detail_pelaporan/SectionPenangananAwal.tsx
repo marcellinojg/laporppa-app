@@ -61,14 +61,19 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
             label="Tanggal & Jam Penanganan"
             value={
               laporan.penanganan_awal?.tanggal_penanganan_awal
-                ? formatDate(laporan.penanganan_awal.tanggal_penanganan_awal.toString(), true)
+                ? formatDate(
+                    laporan.penanganan_awal.tanggal_penanganan_awal.toString(),
+                    true
+                  )
                 : ""
             }
           />
           <DetailLaporanItem
             label="Hasil Penanganan Awal"
             value={
-              laporan.penanganan_awal?.hasil ? laporan.penanganan_awal?.hasil : ""
+              laporan.penanganan_awal?.hasil
+                ? laporan.penanganan_awal?.hasil
+                : ""
             }
           />
         </div>
@@ -107,18 +112,22 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
         />
       )}
 
-    <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
-      {laporan.penanganan_awal?.dokumen_pendukung && laporan.penanganan_awal.dokumen_pendukung.length > 0 ? (
-      laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
-          <img
-            key={index}
-            src={url}
-            alt={`Image ${index + 1}`}
-          />
-        ))
-      ) : (
-        <img src={'-'} alt="Image" />
-      )}
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
+        {laporan.penanganan_awal?.dokumen_pendukung &&
+        laporan.penanganan_awal.dokumen_pendukung.length > 0 ? (
+          laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
+            <img
+              key={index}
+              src={url}
+              className="rounded"
+              alt="Dokumentasi"
+              style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              alt={`Image ${index + 1}`}
+            />
+          ))
+        ) : (
+          <img src={"-"} alt="Image" />
+        )}
       </div>
     </>
   );

@@ -82,6 +82,8 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <DetailLaporanItem label="Alamat Domisili" value={laporan.alamat_klien} />
                 <DetailLaporanItem label="Kecamatan" value={laporan.kelurahan.kecamatan?.nama} />
                 <DetailLaporanItem label="Kelurahan" value={laporan.kelurahan.nama} />
+                <DetailLaporanItem label="RT" value={laporan.rt} />
+                <DetailLaporanItem label="RW" value={laporan.rw} />
                 <DetailLaporanItem label="No. Telepon/Whatsapp" value={laporan.no_telp_klien} />
             </div>
             <div className="border-b-2 flex flex-col gap-3 py-3">
