@@ -16,7 +16,7 @@ import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem"
 import { LangkahOPD } from "../../../../consts/langkahOPD"
 import { format } from "date-fns";
 import { LangkahOPDLoader } from "../../../../helpers/fetchHelpers"
-DetailLaporanItem
+import Uploader from "../../../form/Uploader"
 
 const FormDetailLangkahOPD = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
@@ -30,6 +30,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
     handleSubmit,
     control,
     reset,
+    watch,
+    setValue
   } = useForm<LangkahOPD>();
   // console.log(laporan)
 
@@ -181,6 +183,18 @@ const FormDetailLangkahOPD = (props: FormModal) => {
             label="Deskripsi Pelayanan yang Diberikan"
             placeholder="Ceritakan pelayanan yang telah diberikan"
           />
+          <Uploader
+              name='dokumentasi'
+              control={control}
+              watch={watch}
+              placeholder='Upload dokumen langkah OPD'
+              setValue={setValue}
+              register={register}
+              errors={errors}
+              isRequired={false}
+              errorLabel='Dokumen Langkah'
+              isMultiple={false}
+          />
           <PrimaryButton className="py-2" isSubmit>
             Tambah Langkah OPD
           </PrimaryButton>
@@ -222,6 +236,15 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                         : "-"
                     }
                   />
+                  <DetailLaporanItem
+                    label="Dokumentasi Pelayanan"
+                    value={
+                      langkah.dokumentasi
+                        ? langkah.dokumentasi
+                        : "-"
+                    }
+                  />
+                  
                   <div className="flex flex-row-reverse items-end gap-3">
                     <DeleteButton
                       onClick={() => delLangkah(langkah.id)}

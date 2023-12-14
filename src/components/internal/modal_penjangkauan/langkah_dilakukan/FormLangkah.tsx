@@ -21,7 +21,8 @@ import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 import { format } from "date-fns";
 import { LangkahBadanDaerahLoader } from "../../../../helpers/fetchHelpers";
 import { formatDateIndonesia } from "../../../../helpers/formatDate";
-DetailLaporanItem;
+import Uploader from "../../../form/Uploader";
+
 
 const FormDetailLangkah = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
@@ -35,6 +36,8 @@ const FormDetailLangkah = (props: FormModal) => {
     handleSubmit,
     control,
     reset,
+    watch,
+    setValue
   } = useForm<LangkahBadanDaerah>();
   // console.log(laporan)
 
@@ -173,6 +176,18 @@ const FormDetailLangkah = (props: FormModal) => {
             isRequired={true}
             label="Deskripsi Pelayanan yang Diberikan"
             placeholder="Ceritakan pelayanan yang telah diberikan"
+          />
+          <Uploader
+              name='dokumen'
+              control={control}
+              watch={watch}
+              placeholder='Upload dokumen langkah dari kelurahan'
+              setValue={setValue}
+              register={register}
+              errors={errors}
+              isRequired={false}
+              errorLabel='Dokumen Langkah'
+              isMultiple={false}
           />
           <PrimaryButton className="py-2" isSubmit>
             Tambah Langkah Kelurahan
