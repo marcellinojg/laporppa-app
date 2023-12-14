@@ -68,8 +68,9 @@ export interface Laporan {
   status_kronologi: number;
   status_rakk: number;
   status_rrkk: number;
-  updated_at_pelaku: Date
-  updated_by_pelaku: SatgasPelapor
+  updated_at_pelaku: Date;
+  updated_by_pelaku: SatgasPelapor;
+  status_harapan_klien_dan_keluarga: number;
 }
 
 export interface LaporanSatgas {
