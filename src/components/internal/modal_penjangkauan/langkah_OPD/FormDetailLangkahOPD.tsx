@@ -40,6 +40,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
       const formatDataStatus = {
         // ...laporan,
         status_lintas_opd: 2,
+        updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_lintas_opd: laporan.satgas_pelapor.id,
       };
      
       setIsLoading(true);
@@ -66,9 +68,15 @@ const FormDetailLangkahOPD = (props: FormModal) => {
 
   const delLangkah = async (id: number) => {
     try {
+      const formatDataStatus = {
+        updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_lintas_opd: laporan.satgas_pelapor.id,
+      };
+     
       setIsLoading(true);
       showLoader();
       await deleteLangkahOPD(id);
+      await patchLaporan(formatDataStatus, laporan.id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -108,6 +116,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
 
     const formatDataStatus = {
       status_lintas_opd: 1,
+      updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_lintas_opd: laporan.satgas_pelapor.id,
     };
 
     try {

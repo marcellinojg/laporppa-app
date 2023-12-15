@@ -47,7 +47,8 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
           <div className="flex items-center justify-between">
             <SectionTitle>Waktu Penanganan Awal</SectionTitle>
             {userData.role === ROLE.SATGAS &&
-              laporan.satgas_pelapor.id === userData.id && (
+              laporan.satgas_pelapor.id === userData.id &&
+              laporan.status.id === 2 && (
                 <button
                   onClick={() => setIsModalActiveWaktuPenangananAwal(true)}
                   type="button"
@@ -81,7 +82,8 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
           <div className="flex items-center justify-between">
             <SectionTitle>Dokumen Pendukung</SectionTitle>
             {userData.role === ROLE.SATGAS &&
-              laporan.satgas_pelapor.id === userData.id && (
+              laporan.satgas_pelapor.id === userData.id &&
+              laporan.status.id === 2 && (
                 <button
                   onClick={() => setIsModalActiveDokumenPendukung(true)}
                   type="button"
@@ -114,18 +116,18 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
         {laporan.penanganan_awal?.dokumen_pendukung &&
-        laporan.penanganan_awal.dokumen_pendukung.length > 0 ? (
-          laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              className="rounded"
-              alt="Dokumentasi"
-              style={{ width: "100px", height: "100px", objectFit: "cover" }}
-              alt={`Image ${index + 1}`}
-            />
-          ))
-        ) : "-"}
+        laporan.penanganan_awal.dokumen_pendukung.length > 0
+          ? laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                className="rounded"
+                alt="Dokumentasi"
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                alt={`Image ${index + 1}`}
+              />
+            ))
+          : "-"}
       </div>
     </>
   );

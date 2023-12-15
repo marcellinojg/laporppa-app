@@ -19,6 +19,7 @@ import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 import { RAKK } from "../../../../consts/rakk";
 import { Select } from "../../../form/Dropdown";
 import { RAKKLoader } from "../../../../helpers/fetchHelpers";
+import { format } from "date-fns";
 DetailLaporanItem;
 
 const FormRencanaAnalisKebutuhan = (props: FormModal) => {
@@ -41,6 +42,8 @@ const FormRencanaAnalisKebutuhan = (props: FormModal) => {
       const formatDataStatus = {
         // ...laporan,
         status_rakk: 2,
+        updated_at_rakk: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_rakk: laporan.satgas_pelapor.id,
       };
 
       setIsLoading(true);
@@ -67,9 +70,15 @@ const FormRencanaAnalisKebutuhan = (props: FormModal) => {
 
   const delLangkah = async (id: number) => {
     try {
+      const formatDataStatus = {
+        updated_at_rakk: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_rakk: laporan.satgas_pelapor.id,
+      };
+
       setIsLoading(true);
       showLoader();
       await deleteRAKK(id);
+      await patchLaporan(formatDataStatus, laporan.id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -97,10 +106,12 @@ const FormRencanaAnalisKebutuhan = (props: FormModal) => {
       laporan_id: laporan.id,
     };
 
-    console.log(formatData);
+    // console.log(formatData);
 
     const formatDataStatus = {
       status_rakk: 1,
+      updated_at_rakk: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_rakk: laporan.satgas_pelapor.id,
     };
 
     try {

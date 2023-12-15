@@ -12,6 +12,7 @@ import {
     getLaporan, patchDokumenPendukung, patchLaporan,postDokumenPendukung
   } from "../../../../api/laporan";
 import { Laporan } from "../../../../consts/laporan"
+import { format } from "date-fns"
 
 interface DokumenPendukung {
     laporan: Laporan,
@@ -57,7 +58,10 @@ const FormDetailDokumen = (props: FormModal) => {
             ? 1
             : jenisButton === 2
                 ? 2
-                : null,
+                    : null,
+            updated_at_dokumen_pendukung: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+            updated_by_dokumen_pendukung: laporan.satgas_pelapor.id,
+
           };
 
         try {

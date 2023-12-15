@@ -18,6 +18,7 @@ import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
 import { Laporan } from "../../../../consts/laporan";
+import { format } from "date-fns";
 
 interface Situasi {
   situasi_keluarga:string,
@@ -45,6 +46,12 @@ const FormSituasiKeluarga = (props: FormModal) => {
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
       status_situasi_keluarga: jenisButton,
+      updated_at_situasi_keluarga: format(
+        new Date(),
+        "yyyy-MM-dd HH:mm:ss"
+      ),
+      updated_by_situasi_keluarga: laporan.satgas_pelapor.id,
+
     };
 
     try {

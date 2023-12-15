@@ -26,6 +26,7 @@ import {
 } from "../../../../helpers/fetchHelpers";
 import { HubunganKeluarga } from "../../../../consts/hubungan_keluarga";
 import { Laporan } from "../../../../consts/laporan";
+import { format } from "date-fns";
 
 const FormKeluargaKlien = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
@@ -48,7 +49,13 @@ const FormKeluargaKlien = (props: FormModal) => {
     try {
       const formatDataStatus = {
         // ...laporan,
-        status_keluarga: 2
+        status_keluarga: 2,
+        updated_at_keluarga: format(
+        new Date(),
+        "yyyy-MM-dd HH:mm:ss"
+      ),
+      updated_by_keluarga: laporan.satgas_pelapor.id,
+
       };
       setIsLoading(true);
       showLoader();
@@ -74,9 +81,15 @@ const FormKeluargaKlien = (props: FormModal) => {
 
   const delKeluarga = async (id: number) => {
     try {
+      const formatDataStatus = {
+        updated_at_keluarga: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_keluarga: laporan.satgas_pelapor.id,
+      };
+
       setIsLoading(true);
       showLoader();
       await deleteKeluarga(id);
+      await patchLaporan(formatDataStatus, laporan.id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -112,7 +125,12 @@ const FormKeluargaKlien = (props: FormModal) => {
     const formatDataStatus = {
       // ...laporan,
       status_keluarga: 1,
-      // jenis_kelamin: laporan.jenis_kelamin.toUpperCase()
+      updated_at_keluarga: format(
+        new Date(),
+        "yyyy-MM-dd HH:mm:ss"
+      ),
+      updated_by_keluarga: laporan.satgas_pelapor.id,
+
     };
 
     try {

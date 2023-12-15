@@ -115,7 +115,12 @@ const FormDetailKlien = (props: FormModal) => {
 
     const formatDataStatus = {
       status_detail_klien: jenisButton,
-      pendidikan_id: data.pendidikan_id
+      pendidikan_id: data.pendidikan_id,
+      updated_at_detail_klien: format(
+        new Date(),
+        "yyyy-MM-dd HH:mm:ss"
+      ),
+      updated_by_detail_klien: laporan.satgas_pelapor.id,
     }
 
     try {
@@ -467,7 +472,7 @@ const FormDetailKlien = (props: FormModal) => {
                               name="pendidikan_id"
                               control={control}
                               placeholder="Pilih Pendidikan"
-                              label="pendidikan"
+                              label="Pendidikan"
                               errors={errors}
                               defaultValue={laporan.pendidikan?.id}
                               errorLabel="Pendidikan"
