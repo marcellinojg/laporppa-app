@@ -62,6 +62,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
             <div className="border-b-2 flex flex-col gap-3 py-3">
                 <SectionTitle>Informasi Pelaporan</SectionTitle>
                 <DetailLaporanItem label="Nomor Registrasi" value={laporan.id} />
+                <DetailLaporanItem label="Token" value={laporan.token} badge="TOKEN" />
                 <DetailLaporanItem label="Sumber Pengaduan" value="Masyarakat" />
                 <DetailLaporanItem label="Kategori Pengaduan" value={laporan.kategori.nama} />
                 <DetailLaporanItem label="Tanggal & Jam Pengaduan" value={formatDate(laporan.tanggal_jam_pengaduan, true)} />
@@ -78,7 +79,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
             <div className="border-b-2 flex flex-col gap-3 py-3">
                 <SectionTitle>Identitas Klien</SectionTitle>
                 <DetailLaporanItem label="Nama Lengkap (Inisial)" value={laporan.nama_klien} />
-                <DetailLaporanItem label="NIK" value={laporan.nik_klien} />
+                <DetailLaporanItem label="NIK" value={laporan.nik_klien} badge="NIK"/>
                 <DetailLaporanItem label="Alamat Domisili" value={laporan.alamat_klien} />
                 <DetailLaporanItem label="Kecamatan" value={laporan.kelurahan.kecamatan?.nama} />
                 <DetailLaporanItem label="Kelurahan" value={laporan.kelurahan.nama} />

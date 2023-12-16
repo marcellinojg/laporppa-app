@@ -113,6 +113,8 @@ export interface LaporanSatgas {
   uraian_singkat_masalah: string;
   sumber_pengaduan_id: number;
   dokumentasi_pengaduan: File[];
+  rt: number;
+  rw: number;
 
   // doesn't have default value
   // satgas_pelapor_id: string
