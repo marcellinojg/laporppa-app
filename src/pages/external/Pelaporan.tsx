@@ -54,7 +54,7 @@ const Pelaporan = () => {
           <KelurahanLoader data={kelurahan} setData={setKelurahan}>
             <KecamatanLoader data={kecamatan} setData={setKecamatan}>
               <div className="min-w-screen min-h-screen bg-login flex flex-col items-center justify-center pb-[5vh]">
-                <header className="mx-auto flex gap-8 mt-36 ">
+                <header className="mx-auto flex gap-8 mt-36">
                   <img
                     src="/images/logo-pemkot-new.png"
                     className="w-20 object-contain"
