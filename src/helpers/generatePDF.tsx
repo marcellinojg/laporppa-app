@@ -34,6 +34,12 @@ function formatDateIndonesia(date:any){
     }
     return tanggal + " " + bulan + " " + tahun;
 }
+
+function formatDayIndonesia(day:string){
+    switch(day){
+        case "Sunday": day = ""
+    }
+}
  
 function generate(data:any){
     var pengaduan = checkGetDataExist(data['pengaduan']);
@@ -45,18 +51,17 @@ function generate(data:any){
     var klien = checkGetDataExist(data['data_klien']);
     var keluarga_klien = checkGetDataExist(data['data_keluarga_klien']);
     var pelaku = checkGetDataExist(data['pelaku']);
-    var kasus = checkGetDataExist(data['detail_kasus']);
+    var kasus = checkGetDataExist(data['data_kasus']);
     var kondisi_klien = checkGetDataExist(data['kondisi_klien']);
-    var rencana_analisis_kebutuhan_klien = checkGetDataExist(data['RAKK']);
-    var rencana_rujukan_kebutuhan_klien = checkGetDataExist(data['RRKK']);
+    var rencana_analisis_kebutuhan_klien = checkGetDataExist(data['rencana_analisis_kebutuhan_klien']);
+    var rencana_rujukan_kebutuhan_klien = checkGetDataExist(data['rencana_rujukan_kebutuhan_klien']);
 
     var langkah_telah_dilakukan = checkGetDataExist(data['langkah_telah_dilakukan']);
-    var langkah_telah_dilakukan_lintas = checkGetDataExist(data['lintas_opd']);
+    var langkah_telah_dilakukan_lintas = checkGetDataExist(data['langkah_yang_telah_dilakukan_lintas_opd']);
 
     // var dokumen_pendukung ={}; 
     const laporanData = checkGetDataExist(data['dokumen_pendukung']['dokumen_pendukung']);
     console.log(laporanData);
-    console.log(formatDate((checkExist(kasus['tanggal_jam_kejadian'])), true))
 
 
 
@@ -89,7 +94,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ getDayNameIndonesian(checkExist(data.tanggal_jam_pengaduan)) +`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ checkExist(pengaduan['hari']) +`</p>
                 </td>
                 <td rowspan="2" style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 1</p>
@@ -106,13 +111,13 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+formatDate(checkExist(data.tanggal_jam_pengaduan), false)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['tanggal'])+`</p>
                 </td>
                 <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">NO. HP</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+  checkExist(petugas1['no_telp'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+  checkExist(petugas1['no_hp'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -120,7 +125,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">WAKTU</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ getTime(checkExist(data.tanggal_jam_pengaduan)) +`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ checkExist(pengaduan['waktu']) +`</p>
                 </td>
                 <td rowspan="2" style="width:81.35pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 2</p>
@@ -137,7 +142,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">SUMBER ADUAN</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['sumber_aduan']['nama'])+`</p>
                 </td>
                 <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">NO.HP</p>
@@ -154,7 +159,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+getDayNameIndonesian(checkExist(penanganan_awal['tanggal_penanganan_awal']))+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ checkExist(penanganan_awal['hari'])+`</p>
                 </td>
                 <td rowspan="3" style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL PENJANGKAUAN/ KONSELING</p>
@@ -163,7 +168,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+getDayNameIndonesian(checkExist(data.tanggal_penjangkauan))+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penjangkauan['hari'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -171,13 +176,13 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+formatDate(checkExist(penanganan_awal['tanggal_penanganan_awal']), false)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penanganan_awal['tanggal'])+`</p>
                 </td>
                 <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+formatDate(checkExist(data.tanggal_penjangkauan), false)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penjangkauan['tanggal'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -185,13 +190,13 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">WAKTU</p>
                 </td>
                 <td style="width:52.8pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+getTime(checkExist(penanganan_awal['tanggal_penanganan_awal']))+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penanganan_awal['waktu'])+`</p>
                 </td>
                 <td style="width:67.15pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">WAKTU</p>
                 </td>
                 <td style="width:60.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+getTime(checkExist(data.tanggal_penjangkauan))+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penjangkauan['waktu'])+`</p>
                 </td>
             </tr>
         </tbody>
@@ -214,7 +219,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['nama_lengkap'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -281,7 +286,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['nama_klien'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['nama_lengkap'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -292,7 +297,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['nik_klien'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['nik'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -314,7 +319,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['kota_lahir']['nama']) + `, `  + formatDate(checkExist(klien['tanggal_lahir']), false) +`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['ttl']) +`</p>
                 </td>
             </tr>
             <tr>
@@ -325,7 +330,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.usia)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['usia'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -336,7 +341,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.jenis_kelamin)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['jenis_kelamin'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -347,7 +352,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['agama']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['agama'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -358,7 +363,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data['pendidikan']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['pendidikan_terakhir'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -369,7 +374,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['pekerjaan']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['pekerjaan'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -380,7 +385,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['status_perkawinan']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['status_pernikahan'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -402,7 +407,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['alamat_klien'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['alamat_domisili'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -413,7 +418,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['no_wa'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['no_telp'])+`</p>
                 </td>
             </tr>
         </tbody>
@@ -495,7 +500,7 @@ for (let i = 0; i < keluarga_klien.length; i++) {
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
             </td>
             <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(keluarga['hubungan']['nama'])+`</p>
+                <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(keluarga['hubungan']['hubungan'])+`</p>
             </td>
         </tr>
         <tr>
@@ -542,39 +547,6 @@ table_keluarga_klien+=`</tbody>
             </tr>
             <tr>
                 <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">NIK</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['nik'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">No. KK</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['no_kk'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TTL</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['kota_lahir']['nama']) + `, ` + formatDate(checkExist(pelaku['tanggal_lahir']), false)+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Usia</p>
                 </td>
                 <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
@@ -582,105 +554,6 @@ table_keluarga_klien+=`</tbody>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['usia'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Jenis Kelamin</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['jenis_kelamin'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Agama</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"`+checkExist(pelaku['agama']['nama'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Pendidikan Terakhir</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data['pendidikan']['nama'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Pekerjaan</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['pekerjaan'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Status Pernikahan</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['status_perkawinan']['nama'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Alamat KK</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['alamat_kk'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Alamat Domisili</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['alamat_domisili'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Kewarganegaraan</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['kewarganegaraan'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:119.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Nomor Telepon</p>
-                </td>
-                <td style="width:2.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelaku['no_telp'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -720,7 +593,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['jenis_klien'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['jenis_klien'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -731,7 +604,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(klien['kategori_klien'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['kategori_klien'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -753,7 +626,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['kategori_kasus']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['kategori_kasus'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -764,7 +637,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['jenis_kasus']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['jenis_kasus'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -775,7 +648,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['deskripsi'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['deskripsi_singkat_kasus'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -786,7 +659,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['lokasi_kasus'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(kasus['lokasi_kejadian'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -797,7 +670,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.3pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ formatDate((checkExist(kasus['tanggal_jam_kejadian'])), true)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ checkExist(kasus['tanggal_dan_waktu_kejadian']) +`</p>
                 </td>
             </tr>
         </tbody>
@@ -900,62 +773,29 @@ table_keluarga_klien+=`</tbody>
             </tr>
             <tr>
                 <td colspan="3" style="width:456.75pt; border-top-style:solid; border-top-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong>RENCANA ANALISIS KEBUTUHAN KLIEN OLEH DP3KAPPKB</strong></p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong>RENCANA ANALISIS KEBUTUHAN KLIEN OLEH KELURAHAN</strong></p>
                 </td>
             </tr>
             <tr>
                 <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Pendampingan Psikologis</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Kebutuhan</p>
                 </td>
                 <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['pend_psikologis'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['kebutuhan'])+`</p>
                 </td>
             </tr>
             <tr>
                 <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Pendampingan Medis</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Deskripsi</p>
                 </td>
                 <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['pend_medis'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Pendampingan Hukum</p>
-                </td>
-                <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['pend_hukum'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Psikososial</p>
-                </td>
-                <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['psikososial'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Rumah Aman</p>
-                </td>
-                <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['rumah_aman'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_analisis_kebutuhan_klien['deskripsi'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -976,57 +816,37 @@ table_keluarga_klien+=`</tbody>
             </tr>
             <tr>
                 <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Ekonomi</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Kebutuhan</p>
                 </td>
                 <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['ekonomi'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['kebutuhan'])+`</p>
                 </td>
             </tr>
             <tr>
                 <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Pendidikan</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">OPD</p>
                 </td>
                 <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['pendidikan'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['opd'])+`</p>
                 </td>
             </tr>
             <tr>
                 <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Sosial</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Layanan yang Diberikan</p>
                 </td>
                 <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['sosial'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['layanan_yang_diberikan'])+`</p>
                 </td>
             </tr>
-            <tr>
-                <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Kesehatan</p>
-                </td>
-                <td style="width:5.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['kesehatan'])+`</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:114.4pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">Hukum</p>
-                </td>
-                <td style="width:5.5pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
-                </td>
-                <td style="width:315.25pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(rencana_rujukan_kebutuhan_klien['hukum'])+`</p>
                 </td>
             </tr>
         </tbody>
@@ -1038,7 +858,7 @@ table_keluarga_klien+=`</tbody>
         <tbody>
             <tr>
                 <td colspan="3" style="width:456.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong>LANGKAH YANG TELAH DILAKUKAN DP3APPKB</strong></p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong>LANGKAH YANG TELAH DILAKUKAN KELURAHAN</strong></p>
                 </td>
             </tr>
             <tr>

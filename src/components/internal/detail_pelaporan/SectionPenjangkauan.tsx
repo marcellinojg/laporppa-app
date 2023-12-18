@@ -302,20 +302,7 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             setRefetch={setRefetch}
           />
         )}
-        <div className="flex items-center rounded-md border-2">
-            <div className="w-5">
-            <FaFilePdf />
-            </div>
-            <a
-              href={""}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="break-words"
-              >
-                  ghjmk,l
-                </a>
-              </div>
-      </>
+    </>
     );
 }
 

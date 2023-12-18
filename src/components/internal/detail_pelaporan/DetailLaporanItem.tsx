@@ -25,21 +25,18 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
               ) : value && (value.endsWith('.jpg') || value.endsWith('.png')) ? (
                 <img
                   src={value}
-                  alt="Image"
+                  alt={value}
                   className="h-3/6 w-auto mr-2 ml-2"
                 />
               ) : value && (value.endsWith('.pdf')) ? (
-                <div className="flex items-center">
-                <FaFilePdf />
-                <a
-                  href={value}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="break-words"
-                >
-                  {value ? value : "-"}
-                </a>
-              </div>
+                <div className="flex items-center rounded-md border-2">
+                  <a
+                    href={value}
+                    target="_blank"
+                    className="break-words"
+                    >
+                  </a>
+                </div>
               ) : (
                 <span className="lg:col-span-2 col-span-3 font-bold text-sm break-words">
                   {value ? value : "-"}
