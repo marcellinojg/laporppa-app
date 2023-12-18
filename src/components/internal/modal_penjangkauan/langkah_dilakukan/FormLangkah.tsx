@@ -187,7 +187,7 @@ const FormDetailLangkah = (props: FormModal) => {
             label="Deskripsi Pelayanan yang Diberikan"
             placeholder="Ceritakan pelayanan yang telah diberikan"
           />
-          {/* <Uploader
+          <Uploader
               name='dokumen'
               control={control}
               watch={watch}
@@ -198,7 +198,7 @@ const FormDetailLangkah = (props: FormModal) => {
               isRequired={false}
               errorLabel='Dokumen Langkah'
               isMultiple={false}
-          /> */}
+          />
           <PrimaryButton className="py-2" isSubmit>
             Tambah Langkah Kelurahan
           </PrimaryButton>
@@ -238,6 +238,14 @@ const FormDetailLangkah = (props: FormModal) => {
                     value={
                       langkah.deskripsi
                         ? langkah.deskripsi.toString()
+                        : "-"
+                    }
+                  />
+                  <DetailLaporanItem
+                    label="Dokumentasi Pelayanan"
+                    value={
+                      langkah.dokumentasi
+                        ? <img src={langkah.dokumentasi} className="rounded" alt="Dokumentasi" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
                         : "-"
                     }
                   />

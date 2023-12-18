@@ -449,9 +449,11 @@ export const LangkahOPDLoader = (props: FetchDataEffectsProps<LangkahOPD[]>) => 
 }
 
 export const LangkahBadanDaerahLoader = (props: FetchDataEffectsProps<LangkahBadanDaerah[]>) => {
-    const { setData, children , id} = props
+    const { setRefetch, setData, children , id} = props
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
+
+    
 
     useEffect(() => {
             showLoader();
@@ -463,8 +465,12 @@ export const LangkahBadanDaerahLoader = (props: FetchDataEffectsProps<LangkahBad
                 if (error.response.status == 404) setData([]);
                 else errorFetchAlert();
               })
-              .finally(() => hideLoader());
-    }, [])
+              .finally(() => {
+                hideLoader(), 
+                setRefetch!(true);
+              });
+            }, []);
+             
     return <>
         {children}
     </>

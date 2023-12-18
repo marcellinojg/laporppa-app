@@ -96,6 +96,9 @@ const FormDokumenPenanganan = (props: FormModal) => {
     <>
       <span className="font-bold text-lg">
         <span className="text-primary">{capitalize(mode)}</span> Dokumen Pendukung
+        <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                    Dapat Lebih Dari 1
+                    </span>
       </span>
 
       <div className="flex flex-col gap-2 py-3">
@@ -108,7 +111,7 @@ const FormDokumenPenanganan = (props: FormModal) => {
                         name='dokumen_pendukung'
                         control={control}
                         watch={watch}
-                        placeholder='Upload dokumen pendukung'
+                        placeholder='Upload dokumen pendukung (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}

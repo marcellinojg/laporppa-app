@@ -1,3 +1,4 @@
+import {FaFilePdf} from "react-icons/fa"
 
 interface DetailLaporanItemProps {
     label: string
@@ -21,12 +22,24 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
                 value.map((url, index) => (
                   <img key={index} src={url} className="w-4/6 mr-2 ml-2" />
                 ))
-              ) : value && String(value).startsWith("https://") ? (
+              ) : value && (value.endsWith('.jpg') || value.endsWith('.png')) ? (
                 <img
                   src={value}
                   alt="Image"
                   className="h-3/6 w-auto mr-2 ml-2"
                 />
+              ) : value && (value.endsWith('.pdf')) ? (
+                <div className="flex items-center">
+                <FaFilePdf />
+                <a
+                  href={value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="break-words"
+                >
+                  {value ? value : "-"}
+                </a>
+              </div>
               ) : (
                 <span className="lg:col-span-2 col-span-3 font-bold text-sm break-words">
                   {value ? value : "-"}

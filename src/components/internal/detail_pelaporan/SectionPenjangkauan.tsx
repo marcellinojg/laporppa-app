@@ -10,6 +10,7 @@ import ModalPenjangkauan from "../modal_penjangkauan/ModalPenjangkauan"
 import { useAuthUser } from "react-auth-kit"
 import { User } from "../../../consts/user"
 import { ROLE } from "../../../consts/role"
+import {FaFilePdf} from "react-icons/fa"
 
 interface SectionPenjangkauanProps {
     laporan: Laporan
@@ -301,6 +302,19 @@ const SectionPenjangkauan = (props: SectionPenjangkauanProps) => {
             setRefetch={setRefetch}
           />
         )}
+        <div className="flex items-center rounded-md border-2">
+            <div className="w-5">
+            <FaFilePdf />
+            </div>
+            <a
+              href={""}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="break-words"
+              >
+                  ghjmk,l
+                </a>
+              </div>
       </>
     );
 }

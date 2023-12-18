@@ -123,7 +123,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
                 src={url}
                 className="rounded"
                 alt="Dokumentasi"
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                style={{ width: "200px", height: "200px", objectFit: "cover" }}
                 alt={`Image ${index + 1}`}
               />
             ))

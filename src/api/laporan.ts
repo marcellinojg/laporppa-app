@@ -32,7 +32,7 @@ export const getLaporan = async (id: string) => {
 
 export const getLaporanCetak = async (id: string) => {
   const instance = CreateAxiosInstance()
-  const res = await instance.get(`/laporans/${id}?withKecamatan=1&withKeluargaKlien=1/cetak`)
+  const res = await instance.get(`/laporans/${id}/cetak`)
   const laporan = res.data.data
   console.log("ini", laporan)
   return laporan

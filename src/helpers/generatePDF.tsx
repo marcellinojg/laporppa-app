@@ -1,9 +1,3 @@
-// import * as html2pdf from "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-// import "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-// import type * as html2pdf from 'html2pdf'
-// import fs from 'fs'
-// import Anvil from '@anvilco/anvil'
-
 import { formatDate, getDayNameIndonesian, getTime} from "./formatDate";
 
 declare var html2pdf: any
@@ -42,13 +36,13 @@ function formatDateIndonesia(date:any){
 }
  
 function generate(data:any){
-    var pengaduan = checkGetDataExist(data['sumber_pengaduan']);
-    var petugas1 = checkGetDataExist(data['satgas_pelapor']);
+    var pengaduan = checkGetDataExist(data['pengaduan']);
+    var petugas1 = checkGetDataExist(data['petugas']);
     var petugas2 = checkGetDataExist(data['petugas2']);
     var penanganan_awal = checkGetDataExist(data['penanganan_awal']);
     var penjangkauan = checkGetDataExist(data['tanggal_penjangkauan']);
     var pelapor = checkGetDataExist(data['data_pelapor']);
-    var klien = checkGetDataExist(data['detail_klien']);
+    var klien = checkGetDataExist(data['data_klien']);
     var keluarga_klien = checkGetDataExist(data['data_keluarga_klien']);
     var pelaku = checkGetDataExist(data['pelaku']);
     var kasus = checkGetDataExist(data['detail_kasus']);
@@ -62,8 +56,6 @@ function generate(data:any){
     // var dokumen_pendukung ={}; 
     const laporanData = checkGetDataExist(data['dokumen_pendukung']['dokumen_pendukung']);
     console.log(laporanData);
-
-    console.log("ini pelaku", data.pelaku['agama']['nama']);
     console.log(formatDate((checkExist(kasus['tanggal_jam_kejadian'])), true))
 
 
@@ -222,7 +214,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.nama_pelapor)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['nama'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -233,7 +225,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.nik_pelapor)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['nik'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -244,7 +236,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.alamat_pelapor)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['alamat_domisili'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -255,7 +247,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data['kota_pelapor']['nama'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['kota'])+`</p>
                 </td>
             </tr>
             <tr>
@@ -266,7 +258,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">:</p>
                 </td>
                 <td style="width:312.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(data.no_telp_pelapor)+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pelapor['no_telp'])+`</p>
                 </td>
             </tr>
             </tbody>
