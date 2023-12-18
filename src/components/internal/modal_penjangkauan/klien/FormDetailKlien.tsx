@@ -7,7 +7,7 @@ import Pendidikan from "../../../../consts/pendidikan";
 import { InputText } from "../../../form/Input";
 import { Kota } from "../../../../consts/kota";
 import { Kecamatan } from "../../../../consts/kecamatan";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Kelurahan } from "../../../../consts/kelurahan";
 import { Agama } from "../../../../consts/agama";
 import { Pekerjaan } from "../../../../consts/pekerjaan";
@@ -102,6 +102,17 @@ const FormDetailKlien = (props: FormModal) => {
     null
   );
   const [jenisButton, setJenisButton] = useState(1)
+  const [isKelurahanDisabled, setIsKelurahanDisabled] = useState(true);
+  const [selectedKecamatan, setSelectedKecamatan] = useState<number | null>(null);
+
+
+  useEffect(() => {
+    const kecamatanId = form.watch("kecamatan_kk_id");
+    setSelectedKecamatan(kecamatanId || null);
+    setIsKelurahanDisabled(!kecamatanId);
+  }, [form.watch("kecamatan_kk_id")]);
+
+
 
   const onSubmit: SubmitHandler<DetailKlien> = async (data: DetailKlien) => {
     // console.log(jenisButton)
@@ -259,22 +270,6 @@ const FormDetailKlien = (props: FormModal) => {
                               isRequired
                             />
                             <Select
-                              name="kelurahan_kk_id"
-                              control={control}
-                              placeholder="Pilih Kelurahan"
-                              label="Kelurahan KK"
-                              errors={errors}
-                              errorLabel="Kelurahan KK"
-                              options={kelurahans.map((k) => ({
-                                label: k.nama,
-                                value: k.id,
-                              }))}
-                              defaultValue={
-                                laporan?.detail_klien?.kelurahan_kk?.id
-                              }
-                              isRequired
-                            />
-                            <Select
                               name="kecamatan_kk_id"
                               control={control}
                               placeholder="Pilih Kecamatan"
@@ -289,6 +284,27 @@ const FormDetailKlien = (props: FormModal) => {
                                 laporan?.detail_klien?.kecamatan_kk?.id
                               }
                               isRequired
+                            />
+                            <Select
+                              name="kelurahan_kk_id"
+                              control={control}
+                              placeholder="Pilih Kelurahan"
+                              label="Kelurahan KK"
+                              errors={errors}
+                              errorLabel="Kelurahan KK"
+                              options={kelurahans
+                                .filter(
+                                  (k) => k.kecamatan?.id == selectedKecamatan
+                                )
+                                .map((k) => ({
+                                  label: k.nama,
+                                  value: k.id,
+                                }))}
+                              defaultValue={
+                                laporan?.detail_klien?.kelurahan_kk?.id
+                              }
+                              isRequired
+                              isDisabled={isKelurahanDisabled}
                             />
                             <InputText
                               register={register}
