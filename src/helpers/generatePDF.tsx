@@ -773,7 +773,7 @@ table_keluarga_klien+=`</tbody>
             </tr>
             <tr>
                 <td colspan="3" style="width:456.75pt; border-top-style:solid; border-top-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong>RENCANA ANALISIS KEBUTUHAN KLIEN OLEH KELURAHAN</strong></p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong>RENCANA ANALISIS KEBUTUHAN KLIEN OLEH DP3KAPPKB</strong></p>
                 </td>
             </tr>
             <tr>

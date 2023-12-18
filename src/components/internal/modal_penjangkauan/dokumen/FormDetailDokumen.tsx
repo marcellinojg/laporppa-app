@@ -115,10 +115,13 @@ const FormDetailDokumen = (props: FormModal) => {
         <div className="flex flex-col gap-2 py-3">
             <form className="border-b-2 flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
                 <SectionTitle>Dokumen Pendukung</SectionTitle>
-               <div className="text-base mb-1 font-bold">Foto 
+               <div className="text-base mb-1 font-bold">Foto Klien
                <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                    Dapat Lebih Dari 1
-                </span></div>
+                        Dapat Lebih Dari 1
+                 </span>
+                 <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                    Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                 </p></div>
                 <Uploader
                         name='foto_klien'
                         control={control}
@@ -133,8 +136,11 @@ const FormDetailDokumen = (props: FormModal) => {
                     />
                  <div className="text-base mb-1 font-bold">Foto Tempat Tinggal
                  <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                    Dapat Lebih Dari 1
-                 </span></div>
+                        Dapat Lebih Dari 1
+                 </span>
+                 <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                    Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                 </p></div>
                 <Uploader
                         name='foto_tempat_tinggal'
                         control={control}
@@ -150,7 +156,10 @@ const FormDetailDokumen = (props: FormModal) => {
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Awal
                      <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
                         Dapat Lebih Dari 1
-                    </span></div>
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_pendampingan_awal'
                         control={control}
@@ -166,7 +175,10 @@ const FormDetailDokumen = (props: FormModal) => {
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Lanjutan
                      <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
                         Dapat Lebih Dari 1
-                     </span></div>
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_pendampingan_lanjutan'
                         control={control}
@@ -181,8 +193,11 @@ const FormDetailDokumen = (props: FormModal) => {
                     />
                      <div className="text-base mb-1 font-bold">Foto Pendampingan Monitoring
                      <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                    Dapat Lebih Dari 1
-                    </span></div>
+                        Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_pendampingan_monitoring'
                         control={control}
@@ -197,8 +212,11 @@ const FormDetailDokumen = (props: FormModal) => {
                     />
                     <div className="text-base mb-1 font-bold">Foto KK  
                     <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                    Dapat Lebih Dari 1
-                    </span></div>
+                            Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_kk'
                         control={control}
@@ -213,8 +231,11 @@ const FormDetailDokumen = (props: FormModal) => {
                     />
                     <div className="text-base mb-1 font-bold">Dokumen Pendukung
                     <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                    Dapat Lebih Dari 1
-                    </span></div>
+                        Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='dokumen_pendukung'
                         control={control}

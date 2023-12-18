@@ -230,6 +230,12 @@ const FormPelaporan = (props: FormPelaporanProps) => {
           </InputSection>
           {!laporanEdit && (
             <InputSection title="Dokumentasi Pelaporan">
+              <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+              </span>
+              <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+              </p>
               <Uploader
                 name="dokumentasi_pengaduan"
                 control={control}

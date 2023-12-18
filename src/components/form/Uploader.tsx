@@ -54,7 +54,7 @@ const Uploader = (props: UploaderProps) => {
             title=" "
             id={name}
             onChange={onChange}
-            accept="image/*,.pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            accept="image/*,.pdf"
           />
           {pictures.length === 0 ? (
             <div className="absolute top-0 h-full w-full flex items-center justify-center z-10">

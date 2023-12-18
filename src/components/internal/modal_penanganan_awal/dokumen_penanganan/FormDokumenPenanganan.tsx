@@ -97,8 +97,11 @@ const FormDokumenPenanganan = (props: FormModal) => {
       <span className="font-bold text-lg">
         <span className="text-primary">{capitalize(mode)}</span> Dokumen Pendukung
         <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                    Dapat Lebih Dari 1
-                    </span>
+                        Dapat Lebih Dari 1
+        </span>
+        <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+          Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+        </p>
       </span>
 
       <div className="flex flex-col gap-2 py-3">
@@ -117,7 +120,7 @@ const FormDokumenPenanganan = (props: FormModal) => {
                         errors={errors}
                         isRequired={true}
                         errorLabel='Dokumen Pendukung'
-                    isMultiple={false}
+                      isMultiple={true}
                     />
           <PrimaryButton className="py-2" isSubmit>
             {laporan.penanganan_awal?.dokumen_pendukung != null
