@@ -45,11 +45,7 @@ const DetailLangkahContentOPD = (props: DetailLangkahOPDContent) => {
                 />
                 <DetailLaporanItem
                     label="Dokumentasi Pelayanan"
-                    value={
-                      langkah.dokumentasi
-                        ? <img src={langkah.dokumentasi} className="rounded" alt="Dokumentasi" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-                        : "-"
-                    }
+                    value={langkah.dokumentasi ? langkah.dokumentasi : '-'}
                 />
                 </div>
               ))

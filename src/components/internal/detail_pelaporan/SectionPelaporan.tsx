@@ -39,11 +39,12 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 laporan.satgas_pelapor.id == userData.id &&
                 <div className="flex items-center gap-3 flex overflow-x-auto w-full">
                     <AssignButton setRefetch={setRefetch} laporan={laporan} />
-                    <RujukButton setRefetch={setRefetch} laporan={laporan} />
+                    <RujukButton setRefetch={setRefetch} laporan={laporan} /> 
+                    <PrintButton setRefetch={setRefetch} laporan={laporan}/>               
                 </div>
             }
             {userData.role === ROLE.SATGAS && laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&  laporan.satgas_pelapor.id === userData.id &&
-                <div className="flex items-center gap-3 flex overflow-x-auto w-full">
+                <div className="flex items-center gap-3 flex overflow-x-auto">
                     <EditButton laporan={laporan} />
                     <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
                     <SelesaikanButton setRefetch={setRefetch} laporan={laporan} />
@@ -55,6 +56,13 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                     <TerimaButton setRefetch={setRefetch} laporan={laporan} />
                     <TolakButton setRefetch={setRefetch} laporan={laporan} />
                     <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
+                    <PrintButton setRefetch={setRefetch} laporan={laporan}/>   
+                </div>
+            }
+            {userData.role === ROLE.KELURAHAN &&
+                laporan.status.id == STATUS_LAPORAN.KASUS_SELESAI &&
+                <div className="flex items-center gap-3 flex overflow-x-auto">
+                    <PrintButton setRefetch={setRefetch} laporan={laporan}/>
                 </div>
             }
         </div>

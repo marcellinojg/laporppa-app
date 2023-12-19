@@ -126,19 +126,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
       )}
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
-        {laporan.penanganan_awal?.dokumen_pendukung &&
-        laporan.penanganan_awal.dokumen_pendukung.length > 0
-          ? laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
-              <img
-                key={index}
-                src={url}
-                className="rounded"
-                alt="Dokumentasi"
-                style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                alt={`Image ${index + 1}`}
-              />
-            ))
-          : "-"}
+          <DetailLaporanItem label= "Dokumen Pendukung" value={laporan.penanganan_awal?.dokumen_pendukung ? laporan.penanganan_awal?.dokumen_pendukung : '-'}/>
       </div>
     </>
   );

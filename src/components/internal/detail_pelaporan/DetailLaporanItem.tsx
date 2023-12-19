@@ -1,5 +1,3 @@
-import {FaFilePdf} from "react-icons/fa"
-
 interface DetailLaporanItemProps {
     label: string
     value?: string | string[]
@@ -16,7 +14,7 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
             {(Array.isArray(value) ? value : [value]).map((url, index) => (
               <>
                 {url && (url.endsWith('.jpg') || url.endsWith('.png')) ? (
-                  <img key={index} src={url} className="w-4/6 mr-2 ml-2" alt={`Image ${index + 1}`} />
+                  <img key={index} src={url} className="w-200 mr-2 ml-2" alt={`Image ${index + 1}`} />
                 ) : (url&& url.endsWith('.pdf')) ? (
                   <div key={index} className="flex items-center p-1.5 rounded-md mr-2 bg-blue-500 text-white">
                     <a href={url}>
