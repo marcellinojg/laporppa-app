@@ -1,12 +1,16 @@
-import { FaChartLine, FaFileAlt, FaPlus, FaSearch, FaTimes } from "react-icons/fa"
+import { FaChartLine, FaFileAlt, FaPlus, FaTimes, FaUsers } from "react-icons/fa"
 import { ROUTES } from "../../consts/routes"
 import { Link, useLocation } from "react-router-dom"
 import { SidebarItemProps, SidebarProps } from "../../consts/sidebar"
+import { ROLE } from "../../consts/role"
+import { User } from "../../consts/user";
+import { useAuthUser } from "react-auth-kit";
 
 
 
 const Sidebar = (props: SidebarProps) => {
     const { sidebarRef, sidebarActive, setSidebarActive } = props
+    const userData = useAuthUser()() as User
 
     return <>
 
@@ -43,11 +47,14 @@ const Sidebar = (props: SidebarProps) => {
                     Icon={FaPlus}
                     to={ROUTES.INTERNAL.CREATE_LAPORAN}
                 />
+                {userData.role === ROLE.KELURAHAN && (
                 <SidebarItem
-                    label="Cek Pelaporan"
-                    Icon={FaSearch}
+                    label="Tambah Akun Satgas & Admin"
+                    Icon={FaUsers}
                     to={ROUTES.INTERNAL.CEK_PELAPORAN}
                 />
+                )}
+                 
             </div>
         </div>
 

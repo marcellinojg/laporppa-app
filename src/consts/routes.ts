@@ -5,7 +5,7 @@ export const ROUTES = {
         DETAIL_PELAPORAN: '/internal/laporan/:id',
         CREATE_LAPORAN: "/internal/laporan/create",
         EDIT_LAPORAN: "/internal/laporan/:id/edit",
-        CEK_PELAPORAN: "/internal/cek-pelaporan"
+        CEK_PELAPORAN: "/internal/tambah-admin-satgas"
     },
     EXTERNAL: {
         LANDING: "/",
