@@ -248,7 +248,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                   />
                   <DetailLaporanItem
                     label="Dokumentasi Pelayanan"
-                    value={langkah.dokumentasi ? langkah.dokumentasi : 
+                    value={langkah.dokumentasi ? langkah.dokumentasi : '-'
                     }
                   />
                   <div className="flex flex-row-reverse items-end gap-3">
