@@ -19,11 +19,9 @@ export const ROUTES = {
 
 
 export const DYNAMIC_ROUTES = {
-    INTERNAL: {
-        DETAIL_PELAPORAN: (id: string) => `/internal/laporan/${id}`,
-        EDIT_LAPORAN: (id: string) => `/internal/laporan/${id}/edit`
-    },
-    EXTERNAL: {
-
-    },
-}
+  INTERNAL: {
+    DETAIL_PELAPORAN: (id: string) => `/internal/laporan/${id}`,
+    EDIT_LAPORAN: (id: string) => `/internal/laporan/${id}/edit`,
+  },
+  EXTERNAL: {},
+};

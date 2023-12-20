@@ -1,3 +1,5 @@
+import { Kelurahan } from "./kelurahan";
+import { Role } from "./role";
 
 export interface UserLogin {
     username: string,
@@ -10,4 +12,15 @@ export interface User {
     name: string,
     role: string,
     username: string,
+}
+
+export interface UserAccount {
+    id: string,
+    username: string,
+    nama: string,
+    role: Role,
+    kelurahan: Kelurahan,
+    no_telp: number,
+    password: string,
+    is_active: string,
 }

@@ -27,7 +27,7 @@ const Login = () => {
                 alert.addAlert({
                     type: ALERT_TYPE.ERROR,
                     title: "Autentikasi gagal",
-                    message: error.response && error.response.data.code == 401 ? 'Username atau password salah.' : 'Terjadi kesalahan, coba lagi nanti.'
+                    message: error.response.data.error_message
                 })
                 return
             })
