@@ -17,6 +17,7 @@ import { KecamatanLoader, KelurahanLoader, RoleLoader, UsersLoader } from "../..
 import { AktifkanButton, EditUserButton, NonAktifkanButton } from "../../components/form/UserActionButton";
 import AutosaveFormEffect from "../../helpers/formSaveHelpers";
 import { Kecamatan } from "../../consts/kecamatan";
+import ModalTambahSatgas from "../../components/internal/modal_tambah_admin/ModalTambahSatgas";
 
 const TambahSatgasAdmin = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,6 +48,9 @@ const TambahSatgasAdmin = () => {
     const [selectedKecamatan, setSelectedKecamatan] = useState<number | null>(
     null
     );
+    const [isModalActive, setIsModalActive] = useState<boolean>(false);
+    const [curUserAccount, setCurUserAccount] = useState<UserAccount | null>(null)
+
 
     useEffect(() => {
     const kecamatanId = form.watch("kecamatan_id");
@@ -90,7 +94,8 @@ const TambahSatgasAdmin = () => {
         setTimeout(() => setIsLoading(false), 3000);
     };
 
-    return (
+  return (
+    <>
       <UsersLoader
         data={users}
         setData={setUsers}
@@ -138,7 +143,7 @@ const TambahSatgasAdmin = () => {
                                 type="number"
                                 // defaultValue={laporanEdit?.alamat_pelapor}
                               />
-                              <Select
+                              {/* <Select
                                 name="kecamatan_id"
                                 control={control}
                                 placeholder="Pilih Kecamatan tempat bertugas"
@@ -150,7 +155,7 @@ const TambahSatgasAdmin = () => {
                                   value: k.id,
                                 }))}
                                 isRequired
-                              />
+                              /> */}
                               <Select
                                 name="kelurahan_id"
                                 control={control}
@@ -160,15 +165,15 @@ const TambahSatgasAdmin = () => {
                                 errors={errors}
                                 // defaultValue={roles.id}
                                 options={kelurahans
-                                  .filter(
-                                    (k) => k.kecamatan?.id == selectedKecamatan
-                                  )
+                                  // .filter(
+                                  //   (k) => k.kecamatan?.id == selectedKecamatan
+                                  // )
                                   .map((k) => ({
                                     label: k.nama,
                                     value: k.id,
                                   }))}
                                 isRequired
-                                isDisabled={isKelurahanDisabled}
+                                // isDisabled={isKelurahanDisabled}
                               />
                               <Select
                                 name="role_id"
@@ -258,16 +263,16 @@ const TambahSatgasAdmin = () => {
                                     </span>
                                   </div>
                                 </td>
-                                <td className="py-4 px-3 border-r-[2px]">
+                                <td className="py-4 px-3 border-r-[2px] w-auto max-w-[100px]">
                                   <div className="flex flex-col gap-2">
                                     {user.is_active == "1" ? (
                                       <button
                                         type="button"
                                         onClick={() => {}}
-                                        className={`min-w-[120px] p-2 px-3 text-center text-xs rounded-full bg-green-500`}
+                                        className={`p-2 px-1 text-center text-xs rounded-full bg-green-200`}
                                       >
                                         <span
-                                          className={`font-bold text-white`}
+                                          className={`font-bold text-green-600`}
                                         >
                                           Aktif
                                         </span>
@@ -276,10 +281,10 @@ const TambahSatgasAdmin = () => {
                                       <button
                                         type="button"
                                         onClick={() => {}}
-                                        className={`min-w-[120px] p-2 px-2 text-center text-xs rounded-full bg-red-500`}
+                                        className={`min-w-[70px] p-2 px-1 text-center text-xs rounded-full bg-red-200`}
                                       >
                                         <span
-                                          className={`font-bold text-white`}
+                                          className={`font-bold text-red-600`}
                                         >
                                           Tidak Aktif
                                         </span>
@@ -287,11 +292,13 @@ const TambahSatgasAdmin = () => {
                                     )}
                                   </div>
                                 </td>
-                                <td className="py-4 px-3 border-r-[2px]">
+                                <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto max-w-[100px]">
                                   <div className="flex flex-col gap-2">
                                     <EditUserButton
                                       user={user}
                                       setRefetch={setRefetch}
+                                      setCurUserAccount={setCurUserAccount}
+                                      setIsModalActive={setIsModalActive}
                                     />
                                     {user.is_active == "1" ? (
                                       <NonAktifkanButton
@@ -319,7 +326,15 @@ const TambahSatgasAdmin = () => {
           </RoleLoader>
         </AdminLayout>
       </UsersLoader>
-    );
+      {isModalActive === true && curUserAccount != null && (
+        <ModalTambahSatgas
+          setIsModalActive={setIsModalActive}
+          userAccount={curUserAccount}
+          setRefetch={setRefetch}
+        />
+      )}
+    </>
+  );
 };
 
 interface InputSectionProps {

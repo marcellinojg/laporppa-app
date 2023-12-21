@@ -23,15 +23,27 @@ interface ActionButtonUserProps {
   setRefetch?: Dispatch<SetStateAction<boolean>>;
 }
 
-export const EditUserButton = (props: ActionButtonUserProps) => {
-  const { user } = props;
-  const navigate = useNavigate();
+interface EditButtonUserProps {
+  user: UserAccount;
+  setCurUserAccount: Dispatch<SetStateAction<UserAccount | null>>;
+  setIsModalActive: Dispatch<SetStateAction<boolean>>;
+  setRefetch?: Dispatch<SetStateAction<boolean>>;
+}
+
+export const EditUserButton = (props: EditButtonUserProps) => {
+  const {user, setCurUserAccount, setIsModalActive} = props;
+  // const navigate = useNavigate();
+
+  const handleEdit = () => {
+    setIsModalActive(true);
+    setCurUserAccount(user)
+  };
 
   return (
     <button
       type="button"
-      onClick={() => {}}
-      className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full"
+      onClick={() => handleEdit()}
+      className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full"
     >
       <FaEdit />
       Edit
@@ -78,7 +90,7 @@ export const AktifkanButton = (props: ActionButtonUserProps) => {
       <button
         type="button"
         onClick={() => setIsModalActive(true)}
-        className="text-white bg-green-500 hover:bg-green-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full"
+        className="text-white bg-green-500 hover:bg-green-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full"
       >
         <FaUser />
         Aktifkan
@@ -135,7 +147,7 @@ export const NonAktifkanButton = (props: ActionButtonUserProps) => {
       <button
         type="button"
         onClick={() => setIsModalActive(true)}
-        className="text-white bg-red-500 hover:bg-red-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full lg:w-auto w-full"
+        className="text-white bg-red-500 hover:bg-red-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full"
       >
         <FaUser />
         Nonaktifkan

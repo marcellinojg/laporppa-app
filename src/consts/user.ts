@@ -21,6 +21,6 @@ export interface UserAccount {
     role: Role,
     kelurahan: Kelurahan,
     no_telp: number,
-    password: string,
+    password?: string,
     is_active: string,
 }
