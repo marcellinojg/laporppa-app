@@ -71,8 +71,8 @@ const TambahSatgasAdmin = () => {
             reset();
             addAlert({
                 type: ALERT_TYPE.SUCCESS,
-                title: "User Berhasil Ditambahkan !",
-                message: `User ${data.nama} telah berhasil ditambahkan !`,
+                title: "Akun Berhasil Ditambahkan !",
+                message: `Akun ${data.nama} telah berhasil ditambahkan !`,
             });
             hideLoader();
             setRefetch(true);
@@ -83,8 +83,8 @@ const TambahSatgasAdmin = () => {
             // errorFetchAlert();
             addAlert({
                 type: ALERT_TYPE.ERROR,
-                title: "User Gagal Ditambahkan !",
-                message: `Pastikan user belum pernah ditambahkan sebelumnya !`,
+                title: "Akun Gagal Ditambahkan !",
+                message: `Pastikan akun belum pernah ditambahkan sebelumnya !`,
             });
         } finally {
             setIsLoading(false);
