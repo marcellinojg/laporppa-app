@@ -263,7 +263,7 @@ const TambahSatgasAdmin = () => {
                                     </span>
                                   </div>
                                 </td>
-                                <td className="py-4 px-3 border-r-[2px] w-auto max-w-[100px]">
+                                <td className="py-4 px-3 border-r-[2px] w-auto lg:max-w-[100px]">
                                   <div className="flex flex-col gap-2">
                                     {user.is_active == "1" ? (
                                       <button
@@ -292,7 +292,7 @@ const TambahSatgasAdmin = () => {
                                     )}
                                   </div>
                                 </td>
-                                <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto max-w-[100px]">
+                                <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
                                   <div className="flex flex-col gap-2">
                                     <EditUserButton
                                       user={user}

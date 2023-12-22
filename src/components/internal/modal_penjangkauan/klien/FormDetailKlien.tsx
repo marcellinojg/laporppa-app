@@ -224,7 +224,7 @@ const FormDetailKlien = (props: FormModal) => {
                               label="NIK Klien"
                               defaultValue={laporan.nik_klien}
                               isRequired
-                              // regex={REGEX.NIK}
+                              regex={REGEX.NIK}
                             />
                             <InputText
                               register={register}
@@ -259,6 +259,7 @@ const FormDetailKlien = (props: FormModal) => {
                               placeholder="No Kartu Keluarga"
                               label="Nomor Kartu Keluarga"
                               isRequired
+                              regex={REGEX.NIK}
                             />
                             <InputText
                               register={register}
@@ -314,7 +315,7 @@ const FormDetailKlien = (props: FormModal) => {
                               placeholder="Nomor Telepon / WhatsApp"
                               label="No. Telp / WhatsApp"
                               isRequired
-                              // regex={REGEX.PHONE_IDN}
+                              regex={REGEX.PHONE_IDN}
                             />
                             <Select
                               name="kota_lahir_id"
