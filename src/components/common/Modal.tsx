@@ -65,7 +65,7 @@ export const AssignModal = (props: AssignModalProps) => {
             <div className="w-screen h-screen bg-black bg-opacity-50 fixed top-0 left-0 z-20 flex items-center justify-center">
                 <div className="flex flex-col bg-white floating-shadow-lg lg:px-10 px-4 py-8 lg:w-[600px] md:w-1/2 w-11/12 rounded-md">
                     <span className="font-bold text-lg">{title}</span>
-                    <p className="mt-3 text-start">Anda akan menerima laporan dari {description}.<br />Mohon pilih satgas yang akan menangani kasus ini.</p>
+                    <p className="mt-3 text-center">Anda akan menerima laporan dari {description}.<br />Mohon pilih satgas yang akan menangani kasus ini.</p>
                     <ReactSelect
                         className="mt-4"
                         onChange={(v) => setSelectedSatgasId(v?.value!)}
