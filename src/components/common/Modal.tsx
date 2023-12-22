@@ -58,7 +58,15 @@ export const AssignModal = (props: AssignModalProps) => {
     const { onClose, onSuccess, title, description, successButtonText, setSelectedSatgasId, laporan } = props
     const [satgasPelapors, setSatgasPelapors] = useState<SatgasPelapor[]>([])
     const userData = useAuthUser()() as User
-    console.log(userData)
+    // console.log(userData)
+    const customHeight = {
+      menuList: (provided: any) => ({
+        ...provided,
+        maxHeight: "200px", // Adjust this value based on the height of your options
+        overflowY: "auto",
+      }),
+    };
+
 
     return <>
         <SatgasPelaporLoader data={satgasPelapors} setData={setSatgasPelapors}>
@@ -73,6 +81,7 @@ export const AssignModal = (props: AssignModalProps) => {
                             label: satgas.nama,
                             value: satgas.id
                         }))}
+                        styles={customHeight}
                     />
                     <div className="w-full flex gap-4 mt-7">
                         <SecondaryButton
