@@ -37,10 +37,10 @@ const DetailLangkahContent = (props: DetailLangkahContent) => {
                     label="Deskripsi Pelayanan"
                     value={langkah.deskripsi ?? "-"}
                   />
-                  <DetailLaporanItem
+                  {/* <DetailLaporanItem
                     label="Dokumentasi Pelayanan"
                     value={langkah.dokumentasi ? langkah.dokumentasi : '-'}
-                />
+                /> */}
                 </div>
               ))
             : null}

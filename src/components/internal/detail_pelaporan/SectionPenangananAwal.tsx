@@ -81,7 +81,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
             }
           />
         </div>
-        <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
+        <div className="border-b-2 flex flex-col gap-3 py-3">
           <div className="flex items-center justify-between">
             <SectionTitle>Dokumen Pendukung</SectionTitle>
             {userData.role === ROLE.SATGAS &&
@@ -126,7 +126,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
       )}
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
-          <DetailLaporanItem label= "Dokumen Pendukung" value={laporan.penanganan_awal?.dokumen_pendukung ? laporan.penanganan_awal?.dokumen_pendukung : '-'}/>
+          <DetailLaporanItem label= "" value={laporan.penanganan_awal?.dokumen_pendukung ? laporan.penanganan_awal?.dokumen_pendukung : '-'}/>
       </div>
     </>
   );

@@ -15,10 +15,11 @@ interface UploaderProps {
   isRequired?: boolean;
   isMultiple: boolean;
 //   defaultValue?: File[] | undefined;
+  reset: boolean
 }
 
 const Uploader = (props: UploaderProps) => {
-    const { name, placeholder, setValue, errors, isMultiple } = props
+    const { name, placeholder, setValue, errors, isMultiple, reset } = props
     const [pictures, setPictures] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
 
@@ -38,9 +39,20 @@ const Uploader = (props: UploaderProps) => {
         }
     }
 
+    const resetUploader = () => {
+      setPictures([]);
+      setFiles([]);
+  }
+
     useEffect(() => {
         setValue(name, files)
     }, [files])
+
+    useEffect(() => {
+      if (reset) {
+        resetUploader();
+      }
+    }, [reset]);
 
 
 

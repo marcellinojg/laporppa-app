@@ -187,8 +187,8 @@ const FormDetailLangkah = (props: FormModal) => {
             label="Deskripsi Pelayanan yang Diberikan"
             placeholder="Ceritakan pelayanan yang telah diberikan"
           />
-          <Uploader
-              name='dokumen'
+          {/* <Uploader
+              name="dokumentasi"
               control={control}
               watch={watch}
               placeholder='Upload dokumen langkah dari kelurahan'
@@ -198,7 +198,7 @@ const FormDetailLangkah = (props: FormModal) => {
               isRequired={false}
               errorLabel='Dokumen Langkah'
               isMultiple={false}
-          />
+          /> */}
           <PrimaryButton className="py-2" isSubmit>
             Tambah Langkah Kelurahan
           </PrimaryButton>
@@ -241,10 +241,10 @@ const FormDetailLangkah = (props: FormModal) => {
                         : "-"
                     }
                   />
-                  <DetailLaporanItem
+                  {/* <DetailLaporanItem
                     label="Dokumentasi Pelayanan"
                     value={langkah.dokumentasi ? langkah.dokumentasi : '-'}
-                />
+                /> */}
                   <div className="flex flex-row-reverse items-end gap-3">
                     <DeleteButton
                       onClick={() => delLangkah(langkah.id)}
