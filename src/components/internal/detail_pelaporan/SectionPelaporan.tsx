@@ -67,12 +67,12 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
                 <PrintButton setRefetch={setRefetch} laporan={laporan} />
               </div>
             )}
-          {userData.role === ROLE.KELURAHAN &&
+          {/* {userData.role === ROLE.KELURAHAN &&
             laporan.status.id == STATUS_LAPORAN.KASUS_SELESAI || laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&(
               <div className="flex items-center gap-3 flex overflow-x-auto w-full overflow-auto">
                 <PrintButton setRefetch={setRefetch} laporan={laporan} />
               </div>
-            )}
+            )} */}
         </div>
         <div className="flex flex-col gap-2 py-3">
           <div className="border-b-2 flex flex-col gap-3 py-3">
