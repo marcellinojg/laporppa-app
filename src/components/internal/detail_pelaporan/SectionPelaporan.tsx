@@ -68,7 +68,7 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
               </div>
             )}
           {userData.role === ROLE.KELURAHAN &&
-            laporan.status.id == STATUS_LAPORAN.KASUS_SELESAI || laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI &&(
+            (laporan.status.id == STATUS_LAPORAN.KASUS_SELESAI || laporan.status.id == STATUS_LAPORAN.SEDANG_DITANGANI) &&(
               <div className="flex items-center gap-3 flex overflow-x-auto w-full overflow-auto">
                 <PrintButton setRefetch={setRefetch} laporan={laporan} />
               </div>
