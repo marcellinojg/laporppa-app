@@ -6,7 +6,7 @@ const Landing = () => {
     return <div className="min-w-screen min-h-screen bg-login flex items-center justify-center">
         <div className="flex justify-center items-center w-10/12 gap-36">
             <div className="flex flex-col gap-6 self-start">
-                <div className="flex gap-8 items-center">
+                <div className="flex gap-8 items-center mt-10">
                     <img src="/images/logo-pemkot-new.png" className="w-16" alt="Logo Pemkot Surabaya" />
                     <img src="/images/logo-without-text.png" className="w-24" alt="Logo SIAPPPAK" />
                 </div>

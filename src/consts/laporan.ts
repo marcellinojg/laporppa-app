@@ -1,13 +1,13 @@
 import { DetailKasus } from "../components/internal/modal_penjangkauan/detail_kasus/FormDetailKasus";
 import { DetailKlien } from "./detail_klien";
 import { KeluargaKlien } from "./keluarga_klien";
-import { Kelurahan } from "./kelurahan"
+import { Kelurahan } from "./kelurahan";
 import { KondisiKlien } from "./kondisi_klien";
 import { Pelaku } from "./pelaku";
 import Pendidikan from "./pendidikan";
 import { SatgasPelapor } from "./satgas";
 import { Status } from "./status";
-import SumberPengaduan from './sumber';
+import SumberPengaduan from "./sumber";
 import { DokumenPendukung } from "./dokumen_pendukung";
 import { LangkahBadanDaerah } from "./langkahBadanDaerah";
 import { LangkahOPD } from "./langkahOPD";
@@ -68,58 +68,79 @@ export interface Laporan {
   status_kronologi: number;
   status_rakk: number;
   status_rrkk: number;
+  updated_at_keluarga: Date;
+  updated_at_detail_klien: Date;
   updated_at_pelaku: Date;
+  updated_at_situasi_keluarga: Date;
+  updated_at_kronologi: Date;
+  updated_at_kondisi_klien: Date;
+  updated_at_langkah_telah_dilakukan: Date;
+  updated_at_rakk: Date;
+  updated_at_rrkk: Date;
+  updated_at_lintas_opd: Date;
+  updated_at_harapan: Date;
+  updated_at_dokumen_pendukung: Date;
+  updated_by_keluarga: SatgasPelapor;
+  updated_by_detail_klien: SatgasPelapor;
   updated_by_pelaku: SatgasPelapor;
+  updated_by_situasi_keluarga: SatgasPelapor;
+  updated_by_kronologi: SatgasPelapor;
+  updated_by_kondisi_klien: SatgasPelapor;
+  updated_by_langkah_telah_dilakukan: SatgasPelapor;
+  updated_by_rakk: SatgasPelapor;
+  updated_by_rrkk: SatgasPelapor;
+  updated_by_lintas_opd: SatgasPelapor;
+  updated_by_harapan: SatgasPelapor;
+  updated_by_dokumen_pendukung: SatgasPelapor;
   status_harapan_klien_dan_keluarga: number;
 }
 
 export interface LaporanSatgas {
-    kategori_id: number
-    tanggal_jam_pengaduan: string
-    tanggal_pengaduan: Date
-    jam_pengaduan: string
-    nama_pelapor: string
-    nik_pelapor?: string
-    no_telp_pelapor: string
-    alamat_pelapor?: string
-    nama_klien: string
-    nik_klien?: string
-    no_telp_klien?: string
-    kecamatan_id: number
-    kelurahan_id: number
-    alamat_klien?: string
-    uraian_singkat_masalah: string
-    sumber_pengaduan_id: number
-    dokumentasi_pengaduan: File[]
+  kategori_id: number;
+  tanggal_jam_pengaduan: string;
+  tanggal_pengaduan: Date;
+  jam_pengaduan: string;
+  nama_pelapor: string;
+  nik_pelapor?: string;
+  no_telp_pelapor: string;
+  alamat_pelapor?: string;
+  nama_klien: string;
+  nik_klien?: string;
+  no_telp_klien?: string;
+  kecamatan_id: number;
+  kelurahan_id: number;
+  alamat_klien?: string;
+  uraian_singkat_masalah: string;
+  sumber_pengaduan_id: number;
+  dokumentasi_pengaduan: File[];
+  rt: number;
+  rw: number;
 
-
-    // doesn't have default value
-    // satgas_pelapor_id: string
-    // previous_satgas_id: string
-    // sumber_pengaduan_id: number
+  // doesn't have default value
+  // satgas_pelapor_id: string
+  // previous_satgas_id: string
+  // sumber_pengaduan_id: number
 }
 
-
 export interface LaporanWarga {
-    kategori_id: number
-    kecamatan_id: number
-    sumber_pengaduan_id: number
-    kelurahan_id: number
-    uraian_singkat_masalah: string
-    nama_pelapor: string
-    nama_klien: string
-    tanggal_jam_pengaduan: string
+  kategori_id: number;
+  kecamatan_id: number;
+  sumber_pengaduan_id: number;
+  kelurahan_id: number;
+  uraian_singkat_masalah: string;
+  nama_pelapor: string;
+  nama_klien: string;
+  tanggal_jam_pengaduan: string;
 }
 
 export interface LaporanToken {
-    nama_pelapor: string
-    token: string
-    status: Status
-    kategori: Kategori
-    created_at: string
+  nama_pelapor: string;
+  token: string;
+  status: Status;
+  kategori: Kategori;
+  created_at: string;
 }
 
-
 export interface LaporanCount extends Status {
-    totalCase: number
+  totalCase: number;
 }

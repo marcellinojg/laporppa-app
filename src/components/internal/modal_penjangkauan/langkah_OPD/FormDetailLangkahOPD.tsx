@@ -40,6 +40,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
       const formatDataStatus = {
         // ...laporan,
         status_lintas_opd: 2,
+        updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_lintas_opd: laporan.satgas_pelapor.id,
       };
      
       setIsLoading(true);
@@ -66,9 +68,15 @@ const FormDetailLangkahOPD = (props: FormModal) => {
 
   const delLangkah = async (id: number) => {
     try {
+      const formatDataStatus = {
+        updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_lintas_opd: laporan.satgas_pelapor.id,
+      };
+     
       setIsLoading(true);
       showLoader();
       await deleteLangkahOPD(id);
+      await patchLaporan(formatDataStatus, laporan.id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -108,6 +116,8 @@ const FormDetailLangkahOPD = (props: FormModal) => {
 
     const formatDataStatus = {
       status_lintas_opd: 1,
+      updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_lintas_opd: laporan.satgas_pelapor.id,
     };
 
     try {
@@ -134,7 +144,9 @@ const FormDetailLangkahOPD = (props: FormModal) => {
     } finally {
       getLaporan(laporan.id);
       setIsLoading(false);
+      setRefetch!(true);
       hideLoader();
+      reset();
     }
 
     setTimeout(() => setIsLoading(false), 3000);
@@ -183,6 +195,13 @@ const FormDetailLangkahOPD = (props: FormModal) => {
             label="Deskripsi Pelayanan yang Diberikan"
             placeholder="Ceritakan pelayanan yang telah diberikan"
           />
+           <div className="text-base">Dokumentasi Pelayanan
+            <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                Hanya Menerima 1
+            </span>
+            <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                Menerima File Foto (jpeg/jpg/png). Maks ukuran file 10MB 
+            </p></div>
           <Uploader
               name='dokumentasi'
               control={control}
@@ -236,14 +255,21 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                         : "-"
                     }
                   />
-                  <DetailLaporanItem
-                    label="Dokumentasi Pelayanan"
-                    value={
-                      langkah.dokumentasi
-                        ? <img src={langkah.dokumentasi} className="rounded" alt="Dokumentasi" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-                        : "-"
-                    }
+                 
+                 <div className="border-b-2 flex flex-col gap-3 py-3">
+                 <span className="text-slate-400 text-sm">Dokumentasi Pengaduan</span>
+            <div className="flex flex-wrap items-center gap-4">
+              {langkah.dokumentasi &&
+                langkah.dokumentasi.map((url, index) => (
+                  <img
+                    src={url}
+                    width={200}
+                    alt={`dokumentasi pengaduan ${index + 1}`}
+                    key={index}
                   />
+                ))}
+            </div>
+          </div>
                   <div className="flex flex-row-reverse items-end gap-3">
                     <DeleteButton
                       onClick={() => delLangkah(langkah.id)}

@@ -46,6 +46,8 @@ const FormDetailLangkah = (props: FormModal) => {
       const formatDataStatus = {
         // ...laporan,
         status_langkah_telah_dilakukan: 2,
+        updated_at_langkah_telah_dilakukan: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_langkah_telah_dilakukan: laporan.satgas_pelapor.id,
       };
 
       setIsLoading(true);
@@ -72,9 +74,15 @@ const FormDetailLangkah = (props: FormModal) => {
 
   const delLangkah = async (id: number) => {
     try {
+      const formatDataStatus = {
+        updated_at_langkah_telah_dilakukan: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_langkah_telah_dilakukan: laporan.satgas_pelapor.id,
+      };
+
       setIsLoading(true);
       showLoader();
       await deleteLangkahBadanDaerah(id);
+      await patchLaporan(formatDataStatus, laporan.id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -106,10 +114,12 @@ const FormDetailLangkah = (props: FormModal) => {
       ),
     };
 
-    console.log(formatData);
+    // console.log(formatData);
 
     const formatDataStatus = {
       status_langkah_telah_dilakukan: 1,
+      updated_at_langkah_telah_dilakukan: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_langkah_telah_dilakukan: laporan.satgas_pelapor.id,
     };
 
     try {
@@ -178,7 +188,7 @@ const FormDetailLangkah = (props: FormModal) => {
             placeholder="Ceritakan pelayanan yang telah diberikan"
           />
           {/* <Uploader
-              name='dokumen'
+              name="dokumentasi"
               control={control}
               watch={watch}
               placeholder='Upload dokumen langkah dari kelurahan'
@@ -231,6 +241,10 @@ const FormDetailLangkah = (props: FormModal) => {
                         : "-"
                     }
                   />
+                  {/* <DetailLaporanItem
+                    label="Dokumentasi Pelayanan"
+                    value={langkah.dokumentasi ? langkah.dokumentasi : '-'}
+                /> */}
                   <div className="flex flex-row-reverse items-end gap-3">
                     <DeleteButton
                       onClick={() => delLangkah(langkah.id)}

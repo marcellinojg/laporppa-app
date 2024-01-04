@@ -17,6 +17,7 @@ import { useAlert } from "../../../../hooks/useAlert";
 import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
+import { format } from "date-fns";
 
 const FormDetailKondisi = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
@@ -44,6 +45,8 @@ const FormDetailKondisi = (props: FormModal) => {
 
     const formatDataKondisi = {
       status_kondisi_klien: jenisButton,
+      updated_at_kondisi_klien: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_kondisi_klien: laporan.satgas_pelapor.id,
     };
 
     try {

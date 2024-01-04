@@ -96,7 +96,13 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
 
 export const Select = (props: SelectProps) => {
     const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true, defaultValue = '' } = props
-
+    const customHeight = {
+        menuList: (provided: any) => ({
+        ...provided,
+        maxHeight: "200px", // Adjust this value based on the height of your options
+        overflowY: "auto",
+        }),
+    };
 
 
     return <Controller
@@ -117,6 +123,7 @@ export const Select = (props: SelectProps) => {
                 value={options.find(c => c.value === value)}
                 placeholder={placeholder}
                 options={options}
+                styles={customHeight}
             />
             <span className='text-red-500 text-start'>
                 {error?.message}

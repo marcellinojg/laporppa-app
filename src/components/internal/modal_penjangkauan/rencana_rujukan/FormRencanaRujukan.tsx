@@ -21,6 +21,7 @@ import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 import { Select } from "../../../form/Dropdown";
 import { RRKKLoader } from "../../../../helpers/fetchHelpers";
 import { RRKK } from "../../../../consts/rrkk";
+import { format } from "date-fns";
 DetailLaporanItem;
 
 const FormRencanaRujukan = (props: FormModal) => {
@@ -43,6 +44,8 @@ const FormRencanaRujukan = (props: FormModal) => {
       const formatDataStatus = {
         // ...laporan,
         status_rrkk: 2,
+        updated_at_rrkk: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_rrkk: laporan.satgas_pelapor.id,
       };
 
       setIsLoading(true);
@@ -69,9 +72,15 @@ const FormRencanaRujukan = (props: FormModal) => {
 
   const delLangkah = async (id: number) => {
     try {
+      const formatDataStatus = {
+        updated_at_rrkk: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        updated_by_rrkk: laporan.satgas_pelapor.id,
+      };
+
       setIsLoading(true);
       showLoader();
       await deleteRRKK(id);
+      await patchLaporan(formatDataStatus, laporan.id);
       setRefetch!(true);
       // addAlert({
       //   type: ALERT_TYPE.SUCCESS,
@@ -100,10 +109,12 @@ const FormRencanaRujukan = (props: FormModal) => {
       opd: "Surabaya"
     };
 
-    console.log(formatData);
+    // console.log(formatData);
 
     const formatDataStatus = {
       status_rrkk: 1,
+      updated_at_rrkk: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_rrkk: laporan.satgas_pelapor.id,
     };
 
     try {

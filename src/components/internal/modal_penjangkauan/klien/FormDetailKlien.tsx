@@ -7,7 +7,7 @@ import Pendidikan from "../../../../consts/pendidikan";
 import { InputText } from "../../../form/Input";
 import { Kota } from "../../../../consts/kota";
 import { Kecamatan } from "../../../../consts/kecamatan";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Kelurahan } from "../../../../consts/kelurahan";
 import { Agama } from "../../../../consts/agama";
 import { Pekerjaan } from "../../../../consts/pekerjaan";
@@ -102,6 +102,17 @@ const FormDetailKlien = (props: FormModal) => {
     null
   );
   const [jenisButton, setJenisButton] = useState(1)
+  const [isKelurahanDisabled, setIsKelurahanDisabled] = useState(true);
+  const [selectedKecamatan, setSelectedKecamatan] = useState<number | null>(null);
+
+
+  useEffect(() => {
+    const kecamatanId = form.watch("kecamatan_kk_id");
+    setSelectedKecamatan(kecamatanId || null);
+    setIsKelurahanDisabled(!kecamatanId);
+  }, [form.watch("kecamatan_kk_id")]);
+
+
 
   const onSubmit: SubmitHandler<DetailKlien> = async (data: DetailKlien) => {
     // console.log(jenisButton)
@@ -115,7 +126,12 @@ const FormDetailKlien = (props: FormModal) => {
 
     const formatDataStatus = {
       status_detail_klien: jenisButton,
-      pendidikan_id: data.pendidikan_id
+      pendidikan_id: data.pendidikan_id,
+      updated_at_detail_klien: format(
+        new Date(),
+        "yyyy-MM-dd HH:mm:ss"
+      ),
+      updated_by_detail_klien: laporan.satgas_pelapor.id,
     }
 
     try {
@@ -208,7 +224,7 @@ const FormDetailKlien = (props: FormModal) => {
                               label="NIK Klien"
                               defaultValue={laporan.nik_klien}
                               isRequired
-                              // regex={REGEX.NIK}
+                              regex={REGEX.NIK}
                             />
                             <InputText
                               register={register}
@@ -243,6 +259,7 @@ const FormDetailKlien = (props: FormModal) => {
                               placeholder="No Kartu Keluarga"
                               label="Nomor Kartu Keluarga"
                               isRequired
+                              regex={REGEX.NIK}
                             />
                             <InputText
                               register={register}
@@ -251,22 +268,6 @@ const FormDetailKlien = (props: FormModal) => {
                               name="alamat_kk"
                               placeholder="Alamat Sesuai Kartu Keluarga"
                               label="Alamat Sesuai Kartu Keluarga"
-                              isRequired
-                            />
-                            <Select
-                              name="kelurahan_kk_id"
-                              control={control}
-                              placeholder="Pilih Kelurahan"
-                              label="Kelurahan KK"
-                              errors={errors}
-                              errorLabel="Kelurahan KK"
-                              options={kelurahans.map((k) => ({
-                                label: k.nama,
-                                value: k.id,
-                              }))}
-                              defaultValue={
-                                laporan?.detail_klien?.kelurahan_kk?.id
-                              }
                               isRequired
                             />
                             <Select
@@ -285,6 +286,27 @@ const FormDetailKlien = (props: FormModal) => {
                               }
                               isRequired
                             />
+                            <Select
+                              name="kelurahan_kk_id"
+                              control={control}
+                              placeholder="Pilih Kelurahan"
+                              label="Kelurahan KK"
+                              errors={errors}
+                              errorLabel="Kelurahan KK"
+                              options={kelurahans
+                                .filter(
+                                  (k) => k.kecamatan?.id == selectedKecamatan
+                                )
+                                .map((k) => ({
+                                  label: k.nama,
+                                  value: k.id,
+                                }))}
+                              defaultValue={
+                                laporan?.detail_klien?.kelurahan_kk?.id
+                              }
+                              isRequired
+                              isDisabled={isKelurahanDisabled}
+                            />
                             <InputText
                               register={register}
                               errors={errors}
@@ -293,7 +315,7 @@ const FormDetailKlien = (props: FormModal) => {
                               placeholder="Nomor Telepon / WhatsApp"
                               label="No. Telp / WhatsApp"
                               isRequired
-                              // regex={REGEX.PHONE_IDN}
+                              regex={REGEX.PHONE_IDN}
                             />
                             <Select
                               name="kota_lahir_id"
@@ -467,7 +489,7 @@ const FormDetailKlien = (props: FormModal) => {
                               name="pendidikan_id"
                               control={control}
                               placeholder="Pilih Pendidikan"
-                              label="pendidikan"
+                              label="Pendidikan"
                               errors={errors}
                               defaultValue={laporan.pendidikan?.id}
                               errorLabel="Pendidikan"

@@ -4,4 +4,5 @@ export interface LangkahBadanDaerah {
     pelayanan_yang_diberikan: string
     deskripsi: string
     id: number
+    dokumentasi: File
 }

@@ -32,6 +32,9 @@ import { LangkahOPD } from "../consts/langkahOPD";
 import { LangkahBadanDaerah } from "../consts/langkahBadanDaerah";
 import { RAKK } from "../consts/rakk";
 import { RRKK } from "../consts/rrkk";
+import { UserAccount } from "../consts/user";
+import { getRoles, getUsers } from "../api/user";
+import { Role } from "../consts/role";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -449,9 +452,11 @@ export const LangkahOPDLoader = (props: FetchDataEffectsProps<LangkahOPD[]>) => 
 }
 
 export const LangkahBadanDaerahLoader = (props: FetchDataEffectsProps<LangkahBadanDaerah[]>) => {
-    const { setData, children , id} = props
+    const { setRefetch, setData, children , id} = props
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
+
+    
 
     useEffect(() => {
             showLoader();
@@ -463,8 +468,12 @@ export const LangkahBadanDaerahLoader = (props: FetchDataEffectsProps<LangkahBad
                 if (error.response.status == 404) setData([]);
                 else errorFetchAlert();
               })
-              .finally(() => hideLoader());
-    }, [])
+              .finally(() => {
+                hideLoader(), 
+                setRefetch!(true);
+              });
+            }, []);
+             
     return <>
         {children}
     </>
@@ -513,3 +522,57 @@ export const RRKKLoader = (props: FetchDataEffectsProps<RRKK[]>) => {
         {children}
     </>
 }
+
+export const UsersLoader = (props: FetchDataEffectsProps<UserAccount[]>) => {
+    const { setData, children, refetch, setRefetch, data} = props
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    // useEffect(() => {
+    //     setRefetch!(true)
+    // }, [data])
+
+    useEffect(() => {
+        if (refetch === true) {
+            showLoader()
+            getUsers()
+                .then((users: UserAccount[]) => {
+                    setData( users )
+                })
+                .catch(() => errorFetchAlert())
+                .finally(() => hideLoader())
+            // window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+
+        setRefetch!(false)
+
+    }, [refetch])
+
+    useEffect(() => {
+    showLoader();
+    getUsers()
+        .then((users: UserAccount[]) => setData(users))
+        .catch(() => errorFetchAlert())
+        .then(() => hideLoader());
+    }, []);
+
+    return <>
+        {children}
+    </>
+}
+
+export const RoleLoader = (props: FetchDataEffectsProps<Role[]>) => {
+  const { setData, children } = props;
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert } = useAlert();
+
+  useEffect(() => {
+    showLoader();
+    getRoles()
+      .then((roles) => setData(roles))
+      .catch(() => errorFetchAlert())
+      .then(() => hideLoader());
+  }, []);
+
+  return <>{children}</>;
+};

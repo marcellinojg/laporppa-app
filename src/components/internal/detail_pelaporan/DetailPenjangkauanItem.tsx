@@ -44,7 +44,7 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
         <div className="bg-slate-200 w-0.5 mx-auto grow"></div>
       </div>
 
-      <div className="flex flex-col pb-5 w-full">
+      <div className="flex flex-col pb-5 w-full overflow-auto">
         <div className="flex items-center gap-3">
           <span className="font-bold mt-0.5 text-lg">{title}</span>
           {is_done === 0 ? (
@@ -73,8 +73,8 @@ const DetailPenjangkauanItem = (props: DetailPenjangkauanItemProps) => {
             Data belum ditambahkan oleh <b className="text-black">Satgas</b>
           </span>
         )}
-        <div className="flex p-3 rounded border-2 border-slate-200 border-dashed mt-2.5 justify-between items-center">
-          <p className="text-sm">{help_text}</p>
+        <div className="flex p-3 rounded border-2 border-slate-200 border-dashed mt-2.5 justify-between items-center min-w-[350px]">
+          <p className="text-sm max-w-[200px] sm:max-w-none">{help_text}</p>
           {is_done >= 0 && userData.role === ROLE.KELURAHAN && (
             <div className="flex items-center gap-3">
               <LihatDetailButton

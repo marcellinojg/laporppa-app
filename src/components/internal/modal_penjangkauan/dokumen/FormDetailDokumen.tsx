@@ -12,6 +12,7 @@ import {
     getLaporan, patchDokumenPendukung, patchLaporan,postDokumenPendukung
   } from "../../../../api/laporan";
 import { Laporan } from "../../../../consts/laporan"
+import { format } from "date-fns"
 
 interface DokumenPendukung {
     laporan: Laporan,
@@ -57,7 +58,10 @@ const FormDetailDokumen = (props: FormModal) => {
             ? 1
             : jenisButton === 2
                 ? 2
-                : null,
+                    : null,
+            updated_at_dokumen_pendukung: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+            updated_by_dokumen_pendukung: laporan.satgas_pelapor.id,
+
           };
 
         try {
@@ -111,12 +115,18 @@ const FormDetailDokumen = (props: FormModal) => {
         <div className="flex flex-col gap-2 py-3">
             <form className="border-b-2 flex flex-col gap-3 py-3" onSubmit={handleSubmit(onSubmit)}>
                 <SectionTitle>Dokumen Pendukung</SectionTitle>
-               <div className="text-base mb-1 font-bold">Foto Klien</div>
+               <div className="text-base mb-1 font-bold">Foto Klien
+               <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+                 </span>
+                 <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                    Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                 </p></div>
                 <Uploader
                         name='foto_klien'
                         control={control}
                         watch={watch}
-                        placeholder='Upload foto klien'
+                        placeholder='Upload foto klien (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}
@@ -124,12 +134,18 @@ const FormDetailDokumen = (props: FormModal) => {
                         errorLabel='Foto Klien'
                         isMultiple={true}
                     />
-                 <div className="text-base mb-1 font-bold">Foto Tempat Tinggal</div>
+                 <div className="text-base mb-1 font-bold">Foto Tempat Tinggal
+                 <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+                 </span>
+                 <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                    Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                 </p></div>
                 <Uploader
                         name='foto_tempat_tinggal'
                         control={control}
                         watch={watch}
-                        placeholder='Upload foto tempat tinggal'
+                        placeholder='Upload foto tempat tinggal (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}
@@ -137,12 +153,18 @@ const FormDetailDokumen = (props: FormModal) => {
                         errorLabel='Foto Tempat Tinggal'
                         isMultiple={true}
                     />
-                     <div className="text-base mb-1 font-bold">Foto Pendampingan Awal</div>
+                     <div className="text-base mb-1 font-bold">Foto Pendampingan Awal
+                     <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_pendampingan_awal'
                         control={control}
                         watch={watch}
-                        placeholder='Upload foto pendampingan awal'
+                        placeholder='Upload foto pendampingan awal (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}
@@ -150,12 +172,18 @@ const FormDetailDokumen = (props: FormModal) => {
                         errorLabel='Foto Pendampingan Awal'
                         isMultiple={true}
                     />
-                     <div className="text-base mb-1 font-bold">Foto Pendampingan Lanjutan</div>
+                     <div className="text-base mb-1 font-bold">Foto Pendampingan Lanjutan
+                     <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_pendampingan_lanjutan'
                         control={control}
                         watch={watch}
-                        placeholder='Upload foto pendampingan lanjutan'
+                        placeholder='Upload foto pendampingan lanjutan (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}
@@ -163,12 +191,18 @@ const FormDetailDokumen = (props: FormModal) => {
                         errorLabel='Foto Pendampingan Lanjutan'
                         isMultiple={true}
                     />
-                     <div className="text-base mb-1 font-bold">Foto Pendampingan Monitoring</div>
+                     <div className="text-base mb-1 font-bold">Foto Pendampingan Monitoring
+                     <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_pendampingan_monitoring'
                         control={control}
                         watch={watch}
-                        placeholder='Upload foto pendampingan monitoring'
+                        placeholder='Upload foto pendampingan monitoring (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}
@@ -176,12 +210,18 @@ const FormDetailDokumen = (props: FormModal) => {
                         errorLabel='Foto Pendampingan Monitoring'
                         isMultiple={true}
                     />
-                    <div className="text-base mb-1 font-bold">Foto KK</div>
+                    <div className="text-base mb-1 font-bold">Foto KK  
+                    <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                            Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='foto_kk'
                         control={control}
                         watch={watch}
-                        placeholder='Upload foto KK'
+                        placeholder='Upload foto KK (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}
@@ -189,12 +229,18 @@ const FormDetailDokumen = (props: FormModal) => {
                         errorLabel='Foto KK'
                         isMultiple={true}
                     />
-                    <div className="text-base mb-1 font-bold">Dokumen Pendukung</div>
+                    <div className="text-base mb-1 font-bold">Dokumen Pendukung
+                    <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
+                        Dapat Lebih Dari 1
+                    </span>
+                    <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
+                        Menerima File Foto (jpeg/jpg/png) dan Dokumen(pdf). Maks ukuran file 10MB 
+                    </p></div>
                 <Uploader
                         name='dokumen_pendukung'
                         control={control}
                         watch={watch}
-                        placeholder='Upload dokumen pendukung'
+                        placeholder='Upload dokumen pendukung (dapat lebih dari satu)'
                         setValue={setValue}
                         register={register}
                         errors={errors}

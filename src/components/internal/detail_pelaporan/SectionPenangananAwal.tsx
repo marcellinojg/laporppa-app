@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Laporan } from "../../../consts/laporan";
 import Pill from "../Pill";
 import { formatDate } from "../../../helpers/formatDate";
@@ -9,6 +9,8 @@ import { useAuthUser } from "react-auth-kit";
 import { User } from "../../../consts/user";
 import { ROLE } from "../../../consts/role";
 import ModalPenangananAwal from "../modal_penanganan_awal/ModalPenangananAwal";
+import { ALERT_TYPE } from "../../../consts/alert";
+import { useAlert } from "../../../hooks/useAlert";
 
 interface SectionPenganganAwalProps {
   laporan: Laporan;
@@ -18,20 +20,21 @@ interface SectionPenganganAwalProps {
 const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
   const { laporan, setRefetch } = props;
   const userData = useAuthUser()() as User;
-    const days = [
-      "Minggu",
-      "Senin",
-      "Selasa",
-      "Rabu",
-      "Kamis",
-      "Jumat",
-      "Sabtu",
-    ];
   const [isModalActiveWaktuPenangananAwal, setIsModalActiveWaktuPenangananAwal] =
     useState<boolean>(false);
   const [isModalActiveDokumenPendukung, setIsModalActiveDokumenPendukung] =
     useState<boolean>(false);
-  console.log(laporan.penanganan_awal?.dokumen_pendukung)
+  const [isDisabled, setIsDisabled] = useState(false);
+  const { errorFetchAlert, addAlert } = useAlert();
+  // console.log(laporan.penanganan_awal?.dokumen_pendukung)
+
+  useEffect(() => {
+    if (laporan.penanganan_awal?.id) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [laporan]);
 
   return (
     <>
@@ -47,7 +50,8 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
           <div className="flex items-center justify-between">
             <SectionTitle>Waktu Penanganan Awal</SectionTitle>
             {userData.role === ROLE.SATGAS &&
-              laporan.satgas_pelapor.id === userData.id && (
+              laporan.satgas_pelapor.id === userData.id &&
+              laporan.status.id === 2 && (
                 <button
                   onClick={() => setIsModalActiveWaktuPenangananAwal(true)}
                   type="button"
@@ -77,16 +81,25 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
             }
           />
         </div>
-        <div className="border-b-2 flex flex-col gap-3 py-3 mb-4">
+        <div className="border-b-2 flex flex-col gap-3 py-3">
           <div className="flex items-center justify-between">
             <SectionTitle>Dokumen Pendukung</SectionTitle>
             {userData.role === ROLE.SATGAS &&
-              laporan.satgas_pelapor.id === userData.id && (
+              laporan.satgas_pelapor.id === userData.id &&
+              laporan.status.id === 2 && (
                 <button
-                  onClick={() => setIsModalActiveDokumenPendukung(true)}
+                onClick={isDisabled ?
+                  () => addAlert({
+                          type: ALERT_TYPE.WARNING,
+                          title: "Tidak Dapat Menambah Dokumen Pendukung !",
+                          message: `Harap isi waktu penanganan awal terlebih dahulu !`,
+                        }) :
+                  () => setIsModalActiveDokumenPendukung(true)
+                }
                   type="button"
                   className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
-                >
+                  // disabled={isDisabled}
+              >
                   Tambahkan/Edit Dokumen Pendukung
                 </button>
               )}
@@ -113,19 +126,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
       )}
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
-        {laporan.penanganan_awal?.dokumen_pendukung &&
-        laporan.penanganan_awal.dokumen_pendukung.length > 0 ? (
-          laporan.penanganan_awal.dokumen_pendukung.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              className="rounded"
-              alt="Dokumentasi"
-              style={{ width: "100px", height: "100px", objectFit: "cover" }}
-              alt={`Image ${index + 1}`}
-            />
-          ))
-        ) : "-"}
+          <DetailLaporanItem label= "" value={laporan.penanganan_awal?.dokumen_pendukung ? laporan.penanganan_awal?.dokumen_pendukung : '-'}/>
       </div>
     </>
   );

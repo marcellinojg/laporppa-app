@@ -5,7 +5,7 @@ export const ROUTES = {
         DETAIL_PELAPORAN: '/internal/laporan/:id',
         CREATE_LAPORAN: "/internal/laporan/create",
         EDIT_LAPORAN: "/internal/laporan/:id/edit",
-        CEK_PELAPORAN: "/internal/cek-pelaporan"
+        CEK_PELAPORAN: "/internal/tambah-admin-satgas"
     },
     EXTERNAL: {
         LANDING: "/",
@@ -19,11 +19,9 @@ export const ROUTES = {
 
 
 export const DYNAMIC_ROUTES = {
-    INTERNAL: {
-        DETAIL_PELAPORAN: (id: string) => `/internal/laporan/${id}`,
-        EDIT_LAPORAN: (id: string) => `/internal/laporan/${id}/edit`
-    },
-    EXTERNAL: {
-
-    },
-}
+  INTERNAL: {
+    DETAIL_PELAPORAN: (id: string) => `/internal/laporan/${id}`,
+    EDIT_LAPORAN: (id: string) => `/internal/laporan/${id}/edit`,
+  },
+  EXTERNAL: {},
+};

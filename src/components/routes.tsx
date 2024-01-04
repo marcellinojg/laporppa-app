@@ -12,7 +12,7 @@ import { NotFoundPage } from "./errors/NotFoundPage"
 import TokenPelaporan from "../pages/external/TokenPelaporan"
 import TrackPelaporan from "../pages/external/TrackPelaporan"
 import DetailPelaporan from "../pages/internal/DetailPelaporan"
-import CekPelaporan from "../pages/internal/CekPelaporan"
+import CekPelaporan from "../pages/internal/TambahAdminSatgas"
 import EditPelaporan from "../pages/internal/EditPelaporan"
 
 const RoutesComponents = () => {

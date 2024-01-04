@@ -17,6 +17,7 @@ import { useAlert } from "../../../../hooks/useAlert";
 import { SectionTitle } from "../../../common/Typography";
 import { KondisiKlien } from "../../../../consts/kondisi_klien";
 import { TextArea } from "../../../form/Input";
+import { format } from "date-fns";
 
 interface Harapan {
   harpaan_klien_dan_keluarga: string,
@@ -44,13 +45,15 @@ const FormDetailHarapan = (props: FormModal) => {
       laporan_id: laporan.id,
       satgas_id: laporan.satgas_pelapor.id,
       status_harapan_klien_dan_keluarga: jenisButton,
+      updated_at_harapan: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      updated_by_harapan: laporan.satgas_pelapor.id,
     };
 
     try {
       setIsLoading(true);
       showLoader();
       if (jenisButton == 2) {
-        (await patchLaporan(formatData, laporan.id)) as Harapan;
+        (await patchLaporan(formatData, laporan.id));
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
         reset();
         addAlert({
@@ -59,7 +62,7 @@ const FormDetailHarapan = (props: FormModal) => {
           message: `Data Harapan Keluarga untuk laporan ${laporan.nama_klien} berhasil Dipublish!`,
         });
       } else if (jenisButton == 1 && laporan.situasi_keluarga != null){
-        (await patchLaporan(formatData, laporan.id)) as Harapan;
+        (await patchLaporan(formatData, laporan.id));
         // await postKondisiStatus(formatData, "kondisi_klien", jenisButton);
         reset();
         addAlert({
@@ -70,7 +73,7 @@ const FormDetailHarapan = (props: FormModal) => {
 
       }
         else {
-        (await patchLaporan(formatData, laporan.id)) as Harapan;
+        (await patchLaporan(formatData, laporan.id));
         reset();
         addAlert({
           type: ALERT_TYPE.SUCCESS,
