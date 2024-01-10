@@ -233,7 +233,7 @@ const FormRencanaRujukan = (props: FormModal) => {
             ) : (
               <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
                 <img
-                  src="/images/nodata.png"
+                  src="./images/nodata.png"
                   className=""
                   width={300}
                   alt="No Data illustration"
