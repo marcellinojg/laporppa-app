@@ -1,4 +1,4 @@
-import { FaChartLine, FaFileAlt, FaPlus, FaTimes, FaUsers } from "react-icons/fa"
+import { FaChartLine, FaFileAlt, FaPlus, FaPrint, FaTimes, FaUsers } from "react-icons/fa"
 import { ROUTES } from "../../consts/routes"
 import { Link, useLocation } from "react-router-dom"
 import { SidebarItemProps, SidebarProps } from "../../consts/sidebar"
@@ -48,11 +48,18 @@ const Sidebar = (props: SidebarProps) => {
                     to={ROUTES.INTERNAL.CREATE_LAPORAN}
                 />
                 {userData.role === ROLE.KELURAHAN && (
+                <>
                 <SidebarItem
                     label="Tambah Akun Satgas & Admin"
                     Icon={FaUsers}
-                    to={ROUTES.INTERNAL.CEK_PELAPORAN}
+                    to={ROUTES.INTERNAL.TAMBAH_SATGAS}
                 />
+                <SidebarItem
+                    label="Cetak Rekap Laporan"
+                    Icon={FaPrint}
+                    to={ROUTES.INTERNAL.CETAK_REKAP}
+                />
+                </>
                 )}
                  
             </div>
