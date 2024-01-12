@@ -17,7 +17,7 @@ const DetailLaporanItem = (props : DetailLaporanItemProps) => {
                 <img src={url} className="w-200 mr-2 ml-2" alt={`Image ${index + 1}`} />
               ) : url && url.endsWith('.pdf') ? (
                 <div className="bg-blue-500 text-white  p-1.5 rounded-md mr-2">
-                  <a href={url}>
+                  <a href={url} target="_blank">
                     Dokumen {label}.{re.exec(value)[1]}
                   </a>
                 </div>

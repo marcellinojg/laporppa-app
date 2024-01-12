@@ -12,8 +12,9 @@ import { NotFoundPage } from "./errors/NotFoundPage"
 import TokenPelaporan from "../pages/external/TokenPelaporan"
 import TrackPelaporan from "../pages/external/TrackPelaporan"
 import DetailPelaporan from "../pages/internal/DetailPelaporan"
-import CekPelaporan from "../pages/internal/TambahAdminSatgas"
 import EditPelaporan from "../pages/internal/EditPelaporan"
+import TambahSatgasAdmin from "../pages/internal/TambahAdminSatgas"
+import CetakRekap from "../pages/internal/CetakRekap"
 
 const RoutesComponents = () => {
     return <Routes>
@@ -65,8 +66,12 @@ const RoutesComponents = () => {
                 element={<DetailPelaporan />}
             />
             <Route
-                path={ROUTES.INTERNAL.CEK_PELAPORAN}
-                element={<CekPelaporan />}
+                path={ROUTES.INTERNAL.TAMBAH_SATGAS}
+                element={<TambahSatgasAdmin />}
+            />
+            <Route
+                path={ROUTES.INTERNAL.CETAK_REKAP}
+                element={<CetakRekap />}
             />
             <Route
                 path={ROUTES.INTERNAL.EDIT_LAPORAN}
