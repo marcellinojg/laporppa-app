@@ -1,9 +1,9 @@
 import { Kelurahan } from "../consts/kelurahan"
-import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
+import { CreateAxiosInstance, CreatePublicAxiosInstance } from "../helpers/createAxiosInstance"
 
 export const getKelurahans = async () => {
-    const instance = CreateAxiosInstance()
-    const res = await instance.get('/public/kelurahans?withKecamatan=1')
+    const instance = CreatePublicAxiosInstance()
+    const res = await instance.get('/m-kelurahan')
     const kelurahans = res.data.data as Kelurahan[]
     return kelurahans
 }

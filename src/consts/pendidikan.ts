@@ -1,7 +1,8 @@
 
 interface Pendidikan {
     id: number
-    nama: string
+    name: string
+    is_active?: boolean
 }
 
 export default Pendidikan

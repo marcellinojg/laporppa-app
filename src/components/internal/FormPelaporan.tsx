@@ -35,7 +35,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
 
     useEffect(() => {
         if (laporanEdit)
-            setSelectedKecamatan(laporanEdit.kelurahan.kecamatan?.id)
+            setSelectedKecamatan(laporanEdit.kelurahan.id_kecamatan)
         const subscription = watch((value) => {
             setSelectedKecamatan(value.kecamatan_id)
         })
@@ -54,8 +54,10 @@ const FormPelaporan = (props: FormPelaporanProps) => {
               errorLabel="Kategori Permasalahan"
               errors={errors}
               defaultValue={laporanEdit?.kategori.id}
-              options={kategori.map((k) => ({
-                label: k.nama,
+              options={kategori
+                .filter((k) => k.is_active === true)
+                .map((k) => ({
+                label: k.name,
                 value: k.id,
               }))}
             />
@@ -105,7 +107,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
               placeholder="Masukkan nomor telepon pelapor"
               errors={errors}
               label="No. Telepon/Whatsapp Pelapor"
-              regex={REGEX.PHONE_IDN}
+              // regex={REGEX.PHONE_IDN}
               type="tel"
               isRequired
               defaultValue={laporanEdit?.no_telp_pelapor}
@@ -155,17 +157,18 @@ const FormPelaporan = (props: FormPelaporanProps) => {
               label="Kecamatan Klien"
               errors={errors}
               errorLabel="Kecamatan"
-              options={kecamatan.map((k) => ({
-                label: k.nama,
+              options={kecamatan
+                .filter((k) => k.is_active === true && k.id_kabupaten === 1)
+                .map((k) => ({
+                label: k.name,
                 value: k.id,
               }))}
-              defaultValue={laporanEdit?.kelurahan.kecamatan?.id}
             />
             <Select
               isDisabled={
                 selectedKecamatan
                   ? false
-                  : laporanEdit?.kelurahan.kecamatan?.id
+                  : laporanEdit?.kelurahan.id_kecamatan
                   ? false
                   : true
               }
@@ -176,9 +179,9 @@ const FormPelaporan = (props: FormPelaporanProps) => {
               errors={errors}
               errorLabel="Kelurahan"
               options={kelurahan
-                .filter((k) => k.kecamatan?.id == selectedKecamatan)
+                .filter((k) => k.is_active === true && k.id_kecamatan === selectedKecamatan)
                 .map((k) => ({
-                  label: k.nama,
+                  label: k.name,
                   value: k.id,
                 }))}
               defaultValue={laporanEdit?.kelurahan.id}

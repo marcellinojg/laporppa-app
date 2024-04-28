@@ -1,4 +1,5 @@
 export interface StatusPerkawinan {
     id: number
-    nama: string
+    name: string
+    is_active: boolean
 }

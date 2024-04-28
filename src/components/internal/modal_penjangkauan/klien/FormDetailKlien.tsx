@@ -242,8 +242,10 @@ const FormDetailKlien = (props: FormModal) => {
                               label="Kecamatan Klien"
                               errors={errors}
                               errorLabel="Kecamatan Domisili"
-                              options={kecamatans.map((k) => ({
-                                label: k.nama,
+                              options={kecamatans
+                                .filter((k) => k.is_active === true && k.id_kabupaten === 1)
+                                .map((k) => ({
+                                label: k.name,
                                 value: k.id,
                               }))}
                               defaultValue={
@@ -277,8 +279,10 @@ const FormDetailKlien = (props: FormModal) => {
                               label="Kecamatan KK"
                               errors={errors}
                               errorLabel="Kecamatan KK"
-                              options={kecamatans.map((k) => ({
-                                label: k.nama,
+                              options={kecamatans
+                                .filter((k) => k.is_active === true && k.id_kabupaten === 1)
+                                .map((k) => ({
+                                label: k.name,
                                 value: k.id,
                               }))}
                               defaultValue={
@@ -294,11 +298,9 @@ const FormDetailKlien = (props: FormModal) => {
                               errors={errors}
                               errorLabel="Kelurahan KK"
                               options={kelurahans
-                                .filter(
-                                  (k) => k.kecamatan?.id == selectedKecamatan
-                                )
+                                .filter((k) => k.is_active === true && k.id_kecamatan === selectedKecamatan)
                                 .map((k) => ({
-                                  label: k.nama,
+                                  label: k.name,
                                   value: k.id,
                                 }))}
                               defaultValue={
@@ -327,7 +329,7 @@ const FormDetailKlien = (props: FormModal) => {
                               errorLabel="Kota Lahir"
                               // options={[{ label: "Surabaya", value: 1 }]}
                               options={kotas.map((k) => ({
-                                label: k.nama,
+                                label: k.name,
                                 value: k.id,
                               }))}
                               isRequired
@@ -433,8 +435,10 @@ const FormDetailKlien = (props: FormModal) => {
                               defaultValue={laporan.detail_klien?.pekerjaan?.id}
                               errorLabel="Pekerjaan"
                               // options={[{ label: "Pekerjaan 1", value: 1 }]}
-                              options={pekerjaans.map((k) => ({
-                                label: k.nama,
+                              options={pekerjaans
+                                .filter((k) => k.is_active === true)
+                                .map((k) => ({
+                                label: k.name,
                                 value: k.id,
                               }))}
                               isRequired
@@ -461,7 +465,7 @@ const FormDetailKlien = (props: FormModal) => {
                               }
                               // options={[{ label: "Cerai Hidup", value: 3 }]}
                               options={statusPerkawinans.map((k) => ({
-                                label: k.nama,
+                                label: k.name,
                                 value: k.id,
                               }))}
                               isRequired
@@ -493,8 +497,10 @@ const FormDetailKlien = (props: FormModal) => {
                               errors={errors}
                               defaultValue={laporan.pendidikan?.id}
                               errorLabel="Pendidikan"
-                              options={pendidikans.map((k) => ({
-                                label: k.nama,
+                              options={pendidikans
+                                .filter((k) => k.is_active === true)
+                                .map((k) => ({
+                                label: k.name,
                                 value: k.id,
                               }))}
                               isRequired

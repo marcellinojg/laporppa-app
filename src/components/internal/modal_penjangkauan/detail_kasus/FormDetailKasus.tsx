@@ -134,8 +134,10 @@ const FormDetailKasus = (props: FormModal) => {
                   label="Kategori Kasus"
                   errors={errors}
                   errorLabel="Kategori Kasus"
-                  options={kategoriKasues.map((k) => ({
-                    label: k.nama,
+                  options={kategoriKasues
+                    .filter((k) => k.is_active === true && k.id_tipe_permasalahan === laporan.kategori.id)
+                    .map((k) => ({
+                    label: k.name,
                     value: k.id,
                   }))}
                   defaultValue={laporan?.detail_kasus?.kategori_kasus?.id}

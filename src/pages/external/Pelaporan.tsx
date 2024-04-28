@@ -79,8 +79,10 @@ const Pelaporan = () => {
                       control={control}
                       errors={errors}
                       errorLabel="Kategori Permasalahan"
-                      options={kategoris.map((k) => ({
-                        label: k.nama,
+                      options={kategoris
+                        .filter((k) => k.is_active === true)
+                        .map((k) => ({
+                        label: k.name,
                         value: k.id,
                       }))}
                     />
@@ -91,8 +93,10 @@ const Pelaporan = () => {
                       control={control}
                       errors={errors}
                       errorLabel="Kecamatan"
-                      options={kecamatan.map((k) => ({
-                        label: k.nama,
+                      options={kecamatan
+                        .filter((k) => k.is_active === true && k.id_kabupaten === 1)
+                        .map((k) => ({
+                        label: k.name,
                         value: k.id,
                       }))}
                     />
@@ -105,9 +109,9 @@ const Pelaporan = () => {
                       errors={errors}
                       errorLabel="Kelurahan"
                       options={kelurahan
-                        .filter((k) => k.kecamatan?.id == selectedKecamatan)
+                        .filter((k) => k.is_active === true && k.id_kecamatan === selectedKecamatan)
                         .map((k) => ({
-                          label: k.nama,
+                          label: k.name,
                           value: k.id,
                         }))}
                     />
@@ -158,7 +162,7 @@ const Pelaporan = () => {
                       name="no_telp_pelapor"
                       register={register}
                       errors={errors}
-                      regex={REGEX.PHONE_IDN}
+                      // regex={REGEX.PHONE_IDN}
                       placeholder="Masukkan Nomor Telepon"
                       label="Nomor Telepon Pelapor"
                       isRequired
