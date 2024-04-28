@@ -1,4 +1,5 @@
 export interface Pekerjaan {
     id: number
-    nama: string
+    name: string
+    is_active?: boolean
 }
