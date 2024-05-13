@@ -30,6 +30,13 @@ interface EditButtonUserProps {
   setRefetch?: Dispatch<SetStateAction<boolean>>;
 }
 
+interface UpdatePasswordButtonProps {
+  user: UserAccount;
+  setCurUserAccount: Dispatch<SetStateAction<UserAccount | null>>;
+  setIsModalActive: Dispatch<SetStateAction<boolean>>;
+  setRefetch?: Dispatch<SetStateAction<boolean>>;
+}
+
 export const EditUserButton = (props: EditButtonUserProps) => {
   const {user, setCurUserAccount, setIsModalActive} = props;
   // const navigate = useNavigate();
@@ -47,6 +54,27 @@ export const EditUserButton = (props: EditButtonUserProps) => {
     >
       <FaEdit />
       Edit
+    </button>
+  );
+};
+
+export const UpdatePasswordButton = (props: UpdatePasswordButtonProps) => {
+  const {user, setCurUserAccount, setIsModalActive} = props;
+  // const navigate = useNavigate();
+
+  const handleUpdate = () => {
+    setIsModalActive(true);
+    setCurUserAccount(user)
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={() => handleUpdate()}
+      className="text-white bg-yellow-500 hover:bg-yellow-600 transition duration-300 flex justify-center items-center gap-2 p-2 px-4 rounded-full"
+    >
+      <FaEdit />
+      Password
     </button>
   );
 };
