@@ -35,6 +35,10 @@ import { RRKK } from "../consts/rrkk";
 import { UserAccount } from "../consts/user";
 import { getRoles, getUsers } from "../api/user";
 import { Role } from "../consts/role";
+import { LookasiKejadian } from "../consts/lokasi_kejadian";
+import { getLokasiKejadians } from "../api/lokasi_kejadian";
+import { getOpdes } from "../api/opd";
+import { Opd } from "../consts/opd";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -575,4 +579,36 @@ export const RoleLoader = (props: FetchDataEffectsProps<Role[]>) => {
   }, []);
 
   return <>{children}</>;
+};
+
+export const LokasiKejadianLoader = (props: FetchDataEffectsProps<LookasiKejadian[]>) => {
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
+  
+    useEffect(() => {
+      showLoader();
+      getLokasiKejadians()
+        .then((roles) => setData(roles))
+        .catch(() => errorFetchAlert())
+        .then(() => hideLoader());
+    }, []);
+  
+    return <>{children}</>;
+};
+
+export const OPDLoader = (props: FetchDataEffectsProps<Opd[]>) => {
+    const { setData, children } = props;
+    const { showLoader, hideLoader } = useLoader();
+    const { errorFetchAlert } = useAlert();
+  
+    useEffect(() => {
+      showLoader();
+      getOpdes()
+        .then((roles) => setData(roles))
+        .catch(() => errorFetchAlert())
+        .then(() => hideLoader());
+    }, []);
+  
+    return <>{children}</>;
 };

@@ -21,11 +21,15 @@ import { useAlert } from "../../../../hooks/useAlert";
 import { ALERT_TYPE } from "../../../../consts/alert";
 import { JenisKasus } from "../../../../consts/jenis_kasus";
 import {
+  HubunganKeluargaLoader,
   JenisKasusesLoader,
   KategoriKasusesLoader,
   KategoriLoader,
+  LokasiKejadianLoader,
 } from "../../../../helpers/fetchHelpers";
 import { Select } from "../../../form/Dropdown";
+import { HubunganKeluarga } from "../../../../consts/hubungan_keluarga";
+import { LookasiKejadian } from "../../../../consts/lokasi_kejadian";
 
 export interface DetailKasus {
   laporan_id: string;
@@ -41,6 +45,7 @@ const FormDetailKasus = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [kategoriKasues, setKategoriKasues] = useState<Kategori[]>([]);
   const [jenisKasus, setJenisKasus] = useState<JenisKasus[]>([]);
+  const [lokasiKejadians, setlokasiKejadians] = useState<LookasiKejadian[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const form = useForm<DetailKasus>();
@@ -120,6 +125,10 @@ const FormDetailKasus = (props: FormModal) => {
           data={kategoriKasues}
           setData={setKategoriKasues}
         >
+          <LokasiKejadianLoader
+          data={lokasiKejadians}
+          setData={setlokasiKejadians}
+          >
           <div className="flex flex-col gap-2 py-3">
             <form
               className="flex flex-col gap-3 py-3"
@@ -157,7 +166,20 @@ const FormDetailKasus = (props: FormModal) => {
                   defaultValue={laporan?.detail_kasus?.jenis_kasus?.id}
                   isRequired
                 />
-                <InputText
+                <Select
+                  name="lokasi_kejadian_id"
+                  control={control}
+                  placeholder="Pilih Lokasi Kejadian"
+                  label="Lokasi Kejadian"
+                  errors={errors}
+                  errorLabel="Lokasi Kejadian"
+                  options={lokasiKejadians.map((k) => ({
+                    label: k.name,
+                    value: k.id,
+                  }))}
+                  defaultValue={laporan?.detail_kasus?.lokasi_kasus}
+                />
+                {/* <InputText
                   register={register}
                   errors={errors}
                   name="lokasi_kasus"
@@ -165,7 +187,7 @@ const FormDetailKasus = (props: FormModal) => {
                   label="Lokasi Kasus"
                   defaultValue={laporan.detail_kasus?.lokasi_kasus}
                   isRequired
-                />
+                /> */}
                 <Datepicker
                   name="tanggal_jam_kejadian"
                   control={control}
@@ -180,7 +202,7 @@ const FormDetailKasus = (props: FormModal) => {
                 />
               </div>
               <PrimaryButton className="py-2" isSubmit>
-                {laporan.detail_kasus?.kategori_kasus.nama != null ||
+                {laporan.detail_kasus?.kategori_kasus.name != null ||
                 laporan.detail_kasus?.jenis_kasus.nama != null ||
                 laporan.detail_kasus?.lokasi_kasus != null ||
                 laporan.detail_kasus?.tanggal_jam_kejadian != null
@@ -189,6 +211,7 @@ const FormDetailKasus = (props: FormModal) => {
               </PrimaryButton>
             </form>
           </div>
+          </LokasiKejadianLoader>
         </KategoriKasusesLoader>
       </JenisKasusesLoader>
     </>
