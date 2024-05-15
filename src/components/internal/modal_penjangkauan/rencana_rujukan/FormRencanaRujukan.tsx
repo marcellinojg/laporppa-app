@@ -19,17 +19,19 @@ import { useAlert } from "../../../../hooks/useAlert";
 import { DeleteButton } from "../../../form/PenjangkauanButtons";
 import DetailLaporanItem from "../../detail_pelaporan/DetailLaporanItem";
 import { Select } from "../../../form/Dropdown";
-import { RRKKLoader } from "../../../../helpers/fetchHelpers";
+import { OPDLoader, RRKKLoader } from "../../../../helpers/fetchHelpers";
 import { RRKK } from "../../../../consts/rrkk";
 import { format } from "date-fns";
+import { Opd } from "../../../../consts/opd";
 DetailLaporanItem;
 
 const FormRencanaRujukan = (props: FormModal) => {
   const { mode, laporan, setRefetch, setIsModalActive } = props;
-  const [ isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const { errorFetchAlert, addAlert } = useAlert();
   const [langkahs, setLangkahs] = useState<RRKK[]>([]);
+  const [opdes, setOpdes] = useState<Opd[]>([])
   const {
     register,
     formState: { errors },
@@ -106,7 +108,7 @@ const FormRencanaRujukan = (props: FormModal) => {
     const formatData: RRKK = {
       ...data,
       laporan_id: laporan.id,
-      opd: "Surabaya"
+      // opd: "Surabaya"
     };
 
     // console.log(formatData);
@@ -152,30 +154,34 @@ const FormRencanaRujukan = (props: FormModal) => {
         <span className="text-primary">{capitalize(mode)}</span> Detail Rencana
         Analis Kebutuhan Klien Oleh Kelurahan
       </span>
-      <div className="flex flex-col gap-2 py-3">
-        <form
-          className="border-b-2 flex flex-col gap-3 py-3"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <SectionTitle>
-            Detail Rencana Analis Kebutuhan Klien Oleh
-          </SectionTitle>
-          <Select
-            name="kebutuhan"
-            control={control}
-            placeholder="Pilih Jenis Kebutuhan"
-            label="Kebutuhan"
-            errors={errors}
-            errorLabel="Kebutuhan"
-            options={[
-              { label: "Pendidikan", value: "Pendidikan" },
-              { label: "Kesehatan", value: "Kesehatan" },
-              { label: "Ekonomi", value: "Ekonomi" },
-              { label: "Hukum", value: "Hukum" },
-            ]}
-            isRequired
-          />
-          <InputText
+      <OPDLoader
+        data={opdes}
+        setData={setOpdes}
+      >
+        <div className="flex flex-col gap-2 py-3">
+          <form
+            className="border-b-2 flex flex-col gap-3 py-3"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <SectionTitle>
+              Detail Rencana Analis Kebutuhan Klien Oleh
+            </SectionTitle>
+            <Select
+              name="kebutuhan"
+              control={control}
+              placeholder="Pilih Jenis Kebutuhan"
+              label="Kebutuhan"
+              errors={errors}
+              errorLabel="Kebutuhan"
+              options={[
+                { label: "Pendidikan", value: "Pendidikan" },
+                { label: "Kesehatan", value: "Kesehatan" },
+                { label: "Ekonomi", value: "Ekonomi" },
+                { label: "Hukum", value: "Hukum" },
+              ]}
+              isRequired
+            />
+            {/* <InputText
             register={register}
             errors={errors}
             name="opd"
@@ -184,71 +190,85 @@ const FormRencanaRujukan = (props: FormModal) => {
             defaultValue={"Surabaya"}
             isRequired
             isDisabled
-          />
-          <InputText
-            register={register}
-            errors={errors}
-            name="layanan_yang_diberikan"
-            placeholder="Layanan yang Diberikan"
-            label="Layanan yang Diberikan"
-            isRequired
-          />
-          <PrimaryButton className="py-2" isSubmit>
-            Tambah Rencana Rujukan
-          </PrimaryButton>
-        </form>
-        <RRKKLoader
-          data={langkahs}
-          setData={setLangkahs}
-          key={langkahs.length}
-          id={laporan.id}
-        >
-          <div className="border-b-2 flex flex-col gap-3 py-3">
-            {langkahs.length > 0 ? (
-              langkahs.map((langkah, index) => (
-                <div
-                  key={index}
-                  className="shadow-md p-5 rounded gap-2 flex flex-col"
-                >
-                  <SectionTitle>{`Pelayanan ${index + 1}`}</SectionTitle>
-                  <DetailLaporanItem
-                    label="Kebutuhan"
-                    value={langkah.kebutuhan ? langkah.kebutuhan : "-"}
-                  />
-                  <DetailLaporanItem
-                    label="OPD"
-                    value={langkah.opd ? langkah.opd : "-"}
-                  />
-                  <DetailLaporanItem
-                    label="Layanan yang Diberikan"
-                    value={langkah.layanan_yang_diberikan? langkah.layanan_yang_diberikan: "-"}
-                  />
-                  <div className="flex flex-row-reverse items-end gap-3">
-                    <DeleteButton
-                      onClick={() => delLangkah(langkah.id)}
-                    ></DeleteButton>
+          /> */}
+            <Select
+              name="opd_id"
+              control={control}
+              placeholder="Pilih OPD"
+              label="OPD"
+              errors={errors}
+              errorLabel="OPD"
+              options={opdes.map((k) => ({
+                label: k.name,
+                value: k.id,
+              }))}
+              isRequired
+            />
+            <InputText
+              register={register}
+              errors={errors}
+              name="layanan_yang_diberikan"
+              placeholder="Layanan yang Diberikan"
+              label="Layanan yang Diberikan"
+              isRequired
+            />
+            <PrimaryButton className="py-2" isSubmit>
+              Tambah Rencana Rujukan
+            </PrimaryButton>
+          </form>
+          <RRKKLoader
+            data={langkahs}
+            setData={setLangkahs}
+            key={langkahs.length}
+            id={laporan.id}
+          >
+            <div className="border-b-2 flex flex-col gap-3 py-3">
+              {langkahs.length > 0 ? (
+                langkahs.map((langkah, index) => (
+                  <div
+                    key={index}
+                    className="shadow-md p-5 rounded gap-2 flex flex-col"
+                  >
+                    <SectionTitle>{`Pelayanan ${index + 1}`}</SectionTitle>
+                    <DetailLaporanItem
+                      label="Kebutuhan"
+                      value={langkah.kebutuhan ? langkah.kebutuhan : "-"}
+                    />
+                    <DetailLaporanItem
+                      label="OPD"
+                      value={langkah.opd ? langkah.opd.name : "-"}
+                    />
+                    <DetailLaporanItem
+                      label="Layanan yang Diberikan"
+                      value={langkah.layanan_yang_diberikan ? langkah.layanan_yang_diberikan : "-"}
+                    />
+                    <div className="flex flex-row-reverse items-end gap-3">
+                      <DeleteButton
+                        onClick={() => delLangkah(langkah.id)}
+                      ></DeleteButton>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
+                  <img
+                    src="/images/nodata.png"
+                    className=""
+                    width={300}
+                    alt="No Data illustration"
+                  />
+                  <b className="text-xl text-center text-primary">
+                    Rencana Rujukan Belum Ditambahkan
+                  </b>
                 </div>
-              ))
-            ) : (
-              <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
-                <img
-                  src="./images/nodata.png"
-                  className=""
-                  width={300}
-                  alt="No Data illustration"
-                />
-                <b className="text-xl text-center text-primary">
-                  Rencana Rujukan Belum Ditambahkan
-                </b>
-              </div>
-            )}
-          </div>
-        </RRKKLoader>
-        <PrimaryButton className="py-2" onClick={() => publishLangkah()}>
-          Publish Rencana Rujukan
-        </PrimaryButton>
-      </div>
+              )}
+            </div>
+          </RRKKLoader>
+          <PrimaryButton className="py-2" onClick={() => publishLangkah()}>
+            Publish Rencana Rujukan
+          </PrimaryButton>
+        </div>
+      </OPDLoader>
     </>
   );
 };

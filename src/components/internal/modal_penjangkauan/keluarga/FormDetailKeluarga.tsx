@@ -51,10 +51,10 @@ const FormKeluargaKlien = (props: FormModal) => {
         // ...laporan,
         status_keluarga: 2,
         updated_at_keluarga: format(
-        new Date(),
-        "yyyy-MM-dd HH:mm:ss"
-      ),
-      updated_by_keluarga: laporan.satgas_pelapor.id,
+          new Date(),
+          "yyyy-MM-dd HH:mm:ss"
+        ),
+        updated_by_keluarga: laporan.satgas_pelapor.id,
 
       };
       setIsLoading(true);
@@ -186,7 +186,7 @@ const FormKeluargaKlien = (props: FormModal) => {
               errorLabel="Hubungan"
               // options={[{ label: "Ayah Kandung", value: 1 }]}
               options={hubunganKeluarga.map((k) => ({
-                label: k.hubungan,
+                label: k.name,
                 value: k.id,
               }))}
               isRequired
@@ -229,8 +229,8 @@ const FormKeluargaKlien = (props: FormModal) => {
                     <DetailLaporanItem
                       label="Hubungan dengan Klien"
                       value={
-                        keluarga.hubungan?.hubungan
-                          ? keluarga.hubungan.hubungan
+                        keluarga.hubungan?.name
+                          ? keluarga.hubungan.name
                           : "-"
                       }
                     />

@@ -8,7 +8,7 @@ import { KondisiKlien } from "../consts/kondisi_klien"
 import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { Pelaku } from "../consts/pelaku"
-import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
+import { CreateAxiosInstance, CreatePublicAxiosInstance } from "../helpers/createAxiosInstance"
 import { LaporanByKategori, LaporanByKategoriRT } from "../consts/laporanByKategori"
 import { LangkahBadanDaerah, LangkahDP3A } from "../consts/langkahBadanDaerah"
 import { LangkahOPD } from "../consts/langkahOPD"
@@ -346,8 +346,8 @@ export const postKeluargaKlienStatus = async (
 };
 
 export const getHubunganKeluarga = async () => {
-  const instance = CreateAxiosInstance();
-  const res = await instance.get(`/hubungan-keluarga-kliens`);
+  const instance = CreatePublicAxiosInstance()
+  const res = await instance.get(`/m-hubungan`);
   const data = res.data.data as HubunganKeluarga[];
   return data;
 };
