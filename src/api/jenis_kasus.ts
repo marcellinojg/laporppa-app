@@ -1,10 +1,10 @@
 import { JenisKasus } from "../consts/jenis_kasus"
-import { CreateAxiosInstance } from "../helpers/createAxiosInstance"
+import { CreateAxiosInstance, CreatePublicAxiosInstance } from "../helpers/createAxiosInstance"
 
 
 export const getJenisKasuses = async () => {
-    const instance = CreateAxiosInstance()
-    const res = await instance.get('/jenis-kasuses')
+    const instance = CreatePublicAxiosInstance()
+    const res = await instance.get('/m-jenis-kasus')
     const jenisKasus = res.data.data as JenisKasus[]
     return jenisKasus
 }

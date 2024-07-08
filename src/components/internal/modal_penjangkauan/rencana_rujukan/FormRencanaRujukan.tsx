@@ -192,7 +192,7 @@ const FormRencanaRujukan = (props: FormModal) => {
             isDisabled
           /> */}
             <Select
-              name="opd_id"
+              name="opd"
               control={control}
               placeholder="Pilih OPD"
               label="OPD"
@@ -200,7 +200,7 @@ const FormRencanaRujukan = (props: FormModal) => {
               errorLabel="OPD"
               options={opdes.map((k) => ({
                 label: k.name,
-                value: k.id,
+                value: k.name,
               }))}
               isRequired
             />
@@ -236,7 +236,7 @@ const FormRencanaRujukan = (props: FormModal) => {
                     />
                     <DetailLaporanItem
                       label="OPD"
-                      value={langkah.opd ? langkah.opd.name : "-"}
+                      value={langkah.opd ? langkah.opd : "-"}
                     />
                     <DetailLaporanItem
                       label="Layanan yang Diberikan"

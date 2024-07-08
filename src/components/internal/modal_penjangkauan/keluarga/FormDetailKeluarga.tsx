@@ -229,8 +229,8 @@ const FormKeluargaKlien = (props: FormModal) => {
                     <DetailLaporanItem
                       label="Hubungan dengan Klien"
                       value={
-                        keluarga.hubungan?.name
-                          ? keluarga.hubungan.name
+                        keluarga.hubungan?.hubungan
+                          ? keluarga.hubungan.hubungan
                           : "-"
                       }
                     />

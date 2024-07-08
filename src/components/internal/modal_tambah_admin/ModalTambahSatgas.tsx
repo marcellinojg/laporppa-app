@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from "react";
 import useOutsideAlerter from "../../../hooks/useOutsideAlerter";
-import { UserAccount } from "../../../consts/user";
+import { User, UserAccount } from "../../../consts/user";
 import useLoader from "../../../hooks/useLoader";
 import { useAlert } from "../../../hooks/useAlert";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -12,8 +12,9 @@ import { Select } from "../../form/Dropdown";
 import { Role } from "../../../consts/role";
 import { Kelurahan } from "../../../consts/kelurahan";
 import { Kecamatan } from "../../../consts/kecamatan";
-import { KecamatanLoader, KelurahanLoader, RoleLoader } from "../../../helpers/fetchHelpers";
+import { KecamatanLoader, KelurahanLoader, RoleLoader, UserLoader } from "../../../helpers/fetchHelpers";
 import { REGEX } from "../../../consts/regex";
+import { useAuthUser } from "react-auth-kit";
 
 interface ModalTambahSatgasProps {
   setIsModalActive: Dispatch<SetStateAction<boolean>>;
@@ -22,6 +23,7 @@ interface ModalTambahSatgasProps {
 }
 
 const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
+  const userData = useAuthUser()() as User;
   const { setIsModalActive, userAccount, setRefetch } = props;
   const modalRef = useRef(null);
   useOutsideAlerter(modalRef, () => setIsModalActive(false));
@@ -43,6 +45,7 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
   const [selectedKecamatan, setSelectedKecamatan] = useState<number | null>(
     null
   );
+  const [user, setUser] = useState<UserAccount>()
 
   useEffect(() => {
     const kecamatanId = form.watch("kecamatan_id");
@@ -59,7 +62,7 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
     try {
       setIsLoading(true);
       showLoader();
-      (await patchUser(formatData, userAccount.id));
+      (await patchUser(formatData, userAccount.id)) as UserAccount;
       reset();
       addAlert({
         type: ALERT_TYPE.SUCCESS,
@@ -90,38 +93,39 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
           <RoleLoader data={roles} setData={setRoles}>
             <KecamatanLoader data={kecamatans} setData={setKecamatans}>
               <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                {/* <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md"> */}
-                <div className="grid grid-cols-1 gap-5">
-                  <div>
-                    <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl text-primary">
-                      Tambah Akun Satgas dan Admin
-                    </h1>
-                    <form action="" onSubmit={handleSubmit(onSubmit)}>
-                      <div className="flex flex-col">
-                        <InputSection title="">
-                          <InputText
-                            name="nama"
-                            register={register}
-                            placeholder="Masukkan Nama Lengkap"
-                            errorLabel="Nama Lengkap"
-                            errors={errors}
-                            label="Nama Lengkap"
-                            isRequired
-                            defaultValue={userAccount.nama}
-                          />
-                          <InputText
-                            name="no_telp"
-                            register={register}
-                            placeholder="Masukkan nomor telepon"
-                            errorLabel="Nomor Telepon"
-                            errors={errors}
-                            label="Nomor Telepon"
-                            isRequired
-                            regex={REGEX.PHONE_IDN}
-                            type="number"
-                            defaultValue={userAccount.no_telp.toString()}
-                          />
-                          <Select
+                <UserLoader data={user} setData={setUser} id={userData?.id}>
+                  {/* <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md"> */}
+                  <div className="grid grid-cols-1 gap-5">
+                    <div>
+                      <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl text-primary">
+                        Tambah Akun Satgas dan Admin
+                      </h1>
+                      <form action="" onSubmit={handleSubmit(onSubmit)}>
+                        <div className="flex flex-col">
+                          <InputSection title="">
+                            <InputText
+                              name="nama"
+                              register={register}
+                              placeholder="Masukkan Nama Lengkap"
+                              errorLabel="Nama Lengkap"
+                              errors={errors}
+                              label="Nama Lengkap"
+                              isRequired
+                              defaultValue={userAccount.nama}
+                            />
+                            <InputText
+                              name="no_telp"
+                              register={register}
+                              placeholder="Masukkan nomor telepon"
+                              errorLabel="Nomor Telepon"
+                              errors={errors}
+                              label="Nomor Telepon"
+                              isRequired
+                              regex={REGEX.PHONE_IDN}
+                              type="number"
+                              defaultValue={userAccount.no_telp.toString()}
+                            />
+                            {/* <Select
                             name="kecamatan_id"
                             control={control}
                             placeholder="Pilih kecamatan"
@@ -134,31 +138,32 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                                 label: k.name,
                                 value: k.id,
                               }))}
-                              defaultValue={userAccount?.kelurahan.id_kecamatan}
-                          />
-                          <Select
-                            isDisabled={
-                              selectedKecamatan
-                                ? false
-                                : userAccount?.kelurahan.id_kecamatan
-                                  ? false
-                                  : true
-                            }
-                            name="kelurahan_id"
-                            placeholder="Pilih kelurahan"
-                            label="Kelurahan Klien"
-                            control={control}
-                            errors={errors}
-                            errorLabel="Kelurahan"
-                            options={kelurahans
-                              .filter((k) => k.is_active === true && k.id_kecamatan === selectedKecamatan)
-                              .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
-                            defaultValue={userAccount?.kelurahan.id}
-                          />
-                          {/* <Select
+                            defaultValue={userAccount?.kelurahan.id_kecamatan}
+                          /> */}
+                            {/* <Select
+                              // isDisabled={
+                              //   selectedKecamatan
+                              //     ? false
+                              //     : userAccount?.kelurahan.id_kecamatan
+                              //       ? false
+                              //       : true
+                              // }
+                              name="kelurahan_id"
+                              placeholder="Pilih kelurahan"
+                              label="Kelurahan Tempat Bertugas"
+                              control={control}
+                              errors={errors}
+                              errorLabel="Kelurahan"
+                              options={kelurahans
+                                .filter((k) => k.is_active === true)
+                                .map((k) => ({
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
+                              defaultValue={userAccount?.kelurahan?.id}
+                              isRequired
+                            /> */}
+                            {/* <Select
                                 name="kecamatan_id"
                                 control={control}
                                 placeholder="Pilih Kecamatan tempat bertugas"
@@ -172,73 +177,67 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                                 isRequired
                                 defaultValue={userAccount.kelurahan.kecamatan?.id}
                               /> */}
-                          {/* <Select
-                                name="kelurahan_id"
-                                control={control}
-                                placeholder="Pilih Kelurahan tempat bertugas"
-                                label="Kelurahan Bertugas"
-                                errorLabel="Kelurahan"
-                                errors={errors}
-                                defaultValue={userAccount.kelurahan.id}
-                                options={kelurahans
-                                //   .filter(
-                                //     (k) => k.kecamatan?.id == selectedKecamatan
-                                //   )
-                                  .map((k) => ({
-                                    label: k.nama,
-                                    value: k.id,
-                                  }))}
-                                isRequired
-                                // isDisabled={isKelurahanDisabled}                        
-                              /> */}
-                          <Select
-                            name="role_id"
-                            control={control}
-                            placeholder="Pilih Role"
-                            label="Role"
-                            errorLabel="Role"
-                            errors={errors}
-                            defaultValue={userAccount.role.id}
-                            options={roles.map((r) => ({
-                              label: r.nama,
-                              value: r.id,
-                            }))}
-                            isRequired
-                          />
-                          <InputText
-                            name="username"
-                            register={register}
-                            placeholder="Masukkan username"
-                            errors={errors}
-                            label="Username"
-                            isRequired
-                            defaultValue={userAccount.username}
-                          />
-                        </InputSection>
-                      </div>
-                      {/* Footer */}
-                      <div className="grid grid-cols-1 border-t-2 border-slate-400 pt-5 gap-3">
-                        <SecondaryButton
-                          className="py-2"
-                          isLoading={isLoading}
-                          isDisabled={isLoading}
-                          onClick={() => setIsModalActive(false)}
-                        >
-                          Batal
-                        </SecondaryButton>
-                        <PrimaryButton
-                          className="py-2"
-                          isLoading={isLoading}
-                          isDisabled={isLoading}
-                          isSubmit
-                        >
-                          Edit Satgas / Admin Kelurahan
-                        </PrimaryButton>
-                      </div>
-                    </form>
+                            <InputText
+                              name="kelurahan"
+                              register={register}
+                              placeholder="Kelurahan Tempat Bertugas"
+                              errorLabel="Kelurahan Tempat Bertugas"
+                              errors={errors}
+                              label="Kelurahan Tempat Bertugas"
+                              defaultValue={user?.kelurahan.nama}
+                              isDisabled
+                              isRequired
+                            // defaultValue={laporanEdit?.alamat_pelapor}
+                            />
+                            <Select
+                              name="role_id"
+                              control={control}
+                              placeholder="Pilih Role"
+                              label="Role"
+                              errorLabel="Role"
+                              errors={errors}
+                              defaultValue={userAccount.role.id}
+                              options={roles.map((r) => ({
+                                label: r.nama,
+                                value: r.id,
+                              }))}
+                              isRequired
+                            />
+                            <InputText
+                              name="username"
+                              register={register}
+                              placeholder="Masukkan username"
+                              errors={errors}
+                              label="Username"
+                              isRequired
+                              defaultValue={userAccount.username}
+                            />
+                          </InputSection>
+                        </div>
+                        {/* Footer */}
+                        <div className="grid grid-cols-1 border-t-2 border-slate-400 pt-5 gap-3">
+                          <SecondaryButton
+                            className="py-2"
+                            isLoading={isLoading}
+                            isDisabled={isLoading}
+                            onClick={() => setIsModalActive(false)}
+                          >
+                            Batal
+                          </SecondaryButton>
+                          <PrimaryButton
+                            className="py-2"
+                            isLoading={isLoading}
+                            isDisabled={isLoading}
+                            isSubmit
+                          >
+                            Edit Satgas / Admin Kelurahan
+                          </PrimaryButton>
+                        </div>
+                      </form>
+                    </div>
                   </div>
-                </div>
-                {/* </div> */}
+                  {/* </div> */}
+                </UserLoader>
               </KelurahanLoader>
             </KecamatanLoader>
           </RoleLoader>{" "}
