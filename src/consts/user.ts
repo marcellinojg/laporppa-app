@@ -11,7 +11,7 @@ export interface User {
     token: string,
     name: string,
     role: string,
-    username: string,
+    username: string
 }
 
 export interface UserAccount {

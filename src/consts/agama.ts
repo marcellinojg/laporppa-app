@@ -1,4 +1,5 @@
 export interface Agama {
-    id: number
-    nama: string
+    id: number,
+    name: string,
+    is_active: boolean
 }

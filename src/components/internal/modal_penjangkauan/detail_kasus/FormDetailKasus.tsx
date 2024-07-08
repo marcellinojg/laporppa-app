@@ -7,7 +7,7 @@ import Datepicker from "../../../form/Datepicker";
 // import useLoader from "../../../../hooks/useLoader";
 import TimePicker from "../../../form/Timepicker";
 import { combineDateAndTimePelaporan } from "../../../../helpers/formatDate";
-import { SetStateAction, useState, Dispatch } from "react";
+import { SetStateAction, useState, Dispatch, useEffect } from "react";
 import { format } from "date-fns";
 import useLoader from "../../../../hooks/useLoader";
 import {
@@ -57,6 +57,14 @@ const FormDetailKasus = (props: FormModal) => {
     control,
     reset,
   } = form;
+  const [selectedKategoriKasus, setSelectedKategoriKasus] = useState<number | null>(null)
+  const [isJenisKasusDisabled, setIsJenisKasusDisabled] = useState<boolean>(true)
+
+  useEffect(() => {
+    const kategoriKasusId = form.watch("kategori_kasus_id");
+    setSelectedKategoriKasus(kategoriKasusId || null);
+    setIsJenisKasusDisabled(!kategoriKasusId);
+  }, [form.watch("kategori_kasus_id")]);
 
   const onSubmit: SubmitHandler<DetailKasus> = async (data: DetailKasus) => {
     // console.log(data);
@@ -74,8 +82,8 @@ const FormDetailKasus = (props: FormModal) => {
       setIsLoading(true);
       showLoader();
       if (
-        laporan.detail_kasus?.kategori_kasus.nama != null ||
-        laporan.detail_kasus?.jenis_kasus.nama != null ||
+        laporan.detail_kasus?.kategori_kasus.name != null ||
+        laporan.detail_kasus?.jenis_kasus.name != null ||
         laporan.detail_kasus?.lokasi_kasus != null ||
         laporan.detail_kasus?.tanggal_jam_kejadian != null
       ) {
@@ -126,60 +134,63 @@ const FormDetailKasus = (props: FormModal) => {
           setData={setKategoriKasues}
         >
           <LokasiKejadianLoader
-          data={lokasiKejadians}
-          setData={setlokasiKejadians}
+            data={lokasiKejadians}
+            setData={setlokasiKejadians}
           >
-          <div className="flex flex-col gap-2 py-3">
-            <form
-              className="flex flex-col gap-3 py-3"
-              action=""
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <div className="border-b-2 flex flex-col gap-3 py-3">
-                <Select
-                  name="kategori_kasus_id"
-                  control={control}
-                  placeholder="Pilih Kategori Kasus"
-                  label="Kategori Kasus"
-                  errors={errors}
-                  errorLabel="Kategori Kasus"
-                  options={kategoriKasues
-                    .filter((k) => k.is_active === true && k.id_tipe_permasalahan === laporan.kategori.id)
-                    .map((k) => ({
-                    label: k.name,
-                    value: k.id,
-                  }))}
-                  defaultValue={laporan?.detail_kasus?.kategori_kasus?.id}
-                  isRequired
-                />
-                <Select
-                  name="jenis_kasus_id"
-                  control={control}
-                  placeholder="Pilih Jenis Kasus"
-                  label="Jenis Kasus"
-                  errors={errors}
-                  errorLabel="Jenis Kasus"
-                  options={jenisKasus.map((k) => ({
-                    label: k.nama,
-                    value: k.id,
-                  }))}
-                  defaultValue={laporan?.detail_kasus?.jenis_kasus?.id}
-                  isRequired
-                />
-                <Select
-                  name="lokasi_kejadian_id"
-                  control={control}
-                  placeholder="Pilih Lokasi Kejadian"
-                  label="Lokasi Kejadian"
-                  errors={errors}
-                  errorLabel="Lokasi Kejadian"
-                  options={lokasiKejadians.map((k) => ({
-                    label: k.name,
-                    value: k.id,
-                  }))}
-                  defaultValue={laporan?.detail_kasus?.lokasi_kasus}
-                />
-                {/* <InputText
+            <div className="flex flex-col gap-2 py-3">
+              <form
+                className="flex flex-col gap-3 py-3"
+                action=""
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <div className="border-b-2 flex flex-col gap-3 py-3">
+                  <Select
+                    name="kategori_kasus_id"
+                    control={control}
+                    placeholder="Pilih Kategori Kasus"
+                    label="Kategori Kasus"
+                    errors={errors}
+                    errorLabel="Kategori Kasus"
+                    options={kategoriKasues
+                      .filter((k) => k.is_active === true && k.id_tipe_permasalahan === laporan.kategori.id)
+                      .map((k) => ({
+                        label: k.name,
+                        value: k.id,
+                      }))}
+                    defaultValue={laporan?.detail_kasus?.kategori_kasus?.id}
+                    isRequired
+                  />
+                  <Select
+                    name="jenis_kasus_id"
+                    control={control}
+                    placeholder="Pilih Jenis Kasus"
+                    label="Jenis Kasus"
+                    errors={errors}
+                    errorLabel="Jenis Kasus"
+                    options={jenisKasus
+                      .filter((k) => k.is_active === true && k.id_kategori_kasus === selectedKategoriKasus)
+                      .map((k) => ({
+                        label: k.name,
+                        value: k.id,
+                      }))}
+                    defaultValue={laporan?.detail_kasus?.jenis_kasus?.id}
+                    isDisabled={isJenisKasusDisabled}
+                    isRequired
+                  />
+                  <Select
+                    name="lokasi_kasus"
+                    control={control}
+                    placeholder="Pilih Lokasi Kejadian"
+                    label="Lokasi Kejadian"
+                    errors={errors}
+                    errorLabel="Lokasi Kejadian"
+                    options={lokasiKejadians.map((k) => ({
+                      label: k.name,
+                      value: k.name,
+                    }))}
+                    defaultValue={laporan?.detail_kasus?.lokasi_kasus}
+                  />
+                  {/* <InputText
                   register={register}
                   errors={errors}
                   name="lokasi_kasus"
@@ -188,29 +199,29 @@ const FormDetailKasus = (props: FormModal) => {
                   defaultValue={laporan.detail_kasus?.lokasi_kasus}
                   isRequired
                 /> */}
-                <Datepicker
-                  name="tanggal_jam_kejadian"
-                  control={control}
-                  defaultValue={
-                    laporan.detail_kasus?.tanggal_jam_kejadian
-                      ? new Date(laporan.detail_kasus.tanggal_jam_kejadian)
-                      : null
-                  }
-                  placeholder="Tanggal Jam Kejadian"
-                  label="Tanggal Jam Kejadian"
-                  isRequired
-                />
-              </div>
-              <PrimaryButton className="py-2" isSubmit>
-                {laporan.detail_kasus?.kategori_kasus.name != null ||
-                laporan.detail_kasus?.jenis_kasus.nama != null ||
-                laporan.detail_kasus?.lokasi_kasus != null ||
-                laporan.detail_kasus?.tanggal_jam_kejadian != null
-                  ? "Edit Detail Kasus Klien"
-                  : "Tambahkan Detail Kasus Klien"}
-              </PrimaryButton>
-            </form>
-          </div>
+                  <Datepicker
+                    name="tanggal_jam_kejadian"
+                    control={control}
+                    defaultValue={
+                      laporan.detail_kasus?.tanggal_jam_kejadian
+                        ? new Date(laporan.detail_kasus.tanggal_jam_kejadian)
+                        : null
+                    }
+                    placeholder="Tanggal Jam Kejadian"
+                    label="Tanggal Jam Kejadian"
+                    isRequired
+                  />
+                </div>
+                <PrimaryButton className="py-2" isSubmit>
+                  {laporan.detail_kasus?.kategori_kasus.name != null ||
+                    laporan.detail_kasus?.jenis_kasus.name != null ||
+                    laporan.detail_kasus?.lokasi_kasus != null ||
+                    laporan.detail_kasus?.tanggal_jam_kejadian != null
+                    ? "Edit Detail Kasus Klien"
+                    : "Tambahkan Detail Kasus Klien"}
+                </PrimaryButton>
+              </form>
+            </div>
           </LokasiKejadianLoader>
         </KategoriKasusesLoader>
       </JenisKasusesLoader>

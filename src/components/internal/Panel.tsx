@@ -171,7 +171,7 @@ export const FilterPanel = (props: PanelFilter) => {
             errors={errors}
             errorLabel="Kelurahan"
             options={kelurahans.map((k) => ({
-              label: k.nama,
+              label: k.name,
               value: k.id,
             }))}
             defaultValue={selectedKelurahans}
@@ -242,13 +242,13 @@ export const BarChartPanel = (props: PanelBar) => {
         {
           tempSerieses[i]
             ? tempSerieses[i].data.push(
-                laporansByKategori[i].count_total[j].count
-              )
+              laporansByKategori[i].count_total[j].count
+            )
             : tempSerieses.push({
-                data: [laporansByKategori[i].count_total[j].count],
-                color: color[i % 2],
-                label: laporansByKategori[i].kategori_nama.toString(),
-              });
+              data: [laporansByKategori[i].count_total[j].count],
+              color: color[i % 2],
+              label: laporansByKategori[i].kategori_nama.toString(),
+            });
         }
       }
     }

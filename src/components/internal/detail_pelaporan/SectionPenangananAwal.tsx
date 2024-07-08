@@ -66,9 +66,9 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
             value={
               laporan.penanganan_awal?.tanggal_penanganan_awal
                 ? formatDate(
-                    laporan.penanganan_awal.tanggal_penanganan_awal.toString(),
-                    true
-                  )
+                  laporan.penanganan_awal.tanggal_penanganan_awal.toString(),
+                  true
+                )
                 : ""
             }
           />
@@ -88,18 +88,18 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
               laporan.satgas_pelapor.id === userData.id &&
               laporan.status.id === 2 && (
                 <button
-                onClick={isDisabled ?
-                  () => addAlert({
-                          type: ALERT_TYPE.WARNING,
-                          title: "Tidak Dapat Menambah Dokumen Pendukung !",
-                          message: `Harap isi waktu penanganan awal terlebih dahulu !`,
-                        }) :
-                  () => setIsModalActiveDokumenPendukung(true)
-                }
+                  onClick={isDisabled ?
+                    () => addAlert({
+                      type: ALERT_TYPE.WARNING,
+                      title: "Tidak Dapat Menambah Dokumen Pendukung !",
+                      message: `Harap isi waktu penanganan awal terlebih dahulu !`,
+                    }) :
+                    () => setIsModalActiveDokumenPendukung(true)
+                  }
                   type="button"
                   className="text-[12px] bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition duration-300"
-                  // disabled={isDisabled}
-              >
+                // disabled={isDisabled}
+                >
                   Tambahkan/Edit Dokumen Pendukung
                 </button>
               )}
@@ -126,7 +126,7 @@ const SectionPenangananAwal = (props: SectionPenganganAwalProps) => {
       )}
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-1">
-          <DetailLaporanItem label= "" value={laporan.penanganan_awal?.dokumen_pendukung ? laporan.penanganan_awal?.dokumen_pendukung : '-'}/>
+        <DetailLaporanItem label="" value={laporan.penanganan_awal?.dokumen_pendukung ? laporan.penanganan_awal?.dokumen_pendukung : '-'} />
       </div>
     </>
   );

@@ -30,7 +30,7 @@ export interface Penjadwalan {
 }
 
 const FormPenjadwalan = (props: FormModal) => {
-  const { mode, laporan, setRefetch, setIsModalActive} = props;
+  const { mode, laporan, setRefetch, setIsModalActive } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showLoader, hideLoader } = useLoader();
   const form = useForm<Penjadwalan>();
@@ -129,10 +129,10 @@ const FormPenjadwalan = (props: FormModal) => {
               defaultValue={
                 laporan.penjadwalan?.tanggal_jam
                   ? `${String(
-                      new Date(laporan.penjadwalan?.tanggal_jam).getHours()
-                    ).padStart(2, "0")}:${String(
-                      new Date(laporan.penjadwalan?.tanggal_jam).getMinutes()
-                    ).padStart(2, "0")}`
+                    new Date(laporan.penjadwalan?.tanggal_jam).getHours()
+                  ).padStart(2, "0")}:${String(
+                    new Date(laporan.penjadwalan?.tanggal_jam).getMinutes()
+                  ).padStart(2, "0")}`
                   : undefined
               }
               placeholder="Jam Penjadwalan"
@@ -160,8 +160,8 @@ const FormPenjadwalan = (props: FormModal) => {
           </div>
           <PrimaryButton className="py-2" isSubmit>
             {laporan.penjadwalan?.alamat != null ||
-            laporan.penjadwalan?.alamat != null ||
-            laporan.penjadwalan?.tanggal_jam != null
+              laporan.penjadwalan?.alamat != null ||
+              laporan.penjadwalan?.tanggal_jam != null
               ? "Edit Penjadwalan"
               : "Tambahkan Penjadwalan"}
           </PrimaryButton>

@@ -3,7 +3,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import { InputText } from "../../components/form/Input";
 import { PrimaryButton } from "../../components/form/Button";
 import { Select } from "../../components/form/Dropdown";
-import { UserAccount } from "../../consts/user";
+import { User, UserAccount } from "../../consts/user";
 import { useAlert } from "../../hooks/useAlert";
 import { useLocalStorage } from "usehooks-ts";
 import { ReactNode, useEffect, useState } from "react";
@@ -13,14 +13,16 @@ import { ALERT_TYPE } from "../../consts/alert";
 import { Role } from "../../consts/role";
 import { Kelurahan } from "../../consts/kelurahan";
 import { REGEX } from "../../consts/regex";
-import { KecamatanLoader, KelurahanLoader, RoleLoader, UsersLoader } from "../../helpers/fetchHelpers";
+import { KecamatanLoader, KelurahanLoader, RoleLoader, UserLoader, UsersLoader } from "../../helpers/fetchHelpers";
 import { AktifkanButton, EditUserButton, NonAktifkanButton, UpdatePasswordButton } from "../../components/form/UserActionButton";
 import AutosaveFormEffect from "../../helpers/formSaveHelpers";
 import { Kecamatan } from "../../consts/kecamatan";
 import ModalTambahSatgas from "../../components/internal/modal_tambah_admin/ModalTambahSatgas";
 import ModalUpdatePassword from "../../components/internal/modal_tambah_admin/ModalUpdatePassword";
+import { useAuthUser } from "react-auth-kit";
 
 const TambahSatgasAdmin = () => {
+  const userData = useAuthUser()() as User;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formState, setFormState] = useLocalStorage<string | null>(
     "form_internal_state",
@@ -41,6 +43,7 @@ const TambahSatgasAdmin = () => {
   } = form;
   const { errorFetchAlert, addAlert } = useAlert();
   const { showLoader, hideLoader } = useLoader();
+  const [userAccount, setUserAccount] = useState<UserAccount>()
   const [roles, setRoles] = useState<Role[]>([])
   const [kelurahans, setKelurahans] = useState<Kelurahan[]>([])
   const [kecamatans, setKecamatans] = useState<Kecamatan[]>([]);
@@ -85,6 +88,7 @@ const TambahSatgasAdmin = () => {
     else {
       const formatData: UserAccount = {
         ...data,
+        kelurahan_id: userAccount?.kelurahan?.id
       };
 
       try {
@@ -131,12 +135,13 @@ const TambahSatgasAdmin = () => {
           <RoleLoader data={roles} setData={setRoles}>
             <KecamatanLoader data={kecamatans} setData={setKecamatans}>
               <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                <AutosaveFormEffect
-                  setValue={setValue}
-                  watch={watch}
-                  formState={formState}
-                  setFormState={setFormState}
-                >
+                <UserLoader data={userAccount} setData={setUserAccount} id={userData?.id}>
+                  {/* <AutosaveFormEffect
+                    setValue={setValue}
+                    watch={watch}
+                    formState={formState}
+                    setFormState={setFormState}
+                  > */}
                   <div className="md:w-10/12 w-11/12 floating-shadow-md py-12 px-10 mx-auto mt-12 bg-white rounded-md">
                     <div className="grid grid-cols-1 gap-5">
                       <div>
@@ -200,7 +205,7 @@ const TambahSatgasAdmin = () => {
                                 isRequired
                                 // isDisabled={isKelurahanDisabled}
                               /> */}
-                              <Select
+                              {/* <Select
                                 name="kecamatan_id"
                                 control={control}
                                 placeholder="Pilih kecamatan"
@@ -213,26 +218,18 @@ const TambahSatgasAdmin = () => {
                                     label: k.name,
                                     value: k.id,
                                   }))}
-                              />
-                              <Select
-                                isDisabled={
-                                  selectedKecamatan
-                                    ? false
-                                    : true
-                                }
-                                name="kelurahan_id"
-                                placeholder="Pilih kelurahan"
-                                label="Kelurahan Klien"
-                                control={control}
+                              /> */}
+                              <InputText
+                                name="kelurahan"
+                                register={register}
+                                placeholder="Kelurahan Tempat Bertugas"
+                                errorLabel="Kelurahan Tempat Bertugas"
                                 errors={errors}
-                                errorLabel="Kelurahan"
-                                options={kelurahans
-                                  .filter((k) => k.is_active === true && k.id_kecamatan === selectedKecamatan)
-                                  .map((k) => ({
-                                    label: k.name,
-                                    value: k.id,
-                                  }))}
-                              // defaultValue={userAccount?.kelurahan.id}
+                                label="Kelurahan Tempat Bertugas"
+                                defaultValue={userAccount?.kelurahan.nama}
+                                isDisabled
+                                isRequired
+                              // defaultValue={laporanEdit?.alamat_pelapor}
                               />
                               <Select
                                 name="role_id"
@@ -312,91 +309,94 @@ const TambahSatgasAdmin = () => {
                               <th className="py-4 px-2 border-r-[2px]">Aksi</th>
                             </tr>
                           </thead>
-                          {users.map((user: UserAccount) => (
-                            <tbody key={user.id}>
-                              <tr className="border-b-2 border-slate-300 text-center text-sm">
-                                <td className="py-4 px-2 border-x-[2px]">
-                                  <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-1 text-start">
-                                      <span>{user.nama || "-"}</span>
-                                      <span className="text-slate-400">
-                                        {user.no_telp || "-"}
-                                      </span>
+                          {users
+                            .filter((user) => user.kelurahan.id === userAccount?.kelurahan?.id)
+                            .map((user: UserAccount) => (
+                              <tbody key={user.id}>
+                                <tr className="border-b-2 border-slate-300 text-center text-sm">
+                                  <td className="py-4 px-2 border-x-[2px]">
+                                    <div className="flex flex-col gap-2">
+                                      <div className="flex flex-col gap-1 text-start">
+                                        <span>{user.nama || "-"}</span>
+                                        <span className="text-slate-400">
+                                          {user.no_telp || "-"}
+                                        </span>
+                                      </div>
                                     </div>
-                                  </div>
-                                </td>
-                                <td className="py-4 px-2 border-r-[2px]">
-                                  <div className="flex flex-col gap-1 text-start">
-                                    <span>{user.role.nama || "-"}</span>
-                                    {/* <span className="text-slate-400">
+                                  </td>
+                                  <td className="py-4 px-2 border-r-[2px]">
+                                    <div className="flex flex-col gap-1 text-start">
+                                      <span>{user.role.nama || "-"}</span>
+                                      {/* <span className="text-slate-400">
                                       {user.kelurahan.name || "-"}
                                     </span> */}
-                                  </div>
-                                </td>
-                                <td className="py-4 px-3 border-r-[2px] w-auto lg:max-w-[100px]">
-                                  <div className="flex flex-col gap-2">
-                                    {user.is_active == "1" ? (
-                                      <button
-                                        type="button"
-                                        onClick={() => { }}
-                                        className={`p-2 px-1 text-center text-xs rounded-full bg-green-200`}
-                                      >
-                                        <span
-                                          className={`font-bold text-green-600`}
+                                    </div>
+                                  </td>
+                                  <td className="py-4 px-3 border-r-[2px] w-auto lg:max-w-[100px]">
+                                    <div className="flex flex-col gap-2">
+                                      {user.is_active == "1" ? (
+                                        <button
+                                          type="button"
+                                          onClick={() => { }}
+                                          className={`p-2 px-1 text-center text-xs rounded-full bg-green-200`}
                                         >
-                                          Aktif
-                                        </span>
-                                      </button>
-                                    ) : (
-                                      <button
-                                        type="button"
-                                        onClick={() => { }}
-                                        className={`min-w-[70px] p-2 px-1 text-center text-xs rounded-full bg-red-200`}
-                                      >
-                                        <span
-                                          className={`font-bold text-red-600`}
+                                          <span
+                                            className={`font-bold text-green-600`}
+                                          >
+                                            Aktif
+                                          </span>
+                                        </button>
+                                      ) : (
+                                        <button
+                                          type="button"
+                                          onClick={() => { }}
+                                          className={`min-w-[70px] p-2 px-1 text-center text-xs rounded-full bg-red-200`}
                                         >
-                                          Tidak Aktif
-                                        </span>
-                                      </button>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
-                                  <div className="flex flex-col gap-2">
-                                    <EditUserButton
-                                      user={user}
-                                      setRefetch={setRefetch}
-                                      setCurUserAccount={setCurUserAccount}
-                                      setIsModalActive={setIsModalActive}
-                                    />
-                                    <UpdatePasswordButton
-                                      user={user}
-                                      setRefetch={setRefetch}
-                                      setCurUserAccount={setCurUserAccount}
-                                      setIsModalActive={setIsModalUpdatePasswordActive}
-                                    />
-                                    {user.is_active == "1" ? (
-                                      <NonAktifkanButton
+                                          <span
+                                            className={`font-bold text-red-600`}
+                                          >
+                                            Tidak Aktif
+                                          </span>
+                                        </button>
+                                      )}
+                                    </div>
+                                  </td>
+                                  <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
+                                    <div className="flex flex-col gap-2">
+                                      <EditUserButton
                                         user={user}
                                         setRefetch={setRefetch}
+                                        setCurUserAccount={setCurUserAccount}
+                                        setIsModalActive={setIsModalActive}
                                       />
-                                    ) : (
-                                      <AktifkanButton
+                                      <UpdatePasswordButton
                                         user={user}
                                         setRefetch={setRefetch}
+                                        setCurUserAccount={setCurUserAccount}
+                                        setIsModalActive={setIsModalUpdatePasswordActive}
                                       />
-                                    )}
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          ))}
+                                      {user.is_active == "1" ? (
+                                        <NonAktifkanButton
+                                          user={user}
+                                          setRefetch={setRefetch}
+                                        />
+                                      ) : (
+                                        <AktifkanButton
+                                          user={user}
+                                          setRefetch={setRefetch}
+                                        />
+                                      )}
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            ))}
                         </table>
                       </div>
                     </div>
                   </div>
-                </AutosaveFormEffect>
+                  {/* </AutosaveFormEffect> */}
+                </UserLoader>
               </KelurahanLoader>
             </KecamatanLoader>
           </RoleLoader>

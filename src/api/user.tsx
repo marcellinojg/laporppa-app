@@ -33,3 +33,10 @@ export const patchUser = async (data: any, id: string) => {
     const patchedUser = res.data.data as UserAccount
     return patchedUser
 }
+
+export const getUser = async (id: string) => {
+    const instance = CreateAxiosInstance()
+    const res = await instance.get(`/users/${id}`)
+    const user = res.data.data as UserAccount
+    return user
+}

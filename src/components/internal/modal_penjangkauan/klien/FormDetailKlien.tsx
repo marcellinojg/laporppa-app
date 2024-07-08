@@ -245,9 +245,9 @@ const FormDetailKlien = (props: FormModal) => {
                               options={kecamatans
                                 .filter((k) => k.is_active === true && k.id_kabupaten === 1)
                                 .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
                               defaultValue={
                                 laporan?.detail_klien?.kecamatan?.id
                               }
@@ -282,9 +282,9 @@ const FormDetailKlien = (props: FormModal) => {
                               options={kecamatans
                                 .filter((k) => k.is_active === true && k.id_kabupaten === 1)
                                 .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
                               defaultValue={
                                 laporan?.detail_klien?.kecamatan_kk?.id
                               }
@@ -421,7 +421,7 @@ const FormDetailKlien = (props: FormModal) => {
                               defaultValue={laporan.detail_klien?.agama.id}
                               errorLabel="Agama"
                               options={agamas.map((k) => ({
-                                label: k.nama,
+                                label: k.name,
                                 value: k.id,
                               }))}
                               isRequired
@@ -438,9 +438,9 @@ const FormDetailKlien = (props: FormModal) => {
                               options={pekerjaans
                                 .filter((k) => k.is_active === true)
                                 .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
                               isRequired
                             />
                             <InputText
@@ -500,9 +500,9 @@ const FormDetailKlien = (props: FormModal) => {
                               options={pendidikans
                                 .filter((k) => k.is_active === true)
                                 .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
                               isRequired
                             />
                             <InputText
