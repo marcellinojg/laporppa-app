@@ -15,6 +15,7 @@ import DetailPelaporan from "../pages/internal/DetailPelaporan"
 import EditPelaporan from "../pages/internal/EditPelaporan"
 import TambahSatgasAdmin from "../pages/internal/TambahAdminSatgas"
 import CetakRekap from "../pages/internal/CetakRekap"
+import CetakKasusKlien from "../pages/internal/CetakKasusKlien"
 
 const RoutesComponents = () => {
     return <Routes>
@@ -72,6 +73,10 @@ const RoutesComponents = () => {
             <Route
                 path={ROUTES.INTERNAL.CETAK_REKAP}
                 element={<CetakRekap />}
+            />
+            <Route
+                path={ROUTES.INTERNAL.CETAK_KASUS_KLIEN}
+                element={<CetakKasusKlien />}
             />
             <Route
                 path={ROUTES.INTERNAL.EDIT_LAPORAN}

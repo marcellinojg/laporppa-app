@@ -1,16 +1,23 @@
-import { FaChartLine, FaFileAlt, FaPlus, FaPrint, FaTimes, FaUsers } from "react-icons/fa"
+import { FaChartLine, FaFileAlt, FaPlus, FaPrint, FaTimes, FaUsers, FaList } from "react-icons/fa"
 import { ROUTES } from "../../consts/routes"
 import { Link, useLocation } from "react-router-dom"
 import { SidebarItemProps, SidebarProps } from "../../consts/sidebar"
 import { ROLE } from "../../consts/role"
 import { User } from "../../consts/user";
 import { useAuthUser } from "react-auth-kit";
+import { useState } from "react";
 
 
 
 const Sidebar = (props: SidebarProps) => {
     const { sidebarRef, sidebarActive, setSidebarActive } = props
     const userData = useAuthUser()() as User
+    const [accordionOpen, setAccordionOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<string | null>(null); 
+
+    const handleAccordionClick = () => {
+        setAccordionOpen(!accordionOpen);
+    };
 
     return <>
 
@@ -54,11 +61,34 @@ const Sidebar = (props: SidebarProps) => {
                     Icon={FaUsers}
                     to={ROUTES.INTERNAL.TAMBAH_SATGAS}
                 />
-                <SidebarItem
-                    label="Cetak Rekap Laporan"
-                    Icon={FaPrint}
-                    to={ROUTES.INTERNAL.CETAK_REKAP}
-                />
+                 <div>
+                        <button
+                            className="p-6 text-black flex gap-3 items-center hover:bg-gray-200 transition duration-300 font-bold w-full"
+                            onClick={() => setAccordionOpen(!accordionOpen)}
+                        >
+                            <span className="text-2xl">
+                                <FaPrint />
+                            </span>
+                            <span>Cetak Laporan</span>
+                            <span className="ml-auto">
+                                {accordionOpen ? <FaTimes /> : <FaPlus />}
+                            </span>
+                        </button>
+                        {accordionOpen && (
+                            <div className="ml-6">
+                                <SidebarItem
+                                    label="Laporan Rekap"
+                                    Icon={FaList}
+                                    to={ROUTES.INTERNAL.CETAK_REKAP}
+                                />
+                                <SidebarItem
+                                    label="Laporan Kasus Klien"
+                                    Icon={FaList}
+                                    to={ROUTES.INTERNAL.CETAK_KASUS_KLIEN}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </>
                 )}
                  
