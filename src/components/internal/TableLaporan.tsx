@@ -45,7 +45,7 @@ const TableLaporan = (props: TableLaporan) => {
                                         </div>
                                         <div className="flex flex-col gap-1 text-start">
                                             <span>{laporan.alamat_klien}</span>
-                                            <span className="text-slate-400">{laporan.kelurahan.nama}, {laporan.kelurahan.kecamatan?.nama}</span>
+                                            <span className="text-slate-400">{laporan?.kelurahan?.nama}, {laporan.kelurahan?.kecamatan?.nama}</span>
                                         </div>
                                     </div>
                                 </td>

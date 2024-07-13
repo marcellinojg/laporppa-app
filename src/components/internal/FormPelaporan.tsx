@@ -27,6 +27,12 @@ interface InputSectionProps {
   children: ReactNode
 }
 
+const extractHourAndMinute = (dateTimeString: string): string => {
+  const timePart = dateTimeString.split(' ')[1];
+  const [hour, minute] = timePart.split(':');
+  return `${hour}:${minute}`;
+};
+
 const FormPelaporan = (props: FormPelaporanProps) => {
   const { onSubmit, isLoading, form, kecamatan, kelurahan, kategori, laporanEdit } = props
   const [selectedKecamatan, setSelectedKecamatan] = useState<number | string>()
@@ -35,7 +41,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
 
 
   useEffect(() => {
-    if (laporanEdit)
+    if (laporanEdit?.kelurahan?.kecamatan?.id)
       setSelectedKecamatan(laporanEdit.kelurahan.kecamatan.id)
     const subscription = watch((value) => {
       setSelectedKecamatan(value.kecamatan_id)
@@ -77,7 +83,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             register={register}
             isRequired
             defaultValue={laporanEdit?.tanggal_jam_pengaduan
-              ? laporanEdit.tanggal_jam_pengaduan.split(' ')[1]
+              ? extractHourAndMinute(laporanEdit.tanggal_jam_pengaduan)
               : ''}
             placeholder="Masukkan jam pengaduan"
             label="Jam Pengaduan"
@@ -172,7 +178,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             isDisabled={
               selectedKecamatan
                 ? false
-                : laporanEdit?.kelurahan.id_kecamatan
+                : laporanEdit?.kelurahan?.kecamatan?.id
                   ? false
                   : true
             }
