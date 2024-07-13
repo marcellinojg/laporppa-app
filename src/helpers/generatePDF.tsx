@@ -61,7 +61,8 @@ function generate(data:any){
 
     // var dokumen_pendukung ={}; 
     const laporanData = checkGetDataExist(data['dokumen_pendukung']['dokumen_pendukung']);
-    console.log(laporanData);
+    console.log(checkExist(pengaduan['hari']))
+    //console.log(laporanData);
 
 
 
@@ -94,7 +95,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ checkExist(pengaduan['hari']) +`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(pengaduan['hari'])+`</p>
                 </td>
                 <td rowspan="2" style=" border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">PETUGAS 1</p>
@@ -159,7 +160,7 @@ function generate(data:any){
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">HARI</p>
                 </td>
                 <td style="width:52.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+ checkExist(penanganan_awal['hari'])+`</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">`+checkExist(penanganan_awal['hari'])+`</p>
                 </td>
                 <td rowspan="3" style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">TANGGAL PENJANGKAUAN/ KONSELING</p>
@@ -1004,7 +1005,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">&nbsp;</p>
                 </td>
                 <td style="width:223pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><u>Tomi Ardiyanto, AP, S.Sos, M.Si.</u></p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><u></u></p>
                 </td>
             </tr>
             <tr>
@@ -1012,7 +1013,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">&nbsp;</p>
                 </td>
                 <td style="width:223pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">Pembina Utama Muda</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"></p>
                 </td>
             </tr>
             <tr>
@@ -1020,7 +1021,7 @@ table_keluarga_klien+=`</tbody>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;">&nbsp;</p>
                 </td>
                 <td style="width:223pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">NIP. 197304271993111001</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">NIP. ______________________</p>
                 </td>
             </tr>
         </tbody>

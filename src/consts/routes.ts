@@ -6,7 +6,9 @@ export const ROUTES = {
         CREATE_LAPORAN: "/internal/laporan/create",
         EDIT_LAPORAN: "/internal/laporan/:id/edit",
         TAMBAH_SATGAS: "/internal/tambah-admin-satgas",
+        CETAK_KASUS_KLIEN: "/internal/cetak-kasus-klien",
         CETAK_REKAP: "/internal/cetak-rekap"
+        
     },
     EXTERNAL: {
         LANDING: "/",

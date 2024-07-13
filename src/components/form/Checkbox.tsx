@@ -35,7 +35,7 @@ export const Checkbox = (props: CheckboxProps): ReactNode => {
                         <FaCheck />
                     </span>
                 </div>
-                <div className="text-[13px]">{label}</div>
+                <div className="text-[17px]">{label}</div>
             </label>
             <span className="text-red-500">
                 {errors[name] && <span>{errors[name]!.message?.toString()}</span>}

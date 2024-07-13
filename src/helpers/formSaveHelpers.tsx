@@ -16,7 +16,7 @@ const AutosaveFormEffect = (props: AutosaveForm) => {
     // Load form if available in local storage
     useEffect(() => {
         if (formState) {
-            const formStateParsed = Object.entries(JSON.parse(formState))
+        const formStateParsed = Object.entries(JSON.parse(formState))
             formStateParsed.forEach(element => {
                 if (!excludeKeys.includes(element[0]))
                     setValue(element[0], element[1])
