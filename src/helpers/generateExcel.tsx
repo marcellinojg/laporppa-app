@@ -1,36 +1,53 @@
 import * as XLSX from 'xlsx';
 
-function filterData(data: any, keys: any[]): any[] {
-   data = data['data']
+function filterData(data: any[], keys: any[]): any[] {
+    data = data['data']
+    let array: any[] = [];
 
-    return data.map((row: any) => {
-        return keys.map((key: any) => {
-            // Ensure row[key.type] and row[key.type][key.key] exist before accessing
+    data.forEach((row) => {
+        let newRow: any[] = [];
+
+        keys.forEach((key) => {
             if (row[key.type]?.[key.key] === null || row[key.type]?.[key.key] === undefined) {
-                return '-';
+                newRow.push('-');
+            } else if (Array.isArray(row[key.type])) {
+                row[key.type].forEach((item: any) => {
+                    if (item === null || item[key.key] === null || item[key.key] === undefined) {
+                        newRow.push('-');
+                    } else {
+                        newRow.push(item[key.key]);
+                    }
+                });
+            } else {
+                newRow.push(row[key.type][key.key]);
             }
-            return row[key.type][key.key];
         });
+
+        array.push(newRow);
     });
+
+    return array;
 }
 
 function generateArray2Table(array: any[], head: string): string {
-    let table = "<table>" + head + "<tbody>";
+    let table: string = "<table>" + head + "<tbody>";
+
     array.forEach((row, index) => {
-        table += "<tr><td>" + (index + 1) + "</td>";
-        row.forEach((col: any) => {
-            table += "<td>" + col + "</td>";
+        table += `<tr><td>${index + 1}</td>`;
+        Object.values(row).forEach((col: any) => {
+            table += `<td>${col}</td>`;
         });
         table += "</tr>";
     });
+
     table += "</tbody></table>";
+
     return table;
 }
 
 function generateTable(data: any, keys: any[], head: string): HTMLTableElement {
-    
     const array = filterData(data, keys);
-    console.log(array)
+    // console.log(array)
     const tableHTML = generateArray2Table(array, head);
     return new DOMParser().parseFromString(tableHTML, "text/html").querySelector("table")!;
 }
@@ -514,17 +531,260 @@ function generateRekap(data:any){
     </thead>
     `)
 
+    var tableKeluarga = generateTable(data, [
+        {
+            'type': 'klien',
+            'key': 'nama_klien'
+        },
+        {
+            'type': 'klien',
+            'key': 'nik'
+        },
+        {
+            'type': 'keluarga',
+            'key': 'hubungan'
+        },
+        {
+            'type': 'keluarga',
+            'key': 'nama_lengkap'
+        },
+        {
+            'type': 'keluarga',
+            'key': 'nik'
+        },
+        {
+            'type': 'keluarga',
+            'key': 'kk'
+        },
+        {
+            'type': 'keluarga',
+            'key': 'alamat_kk'
+        },
+        {
+            'type': 'keluarga',
+            'key': 'alamat_domisili'
+        },
+    ],`
+    <thead>
+        <tr>
+            <td colspan="3" style="background-color: orange; font-weight: bold;" >IDENTITAS KLIEN</td>
+            <td colspan="6" style="background-color: #53b1c2; font-weight: bold;" >IDENTITAS KELUARGA</td>
+        </tr>
+        <tr style="font-weight: bold; ">
+            <!-- KLIEN -->
+            <td>NO</td>
+            <td>NAMA KLIEN</td>
+            <td>NIK</td>
+
+            <!-- KELUARGA -->
+            <td>HUBUNGAN DENGAN KLIEN</td>
+            <td>NAMA LENGKAP</td>
+            <td>NIK</td>
+            <td>KK</td>
+
+            <!-- ALAMAT KK -->
+            <td>ALAMAT KK</td>
+
+            <!-- ALAMAT DOMISILI -->
+            <td>ALAMAT DOMISILI</td>
+
+        </tr>
+        </thead>
+    `);
+
+    var tableRencanaDP3 = generateTable(data, [
+        {
+            'type': 'klien',
+            'key': 'nama_klien'
+        },
+        {
+            'type': 'klien',
+            'key': 'nik'
+        },
+        {
+            'type': 'rencanadp3',
+            'key': 'kebutuhan'
+        },
+        {
+            'type': 'rencanadp3',
+            'key': 'deskripsi'
+        },
+    ], `
+       <thead>
+        <tr>
+            <td colspan="3" style="background-color: orange; font-weight: bold;" >IDENTITAS KLIEN</td>
+            <td colspan="2" style="background-color: #99CC00; font-weight: bold;" >PELAYANAN</td>
+        </tr>
+        <tr style="font-weight: bold; ">
+            <!-- KLIEN -->
+            <td>NO</td>
+            <td>NAMA KLIEN</td>
+            <td>NIK</td>
+
+           <!-- PELAYANAN -->
+           <td>PELAYANAN YANG DIBERIKAN</td>
+           <td>DESKRIPSI PELAYANAN</td>
+        </tr>
+        </thead> 
+    `);
+
+    var tableRencanaOPD = generateTable(data, [
+        {
+            'type': 'klien',
+            'key': 'nomor_register'
+        },
+        {
+            'type': 'klien',
+            'key': 'nama_klien'
+        },
+        {
+            'type': 'klien',
+            'key': 'nik'
+        },
+        {
+            'type': 'rencana_rujukan',
+            'key': 'kebutuhan'
+        },
+        {
+            'type': 'rencana_rujukan',
+            'key': 'OPD'
+        },
+        {
+            'type': 'rencana_rujukan',
+            'key': 'layanan_yang_diberikan'
+        }, 
+    ],`
+    <thead>
+        <tr>
+            <td colspan="4" style="background-color: orange; font-weight: bold;" >IDENTITAS KLIEN</td>
+            <td colspan="3" style="background-color: #99CC00; font-weight: bold;" >PELAYANAN</td>
+        </tr>
+        <tr style="font-weight: bold; ">
+            <!-- KLIEN -->
+            <td>NO</td>
+            <td>NO REGISTRASI</td>
+            <td>NAMA LENGKAP KLIEN</td>
+            <td>NIK</td>
+
+            <!-- PELAYANAN -->
+            <td>KEBUTUHAN</td>
+            <td>OPD/INSTANSI RUJUKAN</td>
+            <td>PELAYANAN YANG DIBERIKAN INTERVENSI</td>
+        </tr>
+    </thead>
+    `);
+    
+    var tableIntervensiDP3 = generateTable(data, [
+        {
+            'type': 'klien',
+            'key': 'nama_klien'
+        },
+        {
+            'type': 'klien',
+            'key': 'nik'
+        },
+        {
+            'type': 'intervensi_dp3a',
+            'key': 'tanggal_pelayanan'
+        },
+        {
+            'type': 'intervensi_dp3a',
+            'key': 'pelayanan_yang_diberikan'
+        },
+        {
+            'type': 'intervensi_dp3a',
+            'key': 'deskripsi'
+        },
+    ], `
+    <thead>
+        <tr>
+            <td colspan="3" style="background-color: orange; font-weight: bold;" >IDENTITAS KLIEN</td>
+            <td colspan="3" style="background-color: #99CC00; font-weight: bold;" >PELAYANAN X</td>
+        </tr>
+        <tr style="font-weight: bold; ">
+            <!-- KLIEN -->
+            <td>NO</td>
+            <td>NAMA KLIEN</td>
+            <td>NIK</td>
+
+           <!-- PELAYANAN -->
+           <td>TANGGAL PELAYANAN</td>
+           <td>PELAYANAN YANG DIBERIKAN</td>
+           <td>DESKRIPSI PELAYANAN</td>
+        </tr>
+        </thead>
+    `);
+
+    var tableIntervensiOPD = generateTable(data, [
+        {
+            'type': 'klien',
+            'key': 'nama_klien'
+        },
+        {
+            'type': 'klien',
+            'key': 'nik'
+        },
+        {
+            'type': 'intervensi_opd',
+            'key': 'tanggal_pelayanan'
+        },
+        {
+            'type': 'intervensi_opd',
+            'key': 'instansi'
+        },
+        {
+            'type': 'intervensi_opd',
+            'key': 'pelayanan_diberikan'
+        },
+        {
+            'type': 'intervensi_opd',
+            'key': 'deskripsi_pelayanan'
+        },
+    ], `
+    <thead>
+        <tr>
+            <td colspan="3" style="background-color: orange; font-weight: bold;" >IDENTITAS KLIEN</td>
+            <td colspan="4" style="background-color: #99CC00; font-weight: bold;" >PELAYANAN X</td>
+        </tr>
+        <tr style="font-weight: bold; ">
+            <!-- KLIEN -->
+            <td>NO</td>
+            <td>NAMA KLIEN</td>
+            <td>NIK</td>
+
+            <!-- PELAYANAN -->
+             <td>TANGGAL PELAYANAN</td>
+            <td>KEBUTUHAN</td>
+            <td>OPD/INSTANSI RUJUKAN</td>
+            <td>PELAYANAN YANG DIBERIKAN</td>
+
+        </tr>
+    </thead>
+    `);
+
     const wb = XLSX.utils.book_new();
     
     const wsPelapor= XLSX.utils.table_to_sheet(tablePelapor);
     const wsKlien= XLSX.utils.table_to_sheet(tableKlien);
     const wsPelaku= XLSX.utils.table_to_sheet(tablePelaku);
     const wsKeterangan= XLSX.utils.table_to_sheet(tableKeterangan);
+    const wsKeluarga= XLSX.utils.table_to_sheet(tableKeluarga);
+    const wsRencanaDP3= XLSX.utils.table_to_sheet(tableRencanaDP3);
+    const wsRencanaOPD= XLSX.utils.table_to_sheet(tableRencanaOPD);
+    const wsIntervensiDP3= XLSX.utils.table_to_sheet(tableIntervensiDP3);
+    const wsIntervensiOPD= XLSX.utils.table_to_sheet(tableIntervensiOPD);
+    
     
     XLSX.utils.book_append_sheet(wb, wsPelapor, "Pelapor");
     XLSX.utils.book_append_sheet(wb, wsKlien, "Klien");
     XLSX.utils.book_append_sheet(wb, wsPelaku, "Pelaku");
     XLSX.utils.book_append_sheet(wb, wsKeterangan, "Keterangan");
+    XLSX.utils.book_append_sheet(wb, wsKeluarga, "Keluarga");
+    XLSX.utils.book_append_sheet(wb, wsRencanaDP3, "Rencana DP3APPKB");
+    XLSX.utils.book_append_sheet(wb, wsRencanaOPD, "Rencana Rujukan OPD");
+    XLSX.utils.book_append_sheet(wb, wsIntervensiDP3, "Intervensi DP3APPKB");
+    XLSX.utils.book_append_sheet(wb, wsIntervensiOPD, "Intervensi OPD");
+   
     
     XLSX.writeFile(wb, 'Laporan Kasus Klien.xls')
 }

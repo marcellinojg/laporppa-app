@@ -1,34 +1,31 @@
 import { useState } from "react"
 import AdminLayout from "../layouts/AdminLayout"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { KategoriKasusesLoader, KategoriLoader, KecamatanLoader, PendidikanLoader } from "../../helpers/fetchHelpers"
+import { KategoriKasusesLoader, KategoriLoader } from "../../helpers/fetchHelpers"
 import { PrimaryButton } from "../../components/form/Button"
 import useLoader from "../../hooks/useLoader"
 import { useAlert } from "../../hooks/useAlert"
-import generateRekap from "../../helpers/generateExcel"
 import Datepicker from "../../components/form/Datepicker"
 import { Select } from "../../components/form/Dropdown"
-import Pendidikan from "../../consts/pendidikan"
-import { Kecamatan } from "../../consts/kecamatan"
 import apiService from "../../helpers/constructGetRekap"
 import { ALERT_TYPE } from "../../consts/alert"
-import { Checkbox } from "../../components/form/Checkbox"
+import generateCount from "../../helpers/generateCount"
 
-interface RekapKasusKlien {
+interface RekapLaporan {
     periode_tanggal: string,
-    kategori_klien: string,
     kategori_id: string,
     kategori_kasus_klien_id: string,
-    pendidikan: string,
-    kecamatan_id: string,
-    start_date: Date | null,
-    end_date: Date | null
+    tahun_awal: number | null,
+    tahun_akhir: number | null,
+    bulan_awal: number | null,
+    bulan_akhir: number | null, 
+    bulan_awal_tahun: number | null,
+    bulan_akhir_tahun: number | null,
 }
 
 const CetakRekap = () => {
     const { showLoader, hideLoader } = useLoader()
-    const [period, setPeriod] = useState<string>('');
-    const [selectAll, setSelectAll] = useState(false);
+    const [period, setPeriod] = useState<string>('')        
     const [kategoris, setKategoris] = useState<Kategori[]>([])
     const [kategoriKasuses, setKategoriKasuses] = useState<KategoriKasus[]>([])
     const { errorFetchAlert, addAlert } = useAlert();
@@ -38,7 +35,7 @@ const CetakRekap = () => {
         control,
         reset,
         watch,
-      } = useForm<RekapKasusKlien>();
+      } = useForm<RekapLaporan>();
 
     const form = useForm()
 
@@ -54,37 +51,58 @@ const CetakRekap = () => {
         setPeriod(newPeriod);
     };
 
-    const handleSelectAllChange = (e) => {
-        setSelectAll(e.target.checked);
-    };
-
-    const start_date = watch("start_date");
-    const end_date = watch("end_date");
-
-    const onSubmit: SubmitHandler<RekapKasusKlien> = async (data) => {
+    const onSubmit: SubmitHandler<RekapLaporan> = async (data) => {
         try {
             showLoader();
-            const result = await apiService.getRekap(
-                period,
-                start_date?.toISOString().split('T')[0],
-                end_date?.toISOString().split('T')[0],
-                data.kategori_kasus_klien_id,
-                data.kategori_id
-            );
 
-            console.log(result)
+            const { tahun_awal, tahun_akhir, bulan_awal, bulan_akhir, kategori_kasus_klien_id, kategori_id } = data;
+           
+            
+
+            let result;
+            if (period === 'tahun') {
+                if (tahun_awal && tahun_akhir) {
+                    result = await apiService.getRekapTahunan(
+                        new Date(tahun_awal).getFullYear(),
+                        new Date(tahun_akhir).getFullYear(),
+                        kategori_kasus_klien_id,
+                        kategori_id
+                    );
+                } else {
+                    throw new Error('Tahun belum diisikan');
+                }
+            } else if (period === 'bulan') {
+                if (bulan_awal && bulan_akhir) {
+                    const bulanAwalTahun = new Date(bulan_awal).getFullYear();
+                    const bulanAkhirTahun = new Date(bulan_akhir).getFullYear();
+                    console.log(new Date(bulan_akhir).getMonth())
+                    result = await apiService.getRekapBulanan(
+                        new Date(bulan_awal).getMonth(),
+                        bulanAwalTahun,
+                        new Date(bulan_akhir).getMonth(),
+                        bulanAkhirTahun,
+                        kategori_kasus_klien_id,
+                        kategori_id
+                    );
+                } else {
+                    throw new Error('Bulan belum diisikan ');
+                }
+            } else {
+                throw new Error('Invalid periode type selected.');
+            }
+
+            console.log(result);
             try {
-                await generateRekap(result); 
-            } catch (error){
+                await generateCount(result);
+            } catch (error) {
                 reset();
-                console.log(error)
+                console.log(error);
                 addAlert({
                     type: ALERT_TYPE.ERROR,
                     title: "Gagal Membuat Rekap Data!",
                     message: `Terjadi kesalahan saat proses rekap`,
-                  });
+                });
             }
-            
         } catch (error) {
             errorFetchAlert();
         } finally {
@@ -155,14 +173,15 @@ const CetakRekap = () => {
                             />
                         </div>
                     )}
-                    
+                    </div>
+                    <div className="mt-5">
                     <h2 className="font-semibold text-xl">Detail Rekap : </h2>
-                       <div className="flex flex-col gap-2 py-3">
+                       <div className="flex flex-col gap-2">
                        <form
                          className="border-b-2 flex flex-col gap-3 py-3"
                          onSubmit={handleSubmit(onSubmit)}
                        >
-                            <span className="mb-3 font-semibold italic text-rose-800">*Kosongkan apabila tidak membutuhkan detail tersebut pada rekap</span>
+                            <span className="font-semibold italic text-rose-800">*Kosongkan untuk rekap secara keseluruhan</span>
                             <div className="flex items-center">
                                 <div className="flex-1 mr-4">
                                 <KategoriLoader data={kategoris} setData={setKategoris} >
@@ -178,20 +197,9 @@ const CetakRekap = () => {
                                             value: k.id,
                                         }))}
                                         isRequired={false}
-                                        isDisabled={selectAll} 
                                     />
                                 </KategoriLoader>
-                                                    </div>
-                            
-                                <label className="flex items-center">
-                                <Checkbox
-                                        wrapperClass="mt-10 mb-4"
-                                        name="all_kategori"
-                                        form={form}
-                                        label="Semua"
-                                        isRequired={false}
-                                        />
-                                </label>
+                                </div>
                             </div>
                             <div className="flex items-center">
                             <div className="flex-1 mr-4">
@@ -208,22 +216,14 @@ const CetakRekap = () => {
                                             value: k.id,
                                         }))}
                                         isRequired={false}
-                                        isDisabled={selectAll}
                                     />
                                 </KategoriKasusesLoader>
-                                </div>
-                                <Checkbox
-                                        wrapperClass="mt-10 mb-4"
-                                        name="all_kasus"
-                                        form={form}
-                                        label="Semua"
-                                        isRequired={false}
-                                        />
-                               
-                                </div>
-                                  
+                                </div>     
+                            </div> 
                     </form>
                         </div>
+                    </div>
+                   
                    
                      <div className="d-flex justify-content-center mt-5">
                         <PrimaryButton className="py-2" onClick={handleSubmit(onSubmit)}>
@@ -231,7 +231,7 @@ const CetakRekap = () => {
                         </PrimaryButton>
                     </div>               
                 </div>
-            </div>
+            
         </AdminLayout>
     )
 }
