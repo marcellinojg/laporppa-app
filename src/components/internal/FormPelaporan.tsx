@@ -109,6 +109,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             label="NIK Pelapor"
             regex={REGEX.NIK}
             defaultValue={laporanEdit?.nik_pelapor}
+            type='number'
           />
           <InputText
             name="no_telp_pelapor"
@@ -150,6 +151,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             errors={errors}
             regex={REGEX.NIK}
             defaultValue={laporanEdit?.nik_klien}
+            type='number'
           />
           <InputText
             name="no_telp_klien"
