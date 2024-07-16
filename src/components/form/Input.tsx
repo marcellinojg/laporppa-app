@@ -1,56 +1,85 @@
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { HiEyeSlash, HiEye } from "react-icons/hi2"
 import { InputProps, SearchInputProps } from "../../consts/input"
 import { REGEX } from "../../consts/regex"
 import { FaSearch } from "react-icons/fa"
+import { FieldError, useForm } from "react-hook-form"
 
 export const InputText = (props: InputProps): ReactNode => {
-    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '', isDisabled} = props
-    const [isObscure, setIsObscure] = useState<boolean | undefined>(obscure)
+    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '', isDisabled } = props;
+    const [isObscure, setIsObscure] = useState<boolean | undefined>(obscure);
 
-    return <div className='flex flex-col gap-1'>
-        {label &&
-            <label htmlFor={name}>
-                {label ? label : placeholder}
-                {isRequired && <span className='text-red-500'> *</span>}
-            </label>
-        }
+    // useForm from react-hook-form
+    const { watch, setError, clearErrors, trigger } = useForm();
 
-        <div className={`${obscure === true && 'relative'}`}>
-            <input
-                autoComplete={autoComplete}
-                id={name}
-                defaultValue={defaultValue}
-                className={`rounded p-2 text-black outline-blue-500 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 w-full outline-1 ${className}`}
-                type={isObscure ? 'password' : type}
-                {...register(
-                    name,
-                    {   disabled: isDisabled? true : false,
-                        required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
-                        pattern: regex ? {
-                            value: regex,
-                            message: regex == REGEX.PHONE_IDN ? 'Gunakan format contoh: 08123456789' : `${label || placeholder} tidak valid !`
-                        } : undefined
-                    },
-                )}
-                placeholder={placeholder}
-            />
-            {isObscure != undefined &&
-                <button type='button' className='absolute top-1/2 transform -translate-y-1/2 right-3' onClick={() => setIsObscure(prev => !prev)}>
-                    {isObscure ? <HiEyeSlash /> : <HiEye />}
-                </button>
+    // Watch the input value
+    const inputValue = watch(name);
+
+    useEffect(() => {
+        const validateField = async () => {
+            if (regex && inputValue !== undefined) {
+                if (!regex.test(inputValue)) {
+                    setError(name, { type: 'pattern', message: regex === REGEX.PHONE_IDN ? 'Gunakan format contoh: 08123456789' : `${label || placeholder} tidak valid !` });
+                } else {
+                    clearErrors(name);
+                }
+            }
+            if (isRequired && !inputValue) {
+                setError(name, { type: 'required', message: `${label ? label : placeholder} harus diisi` });
+            } else {
+                clearErrors(name);
+            }
+            await trigger(name); // Trigger validation
+        };
+
+        validateField();
+    }, [inputValue, regex, name, setError, clearErrors, label, placeholder, isRequired, trigger]);
+
+    return (
+        <div className='flex flex-col gap-1'>
+            {label &&
+                <label htmlFor={name}>
+                    {label ? label : placeholder}
+                    {isRequired && <span className='text-red-500'> *</span>}
+                </label>
             }
 
-        </div>
+            <div className={obscure === true ? 'relative' : ''}>
+                <input
+                    autoComplete={autoComplete}
+                    id={name}
+                    defaultValue={defaultValue}
+                    className={`rounded p-2 text-black outline-blue-500 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 w-full outline-1 ${className}`}
+                    type={isObscure ? 'password' : type}
+                    {...register(
+                        name,
+                        {
+                            disabled: isDisabled ? true : false,
+                            required: isRequired ? `${label ? label : placeholder} harus diisi` : undefined,
+                            pattern: regex ? {
+                                value: regex,
+                                message: regex === REGEX.PHONE_IDN ? 'Gunakan format contoh: 08123456789' : `${label || placeholder} tidak valid !`
+                            } : undefined
+                        },
+                    )}
+                    placeholder={placeholder}
+                />
+                {isObscure != undefined &&
+                    <button type='button' className='absolute top-1/2 transform -translate-y-1/2 right-3' onClick={() => setIsObscure(prev => !prev)}>
+                        {isObscure ? <HiEyeSlash /> : <HiEye />}
+                    </button>
+                }
+            </div>
 
-        <span className='text-start text-red-500'>
-            {errors[name] && <span>{errors[name]!.message?.toString()}</span>}
-        </span>
-    </div>
+            <span className='text-start text-red-500'>
+                {errors[name] && <span>{(errors[name] as FieldError)?.message?.toString()}</span>}
+            </span>
+        </div>
+    );
 }
 
 export const TextArea = (props: InputProps) => {
-    const { register, placeholder, name, isRequired, errors, label, className, defaultValue ='', maxChar = 255, errorLabel = label } = props
+    const { register, placeholder, name, isRequired, errors, label, className, defaultValue = '', maxChar = 255, errorLabel = label } = props
 
     return <div className='flex flex-col gap-1'>
         {label &&
@@ -65,6 +94,7 @@ export const TextArea = (props: InputProps) => {
                 className={`rounded p-2 border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 resize-none text-black w-full outline-none ${className}`}
                 placeholder={placeholder}
                 rows={5}
+                maxLength={maxChar}
                 defaultValue={defaultValue}
                 {...register(
                     name,
