@@ -5,5 +5,6 @@ export interface Role {
 
 export const ROLE = {
     KELURAHAN: 'Kelurahan',
-    SATGAS: 'Satuan Tugas (Satgas)'
+    SATGAS: 'Satuan Tugas (Satgas)',
+    ADMIN: 'Admin'
 }

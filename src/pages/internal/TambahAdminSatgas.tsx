@@ -20,6 +20,7 @@ import { Kecamatan } from "../../consts/kecamatan";
 import ModalTambahSatgas from "../../components/internal/modal_tambah_admin/ModalTambahSatgas";
 import ModalUpdatePassword from "../../components/internal/modal_tambah_admin/ModalUpdatePassword";
 import { useAuthUser } from "react-auth-kit";
+import { format } from "date-fns";
 
 const TambahSatgasAdmin = () => {
   const userData = useAuthUser()() as User;
@@ -86,10 +87,17 @@ const TambahSatgasAdmin = () => {
       )
     }
     else {
-      const formatData: UserAccount = {
+      let formatData: UserAccount = {
         ...data,
-        kelurahan_id: userAccount?.kelurahan?.id
-      };
+      }
+
+      if (userData?.role === "Kelurahan") {
+        formatData = {
+          ...data,
+          kelurahan_id: userAccount?.kelurahan?.id,
+          role_id: 1,
+        };
+      }
 
       try {
         setIsLoading(true);
@@ -154,7 +162,7 @@ const TambahSatgasAdmin = () => {
                               <InputText
                                 name="nama"
                                 register={register}
-                                placeholder="Masukkan Nama Lengkap"
+                                placeholder="Masukkan nama lengkap"
                                 errorLabel="Nama Lengkap"
                                 errors={errors}
                                 label="Nama Lengkap"
@@ -173,78 +181,95 @@ const TambahSatgasAdmin = () => {
                                 type="number"
                               // defaultValue={laporanEdit?.alamat_pelapor}
                               />
-                              {/* <Select
-                                name="kecamatan_id"
-                                control={control}
-                                placeholder="Pilih Kecamatan tempat bertugas"
-                                label="Kecamatan Bertugas"
-                                errors={errors}
-                                errorLabel="Kecamatan"
-                                options={kecamatans.map((k) => ({
-                                  label: k.nama,
-                                  value: k.id,
-                                }))}
-                                isRequired
-                              /> */}
-                              {/* <Select
-                                name="kelurahan_id"
-                                control={control}
-                                placeholder="Pilih Kelurahan tempat bertugas"
-                                label="Kelurahan Bertugas"
-                                errorLabel="Kelurahan"
-                                errors={errors}
-                                // defaultValue={roles.id}
-                                options={kelurahans
-                                  // .filter(
-                                  //   (k) => k.kecamatan?.id == selectedKecamatan
-                                  // )
-                                  .map((k) => ({
-                                    label: k.nama,
-                                    value: k.id,
-                                  }))}
-                                isRequired
-                                // isDisabled={isKelurahanDisabled}
-                              /> */}
-                              {/* <Select
-                                name="kecamatan_id"
-                                control={control}
-                                placeholder="Pilih kecamatan"
-                                label="Kecamatan Klien"
-                                errors={errors}
-                                errorLabel="Kecamatan"
-                                options={kecamatans
-                                  .filter((k) => k.is_active === true && k.id_kabupaten === 1)
-                                  .map((k) => ({
-                                    label: k.name,
-                                    value: k.id,
-                                  }))}
-                              /> */}
-                              <InputText
-                                name="kelurahan"
-                                register={register}
-                                placeholder="Kelurahan Tempat Bertugas"
-                                errorLabel="Kelurahan Tempat Bertugas"
-                                errors={errors}
-                                label="Kelurahan Tempat Bertugas"
-                                defaultValue={userAccount?.kelurahan.nama}
-                                isDisabled
-                                isRequired
-                              // defaultValue={laporanEdit?.alamat_pelapor}
-                              />
-                              <Select
-                                name="role_id"
-                                control={control}
-                                placeholder="Pilih Role"
-                                label="Role"
-                                errorLabel="Role"
-                                errors={errors}
-                                // defaultValue={roles.id}
-                                options={roles.map((r) => ({
-                                  label: r.nama,
-                                  value: r.id,
-                                }))}
-                                isRequired
-                              />
+                              {
+                                userData?.role === "Admin" ?
+                                  <>
+                                    <Select
+                                      name="kecamatan_id"
+                                      control={control}
+                                      placeholder="Pilih kecamatan"
+                                      label="Kecamatan Klien"
+                                      errors={errors}
+                                      errorLabel="Kecamatan"
+                                      options={kecamatans
+                                        .filter((k) => k.is_active === true && k.id_kabupaten === 1)
+                                        .map((k) => ({
+                                          label: k.name,
+                                          value: k.id,
+                                        }))}
+                                    />
+                                    <Select
+                                      name="kelurahan_id"
+                                      control={control}
+                                      placeholder="Pilih kelurahan tempat bertugas"
+                                      label="Kelurahan Bertugas"
+                                      errorLabel="Kelurahan"
+                                      errors={errors}
+                                      // defaultValue={roles.id}
+                                      options={kelurahans
+                                        .filter(
+                                          (k) => k.id_kecamatan == selectedKecamatan
+                                        )
+                                        .map((k) => ({
+                                          label: k.name,
+                                          value: k.id,
+                                        }))}
+                                      isRequired
+                                      isDisabled={isKelurahanDisabled}
+                                    />
+                                  </>
+                                  :
+                                  <>
+                                    <InputText
+                                      name="kelurahan"
+                                      register={register}
+                                      placeholder="Kelurahan Tempat Bertugas"
+                                      errorLabel="Kelurahan Tempat Bertugas"
+                                      errors={errors}
+                                      label="Kelurahan Tempat Bertugas"
+                                      defaultValue={userAccount?.kelurahan.nama}
+                                      isDisabled
+                                      isRequired
+                                    // defaultValue={laporanEdit?.alamat_pelapor}
+                                    />
+                                  </>
+                              }
+                              {
+                                userData?.role === "Admin" ?
+                                  <>
+                                    <Select
+                                      name="role_id"
+                                      control={control}
+                                      placeholder="Pilih Role"
+                                      label="Role"
+                                      errorLabel="Role"
+                                      errors={errors}
+                                      // defaultValue={roles.id}
+                                      options={roles
+                                        .filter((r) => r.nama === "Kelurahan" || r.nama === "Admin")
+                                        .map((r) => ({
+                                          label: r.nama,
+                                          value: r.id,
+                                        }))}
+                                      isRequired
+                                    />
+                                  </>
+                                  :
+                                  <>
+                                    <InputText
+                                      name="role_id"
+                                      register={register}
+                                      placeholder="Pilih Role"
+                                      errorLabel="Role"
+                                      errors={errors}
+                                      label="Role"
+                                      defaultValue={"Satgas"}
+                                      isDisabled
+                                      isRequired
+                                    // defaultValue={laporanEdit?.alamat_pelapor}
+                                    />
+                                  </>
+                              }
                               <InputText
                                 name="username"
                                 register={register}
@@ -286,7 +311,7 @@ const TambahSatgasAdmin = () => {
                               isDisabled={isLoading}
                               isSubmit
                             >
-                              Tambah Satgas / Admin Kelurahan
+                              {userData?.role == "Admin" ? "Tambah Akun Kelurahan / Admin" : "Tambah Akun Satgas"}
                             </PrimaryButton>
                           </div>
                         </form>
@@ -309,88 +334,174 @@ const TambahSatgasAdmin = () => {
                               <th className="py-4 px-2 border-r-[2px]">Aksi</th>
                             </tr>
                           </thead>
-                          {users
-                            .filter((user) => user.kelurahan.id === userAccount?.kelurahan?.id)
-                            .map((user: UserAccount) => (
-                              <tbody key={user.id}>
-                                <tr className="border-b-2 border-slate-300 text-center text-sm">
-                                  <td className="py-4 px-2 border-x-[2px]">
-                                    <div className="flex flex-col gap-2">
-                                      <div className="flex flex-col gap-1 text-start">
-                                        <span>{user.nama || "-"}</span>
-                                        <span className="text-slate-400">
-                                          {user.no_telp || "-"}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td className="py-4 px-2 border-r-[2px]">
-                                    <div className="flex flex-col gap-1 text-start">
-                                      <span>{user.role.nama || "-"}</span>
-                                      {/* <span className="text-slate-400">
+                          {
+                            userData?.role === "Admin" ?
+                              users
+                                .filter((user) => user.role.nama === "Kelurahan" || user.role.nama === "Admin")
+                                .map((user: UserAccount) => (
+                                  <tbody key={user.id}>
+                                    <tr className="border-b-2 border-slate-300 text-center text-sm">
+                                      <td className="py-4 px-2 border-x-[2px]">
+                                        <div className="flex flex-col gap-2">
+                                          <div className="flex flex-col gap-1 text-start">
+                                            <span>{user.nama || "-"}</span>
+                                            <span className="text-slate-400">
+                                              {user.no_telp || "-"}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-2 border-r-[2px]">
+                                        <div className="flex flex-col gap-1 text-start">
+                                          <span>{user.role.nama || "-"}</span>
+                                          {/* <span className="text-slate-400">
+                                  {user.kelurahan.name || "-"}
+                                </span> */}
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-3 border-r-[2px] w-auto lg:max-w-[100px]">
+                                        <div className="flex flex-col gap-2">
+                                          {user.is_active == "1" ? (
+                                            <button
+                                              type="button"
+                                              onClick={() => { }}
+                                              className={`p-2 px-1 text-center text-xs rounded-full bg-green-200`}
+                                            >
+                                              <span
+                                                className={`font-bold text-green-600`}
+                                              >
+                                                Aktif
+                                              </span>
+                                            </button>
+                                          ) : (
+                                            <button
+                                              type="button"
+                                              onClick={() => { }}
+                                              className={`min-w-[70px] p-2 px-1 text-center text-xs rounded-full bg-red-200`}
+                                            >
+                                              <span
+                                                className={`font-bold text-red-600`}
+                                              >
+                                                Tidak Aktif
+                                              </span>
+                                            </button>
+                                          )}
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
+                                        <div className="flex flex-col gap-2">
+                                          <EditUserButton
+                                            user={user}
+                                            setRefetch={setRefetch}
+                                            setCurUserAccount={setCurUserAccount}
+                                            setIsModalActive={setIsModalActive}
+                                          />
+                                          <UpdatePasswordButton
+                                            user={user}
+                                            setRefetch={setRefetch}
+                                            setCurUserAccount={setCurUserAccount}
+                                            setIsModalActive={setIsModalUpdatePasswordActive}
+                                          />
+                                          {user.is_active == "1" ? (
+                                            <NonAktifkanButton
+                                              user={user}
+                                              setRefetch={setRefetch}
+                                            />
+                                          ) : (
+                                            <AktifkanButton
+                                              user={user}
+                                              setRefetch={setRefetch}
+                                            />
+                                          )}
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                ))
+                              :
+                              users
+                                .filter((user) => user.kelurahan.id === userAccount?.kelurahan?.id)
+                                .map((user: UserAccount) => (
+                                  <tbody key={user.id}>
+                                    <tr className="border-b-2 border-slate-300 text-center text-sm">
+                                      <td className="py-4 px-2 border-x-[2px]">
+                                        <div className="flex flex-col gap-2">
+                                          <div className="flex flex-col gap-1 text-start">
+                                            <span>{user.nama || "-"}</span>
+                                            <span className="text-slate-400">
+                                              {user.no_telp || "-"}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-2 border-r-[2px]">
+                                        <div className="flex flex-col gap-1 text-start">
+                                          <span>{user.role.nama || "-"}</span>
+                                          {/* <span className="text-slate-400">
                                       {user.kelurahan.name || "-"}
                                     </span> */}
-                                    </div>
-                                  </td>
-                                  <td className="py-4 px-3 border-r-[2px] w-auto lg:max-w-[100px]">
-                                    <div className="flex flex-col gap-2">
-                                      {user.is_active == "1" ? (
-                                        <button
-                                          type="button"
-                                          onClick={() => { }}
-                                          className={`p-2 px-1 text-center text-xs rounded-full bg-green-200`}
-                                        >
-                                          <span
-                                            className={`font-bold text-green-600`}
-                                          >
-                                            Aktif
-                                          </span>
-                                        </button>
-                                      ) : (
-                                        <button
-                                          type="button"
-                                          onClick={() => { }}
-                                          className={`min-w-[70px] p-2 px-1 text-center text-xs rounded-full bg-red-200`}
-                                        >
-                                          <span
-                                            className={`font-bold text-red-600`}
-                                          >
-                                            Tidak Aktif
-                                          </span>
-                                        </button>
-                                      )}
-                                    </div>
-                                  </td>
-                                  <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
-                                    <div className="flex flex-col gap-2">
-                                      <EditUserButton
-                                        user={user}
-                                        setRefetch={setRefetch}
-                                        setCurUserAccount={setCurUserAccount}
-                                        setIsModalActive={setIsModalActive}
-                                      />
-                                      <UpdatePasswordButton
-                                        user={user}
-                                        setRefetch={setRefetch}
-                                        setCurUserAccount={setCurUserAccount}
-                                        setIsModalActive={setIsModalUpdatePasswordActive}
-                                      />
-                                      {user.is_active == "1" ? (
-                                        <NonAktifkanButton
-                                          user={user}
-                                          setRefetch={setRefetch}
-                                        />
-                                      ) : (
-                                        <AktifkanButton
-                                          user={user}
-                                          setRefetch={setRefetch}
-                                        />
-                                      )}
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            ))}
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-3 border-r-[2px] w-auto lg:max-w-[100px]">
+                                        <div className="flex flex-col gap-2">
+                                          {user.is_active == "1" ? (
+                                            <button
+                                              type="button"
+                                              onClick={() => { }}
+                                              className={`p-2 px-1 text-center text-xs rounded-full bg-green-200`}
+                                            >
+                                              <span
+                                                className={`font-bold text-green-600`}
+                                              >
+                                                Aktif
+                                              </span>
+                                            </button>
+                                          ) : (
+                                            <button
+                                              type="button"
+                                              onClick={() => { }}
+                                              className={`min-w-[70px] p-2 px-1 text-center text-xs rounded-full bg-red-200`}
+                                            >
+                                              <span
+                                                className={`font-bold text-red-600`}
+                                              >
+                                                Tidak Aktif
+                                              </span>
+                                            </button>
+                                          )}
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
+                                        <div className="flex flex-col gap-2">
+                                          <EditUserButton
+                                            user={user}
+                                            setRefetch={setRefetch}
+                                            setCurUserAccount={setCurUserAccount}
+                                            setIsModalActive={setIsModalActive}
+                                          />
+                                          <UpdatePasswordButton
+                                            user={user}
+                                            setRefetch={setRefetch}
+                                            setCurUserAccount={setCurUserAccount}
+                                            setIsModalActive={setIsModalUpdatePasswordActive}
+                                          />
+                                          {user.is_active == "1" ? (
+                                            <NonAktifkanButton
+                                              user={user}
+                                              setRefetch={setRefetch}
+                                            />
+                                          ) : (
+                                            <AktifkanButton
+                                              user={user}
+                                              setRefetch={setRefetch}
+                                            />
+                                          )}
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                ))
+                          }
                         </table>
                       </div>
                     </div>

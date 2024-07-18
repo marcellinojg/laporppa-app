@@ -13,7 +13,7 @@ const Sidebar = (props: SidebarProps) => {
     const { sidebarRef, sidebarActive, setSidebarActive } = props
     const userData = useAuthUser()() as User
     const [accordionOpen, setAccordionOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<string | null>(null); 
+    const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
     const handleAccordionClick = () => {
         setAccordionOpen(!accordionOpen);
@@ -44,54 +44,61 @@ const Sidebar = (props: SidebarProps) => {
                     Icon={FaChartLine}
                     to={ROUTES.INTERNAL.DASHBOARD}
                 />
-                <SidebarItem
-                    label="Pelaporan"
-                    Icon={FaFileAlt}
-                    to={ROUTES.INTERNAL.PELAPORAN}
-                />
-                <SidebarItem
-                    label="Buat Pelaporan"
-                    Icon={FaPlus}
-                    to={ROUTES.INTERNAL.CREATE_LAPORAN}
-                />
-                {userData.role === ROLE.KELURAHAN && (
-                <>
-                <SidebarItem
-                    label="Tambah Akun Satgas & Admin"
-                    Icon={FaUsers}
-                    to={ROUTES.INTERNAL.TAMBAH_SATGAS}
-                />
-                 <div>
-                        <button
-                            className="p-6 text-black flex gap-3 items-center hover:bg-gray-200 transition duration-300 font-bold w-full"
-                            onClick={() => setAccordionOpen(!accordionOpen)}
-                        >
-                            <span className="text-2xl">
-                                <FaPrint />
-                            </span>
-                            <span>Cetak Laporan</span>
-                            <span className="ml-auto">
-                                {accordionOpen ? <FaTimes /> : <FaPlus />}
-                            </span>
-                        </button>
-                        {accordionOpen && (
-                            <div className="ml-6">
-                                <SidebarItem
-                                    label="Laporan Rekap"
-                                    Icon={FaList}
-                                    to={ROUTES.INTERNAL.CETAK_REKAP}
-                                />
-                                <SidebarItem
-                                    label="Laporan Kasus Klien"
-                                    Icon={FaList}
-                                    to={ROUTES.INTERNAL.CETAK_KASUS_KLIEN}
-                                />
-                            </div>
-                        )}
-                    </div>
-                </>
+                {userData.role !== ROLE.ADMIN && (
+                    <>
+                        <SidebarItem
+                            label="Pelaporan"
+                            Icon={FaFileAlt}
+                            to={ROUTES.INTERNAL.PELAPORAN}
+                        />
+                        <SidebarItem
+                            label="Buat Pelaporan"
+                            Icon={FaPlus}
+                            to={ROUTES.INTERNAL.CREATE_LAPORAN}
+                        />
+                    </>
                 )}
-                 
+                {(userData.role === ROLE.KELURAHAN || userData.role === ROLE.ADMIN) && (
+                    <>
+                        <SidebarItem
+                            label={userData.role === ROLE.KELURAHAN ? "Tambah Akun Satgas" : "Tambah Akun Kelurahan"}
+                            Icon={FaUsers}
+                            to={ROUTES.INTERNAL.TAMBAH_SATGAS}
+                        />
+                        {userData.role !== ROLE.ADMIN && (
+                            <>
+                                <div>
+                                    <button
+                                        className="p-6 text-black flex gap-3 items-center hover:bg-gray-200 transition duration-300 font-bold w-full"
+                                        onClick={() => setAccordionOpen(!accordionOpen)}
+                                    >
+                                        <span className="text-2xl">
+                                            <FaPrint />
+                                        </span>
+                                        <span>Cetak Laporan</span>
+                                        <span className="ml-auto">
+                                            {accordionOpen ? <FaTimes /> : <FaPlus />}
+                                        </span>
+                                    </button>
+                                    {accordionOpen && (
+                                        <div className="ml-6">
+                                            <SidebarItem
+                                                label="Laporan Rekap"
+                                                Icon={FaList}
+                                                to={ROUTES.INTERNAL.CETAK_REKAP}
+                                            />
+                                            <SidebarItem
+                                                label="Laporan Kasus Klien"
+                                                Icon={FaList}
+                                                to={ROUTES.INTERNAL.CETAK_KASUS_KLIEN}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
             </div>
         </div>
 
