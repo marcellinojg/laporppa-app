@@ -55,9 +55,17 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
 
 
   const onSubmit: SubmitHandler<UserAccount> = async (data: UserAccount) => {
-    const formatData: UserAccount = {
+    let formatData: UserAccount = {
       ...data,
     };
+
+    if (userData?.role === "Kelurahan") {
+      formatData = {
+        ...data,
+        kelurahan_id: userAccount?.kelurahan?.id,
+        role_id: 1,
+      };
+    }
 
     try {
       setIsLoading(true);
@@ -125,84 +133,100 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                               type="number"
                               defaultValue={userAccount.no_telp.toString()}
                             />
-                            {/* <Select
-                            name="kecamatan_id"
-                            control={control}
-                            placeholder="Pilih kecamatan"
-                            label="Kecamatan Klien"
-                            errors={errors}
-                            errorLabel="Kecamatan"
-                            options={kecamatans
-                              .filter((k) => k.is_active === true && k.id_kabupaten === 1)
-                              .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
-                            defaultValue={userAccount?.kelurahan.id_kecamatan}
-                          /> */}
-                            {/* <Select
-                              // isDisabled={
-                              //   selectedKecamatan
-                              //     ? false
-                              //     : userAccount?.kelurahan.id_kecamatan
-                              //       ? false
-                              //       : true
-                              // }
-                              name="kelurahan_id"
-                              placeholder="Pilih kelurahan"
-                              label="Kelurahan Tempat Bertugas"
-                              control={control}
-                              errors={errors}
-                              errorLabel="Kelurahan"
-                              options={kelurahans
-                                .filter((k) => k.is_active === true)
-                                .map((k) => ({
-                                  label: k.name,
-                                  value: k.id,
-                                }))}
-                              defaultValue={userAccount?.kelurahan?.id}
-                              isRequired
-                            /> */}
-                            {/* <Select
-                                name="kecamatan_id"
-                                control={control}
-                                placeholder="Pilih Kecamatan tempat bertugas"
-                                label="Kecamatan Bertugas"
-                                errors={errors}
-                                errorLabel="Kecamatan"
-                                options={kecamatans.map((k) => ({
-                                  label: k.nama,
-                                  value: k.id,
-                                }))}
-                                isRequired
-                                defaultValue={userAccount.kelurahan.kecamatan?.id}
-                              /> */}
-                            <InputText
-                              name="kelurahan"
-                              register={register}
-                              placeholder="Kelurahan Tempat Bertugas"
-                              errorLabel="Kelurahan Tempat Bertugas"
-                              errors={errors}
-                              label="Kelurahan Tempat Bertugas"
-                              defaultValue={user?.kelurahan.nama}
-                              isDisabled
-                              isRequired
-                            // defaultValue={laporanEdit?.alamat_pelapor}
-                            />
-                            <Select
-                              name="role_id"
-                              control={control}
-                              placeholder="Pilih Role"
-                              label="Role"
-                              errorLabel="Role"
-                              errors={errors}
-                              defaultValue={userAccount.role.id}
-                              options={roles.map((r) => ({
-                                label: r.nama,
-                                value: r.id,
-                              }))}
-                              isRequired
-                            />
+                            {
+                              userData?.role === 'Admin' ?
+                                <>
+                                  <Select
+                                    name="kecamatan_id"
+                                    control={control}
+                                    placeholder="Pilih kecamatan"
+                                    label="Kecamatan Klien"
+                                    errors={errors}
+                                    errorLabel="Kecamatan"
+                                    options={kecamatans
+                                      .filter((k) => k.is_active === true && k.id_kabupaten === 1)
+                                      .map((k) => ({
+                                        label: k.name,
+                                        value: k.id,
+                                      }))}
+                                    defaultValue={userAccount?.kelurahan.id_kecamatan}
+                                  />
+                                  <Select
+                                    isDisabled={
+                                      selectedKecamatan
+                                        ? false
+                                        : userAccount?.kelurahan.id_kecamatan
+                                          ? false
+                                          : true
+                                    }
+                                    name="kelurahan_id"
+                                    placeholder="Pilih kelurahan"
+                                    label="Kelurahan Tempat Bertugas"
+                                    control={control}
+                                    errors={errors}
+                                    errorLabel="Kelurahan"
+                                    options={kelurahans
+                                      .filter((k) => k.is_active === true)
+                                      .map((k) => ({
+                                        label: k.name,
+                                        value: k.id,
+                                      }))}
+                                    defaultValue={userAccount?.kelurahan?.id}
+                                    isRequired
+                                  />
+                                </>
+                                :
+                                <>
+                                  <InputText
+                                    name="kelurahan"
+                                    register={register}
+                                    placeholder="Kelurahan Tempat Bertugas"
+                                    errorLabel="Kelurahan Tempat Bertugas"
+                                    errors={errors}
+                                    label="Kelurahan Tempat Bertugas"
+                                    defaultValue={user?.kelurahan.nama}
+                                    isDisabled
+                                    isRequired
+                                  // defaultValue={laporanEdit?.alamat_pelapor}
+                                  />
+                                </>
+                            }
+                            {
+                              userData?.role === "Admin" ?
+                                <>
+                                  <Select
+                                    name="role_id"
+                                    control={control}
+                                    placeholder="Pilih Role"
+                                    label="Role"
+                                    errorLabel="Role"
+                                    errors={errors}
+                                    defaultValue={userAccount.role.id}
+                                    options={roles
+                                      .filter((r) => r.nama === "Kelurahan" || r.nama === "Admin")
+                                      .map((r) => ({
+                                        label: r.nama,
+                                        value: r.id,
+                                      }))}
+                                    isRequired
+                                  />
+                                </>
+                                :
+                                <>
+                                  <InputText
+                                    name="role_id"
+                                    register={register}
+                                    placeholder="Pilih Role"
+                                    errorLabel="Role"
+                                    errors={errors}
+                                    label="Role"
+                                    defaultValue={"Satgas"}
+                                    isDisabled
+                                    isRequired
+                                  // defaultValue={laporanEdit?.alamat_pelapor}
+                                  />
+                                </>
+                            }
                             <InputText
                               name="username"
                               register={register}
@@ -230,7 +254,7 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                             isDisabled={isLoading}
                             isSubmit
                           >
-                            Edit Satgas / Admin Kelurahan
+                            Edit Akun
                           </PrimaryButton>
                         </div>
                       </form>
