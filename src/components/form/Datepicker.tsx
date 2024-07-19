@@ -60,7 +60,7 @@ const Datepicker = (props: DatepickerProps) => {
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <div className="flex flex-col gap-1">
           <label htmlFor={name}>{label}</label>
-          <div className="flex gap-2 items-center border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 rounded px-4">
+          <div className="relative flex gap-2 items-center border-[1px] border-inputBorder hover:border-inputBorderHover transition duration-300 rounded px-4 z-auto">
             <FaCalendar />
             <Datetime
               id={name}
