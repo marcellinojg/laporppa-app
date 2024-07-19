@@ -786,7 +786,7 @@ function generateRekap(data:any){
     XLSX.utils.book_append_sheet(wb, wsIntervensiOPD, "Intervensi OPD");
    
     
-    XLSX.writeFile(wb, 'Laporan Kasus Klien.xls')
+    XLSX.writeFile(wb, 'Laporan Kasus Klien.xlsx')
 }
 
 export default generateRekap

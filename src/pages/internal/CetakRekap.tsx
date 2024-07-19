@@ -9,7 +9,8 @@ import Datepicker from "../../components/form/Datepicker"
 import { Select } from "../../components/form/Dropdown"
 import apiService from "../../helpers/constructGetRekap"
 import { ALERT_TYPE } from "../../consts/alert"
-import generateCount from "../../helpers/generateCount"
+import { generateRekapBulanan, generateRekapTahunan } from "../../helpers/generateCount"
+
 
 interface RekapLaporan {
     periode_tanggal: string,
@@ -93,7 +94,12 @@ const CetakRekap = () => {
 
             console.log(result);
             try {
-                await generateCount(result);
+                if (period === 'tahun'){
+                    await generateRekapTahunan(result)
+                } else {
+                    await generateRekapBulanan(result)
+                }
+                
             } catch (error) {
                 reset();
                 console.log(error);
@@ -142,6 +148,7 @@ const CetakRekap = () => {
                                 defaultValue={null}
                                 placeholder="Tahun Awal Rekap"
                                 label="Tahun Awal"
+                                type="year"
                             />
                             <Datepicker
                                 name="tahun_akhir"
@@ -150,6 +157,7 @@ const CetakRekap = () => {
                                 defaultValue={null}
                                 placeholder="Tahun Akhir Rekap"
                                 label="Tahun Akhir"
+                                type="year"
                             />
                         </div>
                     )}
@@ -162,6 +170,7 @@ const CetakRekap = () => {
                                 defaultValue={null}
                                 placeholder="Bulan Awal Rekap"
                                 label="Bulan Awal"
+                                type="month"
                             />
                             <Datepicker
                                 name="bulan_akhir"
@@ -170,6 +179,7 @@ const CetakRekap = () => {
                                 defaultValue={null}
                                 placeholder="Bulan Akhir Rekap"
                                 label="Bulan Akhir"
+                                type="month"
                             />
                         </div>
                     )}
