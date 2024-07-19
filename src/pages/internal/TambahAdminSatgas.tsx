@@ -154,7 +154,7 @@ const TambahSatgasAdmin = () => {
                     <div className="grid grid-cols-1 gap-5">
                       <div>
                         <h1 className="font-bold border-b-2 border-slate-400 pb-5 text-xl text-primary">
-                          Tambah Akun Satgas dan Admin
+                          {userData.role === "Admin" ? "Tambah Akun Kelurahan / Admin" : "Tambah Akun Satgas"}
                         </h1>
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
                           <div className="flex flex-col">
@@ -420,7 +420,7 @@ const TambahSatgasAdmin = () => {
                                 ))
                               :
                               users
-                                .filter((user) => user.kelurahan.id === userAccount?.kelurahan?.id)
+                                .filter((user) => (user.kelurahan.id === userAccount?.kelurahan?.id && user.role.nama === "Satuan Tugas (Satgas)") || user.id === userData.id)
                                 .map((user: UserAccount) => (
                                   <tbody key={user.id}>
                                     <tr className="border-b-2 border-slate-300 text-center text-sm">
@@ -473,29 +473,43 @@ const TambahSatgasAdmin = () => {
                                       </td>
                                       <td className="py-4 px-3 border-r-[2px] whitespace-nowrap w-auto lg:max-w-[100px]">
                                         <div className="flex flex-col gap-2">
-                                          <EditUserButton
-                                            user={user}
-                                            setRefetch={setRefetch}
-                                            setCurUserAccount={setCurUserAccount}
-                                            setIsModalActive={setIsModalActive}
-                                          />
-                                          <UpdatePasswordButton
-                                            user={user}
-                                            setRefetch={setRefetch}
-                                            setCurUserAccount={setCurUserAccount}
-                                            setIsModalActive={setIsModalUpdatePasswordActive}
-                                          />
-                                          {user.is_active == "1" ? (
-                                            <NonAktifkanButton
-                                              user={user}
-                                              setRefetch={setRefetch}
-                                            />
-                                          ) : (
-                                            <AktifkanButton
-                                              user={user}
-                                              setRefetch={setRefetch}
-                                            />
-                                          )}
+                                          {
+                                            userData?.role === "Kelurahan" && user.id === userData?.id ?
+                                              <>
+                                                <UpdatePasswordButton
+                                                  user={user}
+                                                  setRefetch={setRefetch}
+                                                  setCurUserAccount={setCurUserAccount}
+                                                  setIsModalActive={setIsModalUpdatePasswordActive}
+                                                />
+                                              </>
+                                              :
+                                              <>
+                                                <EditUserButton
+                                                  user={user}
+                                                  setRefetch={setRefetch}
+                                                  setCurUserAccount={setCurUserAccount}
+                                                  setIsModalActive={setIsModalActive}
+                                                />
+                                                <UpdatePasswordButton
+                                                  user={user}
+                                                  setRefetch={setRefetch}
+                                                  setCurUserAccount={setCurUserAccount}
+                                                  setIsModalActive={setIsModalUpdatePasswordActive}
+                                                />
+                                                {user.is_active == "1" ? (
+                                                  <NonAktifkanButton
+                                                    user={user}
+                                                    setRefetch={setRefetch}
+                                                  />
+                                                ) : (
+                                                  <AktifkanButton
+                                                    user={user}
+                                                    setRefetch={setRefetch}
+                                                  />
+                                                )}
+                                              </>
+                                          }
                                         </div>
                                       </td>
                                     </tr>
