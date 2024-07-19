@@ -149,16 +149,10 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                                         label: k.name,
                                         value: k.id,
                                       }))}
-                                    defaultValue={userAccount?.kelurahan.id_kecamatan}
+                                    defaultValue={userAccount?.kelurahan?.kecamatan?.id}
                                   />
                                   <Select
-                                    isDisabled={
-                                      selectedKecamatan
-                                        ? false
-                                        : userAccount?.kelurahan.id_kecamatan
-                                          ? false
-                                          : true
-                                    }
+                                    isDisabled={isKelurahanDisabled}
                                     name="kelurahan_id"
                                     placeholder="Pilih kelurahan"
                                     label="Kelurahan Tempat Bertugas"
@@ -166,7 +160,9 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                                     errors={errors}
                                     errorLabel="Kelurahan"
                                     options={kelurahans
-                                      .filter((k) => k.is_active === true)
+                                      .filter(
+                                        (k) => k.id_kecamatan == selectedKecamatan
+                                      )
                                       .map((k) => ({
                                         label: k.name,
                                         value: k.id,
