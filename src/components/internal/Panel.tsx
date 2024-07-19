@@ -147,7 +147,7 @@ export const FilterPanel = (props: PanelFilter) => {
   // };
 
   return (
-    <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col overflow-hidden gap-4 h-full min-h-[420px]">
+    <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col gap-4 h-full min-h-[420px]">
       <span className="text-primary font-bold text-xl">{title}</span>
       {/* <div className="flex items-center justify-center md:justify-end my-6"> */}
       {/* <select
