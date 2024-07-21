@@ -317,7 +317,8 @@ const FormDetailKlien = (props: FormModal) => {
                               placeholder="Nomor Telepon / WhatsApp"
                               label="No. Telp / WhatsApp"
                               isRequired
-                              regex={REGEX.PHONE_IDN}
+                              // regex={REGEX.PHONE_IDN}
+                              type='tel'
                             />
                             <Select
                               name="kota_lahir_id"

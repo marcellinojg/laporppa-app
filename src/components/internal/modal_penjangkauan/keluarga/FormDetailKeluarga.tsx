@@ -203,7 +203,8 @@ const FormKeluargaKlien = (props: FormModal) => {
               register={register}
               errors={errors}
               name="no_telp"
-              regex={REGEX.PHONE_IDN}
+              type='tel'
+              // regex={REGEX.PHONE_IDN}
               placeholder="08xxxxxxxxx"
               label="No. Telepon/Whatsapp"
               isRequired

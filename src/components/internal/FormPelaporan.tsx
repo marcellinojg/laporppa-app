@@ -118,7 +118,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             errors={errors}
             label="No. Telepon/Whatsapp Pelapor"
             // regex={REGEX.PHONE_IDN}
-            type="tel"
+            type='tel'
             isRequired
             defaultValue={laporanEdit?.no_telp_pelapor}
           />
@@ -159,6 +159,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             placeholder="Masukkan nomor telepon klien"
             label="No.Telepon/Whatsapp Klien"
             errors={errors}
+            type='tel'
             defaultValue={laporanEdit?.no_telp_klien}
           />
           <Select
