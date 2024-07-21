@@ -163,6 +163,7 @@ const Pelaporan = () => {
                     // regex={REGEX.PHONE_IDN}
                     placeholder="Masukkan Nomor Telepon"
                     label="Nomor Telepon Pelapor"
+                    type='tel'
                     isRequired
                   />
                 </div>

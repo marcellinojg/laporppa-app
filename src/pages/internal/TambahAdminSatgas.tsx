@@ -178,7 +178,7 @@ const TambahSatgasAdmin = () => {
                                 label="Nomor Telepon"
                                 isRequired
                                 regex={REGEX.PHONE_IDN}
-                                type="number"
+                                type='tel'
                               // defaultValue={laporanEdit?.alamat_pelapor}
                               />
                               {

@@ -130,7 +130,7 @@ const ModalTambahSatgas = (props: ModalTambahSatgasProps) => {
                               label="Nomor Telepon"
                               isRequired
                               regex={REGEX.PHONE_IDN}
-                              type="number"
+                              type='tel'
                               defaultValue={userAccount.no_telp.toString()}
                             />
                             {
