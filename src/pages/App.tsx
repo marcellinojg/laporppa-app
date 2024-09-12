@@ -8,6 +8,9 @@ import id from 'date-fns/locale/id'
 import { registerLocale } from "react-datepicker";
 function App() {
   registerLocale("id", id)
+
+  const baseDir = import.meta.env.VITE_ASSET_URL || '/'
+
   return (
     <>
       <AuthProvider
