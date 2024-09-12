@@ -21,7 +21,7 @@ function App() {
       >
         <LoaderProvider>
           <AlertProvider>
-            <BrowserRouter>
+            <BrowserRouter basename={baseDir}>
               <Navbar />
               <RoutesComponents />
             </BrowserRouter>
