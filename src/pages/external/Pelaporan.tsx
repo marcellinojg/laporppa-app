@@ -154,6 +154,7 @@ const Pelaporan = () => {
                     placeholder="Masukkan Nama Lengkap"
                     label="Nama Lengkap Pelapor"
                     isRequired
+                    type="number"
                     regex={REGEX.ALPHABETIC_ONLY}
                   />
                   <InputText

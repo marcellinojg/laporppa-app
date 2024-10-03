@@ -19,7 +19,7 @@ const TableLaporan = (props: TableLaporan) => {
     return <>
         {listLaporan.length == 0 ?
             <div className="w-full flex flex-col items-center justify-center py-12">
-                <img src="./images/nodata.png" className="" width={400} alt="No Data illustration" />
+                <img src="/images/nodata.png" className="" width={400} alt="No Data illustration" />
                 <b className="text-2xl text-center text-primary">Pelaporan tidak ditemukan</b>
             </div>
             :

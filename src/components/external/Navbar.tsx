@@ -26,7 +26,7 @@ function Navbar() {
       <div className="flex justify-between items-center px-[6vw] py-5">
         {/* Left Side */}
         <Link to={ROUTES.EXTERNAL.LANDING} className="flex items-center gap-4 font-bold font-poppins text-xl">
-          <img src='./images/logo-without-text.png' className="bg-white rounded-full p-2" alt="" width={64} />
+          <img src='/images/logo-without-text.png' className="bg-white rounded-full p-2" alt="" width={64} />
           <span className="text-white">SIAP PPAK</span>
         </Link>
 
