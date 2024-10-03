@@ -160,10 +160,11 @@ const Pelaporan = () => {
                     name="no_telp_pelapor"
                     register={register}
                     errors={errors}
-                    // regex={REGEX.PHONE_IDN}
+                    regex={REGEX.PHONE_IDN}
                     placeholder="Masukkan Nomor Telepon"
                     label="Nomor Telepon Pelapor"
-                    type='tel'
+                    // type='tel'
+                    type="number"
                     isRequired
                   />
                 </div>

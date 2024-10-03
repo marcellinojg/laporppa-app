@@ -267,9 +267,9 @@ export const BarChartPanel = (props: PanelBar) => {
     >
       <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col overflow-hidden h-full min-h-[420px]">
         <span className="text-primary font-bold text-xl">{title}</span>
-        <span className="text-black text-sm">
+        {/* <span className="text-black text-sm">
           {formatDate(date.toString(), false)}
-        </span>
+        </span> */}
         <div className="overflow-auto mt-4 h-full flex items-center">
           <div className="w-full min-w-[500px]">
             <BarChart
