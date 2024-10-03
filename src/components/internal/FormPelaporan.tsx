@@ -110,6 +110,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             regex={REGEX.NIK}
             defaultValue={laporanEdit?.nik_pelapor}
             type='number'
+            maxChar={16}
           />
           <InputText
             name="no_telp_pelapor"
@@ -118,7 +119,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             errors={errors}
             label="No. Telepon/Whatsapp Pelapor"
             // regex={REGEX.PHONE_IDN}
-            type='tel'
+            type='number'
             isRequired
             defaultValue={laporanEdit?.no_telp_pelapor}
           />
@@ -152,6 +153,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             regex={REGEX.NIK}
             defaultValue={laporanEdit?.nik_klien}
             type='number'
+            maxChar={16}
           />
           <InputText
             name="no_telp_klien"
@@ -159,7 +161,7 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             placeholder="Masukkan nomor telepon klien"
             label="No.Telepon/Whatsapp Klien"
             errors={errors}
-            type='tel'
+            type='number'
             defaultValue={laporanEdit?.no_telp_klien}
           />
           <Select

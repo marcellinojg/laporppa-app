@@ -3,7 +3,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import { useAuthUser } from "react-auth-kit";
 import { User, UserAccount } from "../../consts/user";
 import { Panel, BarChartPanel, FilterPanel } from "../../components/internal/Panel";
-import { KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader, UserLoader } from "../../helpers/fetchHelpers";
+import { KecamatanLoader, KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader, UserLoader } from "../../helpers/fetchHelpers";
 import { useEffect, useState } from "react";
 import { Laporan, LaporanCount } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { LaporanByKategori, LaporanByKategoriRT } from "../../consts/laporanByKategori";
 import { Kelurahan } from "../../consts/kelurahan";
 import Select from "react-select";
+import { Kecamatan } from "../../consts/kecamatan";
 
 interface DropdownOptionProps {
   text: string;
@@ -28,6 +29,7 @@ const Dashboard = () => {
   const [selectedKelurahans, setSelectedKelurahans] = useState<number>(1);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
 
   return (
     <AdminLayout>
@@ -106,16 +108,26 @@ const Dashboard = () => {
             <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 mt-4">
               <div>
                 <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                  <FilterPanel
-                    title="Filter Diagram"
-                    kelurahans={kelurahans}
-                    selectedKelurahans={selectedKelurahans}
-                    setSelectedKelurahans={setSelectedKelurahans}
-                    setStartDate={setStartDate}
-                    setEndDate={setEndDate}
-                    startDate={startDate}
-                    endDate={endDate}
-                  />
+                  <KecamatanLoader data={kecamatans} setData={setKecamatans}>
+                    {kecamatans && kelurahans && (
+                      <FilterPanel
+                        title="Filter Diagram"
+                        kelurahans={
+                          kelurahans.filter(kelurahan =>
+                            kecamatans.some(kecamatan =>
+                              kecamatan.id_kabupaten === 1 && kecamatan.id === kelurahan.id_kecamatan
+                            )
+                          )
+                        }
+                        selectedKelurahans={selectedKelurahans}
+                        setSelectedKelurahans={setSelectedKelurahans}
+                        setStartDate={setStartDate}
+                        setEndDate={setEndDate}
+                        startDate={startDate}
+                        endDate={endDate}
+                      />
+                    )}
+                  </KecamatanLoader>
                 </KelurahanLoader>
               </div>
               <div className="lg:col-span-2">
