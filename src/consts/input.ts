@@ -17,6 +17,7 @@ export interface InputProps {
     maxChar? : number
     errorLabel?: string
     isDisabled?: boolean
+    onInput?: (e: React.FormEvent<HTMLInputElement>) => void; 
 }
 
 export interface SearchInputProps {

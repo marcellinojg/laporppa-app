@@ -6,7 +6,7 @@ import { FaSearch } from "react-icons/fa"
 import { FieldError, useForm } from "react-hook-form"
 
 export const InputText = (props: InputProps): ReactNode => {
-    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '', isDisabled } = props;
+    const { register, placeholder, name, isRequired, errors, regex, autoComplete, obscure, label, type = 'text', className, defaultValue = '', isDisabled,onInput, maxChar } = props;
     const [isObscure, setIsObscure] = useState<boolean | undefined>(obscure);
 
     // useForm from react-hook-form
@@ -63,6 +63,8 @@ export const InputText = (props: InputProps): ReactNode => {
                         },
                     )}
                     placeholder={placeholder}
+                    onInput={onInput}
+                    maxLength={maxChar}
                 />
                 {isObscure != undefined &&
                     <button type='button' className='absolute top-1/2 transform -translate-y-1/2 right-3' onClick={() => setIsObscure(prev => !prev)}>

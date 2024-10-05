@@ -109,8 +109,13 @@ const FormPelaporan = (props: FormPelaporanProps) => {
             label="NIK Pelapor"
             regex={REGEX.NIK}
             defaultValue={laporanEdit?.nik_pelapor}
-            type='number'
+            type='text'
             maxChar={16}
+            onInput={(e) => {
+              const input = e.target as HTMLInputElement;
+              // Remove any non-digit characters and limit to 16 digits
+              input.value = input.value.replace(/\D/g, '').slice(0, 16);
+            }}
           />
           <InputText
             name="no_telp_pelapor"
