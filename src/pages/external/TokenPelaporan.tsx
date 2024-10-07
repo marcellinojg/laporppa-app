@@ -11,8 +11,8 @@ const TokenPelaporan = () => {
         {state ?
             <div className="min-w-screen min-h-screen bg-login flex flex-col items-center justify-center pb-[5vh]">
                 <header className="mx-auto flex gap-8 mt-36 ">
-                    <img src="/images/logo-pemkot-new.png" className="w-20 object-contain" alt="Logo Pemkot Surabaya" />
-                    <img src="/images/logo-without-text.png" className="w-28 object-contain" alt="Logo SIAPPPAK" />
+                    <img src="./images/logo-pemkot-new.png" className="w-20 object-contain" alt="Logo Pemkot Surabaya" />
+                    <img src="./images/logo-without-text.png" className="w-28 object-contain" alt="Logo SIAPPPAK" />
                 </header>
                 <div className="bg-white floating-shadow-md rounded-sm py-8 md:px-12 px-6 lg:w-[600px] md:w-1/2 w-11/12 mt-6">
                     <div className="border-2 p-6 flex flex-col items-center rounded-md">

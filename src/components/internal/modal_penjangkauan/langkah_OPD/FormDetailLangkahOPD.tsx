@@ -1,7 +1,7 @@
 import { SectionTitle } from "../../../common/Typography"
 import capitalize from "../../../../helpers/capitalize"
 import { TextArea, InputText } from "../../../form/Input"
-import { SubmitHandler,  useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { PrimaryButton } from "../../../form/Button"
 import { FormModal } from "../../../../consts/modal_penjangkauan"
 import { useState } from "react"
@@ -43,7 +43,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
         updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
         updated_by_lintas_opd: laporan.satgas_pelapor.id,
       };
-     
+
       setIsLoading(true);
       showLoader();
       (await patchLaporan(formatDataStatus, laporan.id))
@@ -72,7 +72,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
         updated_at_lintas_opd: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
         updated_by_lintas_opd: laporan.satgas_pelapor.id,
       };
-     
+
       setIsLoading(true);
       showLoader();
       await deleteLangkahOPD(id);
@@ -195,24 +195,24 @@ const FormDetailLangkahOPD = (props: FormModal) => {
             label="Deskripsi Pelayanan yang Diberikan"
             placeholder="Ceritakan pelayanan yang telah diberikan"
           />
-           <div className="text-base">Dokumentasi Pelayanan
+          <div className="text-base">Dokumentasi Pelayanan
             <span className="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500">
-                Hanya Menerima 1
+              Hanya Menerima 1
             </span>
             <p className="items-center justify-center mt-2 text-sm font-bold leading-none text-red-600">
-                Menerima File Foto (jpeg/jpg/png). Maks ukuran file 10MB 
+              Menerima File Foto (jpeg/jpg/png). Maks ukuran file 10MB
             </p></div>
           <Uploader
-              name='dokumentasi'
-              control={control}
-              watch={watch}
-              placeholder='Upload dokumen langkah OPD'
-              setValue={setValue}
-              register={register}
-              errors={errors}
-              isRequired={false}
-              errorLabel='Dokumen Langkah'
-              isMultiple={false}
+            name='dokumentasi'
+            control={control}
+            watch={watch}
+            placeholder='Upload dokumen langkah OPD'
+            setValue={setValue}
+            register={register}
+            errors={errors}
+            isRequired={false}
+            errorLabel='Dokumen Langkah'
+            isMultiple={false}
           />
           <PrimaryButton className="py-2" isSubmit>
             Tambah Langkah OPD
@@ -255,21 +255,21 @@ const FormDetailLangkahOPD = (props: FormModal) => {
                         : "-"
                     }
                   />
-                 
-                 <div className="border-b-2 flex flex-col gap-3 py-3">
-                 <span className="text-slate-400 text-sm">Dokumentasi Pengaduan</span>
-            <div className="flex flex-wrap items-center gap-4">
-              {langkah.dokumentasi &&
-                langkah.dokumentasi.map((url, index) => (
-                  <img
-                    src={url}
-                    width={200}
-                    alt={`dokumentasi pengaduan ${index + 1}`}
-                    key={index}
-                  />
-                ))}
-            </div>
-          </div>
+
+                  <div className="border-b-2 flex flex-col gap-3 py-3">
+                    <span className="text-slate-400 text-sm">Dokumentasi Pengaduan</span>
+                    <div className="flex flex-wrap items-center gap-4">
+                      {langkah.dokumentasi &&
+                        langkah.dokumentasi.map((url, index) => (
+                          <img
+                            src={url}
+                            width={200}
+                            alt={`dokumentasi pengaduan ${index + 1}`}
+                            key={index}
+                          />
+                        ))}
+                    </div>
+                  </div>
                   <div className="flex flex-row-reverse items-end gap-3">
                     <DeleteButton
                       onClick={() => delLangkah(langkah.id)}
@@ -280,7 +280,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
             ) : (
               <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
                 <img
-                  src="/images/nodata.png"
+                  src="./images/nodata.png"
                   className=""
                   width={300}
                   alt="No Data illustration"
