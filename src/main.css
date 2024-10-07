@@ -28,7 +28,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .bg-login {
-  background-image: url("./images/bg-login.png");
+  background-image: url("http://172.18.2.98/newpetra/images/bg-login.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
