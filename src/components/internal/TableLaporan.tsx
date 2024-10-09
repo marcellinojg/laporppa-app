@@ -57,7 +57,7 @@ const TableLaporan = (props: TableLaporan) => {
                                 </td>
                                 <td className="py-4 px-2 border-r-[2px]">
                                     <div className="flex flex-col gap-1 text-start">
-                                        <span>Masyarakat</span>
+                                        <span>{laporan.sumber_pengaduan?.id == 1 ? "Masyarakat" : "Internal"}</span>
                                         <span className="text-slate-400">{formatDate(laporan.tanggal_jam_pengaduan, true)}</span>
                                     </div>
                                 </td>

@@ -420,7 +420,7 @@ const TambahSatgasAdmin = () => {
                                 ))
                               :
                               users
-                                .filter((user) => (user.kelurahan.id === userAccount?.kelurahan?.id && user.role.nama === "Satuan Tugas (Satgas)") || user.id === userData.id)
+                                .filter((user) => (user.kelurahan?.id === userAccount?.kelurahan?.id && user.role.nama === "Satuan Tugas (Satgas)") || user.id === userData.id)
                                 .map((user: UserAccount) => (
                                   <tbody key={user.id}>
                                     <tr className="border-b-2 border-slate-300 text-center text-sm">

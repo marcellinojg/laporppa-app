@@ -77,7 +77,7 @@ export const AssignModal = (props: AssignModalProps) => {
           <ReactSelect
             className="mt-4"
             onChange={(v) => setSelectedSatgasId(v?.value!)}
-            options={satgasPelapors.filter((satgas) => satgas.role.nama === ROLE.SATGAS && satgas.kelurahan.id === laporan.kelurahan.id).map((satgas) => ({
+            options={satgasPelapors.filter((satgas) => satgas.role.nama === ROLE.SATGAS && satgas.kelurahan?.id === laporan.kelurahan?.id).map((satgas) => ({
               label: satgas.nama,
               value: satgas.id
             }))}
