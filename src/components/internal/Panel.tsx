@@ -149,18 +149,6 @@ export const FilterPanel = (props: PanelFilter) => {
   return (
     <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col gap-4 h-full min-h-[420px]">
       <span className="text-primary font-bold text-xl">{title}</span>
-      {/* <div className="flex items-center justify-center md:justify-end my-6"> */}
-      {/* <select
-          onChange={selectChange}
-          className="w-full px-5 py-1 rounded-full border-2 bg-primary text-white text-sm border-primary font-bold focus:border-primary hover:border-primary font-bold duration-300 md:w-auto"
-          style={{ maxWidth: "160px" }}
-        >
-          {kelurahans.map((val) => (
-            <option value={val.id} key={val.id}>
-              {val.nama}
-            </option>
-          ))}
-        </select> */}
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4 h-full">
           <Select

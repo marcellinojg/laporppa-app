@@ -280,7 +280,7 @@ const FormDetailLangkahOPD = (props: FormModal) => {
             ) : (
               <div className="w-full flex flex-col items-center justify-center py-2 pt-0">
                 <img
-                  src="http://172.18.2.98/newpetra/images/nodata.png"
+                  src="/images/nodata.png"
                   className=""
                   width={300}
                   alt="No Data illustration"

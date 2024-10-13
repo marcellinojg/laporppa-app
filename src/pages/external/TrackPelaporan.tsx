@@ -52,12 +52,12 @@ const TrackPelaporan = () => {
     <div className="min-w-screen min-h-screen bg-login flex flex-col items-center justify-center pb-[5vh]">
       <header className="mx-auto flex gap-8 mt-36">
         <img
-          src="http://172.18.2.98/newpetra/images/logo-pemkot-new.png"
+          src="/images/logo-pemkot-new.png"
           className="w-20 object-contain"
           alt="Logo Pemkot Surabaya"
         />
         <img
-          src="http://172.18.2.98/newpetra/images/logo-without-text.png"
+          src="/images/logo-without-text.png"
           className="w-28 object-contain"
           alt="Logo SIAPPPAK"
         />

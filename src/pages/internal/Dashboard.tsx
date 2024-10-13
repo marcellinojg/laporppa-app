@@ -3,21 +3,36 @@ import AdminLayout from "../layouts/AdminLayout";
 import { useAuthUser } from "react-auth-kit";
 import { User, UserAccount } from "../../consts/user";
 import { Panel, BarChartPanel, FilterPanel } from "../../components/internal/Panel";
-import { KecamatanLoader, KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader, UserLoader } from "../../helpers/fetchHelpers";
-import { useEffect, useState } from "react";
+import { JenisKasusesLoader, KategoriKasusesLoader, KecamatanLoader, KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader, UserLoader } from "../../helpers/fetchHelpers";
+import React, { useEffect, useState } from "react";
 import { Laporan, LaporanCount } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
 import { useParams } from "react-router-dom";
 import { LaporanByKategori, LaporanByKategoriRT } from "../../consts/laporanByKategori";
 import { Kelurahan } from "../../consts/kelurahan";
-import Select from "react-select";
+import { Select } from "../../components/form/Dropdown";
 import { Kecamatan } from "../../consts/kecamatan";
+import { SubmitHandler, useForm } from "react-hook-form";
+import useLoader from "../../hooks/useLoader";
+import { useAlert } from "../../hooks/useAlert";
+import Datepicker from "../../components/form/Datepicker";
+import { JenisKasus } from "../../consts/jenis_kasus";
+import { PrimaryButton, SecondaryButton } from "../../components/form/Button";
 
 interface DropdownOptionProps {
   text: string;
   value: string | number;
 }
 
+interface FormFilter {
+  kelurahan_id?: number;
+  satgas_id?: number
+  start_date: Date;
+  end_date: Date;
+  status_id: number;
+  kategori_kasus_id: number;
+  jenis_kasus_id: number
+}
 
 const Dashboard = () => {
   const userData = useAuthUser()() as User;
@@ -27,9 +42,97 @@ const Dashboard = () => {
 
   // chart variabel
   const [selectedKelurahans, setSelectedKelurahans] = useState<number>(1);
+  const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
+  const { showLoader, hideLoader } = useLoader();
+  const { errorFetchAlert, addAlert } = useAlert();
+  const form = useForm<FormFilter>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+    reset,
+  } = form;
+  const [error, setError] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  // dashboard filter
+  const [kategoriKasues, setKategoriKasues] = useState<Kategori[]>([]);
+  const [jenisKasus, setJenisKasus] = useState<JenisKasus[]>([]);
+
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
+  const [selectedStatus, setSelectedStatus] = useState<number | null>(null);
+  const [selectedKategoriKasus, setSelectedKategoriKasus] = useState<number | null>(null)
+  const [selectedJenisKasus, setSelectedJenisKasus] = useState<number | null>(null);
+  const [isJenisKasusDisabled, setIsJenisKasusDisabled] = useState<boolean>(true)
+
+  const onSubmitFilter: SubmitHandler<FormFilter> = async (data: FormFilter) => {
+    try {
+      if (
+        data.start_date >= data.end_date ||
+        data.start_date == null ||
+        data.end_date == null
+      ) {
+        if (data.start_date == null && data.end_date == null) {
+          setIsLoading(true);
+          showLoader();
+          setSelectedKelurahans(data.kelurahan_id == null ? 0 : data.kelurahan_id);
+          setStartDate(data.start_date);
+          setEndDate(data.end_date);
+          setError(false);
+        } else {
+          setError(true);
+        }
+        // addAlert({
+        //   type: ALERT_TYPE.ERROR,
+        //   title: "Date Salah!",
+        //   message: "Start Date Harus Lebih Kecil Dari End Date!",
+        // })
+      } else {
+        setIsLoading(true);
+        showLoader();
+        setSelectedKelurahans(data.kelurahan_id == null ? 0 : data.kelurahan_id);
+        setStartDate(data.start_date);
+        setEndDate(data.end_date);
+        setError(false);
+      }
+      // addAlert({
+      //   type: ALERT_TYPE.SUCCESS,
+      //   title: "Detail Kasus Klien Sukses Diedit !",
+      //   message: `Detail Kasus Klien untuk laporan ${laporan.nama_klien} berhasil diedit!`,
+      // });
+      hideLoader();
+    } catch {
+      errorFetchAlert();
+    } finally {
+      setIsLoading(false);
+      hideLoader();
+    }
+
+    setTimeout(() => setIsLoading(false), 3000);
+  };
+
+  const resetFilter = () => {
+    reset({
+      start_date: null, // Or the name of your date field
+      end_date: null,
+      kategori_kasus_id: null,
+      status_id: null
+    });
+
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedKategoriKasus(null);
+    setError(false);
+  };
+
+  useEffect(() => {
+    const kategoriKasusId = form.watch("kategori_kasus_id");
+    setSelectedKategoriKasus(kategoriKasusId || null);
+    setIsJenisKasusDisabled(!kategoriKasusId);
+  }, [form.watch("kategori_kasus_id")]);
+
 
   return (
     <AdminLayout>
@@ -48,96 +151,200 @@ const Dashboard = () => {
               <h2 className="font-bold">{userData?.name}</h2>
             </div>
           </div>
-          <div className="lg:w-10/12 w-11/12 p-8 bg-white floating-shadow-md mx-auto mt-6 rounded-lg">
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-              <Panel
-                title="Total Kasus Masuk"
-                date={new Date().toISOString()}
-                count={
-                  laporanCount.find(
-                    (val) => val.id === STATUS_LAPORAN.SEMUA_KASUS
-                  )?.totalCase
-                }
-              />
-              <Panel
-                title="Total Kasus Menunggu Validasi"
-                date={new Date().toISOString()}
-                count={
-                  laporanCount.find(
-                    (val) => val.id === STATUS_LAPORAN.MENUNGGU_VALIDASI
-                  )?.totalCase
-                }
-              />
-              <Panel
-                title="Total Kasus Selesai"
-                date={new Date().toISOString()}
-                count={
-                  laporanCount.find(
-                    (val) => val.id === STATUS_LAPORAN.KASUS_SELESAI
-                  )?.totalCase
-                }
-              />
-              <Panel
-                title="Total Kasus Diteruskan ke DP3A"
-                date={new Date().toISOString()}
-                count={
-                  laporanCount.find(
-                    (val) => val.id === STATUS_LAPORAN.KASUS_DITERUSKAN
-                  )?.totalCase
-                }
-              />
-              <Panel
-                title="Total Kasus Ditangani"
-                date={new Date().toISOString()}
-                count={
-                  laporanCount.find(
-                    (val) => val.id === STATUS_LAPORAN.SEDANG_DITANGANI
-                  )?.totalCase
-                }
-              />
-              <Panel
-                title="Total Kasus Dikembalikan"
-                date={new Date().toISOString()}
-                count={
-                  laporanCount.find(
-                    (val) => val.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN
-                  )?.totalCase
-                }
-              />
-            </div>
-            <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 mt-4">
-              <div>
+
+          <div className="grid xl:grid-cols-5 md:grid-2 lg:w-10/12 w-11/12 mx-auto gap-4 mt-8">
+            <JenisKasusesLoader data={jenisKasus} setData={setJenisKasus}>
+              <KategoriKasusesLoader data={kategoriKasues} setData={setKategoriKasues}>
                 <KelurahanLoader data={kelurahans} setData={setKelurahans}>
                   <KecamatanLoader data={kecamatans} setData={setKecamatans}>
-                    {kecamatans && kelurahans && (
-                      <FilterPanel
-                        title="Filter Diagram"
-                        kelurahans={
-                          kelurahans.filter(kelurahan =>
-                            kecamatans.some(kecamatan =>
-                              kecamatan.id_kabupaten === 1 && kecamatan.id === kelurahan.id_kecamatan
-                            )
-                          )
-                        }
-                        selectedKelurahans={selectedKelurahans}
-                        setSelectedKelurahans={setSelectedKelurahans}
-                        setStartDate={setStartDate}
-                        setEndDate={setEndDate}
-                        startDate={startDate}
-                        endDate={endDate}
-                      />
-                    )}
+                    <div className="xl:col-span-1 col-span-1 p-8 bg-white floating-shadow-md rounded-lg">
+                      <div className="flex flex-col gap-4">
+                        <span className="text-primary font-bold text-xl">Filter</span>
+                        <form action="" onSubmit={handleSubmit(onSubmitFilter)}>
+                          <div className="flex flex-col gap-4 h-full">
+                            <Datepicker
+                              name="start_date"
+                              control={control}
+                              defaultValue={startDate}
+                              placeholder="Masukkan tanggal awal"
+                              label="Tanggal Awal"
+                              type="date"
+                              isRequired
+                            />
+                            <Datepicker
+                              name="end_date"
+                              control={control}
+                              defaultValue={endDate}
+                              placeholder="Masukkan tanggal akhir"
+                              label="Tanggal Akhir"
+                              type="date"
+                              isRequired
+                            />
+                            <span className="text-red-500 mt-[-15px]">
+                              {error == true ? "Tanggal Akhir Tidak Valid!" : ""}
+                            </span>
+                            <Select
+                              name="status_id"
+                              control={control}
+                              placeholder="Pilih status"
+                              label="Status"
+                              errors={errors}
+                              errorLabel="Status"
+                              options={[
+                                { label: 'Menunggu Verifikasi', value: 1 },
+                                { label: 'Sedang Ditangani', value: 2 },
+                                { label: 'Kasus Dikembalikan', value: 3 },
+                                { label: 'Kasus Selesai', value: 4 },
+                                { label: 'Kasus Dirujuk', value: 5 },
+                              ]}
+                              isRequired
+                            />
+                            <Select
+                              name="kategori_kasus_id"
+                              control={control}
+                              placeholder="Pilih Kategori Kasus"
+                              label="Kategori Kasus"
+                              errors={errors}
+                              errorLabel="Kategori Kasus"
+                              options={kategoriKasues
+                                .filter((k) => k.is_active === true)
+                                .map((k) => ({
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
+                              isRequired
+                            />
+                            <Select
+                              name="jenis_kasus_id"
+                              control={control}
+                              placeholder="Pilih Jenis Kasus"
+                              label="Jenis Kasus"
+                              errors={errors}
+                              errorLabel="Jenis Kasus"
+                              options={jenisKasus
+                                .filter((k) => k.is_active === true && k.id_kategori_kasus === selectedKategoriKasus)
+                                .map((k) => ({
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
+                              isDisabled={isJenisKasusDisabled}
+                              isRequired
+                            />
+                            <div className="border-t-2 border-slate-400 pt-5 grid grid-cols-1 gap-4">
+                              <SecondaryButton
+                                className="py-2"
+                                onClick={() => resetFilter()}
+                              >
+                                Reset
+                              </SecondaryButton>
+                              <PrimaryButton
+                                className="py-2"
+                                isLoading={isLoading}
+                                isDisabled={isLoading}
+                                isSubmit
+                              >
+                                Filter
+                              </PrimaryButton>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
                   </KecamatanLoader>
                 </KelurahanLoader>
-              </div>
-              <div className="lg:col-span-2">
-                <BarChartPanel
-                  title="Diagram Jumlah Kasus Berdasarkan Kelurahan"
+              </KategoriKasusesLoader>
+            </JenisKasusesLoader>
+            <div className="xl:col-span-4 col-span-1 p-8 bg-white floating-shadow-md rounded-lg">
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                <Panel
+                  title="Total Kasus Masuk"
                   date={new Date().toISOString()}
-                  selectedKelurahans={selectedKelurahans}
-                  startDate={startDate}
-                  endDate={endDate}
+                  count={
+                    laporanCount.find(
+                      (val) => val.id === STATUS_LAPORAN.SEMUA_KASUS
+                    )?.totalCase
+                  }
                 />
+                <Panel
+                  title="Total Kasus Menunggu Validasi"
+                  date={new Date().toISOString()}
+                  count={
+                    laporanCount.find(
+                      (val) => val.id === STATUS_LAPORAN.MENUNGGU_VALIDASI
+                    )?.totalCase
+                  }
+                />
+                <Panel
+                  title="Total Kasus Selesai"
+                  date={new Date().toISOString()}
+                  count={
+                    laporanCount.find(
+                      (val) => val.id === STATUS_LAPORAN.KASUS_SELESAI
+                    )?.totalCase
+                  }
+                />
+                <Panel
+                  title="Total Kasus Diteruskan ke DP3A"
+                  date={new Date().toISOString()}
+                  count={
+                    laporanCount.find(
+                      (val) => val.id === STATUS_LAPORAN.KASUS_DITERUSKAN
+                    )?.totalCase
+                  }
+                />
+                <Panel
+                  title="Total Kasus Ditangani"
+                  date={new Date().toISOString()}
+                  count={
+                    laporanCount.find(
+                      (val) => val.id === STATUS_LAPORAN.SEDANG_DITANGANI
+                    )?.totalCase
+                  }
+                />
+                <Panel
+                  title="Total Kasus Dikembalikan"
+                  date={new Date().toISOString()}
+                  count={
+                    laporanCount.find(
+                      (val) => val.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN
+                    )?.totalCase
+                  }
+                />
+              </div>
+              <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 mt-4">
+                <div>
+                  <KelurahanLoader data={kelurahans} setData={setKelurahans}>
+                    <KecamatanLoader data={kecamatans} setData={setKecamatans}>
+                      {kecamatans && kelurahans && (
+                        <FilterPanel
+                          title="Filter Diagram"
+                          kelurahans={
+                            kelurahans.filter(kelurahan =>
+                              kecamatans.some(kecamatan =>
+                                kecamatan.id_kabupaten === 1 && kecamatan.id === kelurahan.id_kecamatan
+                              )
+                            )
+                          }
+                          selectedKelurahans={selectedKelurahans}
+                          setSelectedKelurahans={setSelectedKelurahans}
+                          setStartDate={setStartDate}
+                          setEndDate={setEndDate}
+                          startDate={startDate}
+                          endDate={endDate}
+                        />
+                      )}
+                    </KecamatanLoader>
+                  </KelurahanLoader>
+                </div>
+                <div className="lg:col-span-2">
+                  <BarChartPanel
+                    title="Diagram Jumlah Kasus Berdasarkan Kelurahan"
+                    date={new Date().toISOString()}
+                    selectedKelurahans={selectedKelurahans}
+                    startDate={startDate}
+                    endDate={endDate}
+                  />
+                </div>
               </div>
             </div>
           </div>

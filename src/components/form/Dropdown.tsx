@@ -95,40 +95,43 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
 
 
 export const Select = (props: SelectProps) => {
-    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true, defaultValue = '' } = props
+    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true, defaultValue = '' } = props;
     const customHeight = {
         menuList: (provided: any) => ({
-        ...provided,
-        maxHeight: "200px", // Adjust this value based on the height of your options
-        overflowY: "auto",
+            ...provided,
+            maxHeight: "200px", // Adjust this value based on the height of your options
+            overflowY: "auto",
         }),
     };
 
-
-    return <Controller
-        control={control}
-        name={name}
-        rules={{
-            required: isRequired === true && `${errorLabel} harus diisi !`
-        }}
-        defaultValue={defaultValue}
-        render={({ field: { onChange, value }, fieldState: { error } }) => <div className='flex flex-col gap-1 w-full'>
-            <label htmlFor={name}>
-                {label ? label : placeholder}
-                {isRequired === true && <span className='text-red-500'> *</span>}
-            </label>
-            <ReactSelect
-                isDisabled={isDisabled}
-                onChange={val => onChange(val.value)}
-                value={options.find(c => c.value === value)}
-                placeholder={placeholder}
-                options={options}
-                styles={customHeight}
-            />
-            <span className='text-red-500 text-start'>
-                {error?.message}
-            </span>
-        </div>
-        }
-    />
-}
+    return (
+        <Controller
+            control={control}
+            name={name}
+            rules={{
+                required: isRequired === true && `${errorLabel} harus diisi!`,
+            }}
+            defaultValue={defaultValue}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <div className="flex flex-col gap-1 w-full">
+                    <label htmlFor={name}>
+                        {label ? label : placeholder}
+                        {isRequired === true && <span className="text-red-500"> *</span>}
+                    </label>
+                    <ReactSelect
+                        isDisabled={isDisabled}
+                        onChange={val => onChange(val && val.value !== undefined ? val.value : null)} // Safely handle `val` to avoid errors
+                        value={value ? options.find(c => c.value === value) : null}  // Ensure `null` resets the field
+                        placeholder={placeholder}
+                        options={options}
+                        styles={customHeight}
+                        isClearable={true}
+                    />
+                    <span className="text-red-500 text-start">
+                        {error?.message}
+                    </span>
+                </div>
+            )}
+        />
+    );
+};
