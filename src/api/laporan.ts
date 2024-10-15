@@ -14,6 +14,7 @@ import { LangkahBadanDaerah, LangkahDP3A } from "../consts/langkahBadanDaerah"
 import { LangkahOPD } from "../consts/langkahOPD"
 import { RAKK } from "../consts/rakk"
 import { RRKK } from "../consts/rrkk"
+import { Rekapitulasi, Rekapitulsai } from "../consts/rekapitulasi"
 
 
 export const getLaporans = async () => {
@@ -111,10 +112,31 @@ export const getLaporansBySearchAndStatus = async (page: number, keyword: string
   return { laporans, paginationData }
 }
 
-export const getTotalLaporan = async () => {
+export const getTotalLaporan = async (startDate?: Date, endDate?: Date, kategoriId?: number, kategoriKasusId?: number) => {
   const instance = CreateAxiosInstance()
-  const res = await instance.get('/statuses/count')
+  let res = null
+  if (startDate != null && endDate != null && kategoriId != null && kategoriKasusId != null) {
+    res = await instance.get(
+      `/statuses/count?tanggal_start=${startDate.toISOString().slice(0, 10)}&tanggal_end=${endDate.toISOString().slice(0, 10)}&kategori_id=${kategoriId}&kategori_kasus_id=${kategoriKasusId}`
+    );
+  } else {
+    res = await instance.get(`/statuses/count`);
+  }
   const data = res.data.data as LaporanCount[]
+  return data
+}
+
+export const getRekapitulasi = async (startDate?: Date, endDate?: Date, kategoriId?: number, kategoriKasusId?: number) => {
+  const instance = CreateAxiosInstance()
+  let res = null
+  if (startDate != null && endDate != null && kategoriId != null && kategoriKasusId != null) {
+    res = await instance.get(
+      `/rekapitulasi/satgas?tanggal_start=${startDate.toISOString().slice(0, 10)}&tanggal_end=${endDate.toISOString().slice(0, 10)}&kategori_id=${kategoriId}&kategori_kasus_id=${kategoriKasusId}`
+    );
+  } else {
+    res = await instance.get(`/rekapitulasi/satgas`);
+  }
+  const data = res.data.data as Rekapitulasi[]
   return data
 }
 

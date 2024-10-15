@@ -7,6 +7,8 @@ export const STATUS_LAPORAN = {
     KASUS_DIKEMBALIKAN: 4,
     KASUS_DITERUSKAN: 5,
     SEMUA_KASUS: 0,
+    KASUS_DITOLAK: 6,
+    KASUS_BELUM_DIASSIGN: 7,
 }
 
 export interface Status {

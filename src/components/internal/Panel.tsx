@@ -11,6 +11,7 @@ import { useAlert } from "../../hooks/useAlert";
 import { ALERT_TYPE } from "../../consts/alert";
 import Datepicker from "../form/Datepicker";
 import { PrimaryButton, SecondaryButton } from "../form/Button";
+import { Rekapitulasi } from "../../consts/rekapitulasi";
 
 interface FormFilter {
   kelurahan_id: number;
@@ -27,7 +28,7 @@ interface PanelProps {
 interface PanelBar {
   title: string;
   date: string;
-  selectedKelurahans: number;
+  selectedKelurahans: number | null;
   startDate: Date | null;
   endDate: Date | null;
 }
@@ -48,6 +49,68 @@ interface PanelFilter {
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
   setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
+
+interface TablePanelProps {
+  title: string;
+  date: string;
+  data: Rekapitulasi[];
+}
+
+export const TablePanel = (props: TablePanelProps) => {
+  const { title, date, data } = props;
+
+  // Menghitung Total untuk setiap kolom
+  const totalMenungguValidasi = data.reduce((acc, curr) => acc + curr.menunggu_validasi, 0);
+  const totalSedangDitangani = data.reduce((acc, curr) => acc + curr.sedang_ditangani, 0);
+  const totalKasusSelesai = data.reduce((acc, curr) => acc + curr.total_selesai, 0);
+  const grandTotal = data.reduce((acc, curr) => acc + curr.total, 0);
+
+  return (
+    <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col overflow-hidden h-full">
+      <span className="text-primary font-bold text-xl">{title}</span>
+      <span className="text-black text-sm">
+        {formatDate(date.toString(), false)}
+      </span>
+      <div className="overflow-x-auto mt-4">
+        <table className="min-w-full border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="py-2 px-4 border-b text-left">Nama Satgas</th>
+              <th className="py-2 px-4 border-b text-left">Menunggu Validasi</th>
+              <th className="py-2 px-4 border-b text-left">Sedang Ditangani</th>
+              <th className="py-2 px-4 border-b text-left">Total Kasus Selesai</th>
+              <th className="py-2 px-4 border-b text-left">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Mapping data untuk setiap Satgas */}
+            {data.map((item, index) => (
+              <tr
+                key={index}
+                className={`hover:bg-gray-100 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                  } text-left`}
+              >
+                <td className="py-2 px-4 border-b">{item.nama}</td>
+                <td className="py-2 px-4 border-b">{item.menunggu_validasi}</td>
+                <td className="py-2 px-4 border-b">{item.sedang_ditangani}</td>
+                <td className="py-2 px-4 border-b">{item.total_selesai}</td>
+                <td className="py-2 px-4 border-b font-bold">{item.total}</td>
+              </tr>
+            ))}
+            {/* Baris Total */}
+            <tr className="font-bold bg-gray-100 text-left">
+              <td className="py-2 px-4 border-b">Total</td>
+              <td className="py-2 px-4 border-b">{totalMenungguValidasi}</td>
+              <td className="py-2 px-4 border-b">{totalSedangDitangani}</td>
+              <td className="py-2 px-4 border-b">{totalKasusSelesai}</td>
+              <td className="py-2 px-4 border-b">{grandTotal}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
 export const Panel = (props: PanelProps) => {
   const { title, date, count } = props;
@@ -253,11 +316,12 @@ export const BarChartPanel = (props: PanelBar) => {
       startDate={startDate}
       endDate={endDate}
     >
-      <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col overflow-hidden h-full min-h-[420px]">
+      <div className="bg-white border-b-4 border-primary p-6 floating-shadow-md rounded flex flex-col overflow-hidden h-full min-h-[480px]">
         <span className="text-primary font-bold text-xl">{title}</span>
-        {/* <span className="text-black text-sm">
+        <span className="text-red-500 text-md mb-1">*Hanya terfilter dengan tanggal</span>
+        <span className="text-black text-sm">
           {formatDate(date.toString(), false)}
-        </span> */}
+        </span>
         <div className="overflow-auto mt-4 h-full flex items-center">
           <div className="w-full min-w-[500px]">
             <BarChart

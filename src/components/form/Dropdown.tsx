@@ -76,10 +76,8 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
                     required: `Pilihan ${errorLabel} harus diisi`,
                 })}
             >
-                {/* Placeholder Option */}
                 <option value="" className='text-gray-400' selected disabled>{placeholder}</option>
 
-                {/* Map Options */}
                 {options.map((e, index) => {
                     return <option value={e.value} className='text-black' key={index}>{e.text}</option>
                 })}
@@ -95,7 +93,7 @@ export const Dropdown = (props: DropdownProps): ReactNode => {
 
 
 export const Select = (props: SelectProps) => {
-    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired = true, defaultValue = '' } = props;
+    const { control, name, placeholder, options, label, isDisabled = false, errorLabel, isRequired, defaultValue = '' } = props;
     const customHeight = {
         menuList: (provided: any) => ({
             ...provided,
@@ -125,7 +123,7 @@ export const Select = (props: SelectProps) => {
                         placeholder={placeholder}
                         options={options}
                         styles={customHeight}
-                        isClearable={true}
+                        isClearable={false}
                     />
                     <span className="text-red-500 text-start">
                         {error?.message}

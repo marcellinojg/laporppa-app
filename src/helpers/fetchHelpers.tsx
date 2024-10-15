@@ -6,7 +6,7 @@ import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
 import { Laporan, LaporanCount } from "../consts/laporan";
-import { getHubunganKeluarga, getKeluargaKlien, getLangkahBadanDaerah, getLangkahOPD, getLaporan, getLaporans, getLaporansBySearchAndStatus, getRAKK, getRRKK, getTotalLaporan, getlaporanByKategori } from '../api/laporan';
+import { getHubunganKeluarga, getKeluargaKlien, getLangkahBadanDaerah, getLangkahOPD, getLaporan, getLaporans, getLaporansBySearchAndStatus, getRAKK, getRRKK, getRekapitulasi, getTotalLaporan, getlaporanByKategori } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
@@ -39,6 +39,7 @@ import { LookasiKejadian } from "../consts/lokasi_kejadian";
 import { getLokasiKejadians } from "../api/lokasi_kejadian";
 import { getOpdes } from "../api/opd";
 import { Opd } from "../consts/opd";
+import { Rekapitulasi, Rekapitulsai } from "../consts/rekapitulasi";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -54,6 +55,8 @@ interface FetchDataEffectsProps<T> {
     setRefetch?: React.Dispatch<SetStateAction<boolean>>
     startDate?: Date | null
     endDate?: Date | null
+    kategoriId?: number | null
+    kategoriKasusId?: number | null
 }
 
 
@@ -191,14 +194,51 @@ export const KategoriLoader = (props: FetchDataEffectsProps<Kategori[]>) => {
 }
 
 export const LaporanCountLoader = (props: FetchDataEffectsProps<LaporanCount[]>) => {
-    const { setData, children } = props
+    const { setData, children, refetch, setRefetch, startDate, endDate, kategoriId, kategoriKasusId } = props;
     const { showLoader, hideLoader } = useLoader()
     const { errorFetchAlert } = useAlert()
 
     useEffect(() => {
-        showLoader()
-        getTotalLaporan().then((totalLaporan) => setData(totalLaporan)).catch(() => errorFetchAlert()).then(() => hideLoader())
-    }, [])
+        setRefetch!(true)
+    }, [startDate, endDate, kategoriId, kategoriKasusId])
+
+    useEffect(() => {
+        if (refetch === true) {
+            showLoader()
+            getTotalLaporan(startDate!, endDate!, kategoriId!, kategoriKasusId!)
+                .then((totalLaporan) => setData(totalLaporan))
+                .catch(() => errorFetchAlert())
+                .finally(() => hideLoader())
+        }
+
+        setRefetch!(false);
+    }, [refetch])
+
+    return <>
+        {children}
+    </>
+}
+
+export const RekapitulasiLoader = (props: FetchDataEffectsProps<Rekapitulasi[]>) => {
+    const { setData, children, refetch, setRefetch, startDate, endDate, kategoriId, kategoriKasusId } = props;
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        setRefetch!(true)
+    }, [startDate, endDate, kategoriId, kategoriKasusId])
+
+    useEffect(() => {
+        if (refetch === true) {
+            showLoader()
+            getRekapitulasi(startDate!, endDate!, kategoriId!, kategoriKasusId!)
+                .then((rekapitulasi) => setData(rekapitulasi))
+                .catch(() => errorFetchAlert())
+                .finally(() => hideLoader())
+        }
+
+        setRefetch!(false);
+    }, [refetch])
 
     return <>
         {children}

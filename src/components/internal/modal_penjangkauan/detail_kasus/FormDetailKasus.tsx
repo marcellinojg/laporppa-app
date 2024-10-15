@@ -175,7 +175,7 @@ const FormDetailKasus = (props: FormModal) => {
                       }))}
                     defaultValue={laporan?.detail_kasus?.jenis_kasus?.id}
                     isDisabled={isJenisKasusDisabled}
-                    isRequired
+                  // isRequired
                   />
                   <Select
                     name="lokasi_kasus"
