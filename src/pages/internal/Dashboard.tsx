@@ -3,9 +3,9 @@ import AdminLayout from "../layouts/AdminLayout";
 import { useAuthUser } from "react-auth-kit";
 import { User, UserAccount } from "../../consts/user";
 import { Panel, BarChartPanel, FilterPanel, TablePanel } from "../../components/internal/Panel";
-import { JenisKasusesLoader, KategoriKasusesLoader, KategoriLoader, KecamatanLoader, KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanLoader, LaporansLoader, RekapitulasiLoader, UserLoader } from "../../helpers/fetchHelpers";
+import { JenisKasusesLoader, KategoriKasusesLoader, KategoriLoader, KecamatanLoader, KelurahanLoader, LaporanByKategoriLoader, LaporanByKategoriRTLoader, LaporanCountLoader, LaporanCountSatgasLoader, LaporanLoader, LaporansLoader, RekapitulasiLoader, UserLoader } from "../../helpers/fetchHelpers";
 import React, { useEffect, useState } from "react";
-import { Laporan, LaporanCount } from "../../consts/laporan";
+import { Laporan, LaporanCount, LaporanCountSatgas } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
 import { useParams } from "react-router-dom";
 import { LaporanByKategori, LaporanByKategoriRT } from "../../consts/laporanByKategori";
@@ -42,6 +42,7 @@ const Dashboard = () => {
   const userData = useAuthUser()() as User;
   const [userAccount, setUserAccount] = useState<UserAccount>();
   const [laporanCount, setLaporanCount] = useState<LaporanCount[]>([]);
+  const [laporanCountSatgas, setLaporanCountSatgas] = useState<LaporanCountSatgas>();
   const [kelurahans, setKelurahans] = useState<Kelurahan[]>([]);
 
   // chart variabel
@@ -120,54 +121,55 @@ const Dashboard = () => {
     <AdminLayout>
       <UserLoader data={userAccount} setData={setUserAccount} id={userData.id}>
         <LaporanCountLoader data={laporanCount} setData={setLaporanCount} refetch={refetch} setRefetch={setRefetch} startDate={startDate} endDate={endDate} kategoriId={selectedKategori} kategoriKasusId={selectedKategoriKasus}>
-          <RekapitulasiLoader data={rekapitulasi} setData={setRekapitulasi} refetch={refetch} setRefetch={setRefetch} startDate={startDate} endDate={endDate} kategoriId={selectedKategori} kategoriKasusId={selectedKategoriKasus}>
-            <div className="lg:w-10/12 w-11/12 p-4 bg-white floating-shadow-md mx-auto mt-12 rounded-lg">
-              <h1 className="font-bold text-2xl text-primary mb-2">
-                Selamat Datang di Dashboard !
-              </h1>
-              <div className="flex gap-3 items-center text-lg">
-                <FaHome />
-                <h2 className="font-bold">Kelurahan {userAccount?.kelurahan?.nama}</h2>
+          <LaporanCountSatgasLoader data={laporanCountSatgas} setData={setLaporanCountSatgas} refetch={refetch} setRefetch={setRefetch} startDate={startDate} endDate={endDate} kategoriId={selectedKategori} kategoriKasusId={selectedKategoriKasus}>
+            <RekapitulasiLoader data={rekapitulasi} setData={setRekapitulasi} refetch={refetch} setRefetch={setRefetch} startDate={startDate} endDate={endDate} kategoriId={selectedKategori} kategoriKasusId={selectedKategoriKasus}>
+              <div className="lg:w-10/12 w-11/12 p-4 bg-white floating-shadow-md mx-auto mt-12 rounded-lg">
+                <h1 className="font-bold text-2xl text-primary mb-2">
+                  Selamat Datang di Dashboard !
+                </h1>
+                <div className="flex gap-3 items-center text-lg">
+                  <FaHome />
+                  <h2 className="font-bold">Kelurahan {userAccount?.kelurahan?.nama}</h2>
+                </div>
+                <div className="flex gap-3 items-center text-lg">
+                  <FaUserNurse />
+                  <h2 className="font-bold">{userData?.name}</h2>
+                </div>
               </div>
-              <div className="flex gap-3 items-center text-lg">
-                <FaUserNurse />
-                <h2 className="font-bold">{userData?.name}</h2>
-              </div>
-            </div>
 
-            <div className="grid xl:grid-cols-5 md:grid-2 lg:w-10/12 w-11/12 mx-auto gap-4 mt-8">
-              {/* filter */}
-              <KategoriKasusesLoader data={kategoriKasues} setData={setKategoriKasues}>
-                <KategoriLoader data={kategoris} setData={setKategoris}>
-                  <div className="xl:col-span-1 col-span-1 p-8 bg-white floating-shadow-md rounded-lg">
-                    <div className="flex flex-col gap-4">
-                      <span className="text-primary font-bold text-xl">Filter</span>
-                      <form action="" onSubmit={handleSubmit(onSubmitFilter)}>
-                        <div className="flex flex-col gap-4 h-full">
-                          <Datepicker
-                            name="start_date"
-                            control={control}
-                            defaultValue={startDate}
-                            placeholder="Masukkan tanggal awal"
-                            label="Tanggal Awal"
-                            type="date"
-                            isRequired
-                            limitToToday
-                          />
-                          <Datepicker
-                            name="end_date"
-                            control={control}
-                            defaultValue={endDate}
-                            placeholder="Masukkan tanggal akhir"
-                            label="Tanggal Akhir"
-                            type="date"
-                            isRequired
-                            limitToToday
-                          />
-                          <span className="text-red-500 mt-[-15px]">
-                            {error == true ? "Tanggal Akhir tidak valid!" : ""}
-                          </span>
-                          {/* {userAccount?.role.id === 2 &&
+              <div className="grid xl:grid-cols-5 md:grid-2 lg:w-10/12 w-11/12 mx-auto gap-4 mt-8">
+                {/* filter */}
+                <KategoriKasusesLoader data={kategoriKasues} setData={setKategoriKasues}>
+                  <KategoriLoader data={kategoris} setData={setKategoris}>
+                    <div className="xl:col-span-1 col-span-1 p-8 bg-white floating-shadow-md rounded-lg">
+                      <div className="flex flex-col gap-4">
+                        <span className="text-primary font-bold text-xl">Filter</span>
+                        <form action="" onSubmit={handleSubmit(onSubmitFilter)}>
+                          <div className="flex flex-col gap-4 h-full">
+                            <Datepicker
+                              name="start_date"
+                              control={control}
+                              defaultValue={startDate}
+                              placeholder="Masukkan tanggal awal"
+                              label="Tanggal Awal"
+                              type="date"
+                              isRequired
+                              limitToToday
+                            />
+                            <Datepicker
+                              name="end_date"
+                              control={control}
+                              defaultValue={endDate}
+                              placeholder="Masukkan tanggal akhir"
+                              label="Tanggal Akhir"
+                              type="date"
+                              isRequired
+                              limitToToday
+                            />
+                            <span className="text-red-500 mt-[-15px]">
+                              {error == true ? "Tanggal Akhir tidak valid!" : ""}
+                            </span>
+                            {/* {userAccount?.role.id === 2 &&
                             <>
                               <Select
                                 name="status_id"
@@ -187,254 +189,193 @@ const Dashboard = () => {
                               />
                             </>
                           } */}
-                          <Select
-                            name="kategori_id"
-                            control={control}
-                            placeholder="Pilih Kategori Pelaporan"
-                            label="Kategori Pelaporan"
-                            errors={errors}
-                            errorLabel="Kategori Pelaporan"
-                            options={kategoris
-                              .filter((k) => k.is_active === true)
-                              .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
-                            isRequired
-                          />
-                          <Select
-                            name="kategori_kasus_id"
-                            control={control}
-                            placeholder="Pilih Kategori Kasus"
-                            label="Kategori Kasus"
-                            errors={errors}
-                            errorLabel="Kategori Kasus"
-                            options={kategoriKasues
-                              .filter((k) => k.is_active === true && k.id_tipe_permasalahan === selectedKategoriDropDown)
-                              .map((k) => ({
-                                label: k.name,
-                                value: k.id,
-                              }))}
-                            isDisabled={isKategoriKasusDisabled}
-                            isRequired
-                          />
-                          <div className="border-t-2 border-slate-400 pt-5 grid grid-cols-1 gap-4">
-                            <SecondaryButton
-                              className="py-2"
-                              onClick={() => resetFilter()}
-                            >
-                              Reset
-                            </SecondaryButton>
-                            <PrimaryButton
-                              className="py-2"
-                              isLoading={isLoading}
-                              isDisabled={isLoading}
-                              isSubmit
-                            >
-                              Filter
-                            </PrimaryButton>
+                            <Select
+                              name="kategori_id"
+                              control={control}
+                              placeholder="Pilih Kategori Pelaporan"
+                              label="Kategori Pelaporan"
+                              errors={errors}
+                              errorLabel="Kategori Pelaporan"
+                              options={kategoris
+                                .filter((k) => k.is_active === true)
+                                .map((k) => ({
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
+                              isRequired
+                            />
+                            <Select
+                              name="kategori_kasus_id"
+                              control={control}
+                              placeholder="Pilih Kategori Kasus"
+                              label="Kategori Kasus"
+                              errors={errors}
+                              errorLabel="Kategori Kasus"
+                              options={kategoriKasues
+                                .filter((k) => k.is_active === true && k.id_tipe_permasalahan === selectedKategoriDropDown)
+                                .map((k) => ({
+                                  label: k.name,
+                                  value: k.id,
+                                }))}
+                              isDisabled={isKategoriKasusDisabled}
+                              isRequired
+                            />
+                            <div className="border-t-2 border-slate-400 pt-5 grid grid-cols-1 gap-4">
+                              <SecondaryButton
+                                className="py-2"
+                                onClick={() => resetFilter()}
+                              >
+                                Reset
+                              </SecondaryButton>
+                              <PrimaryButton
+                                className="py-2"
+                                isLoading={isLoading}
+                                isDisabled={isLoading}
+                                isSubmit
+                              >
+                                Filter
+                              </PrimaryButton>
+                            </div>
                           </div>
-                        </div>
-                      </form>
+                        </form>
+                      </div>
                     </div>
-                  </div>
-                </KategoriLoader>
-              </KategoriKasusesLoader>
-              {/* dashboard */}
-              <div className="xl:col-span-4 col-span-1 p-8 bg-white floating-shadow-md rounded-lg">
-                {
-                  userAccount?.role?.id && userAccount?.role?.id === 1 &&
-                  <>
-                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
-                      <Panel
-                        title="Total Kasus Masuk"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.SEMUA_KASUS
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Menunggu Validasi"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.MENUNGGU_VALIDASI
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Ditangani"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.SEDANG_DITANGANI
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Selesai"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.KASUS_SELESAI
-                          )?.totalCase
-                        }
-                      />
-                    </div>
-                    <div className="grid grid-cols-1 gap-4 mt-4">
-                      {/* <div>
-                  <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                    <KecamatanLoader data={kecamatans} setData={setKecamatans}>
-                      {kecamatans && kelurahans && (
-                        <FilterPanel
-                          title="Filter Diagram"
-                          kelurahans={
-                            kelurahans.filter(kelurahan =>
-                              kecamatans.some(kecamatan =>
-                                kecamatan.id_kabupaten === 1 && kecamatan.id === kelurahan.id_kecamatan
-                              )
-                            )
-                          }
-                          selectedKelurahans={selectedKelurahans}
-                          setSelectedKelurahans={setSelectedKelurahans}
-                          setStartDate={setStartDate}
-                          setEndDate={setEndDate}
-                          startDate={startDate}
-                          endDate={endDate}
+                  </KategoriLoader>
+                </KategoriKasusesLoader>
+                {/* dashboard */}
+                <div className="xl:col-span-4 col-span-1 p-8 bg-white floating-shadow-md rounded-lg">
+                  {
+                    userAccount?.role?.id && userAccount?.role?.id === 1 &&
+                    <>
+                      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+                        <Panel
+                          title="Total Kasus Masuk"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={laporanCountSatgas?.totalCase ?? 0}
                         />
-                      )}
-                    </KecamatanLoader>
-                  </KelurahanLoader>
-                </div> */}
-                      {userAccount?.kelurahan?.id && (
-                        <div className="xl:col-span-3">
+                        <Panel
+                          title="Total Kasus Menunggu Validasi"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCountSatgas?.totalCaseMenunggu ?? 0
+                          }
+                        />
+                        <Panel
+                          title="Total Kasus Ditangani"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={laporanCountSatgas?.totalCaseDiterima ?? 0}
+                        />
+                        <Panel
+                          title="Total Kasus Selesai"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={laporanCountSatgas?.totalCaseSelesai ?? 0}
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 gap-4 mt-4">
+                        {userAccount?.kelurahan?.id && (
+                          <div className="xl:col-span-3">
+                            <BarChartPanel
+                              title={"Diagram Jumlah Kasus Kelurahan " + userAccount.kelurahan.nama}
+                              date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                              selectedKelurahans={userAccount.kelurahan.id}
+                              startDate={startDate}
+                              endDate={endDate}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  }
+                  {
+                    userAccount?.role?.id && userAccount?.role?.id === 2 &&
+                    <>
+                      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                        <Panel
+                          title="Total Kasus Masuk"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCount.find(
+                              (val) => val.id === STATUS_LAPORAN.SEMUA_KASUS
+                            )?.totalCase ?? 0
+                          }
+                        />
+                        <Panel
+                          title="Total Kasus Belum Diassign"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCount.find(
+                              (val) => val.id === STATUS_LAPORAN.KASUS_BELUM_DIASSIGN
+                            )?.totalCase ?? 0
+                          }
+                        />
+                        <Panel
+                          title="Total Kasus Menunggu Validasi"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCount.find(
+                              (val) => val.id === STATUS_LAPORAN.MENUNGGU_VALIDASI
+                            )?.totalCase ?? 0
+                          }
+                        />
+                        <Panel
+                          title="Total Kasus Ditangani"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCount.find(
+                              (val) => val.id === STATUS_LAPORAN.SEDANG_DITANGANI
+                            )?.totalCase ?? 0
+                          }
+                        />
+                        <Panel
+                          title="Total Kasus Selesai"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCount.find(
+                              (val) => val.id === STATUS_LAPORAN.KASUS_SELESAI
+                            )?.totalCase ?? 0
+                          }
+                        />
+                        <Panel
+                          title="Total Kasus Dikembalikan"
+                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                          count={
+                            laporanCount.find(
+                              (val) => val.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN
+                            )?.totalCase ?? 0
+                          }
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 gap-4 mt-4">
+                        {userAccount?.kelurahan?.id && (
                           <BarChartPanel
-                            title={"Diagram Jumlah Kasus Kelurahan " + userAccount.kelurahan.nama}
+                            title={"Diagram Jumlah Kasus Berdasarkan RW di Kelurahan " + userAccount.kelurahan.nama}
                             date={endDate ? endDate.toISOString() : new Date().toISOString()}
                             selectedKelurahans={userAccount.kelurahan.id}
                             startDate={startDate}
                             endDate={endDate}
                           />
-                        </div>
-                      )}
-                    </div>
-                  </>
-                }
-                {
-                  userAccount?.role?.id && userAccount?.role?.id === 2 &&
-                  <>
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-                      <Panel
-                        title="Total Kasus Masuk"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.SEMUA_KASUS
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Belum Diassign"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.KASUS_BELUM_DIASSIGN
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Menunggu Validasi"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.MENUNGGU_VALIDASI
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Ditangani"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.SEDANG_DITANGANI
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Selesai"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.KASUS_SELESAI
-                          )?.totalCase
-                        }
-                      />
-                      <Panel
-                        title="Total Kasus Dikembalikan"
-                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                        count={
-                          laporanCount.find(
-                            (val) => val.id === STATUS_LAPORAN.KASUS_DIKEMBALIKAN
-                          )?.totalCase
-                        }
-                      />
-                    </div>
+                        )}
+                      </div>
+                    </>
+                  }
+                  {
+                    userAccount?.role?.id && userAccount?.role?.id === 2 &&
                     <div className="grid grid-cols-1 gap-4 mt-4">
-                      {/* <div>
-                  <KelurahanLoader data={kelurahans} setData={setKelurahans}>
-                    <KecamatanLoader data={kecamatans} setData={setKecamatans}>
-                      {kecamatans && kelurahans && (
-                        <FilterPanel
-                          title="Filter Diagram"
-                          kelurahans={
-                            kelurahans.filter(kelurahan =>
-                              kecamatans.some(kecamatan =>
-                                kecamatan.id_kabupaten === 1 && kecamatan.id === kelurahan.id_kecamatan
-                              )
-                            )
-                          }
-                          selectedKelurahans={selectedKelurahans}
-                          setSelectedKelurahans={setSelectedKelurahans}
-                          setStartDate={setStartDate}
-                          setEndDate={setEndDate}
-                          startDate={startDate}
-                          endDate={endDate}
-                        />
-                      )}
-                    </KecamatanLoader>
-                  </KelurahanLoader>
-                </div> */}
-                      {userAccount?.kelurahan?.id && (
-                        <BarChartPanel
-                          title={"Diagram Jumlah Kasus Berdasarkan RW di Kelurahan " + userAccount.kelurahan.nama}
-                          date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                          selectedKelurahans={userAccount.kelurahan.id}
-                          startDate={startDate}
-                          endDate={endDate}
-                        />
-                      )}
+                      <TablePanel
+                        title="Tabel Penanganan Tiap Satgas"
+                        date={endDate ? endDate.toISOString() : new Date().toISOString()}
+                        data={rekapitulasi}
+                      ></TablePanel>
                     </div>
-                  </>
-                }
-                {
-                  userAccount?.role?.id && userAccount?.role?.id === 2 &&
-                  <div className="grid grid-cols-1 gap-4 mt-4">
-                    <TablePanel
-                      title="Tabel Penanganan Tiap Satgas"
-                      date={endDate ? endDate.toISOString() : new Date().toISOString()}
-                      data={rekapitulasi}
-                    ></TablePanel>
-                  </div>
-                }
+                  }
+                </div>
               </div>
-            </div>
 
-            {/* <div className="lg:w-10/12 w-11/12 p-4 bg-white floating-shadow-md mx-auto mt-4 rounded-lg">
+              {/* <div className="lg:w-10/12 w-11/12 p-4 bg-white floating-shadow-md mx-auto mt-4 rounded-lg">
             <table></table>
           </div> */}
-          </RekapitulasiLoader>
+            </RekapitulasiLoader>
+          </LaporanCountSatgasLoader>
         </LaporanCountLoader>
       </UserLoader>
     </AdminLayout>

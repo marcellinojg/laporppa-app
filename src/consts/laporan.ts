@@ -144,3 +144,10 @@ export interface LaporanToken {
 export interface LaporanCount extends Status {
   totalCase: number;
 }
+
+export interface LaporanCountSatgas {
+  totalCase: number;
+  totalCaseMenunggu: number;
+  totalCaseDiterima: number;
+  totalCaseSelesai: number;
+}

@@ -5,7 +5,7 @@ import { DetailKlien } from "../consts/detail_klien"
 import { HubunganKeluarga } from "../consts/hubungan_keluarga"
 import { KeluargaKlien } from "../consts/keluarga_klien"
 import { KondisiKlien } from "../consts/kondisi_klien"
-import { Laporan, LaporanCount, LaporanSatgas, LaporanToken } from "../consts/laporan"
+import { Laporan, LaporanCount, LaporanCountSatgas, LaporanSatgas, LaporanToken } from "../consts/laporan"
 import PaginationData from "../consts/pagination"
 import { Pelaku } from "../consts/pelaku"
 import { CreateAxiosInstance, CreatePublicAxiosInstance } from "../helpers/createAxiosInstance"
@@ -110,6 +110,20 @@ export const getLaporansBySearchAndStatus = async (page: number, keyword: string
   } as PaginationData
 
   return { laporans, paginationData }
+}
+
+export const getTotalLaporanSatgas = async (startDate?: Date, endDate?: Date, kategoriId?: number, kategoriKasusId?: number) => {
+  const instance = CreateAxiosInstance()
+  let res = null
+  if (startDate != null && endDate != null && kategoriId != null && kategoriKasusId != null) {
+    res = await instance.get(
+      `/statuses/count?tanggal_start=${startDate.toISOString().slice(0, 10)}&tanggal_end=${endDate.toISOString().slice(0, 10)}&kategori_id=${kategoriId}&kategori_kasus_id=${kategoriKasusId}`
+    );
+  } else {
+    res = await instance.get(`/statuses/count`);
+  }
+  const data = res.data.data as LaporanCountSatgas
+  return data
 }
 
 export const getTotalLaporan = async (startDate?: Date, endDate?: Date, kategoriId?: number, kategoriKasusId?: number) => {

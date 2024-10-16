@@ -5,8 +5,8 @@ import useLoader from "../hooks/useLoader";
 import { getKelurahans } from "../api/kelurahan";
 import { getKecamatans } from "../api/kecamatan";
 import { useAlert } from "../hooks/useAlert";
-import { Laporan, LaporanCount } from "../consts/laporan";
-import { getHubunganKeluarga, getKeluargaKlien, getLangkahBadanDaerah, getLangkahOPD, getLaporan, getLaporans, getLaporansBySearchAndStatus, getRAKK, getRRKK, getRekapitulasi, getTotalLaporan, getlaporanByKategori } from '../api/laporan';
+import { Laporan, LaporanCount, LaporanCountSatgas } from "../consts/laporan";
+import { getHubunganKeluarga, getKeluargaKlien, getLangkahBadanDaerah, getLangkahOPD, getLaporan, getLaporans, getLaporansBySearchAndStatus, getRAKK, getRRKK, getRekapitulasi, getTotalLaporan, getTotalLaporanSatgas, getlaporanByKategori } from '../api/laporan';
 import PaginationData from "../consts/pagination";
 import { getKategoriKasuses, getKategoris } from "../api/kategori";
 import { SatgasPelapor } from "../consts/satgas";
@@ -40,6 +40,7 @@ import { getLokasiKejadians } from "../api/lokasi_kejadian";
 import { getOpdes } from "../api/opd";
 import { Opd } from "../consts/opd";
 import { Rekapitulasi, Rekapitulsai } from "../consts/rekapitulasi";
+import { id } from "date-fns/locale";
 
 interface FetchDataEffectsProps<T> {
     data: T,
@@ -206,6 +207,32 @@ export const LaporanCountLoader = (props: FetchDataEffectsProps<LaporanCount[]>)
         if (refetch === true) {
             showLoader()
             getTotalLaporan(startDate!, endDate!, kategoriId!, kategoriKasusId!)
+                .then((totalLaporan) => setData(totalLaporan))
+                .catch(() => errorFetchAlert())
+                .finally(() => hideLoader())
+        }
+
+        setRefetch!(false);
+    }, [refetch])
+
+    return <>
+        {children}
+    </>
+}
+
+export const LaporanCountSatgasLoader = (props: FetchDataEffectsProps<LaporanCountSatgas | undefined>) => {
+    const { setData, children, refetch, setRefetch, startDate, endDate, kategoriId, kategoriKasusId } = props;
+    const { showLoader, hideLoader } = useLoader()
+    const { errorFetchAlert } = useAlert()
+
+    useEffect(() => {
+        setRefetch!(true)
+    }, [startDate, endDate, kategoriId, kategoriKasusId])
+
+    useEffect(() => {
+        if (refetch === true) {
+            showLoader()
+            getTotalLaporanSatgas(startDate!, endDate!, kategoriId!, kategoriKasusId!)
                 .then((totalLaporan) => setData(totalLaporan))
                 .catch(() => errorFetchAlert())
                 .finally(() => hideLoader())
