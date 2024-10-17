@@ -60,11 +60,11 @@ const Sidebar = (props: SidebarProps) => {
                 )}
                 {(userData.role === ROLE.KELURAHAN || userData.role === ROLE.ADMIN) && (
                     <>
-                        <SidebarItem
+                        {/* <SidebarItem
                             label={userData.role === ROLE.KELURAHAN ? "Tambah Akun Satgas" : "Tambah Akun Kelurahan"}
                             Icon={FaUsers}
                             to={ROUTES.INTERNAL.TAMBAH_SATGAS}
-                        />
+                        /> */}
                         {userData.role !== ROLE.ADMIN && (
                             <>
                                 <div>

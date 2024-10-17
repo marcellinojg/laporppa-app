@@ -35,7 +35,6 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
             <div className="flex items-center gap-3 flex overflow-x-auto w-full overflow-auto">
               <AssignButton laporan={laporan} setRefetch={setRefetch} />
               <TolakButton laporan={laporan} setRefetch={setRefetch} />
-              <PrintButton setRefetch={setRefetch} laporan={laporan} />
             </div>
           )}
         {userData.role === ROLE.KELURAHAN &&
@@ -64,7 +63,6 @@ const SectionPelaporan = (props: SectionPelaporanProps) => {
               <TerimaButton setRefetch={setRefetch} laporan={laporan} />
               <TolakButton setRefetch={setRefetch} laporan={laporan} />
               <KembalikanButton setRefetch={setRefetch} laporan={laporan} />
-              <PrintButton setRefetch={setRefetch} laporan={laporan} />
             </div>
           )}
         {userData.role === ROLE.KELURAHAN &&

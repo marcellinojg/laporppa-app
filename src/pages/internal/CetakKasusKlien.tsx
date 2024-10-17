@@ -76,7 +76,12 @@ const CetakKasusKlien = () => {
 
             console.log(result)
             try {
-                await generateRekap(result); 
+                await generateRekap(result);
+                addAlert({
+                    type:ALERT_TYPE.SUCCESS,
+                    title: "Berhasil mencetak rekap data",
+                    message: "Rekap data berhasil dicetak",
+                }) 
             } catch (error){
                 reset();
                 console.log(error)
