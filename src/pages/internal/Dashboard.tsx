@@ -127,11 +127,11 @@ useEffect(() => {
       console.log(count)
 
       if (userAccount?.role.id == 2) {
-      //  setTimeout(() => {
-      //     clearAlert();
-      //   }, 200);
+       setTimeout(() => {
+          clearAlert();
+        }, 50);
 
-        // setTimeout(() => {
+        setTimeout(() => {
           const message = count
             .filter((status: StatusCount) => 
               status.id === 1 || 
@@ -149,7 +149,7 @@ useEffect(() => {
             title: "Notifikasi Jumlah Kasus",
             message: message,
           }, "top");
-        // }, 2000);
+        }, 1000);
 
        
       }
