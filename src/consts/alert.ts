@@ -1,7 +1,9 @@
+export type Position = 'top' | 'bottom';
+
 export interface AlertProps {
-    message: string,
-    type: string,
-    title: string
+    message: string;
+    type: AlertType;
+    title: string;
 }
 
 export const ALERT_TYPE = {
@@ -9,10 +11,13 @@ export const ALERT_TYPE = {
     INFO: 'info',
     SUCCESS: 'success',
     WARNING: 'warning',
-}
+} as const;
+
+export type AlertType = typeof ALERT_TYPE[keyof typeof ALERT_TYPE];
 
 export interface AlertContextModel {
-    addAlert: (props: AlertProps) => void
-    clearAlert: () => void
-    errorFetchAlert: () => void
+    addAlert: (props: AlertProps, position?: Position) => void;
+    clearAlert: () => void;
+    errorFetchAlert: () => void;
+    position: Position;
 }

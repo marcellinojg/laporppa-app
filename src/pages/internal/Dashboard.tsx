@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { Laporan, LaporanCount, LaporanCountSatgas } from "../../consts/laporan";
 import { STATUS_LAPORAN } from "../../consts/status";
 import { useParams } from "react-router-dom";
-import { LaporanByKategori, LaporanByKategoriRT } from "../../consts/laporanByKategori";
+import { LaporanByKategori } from "../../consts/laporanByKategori";
 import { Kelurahan } from "../../consts/kelurahan";
 import { Select } from "../../components/form/Dropdown";
 import { Kecamatan } from "../../consts/kecamatan";
@@ -20,7 +20,11 @@ import { JenisKasus } from "../../consts/jenis_kasus";
 import { PrimaryButton, SecondaryButton } from "../../components/form/Button";
 import { set } from "date-fns";
 import { ALERT_TYPE } from "../../consts/alert";
-import { Rekapitulsai } from "../../consts/rekapitulasi";
+import { Rekapitulasi } from "../../consts/rekapitulasi";
+import axios from "axios";
+import { CreateAxiosInstance } from "../../helpers/createAxiosInstance";
+
+
 
 interface DropdownOptionProps {
   text: string;
@@ -49,7 +53,7 @@ const Dashboard = () => {
   const [selectedKelurahans, setSelectedKelurahans] = useState<number>(1);
   const [kecamatans, setKecamatans] = useState<Kecamatan[]>([])
   const { showLoader, hideLoader } = useLoader();
-  const { errorFetchAlert, addAlert } = useAlert();
+  const { errorFetchAlert, addAlert,clearAlert } = useAlert();
   const form = useForm<FormFilter>();
   const {
     register,
@@ -74,7 +78,7 @@ const Dashboard = () => {
   const [selectedKategoriDropDown, setSelectedKategoriDropDown] = useState<number | null>(null);
   const [selectedKategori, setSelectedKategori] = useState<number | null>(null);
   const [selectedKategoriKasus, setSelectedKategoriKasus] = useState<number | null>(null)
-  const [isKategoriKasusDisabled, setIsKategoriKasusDisabled] = useState<boolean>(true)
+  const [isKategoriKasusDisabled, setIsKategoriKasusDisabled] = useState<boolean>(true)  
 
   const onSubmitFilter: SubmitHandler<FormFilter> = async (data: FormFilter) => {
     try {
@@ -110,12 +114,66 @@ const Dashboard = () => {
     setSelectedKategoriKasus(null);
     setError(false);
   };
+ 
+const instance = CreateAxiosInstance();
 
+useEffect(() => {
+  const fetchStatusCounts = async () => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    try {
+      const response = await instance.get(`statuses/count?tanggal_end=${currentDate}`);
+
+      const count = response.data.data
+      console.log(count)
+
+      if (userAccount?.role.id == 2) {
+      //  setTimeout(() => {
+      //     clearAlert();
+      //   }, 200);
+
+        // setTimeout(() => {
+          const message = count
+            .filter((status: StatusCount) => 
+              status.id === 1 || 
+              status.id === 2 ||
+              status.id === 7
+            )
+            .map((status: StatusCount) => 
+              `${status.nama}: ${status.totalCase}`
+            ).join(', ');
+
+          console.log(message);
+
+          addAlert({
+            type: ALERT_TYPE.INFO,
+            title: "Notifikasi Jumlah Kasus",
+            message: message,
+          }, "top");
+        // }, 2000);
+
+       
+      }
+    } catch (error) {
+      console.error("Error fetching status counts:", error);
+    }
+  };
+
+  fetchStatusCounts();
+}, [userAccount?.role.id]);
+
+
+
+  // useEffect(() => {
+    
+  // }, [userAccount, kasusCount, clearAlert, addAlert]);
   useEffect(() => {
+  
     const kategoriId = form.watch("kategori_id");
     setSelectedKategoriDropDown(kategoriId || null);
     setIsKategoriKasusDisabled(!kategoriId);
+   
   }, [form.watch("kategori_id")]);
+
 
   return (
     <AdminLayout>

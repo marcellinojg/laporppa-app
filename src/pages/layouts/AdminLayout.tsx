@@ -37,7 +37,7 @@ const AdminLayout = (props: AdminLayoutProps) => {
             type: ALERT_TYPE.INFO,
             title: 'Autentikasi terbarui',
             message: 'Anda berhasil Sign out !'
-        })
+        },"bottom")
     }
 
 

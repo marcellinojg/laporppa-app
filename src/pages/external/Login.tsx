@@ -38,7 +38,8 @@ const Login = () => {
                 type: ALERT_TYPE.SUCCESS,
                 title: "Login Sukses",
                 message: `Selamat datang ${loginData.name}`
-            })
+            },"bottom")
+            
             localStorage.setItem('accessToken', loginData.token)
             signIn({
                 authState: loginData,

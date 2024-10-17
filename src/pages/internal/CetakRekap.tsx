@@ -99,6 +99,11 @@ const CetakRekap = () => {
                 } else {
                     await generateRekapBulanan(result)
                 }
+                addAlert({
+                    type:ALERT_TYPE.SUCCESS,
+                    title: "Berhasil mencetak rekap data",
+                    message: "Rekap data berhasil dicetak",
+                })
                 
             } catch (error) {
                 reset();
