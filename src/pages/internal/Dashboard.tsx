@@ -129,21 +129,24 @@ useEffect(() => {
       if (userAccount?.role.id == 2) {
        setTimeout(() => {
           clearAlert();
-        }, 50);
+        },50);
 
+        
         setTimeout(() => {
           const message = count
-            .filter((status: StatusCount) => 
+            .filter((status:any) => 
               status.id === 1 || 
               status.id === 2 ||
               status.id === 7
             )
-            .map((status: StatusCount) => 
+            .map((status:any) => 
               `${status.nama}: ${status.totalCase}`
             ).join(', ');
 
           console.log(message);
-
+          
+          const audio = new Audio('/sfx.mp3'); 
+          audio.play();
           addAlert({
             type: ALERT_TYPE.INFO,
             title: "Notifikasi Jumlah Kasus",
